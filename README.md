@@ -121,7 +121,7 @@ python ./chat/run_chatgpt.py
 ```
 
 ## Cite Us
-```
+```python
 @misc{huang2025llmsgoodgraphjudge,
       title={Can LLMs be Good Graph Judge for Knowledge Graph Construction?}, 
       author={Haoyu Huang and Chong Chen and Zeang Sheng and Yang Li and Wentao Zhang},
