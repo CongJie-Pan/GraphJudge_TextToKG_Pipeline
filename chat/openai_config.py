@@ -13,11 +13,14 @@ Key Configuration Options:
 - OPENAI_TPM_LIMIT: Tokens per minute limit
 - OPENAI_TPD_LIMIT: Tokens per day limit
 
-OpenAI Free Tier Limits:
-- Concurrency: 3
-- TPM: 90,000
-- RPM: 3500
-- TPD: 2,000,000
+OpenAI Paid Tier Limits (much higher than free tier):
+- Concurrency: 50+ (significantly higher for paid accounts)
+- TPM: 2,000,000+ (paid tier)
+- RPM: 10,000+ (paid tier)
+- TPD: 50,000,000+ (paid tier)
+
+Note: These limits are optimized for paid accounts to maximize execution speed.
+For free tier accounts, use the 'conservative' preset instead.
 
 Usage:
     from openai_config import OPENAI_RPM_LIMIT, OPENAI_CONCURRENT_LIMIT
@@ -25,24 +28,24 @@ Usage:
 """
 
 # Rate limiting configuration for OpenAI API
-# Using original settings from KIMI config for consistency
+# Optimized for paid OpenAI accounts - much higher limits for faster execution
 
 import time
 import random
 
-# OpenAI rate limits - Using more reasonable limits for GPT-5-mini
-OPENAI_RPM_LIMIT = 60  # Requests per minute limit (reasonable for development)
-OPENAI_TPM_LIMIT = 90000  # Tokens per minute limit (OpenAI standard)
-OPENAI_TPD_LIMIT = 2000000  # Tokens per day limit (OpenAI standard)
+# OpenAI rate limits - Using paid tier limits for maximum performance
+OPENAI_RPM_LIMIT = 10000  # Requests per minute limit (paid tier - very high)
+OPENAI_TPM_LIMIT = 2000000  # Tokens per minute limit (paid tier)
+OPENAI_TPD_LIMIT = 50000000  # Tokens per day limit (paid tier - much higher)
 
-# Concurrency control - Allow more concurrent requests
-OPENAI_CONCURRENT_LIMIT = 3  # Maximum concurrent requests (OpenAI allows 3)
+# Concurrency control - Maximize concurrent requests for paid accounts
+OPENAI_CONCURRENT_LIMIT = 50  # Maximum concurrent requests (paid tier allows much more)
 
 # Retry configuration - Optimized for OpenAI
-OPENAI_RETRY_ATTEMPTS = 5  # Retry attempts for rate limit handling
+OPENAI_RETRY_ATTEMPTS = 3  # Fewer retries needed with higher limits
 
-# Delay configuration - Optimized for higher rate limits
-OPENAI_BASE_DELAY = 5  # Base delay for rate limit compliance (seconds)
+# Delay configuration - Minimal delay for paid accounts
+OPENAI_BASE_DELAY = 0.1  # Minimal delay for maximum speed (seconds)
 
 # Advanced configuration options
 # Note: GPT-5 models only support default temperature (1.0)
@@ -60,19 +63,23 @@ _last_reset_day = time.time()
 def calculate_rate_limit_delay():
     """
     Calculate the appropriate delay between requests based on RPM limit.
-    Optimized for OpenAI's higher rate limits.
+    Optimized for paid OpenAI accounts with high rate limits.
     
     Returns:
-        int: Delay in seconds between requests
+        float: Delay in seconds between requests
     """
-    # Ensure at least 60/RPM_LIMIT seconds between requests
-    # For OpenAI's high RPM, this will be very small, so we use a minimum value
-    base_delay = max(OPENAI_BASE_DELAY, int(60 / min(OPENAI_RPM_LIMIT, 100)))
+    # For paid accounts with high RPM limits, use minimal delay
+    if OPENAI_RPM_LIMIT >= 1000:
+        # Very high limits - use base delay with minimal calculation
+        base_delay = OPENAI_BASE_DELAY
+    else:
+        # Lower limits - calculate based on RPM
+        base_delay = max(OPENAI_BASE_DELAY, 60 / OPENAI_RPM_LIMIT)
     
-    # Add random jitter (±20%) to avoid synchronized requests
-    jitter = random.uniform(0.8, 1.2)
+    # Add small random jitter (±10%) to avoid synchronized requests
+    jitter = random.uniform(0.9, 1.1)
     
-    return int(base_delay * jitter)
+    return base_delay * jitter
 
 def track_token_usage(token_count):
     """
@@ -181,7 +188,16 @@ def print_config_summary():
 
 # Configuration presets for different API plans
 PRESETS = {
-    "development": {
+    "paid_tier": {
+        "OPENAI_RPM_LIMIT": 10000,
+        "OPENAI_TPM_LIMIT": 2000000,
+        "OPENAI_TPD_LIMIT": 50000000,
+        "OPENAI_CONCURRENT_LIMIT": 50,
+        "OPENAI_RETRY_ATTEMPTS": 3,
+        "OPENAI_BASE_DELAY": 0.1,
+        "OPENAI_MAX_TOKENS": 8000
+    },
+    "free_tier": {
         "OPENAI_RPM_LIMIT": 60,
         "OPENAI_TPM_LIMIT": 90000,
         "OPENAI_TPD_LIMIT": 2000000,
@@ -200,13 +216,13 @@ PRESETS = {
         "OPENAI_MAX_TOKENS": 3000
     },
     "high_throughput": {
-        "OPENAI_RPM_LIMIT": 120,
-        "OPENAI_TPM_LIMIT": 150000,
-        "OPENAI_TPD_LIMIT": 3000000,
-        "OPENAI_CONCURRENT_LIMIT": 5,
+        "OPENAI_RPM_LIMIT": 5000,
+        "OPENAI_TPM_LIMIT": 1000000,
+        "OPENAI_TPD_LIMIT": 20000000,
+        "OPENAI_CONCURRENT_LIMIT": 25,
         "OPENAI_RETRY_ATTEMPTS": 3,
-        "OPENAI_BASE_DELAY": 2,
-        "OPENAI_MAX_TOKENS": 5000
+        "OPENAI_BASE_DELAY": 0.2,
+        "OPENAI_MAX_TOKENS": 6000
     }
 }
 
@@ -247,7 +263,8 @@ if __name__ == "__main__":
     
     print("\nTo apply a preset, use:")
     print("  from openai_config import apply_preset")
-    print("  apply_preset('free_tier')  # Apply free tier limits")
+    print("  apply_preset('paid_tier')  # Apply paid tier limits (recommended)")
     
-    print("\nRecommended for most users:")
-    print("  apply_preset('free_tier')  # Optimized for standard OpenAI limits")
+    print("\nRecommended configurations:")
+    print("  apply_preset('paid_tier')    # Maximum speed for paid accounts (default)")
+    print("  apply_preset('free_tier')    # Use only if on OpenAI free tier")
