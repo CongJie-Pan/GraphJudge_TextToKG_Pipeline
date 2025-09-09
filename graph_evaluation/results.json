@@ -1,0 +1,51 @@
+{
+  "evaluation_metadata": {
+    "timestamp": "2025-08-18T13:53:11.316620",
+    "total_graphs": 121,
+    "evaluation_metrics": [
+      "triple_match_f1",
+      "graph_match_accuracy",
+      "g_bleu",
+      "g_rouge",
+      "g_bert_score"
+    ]
+  },
+  "exact_matching_metrics": {
+    "triple_match_f1": {
+      "score": 0.7355,
+      "description": "Exact triple matching F1 score"
+    },
+    "graph_match_accuracy": {
+      "score": 0.7355,
+      "description": "Structural graph isomorphism accuracy"
+    }
+  },
+  "text_similarity_metrics": {
+    "g_bleu": {
+      "precision": 0.8329,
+      "recall": 0.8329,
+      "f1": 0.8329,
+      "description": "Graph-adapted BLEU scores using optimal edge matching"
+    },
+    "g_rouge": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "description": "Graph-adapted ROUGE scores using optimal edge matching"
+    }
+  },
+  "semantic_similarity_metrics": {
+    "g_bert_score": {
+      "precision": 0.938,
+      "recall": 0.938,
+      "f1": 0.938,
+      "description": "Graph-adapted BERTScore using semantic embeddings"
+    }
+  },
+  "structural_distance_metrics": {
+    "graph_edit_distance": {
+      "average_ged": 0.0248,
+      "description": "Average minimum edit operations to transform predicted to gold graph"
+    }
+  }
+}

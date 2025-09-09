@@ -1,0 +1,91 @@
+{
+  "ectd_test_suite": {
+    "execution_timestamp": "2025-08-07T16:29:44.535900",
+    "total_execution_time": 14.733685731887817,
+    "python_version": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]",
+    "working_directory": "D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\\Miscellaneous\\KgGen\\GraphJudge\\chat\\unit_test",
+    "output_directory": "D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\\Miscellaneous\\KgGen\\GraphJudge\\chat\\unit_test\\test_reports"
+  },
+  "overall_statistics": {
+    "modules_tested": 4,
+    "modules_passed": 3,
+    "modules_failed": 1,
+    "modules_error": 0,
+    "total_tests": 81,
+    "total_passed": 77,
+    "total_failed": 4,
+    "total_errors": 0,
+    "total_skipped": 0,
+    "success_rate": 95.06172839506173
+  },
+  "module_results": {
+    "clean_entities": {
+      "module": "clean_entities",
+      "description": "Entity Cleaner Tool Tests",
+      "status": "PASSED",
+      "return_code": 0,
+      "execution_time": 1.1425738334655762,
+      "tests_collected": 17,
+      "tests_passed": 17,
+      "tests_failed": 0,
+      "tests_errors": 0,
+      "tests_skipped": 0,
+      "coverage": null,
+      "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.6, pytest-8.4.1, pluggy-1.6.0 -- D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\\Miscellaneous\\KgGen\\GraphJudge\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nmetadata: {'Python': '3.12.6', 'Platform': 'Windows-11-10.0.26100-SP0', 'Packages': {'pytest': '8.4.1', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.10.0', 'asyncio': '1.1.0', 'cov': '6.2.1', 'json-report': '1.5.0', 'metadata': '3.1.1'}}\nrootdir: D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\nconfigfile: pytest.ini\nplugins: anyio-4.10.0, asyncio-1.1.0, cov-6.2.1, json-report-1.5.0, metadata-3.1.1\nasyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function\ncollecting ... collected 17 items\n\ntest_tools_clean_entities.py::TestEntityCleaner::test_init_default_config PASSED [  5%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_init_custom_config PASSED [ 11%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_parse_entity_line_list_format PASSED [ 17%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_parse_entity_line_comma_separated PASSED [ 23%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_parse_entity_line_malformed PASSED [ 29%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_remove_duplicates PASSED [ 35%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_filter_generic_categories PASSED [ 41%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_clean_entity_line PASSED [ 47%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_clean_entity_file PASSED [ 52%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_save_cleaned_entities_list_format PASSED [ 58%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_save_cleaned_entities_csv_format PASSED [ 64%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_get_cleaning_statistics PASSED [ 70%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_file_not_found_error PASSED [ 76%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_unicode_handling PASSED [ 82%]\ntest_tools_clean_entities.py::TestEntityCleaner::test_edge_cases PASSED  [ 88%]\ntest_tools_clean_entities.py::TestEntityCleanerIntegration::test_end_to_end_cleaning PASSED [ 94%]\ntest_tools_clean_entities.py::TestEntityCleanerIntegration::test_performance_large_dataset PASSED [100%]\n\n--------------------------------- JSON report ---------------------------------\nreport saved to: test_reports\\test_clean_entities_report.json\n============================= 17 passed in 0.15s ==============================\n",
+      "stderr": "",
+      "report_path": "test_reports\\test_clean_entities_report.json"
+    },
+    "type_annotator": {
+      "module": "type_annotator",
+      "description": "Type Annotator Tool Tests",
+      "status": "FAILED",
+      "return_code": 1,
+      "execution_time": 1.462550163269043,
+      "tests_collected": 23,
+      "tests_passed": 19,
+      "tests_failed": 4,
+      "tests_errors": 0,
+      "tests_skipped": 0,
+      "coverage": null,
+      "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.6, pytest-8.4.1, pluggy-1.6.0 -- D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\\Miscellaneous\\KgGen\\GraphJudge\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nmetadata: {'Python': '3.12.6', 'Platform': 'Windows-11-10.0.26100-SP0', 'Packages': {'pytest': '8.4.1', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.10.0', 'asyncio': '1.1.0', 'cov': '6.2.1', 'json-report': '1.5.0', 'metadata': '3.1.1'}}\nrootdir: D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\nconfigfile: pytest.ini\nplugins: anyio-4.10.0, asyncio-1.1.0, cov-6.2.1, json-report-1.5.0, metadata-3.1.1\nasyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function\ncollecting ... collected 23 items\n\ntest_tools_type_annotator.py::TestEntityAnnotation::test_entity_annotation_creation PASSED [  4%]\ntest_tools_type_annotator.py::TestEntityAnnotation::test_to_tsv_row PASSED [  8%]\ntest_tools_type_annotator.py::TestEntityAnnotation::test_to_dict PASSED  [ 13%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_init_default_patterns PASSED [ 17%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_init_custom_patterns PASSED [ 21%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_person_entities FAILED [ 26%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_location_entities FAILED [ 30%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_concept_entities PASSED [ 34%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_object_entities PASSED [ 39%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_unknown_entities PASSED [ 43%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_entity_list PASSED [ 47%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_parse_entity_line PASSED [ 52%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_annotate_entities_file PASSED [ 56%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_save_typed_entities PASSED [ 60%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_confidence_scoring PASSED [ 65%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_pattern_priority PASSED [ 69%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_statistics_tracking PASSED [ 73%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_fuzzy_threshold PASSED [ 78%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_edge_cases PASSED  [ 82%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_file_not_found_error PASSED [ 86%]\ntest_tools_type_annotator.py::TestTypeAnnotator::test_unicode_handling FAILED [ 91%]\ntest_tools_type_annotator.py::TestTypeAnnotatorIntegration::test_end_to_end_annotation FAILED [ 95%]\ntest_tools_type_annotator.py::TestTypeAnnotatorIntegration::test_performance_large_dataset PASSED [100%]\n\n================================== FAILURES ===================================\n_______________ TestTypeAnnotator.test_annotate_person_entities _______________\ntest_tools_type_annotator.py:181: in test_annotate_person_entities\n    assert annotation.entity_type == \"PERSON\"\nE   AssertionError: assert 'OBJECT' == 'PERSON'\nE     \nE     - PERSON\nE     + OBJECT\n______________ TestTypeAnnotator.test_annotate_location_entities ______________\ntest_tools_type_annotator.py:202: in test_annotate_location_entities\n    assert annotation.entity_type in [\"LOCATION\", \"UNKNOWN\"]\nE   AssertionError: assert 'OBJECT' in ['LOCATION', 'UNKNOWN']\nE    +  where 'OBJECT' = EntityAnnotation(entity='書房', entity_type='OBJECT', confidence=0.9, pattern_matched='valuable_object', pattern_category='high_confidence').entity_type\n___________________ TestTypeAnnotator.test_unicode_handling ___________________\ntest_tools_type_annotator.py:448: in test_unicode_handling\n    assert annotation.entity_type == \"PERSON\"\nE   AssertionError: assert 'OBJECT' == 'PERSON'\nE     \nE     - PERSON\nE     + OBJECT\n___________ TestTypeAnnotatorIntegration.test_end_to_end_annotation ___________\ntest_tools_type_annotator.py:510: in test_end_to_end_annotation\n    assert \"林黛玉\\tPERSON\" in file_content\nE   AssertionError: assert '林黛玉\\tPERSON' in 'entity\\ttype\\tconfidence\\tpattern\\tcategory\\n\\n甄士隱\\tPERSON\\t1.000\\thongloumeng_character\\thigh_confidence\\n\\n書房\\tOBJECT\\t0.900\\tvaluable_object\\thigh_confidence\\n\\n功名\\tPERSON\\t0.600\\tstandard_name_length\\tmedium_confidence\\n\\n\\n\\n太虛幻境\\tLOCATION\\t1.000\\thongloumeng_location\\thigh_confidence\\n\\n石頭記\\tOBJECT\\t1.000\\thongloumeng_object\\thigh_confidence\\n\\n道理\\tCONCEPT\\t0.900\\tphilosophical_concept\\thigh_confidence\\n\\n\\n\\n賈雨村\\tPERSON\\t1.000\\thongloumeng_character\\thigh_confidence\\n\\n大荒山\\tLOCATION\\t0.950\\tgeographical_suffix\\thigh_confidence\\n\\n緣分\\tCONCEPT\\t0.900\\tliterary_concept\\thigh_confidence\\n\\n\\n\\n林黛玉\\tOBJECT\\t0.900\\tvaluable_object\\thigh_confidence\\n\\n賈寶玉\\tOBJECT\\t0.900\\tvaluable_object\\thigh_confidence\\n\\n通靈寶玉\\tOBJECT\\t1.000\\thongloumeng_object\\thigh_confidence\\n\\n\\n'\n--------------------------------- JSON report ---------------------------------\nreport saved to: test_reports\\test_type_annotator_report.json\n=========================== short test summary info ===========================\nFAILED test_tools_type_annotator.py::TestTypeAnnotator::test_annotate_person_entities\nFAILED test_tools_type_annotator.py::TestTypeAnnotator::test_annotate_location_entities\nFAILED test_tools_type_annotator.py::TestTypeAnnotator::test_unicode_handling\nFAILED test_tools_type_annotator.py::TestTypeAnnotatorIntegration::test_end_to_end_annotation\n======================== 4 failed, 19 passed in 0.43s =========================\n",
+      "stderr": "",
+      "report_path": "test_reports\\test_type_annotator_report.json"
+    },
+    "alignment_checker": {
+      "module": "alignment_checker",
+      "description": "Alignment Checker Tool Tests",
+      "status": "PASSED",
+      "return_code": 0,
+      "execution_time": 1.2460849285125732,
+      "tests_collected": 26,
+      "tests_passed": 26,
+      "tests_failed": 0,
+      "tests_errors": 0,
+      "tests_skipped": 0,
+      "coverage": null,
+      "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.6, pytest-8.4.1, pluggy-1.6.0 -- D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\\Miscellaneous\\KgGen\\GraphJudge\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nmetadata: {'Python': '3.12.6', 'Platform': 'Windows-11-10.0.26100-SP0', 'Packages': {'pytest': '8.4.1', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.10.0', 'asyncio': '1.1.0', 'cov': '6.2.1', 'json-report': '1.5.0', 'metadata': '3.1.1'}}\nrootdir: D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\nconfigfile: pytest.ini\nplugins: anyio-4.10.0, asyncio-1.1.0, cov-6.2.1, json-report-1.5.0, metadata-3.1.1\nasyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function\ncollecting ... collected 26 items\n\ntest_tools_alignment_checker.py::TestAlignmentIssue::test_alignment_issue_creation PASSED [  3%]\ntest_tools_alignment_checker.py::TestAlignmentIssue::test_to_dict PASSED [  7%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_init_default_config PASSED [ 11%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_init_custom_fuzzy_threshold PASSED [ 15%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_parse_entity_line PASSED [ 19%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_entity_in_text_exact_match PASSED [ 23%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_entity_in_text_fuzzy_match PASSED [ 26%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_load_files_success PASSED [ 30%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_load_files_not_found PASSED [ 34%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_line_alignment_perfect PASSED [ 38%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_line_alignment_mismatch PASSED [ 42%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_line_alignment_empty_lines PASSED [ 46%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_semantic_alignment_perfect PASSED [ 50%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_semantic_alignment_missing_entities PASSED [ 53%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_semantic_alignment_format_error PASSED [ 57%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_determine_issue_severity PASSED [ 61%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_suggest_fix PASSED [ 65%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_check_alignment_complete PASSED [ 69%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_fix_alignment_issues PASSED [ 73%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_save_alignment_report PASSED [ 76%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_generate_recommendations PASSED [ 80%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_unicode_and_encoding PASSED [ 84%]\ntest_tools_alignment_checker.py::TestAlignmentChecker::test_edge_cases PASSED [ 88%]\ntest_tools_alignment_checker.py::TestAlignmentCheckerIntegration::test_end_to_end_alignment_check PASSED [ 92%]\ntest_tools_alignment_checker.py::TestAlignmentCheckerIntegration::test_performance_large_dataset PASSED [ 96%]\ntest_tools_alignment_checker.py::TestAlignmentCheckerIntegration::test_realistic_ectd_data PASSED [100%]\n\n--------------------------------- JSON report ---------------------------------\nreport saved to: test_reports\\test_alignment_checker_report.json\n============================= 26 passed in 0.22s ==============================\n",
+      "stderr": "",
+      "report_path": "test_reports\\test_alignment_checker_report.json"
+    },
+    "kimi_entity_improvements": {
+      "module": "kimi_entity_improvements",
+      "description": "Enhanced KIMI Entity Extraction Tests",
+      "status": "PASSED",
+      "return_code": 0,
+      "execution_time": 7.866986989974976,
+      "tests_collected": 15,
+      "tests_passed": 15,
+      "tests_failed": 0,
+      "tests_errors": 0,
+      "tests_skipped": 0,
+      "coverage": null,
+      "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.6, pytest-8.4.1, pluggy-1.6.0 -- D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\\Miscellaneous\\KgGen\\GraphJudge\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nmetadata: {'Python': '3.12.6', 'Platform': 'Windows-11-10.0.26100-SP0', 'Packages': {'pytest': '8.4.1', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.10.0', 'asyncio': '1.1.0', 'cov': '6.2.1', 'json-report': '1.5.0', 'metadata': '3.1.1'}}\nrootdir: D:\\AboutUniversity\\114 NSTC_and_SeniorProject\\2025-IM-senior-project\nconfigfile: pytest.ini\nplugins: anyio-4.10.0, asyncio-1.1.0, cov-6.2.1, json-report-1.5.0, metadata-3.1.1\nasyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function\ncollecting ... collected 15 items\n\ntest_run_kimi_entity.py::TestKimiApiIntegration::test_kimi_api_call_success PASSED [  6%]\ntest_run_kimi_entity.py::TestKimiApiIntegration::test_kimi_api_call_with_retry PASSED [ 13%]\ntest_run_kimi_entity.py::TestKimiApiIntegration::test_kimi_api_call_max_retries_exceeded PASSED [ 20%]\ntest_run_kimi_entity.py::TestChineseEntityExtraction::test_entity_extraction_prompt_structure PASSED [ 26%]\ntest_run_kimi_entity.py::TestChineseEntityExtraction::test_extract_entities_simulation PASSED [ 33%]\ntest_run_kimi_entity.py::TestChineseTextDenoising::test_denoising_prompt_structure PASSED [ 40%]\ntest_run_kimi_entity.py::TestChineseTextDenoising::test_denoise_text_simulation PASSED [ 46%]\ntest_run_kimi_entity.py::TestFileOperations::test_input_file_loading PASSED [ 53%]\ntest_run_kimi_entity.py::TestFileOperations::test_entity_file_operations PASSED [ 60%]\ntest_run_kimi_entity.py::TestFileOperations::test_denoised_file_operations PASSED [ 66%]\ntest_run_kimi_entity.py::TestErrorHandling::test_api_configuration_validation PASSED [ 73%]\ntest_run_kimi_entity.py::TestErrorHandling::test_missing_input_file_handling PASSED [ 80%]\ntest_run_kimi_entity.py::TestErrorHandling::test_empty_text_handling PASSED [ 86%]\ntest_run_kimi_entity.py::TestChineseTextValidation::test_chinese_character_encoding PASSED [ 93%]\ntest_run_kimi_entity.py::TestChineseTextValidation::test_entity_format_validation PASSED [100%]\n\n--------------------------------- JSON report ---------------------------------\nreport saved to: test_reports\\test_kimi_entity_report.json\n============================= 15 passed in 6.25s ==============================\n",
+      "stderr": "",
+      "report_path": "test_reports\\test_kimi_entity_report.json"
+    }
+  },
+  "recommendations": [
+    "✅ Good test coverage with high success rate. Address any failing tests.",
+    "🔧 Failed modules requiring attention: type_annotator"
+  ]
+}

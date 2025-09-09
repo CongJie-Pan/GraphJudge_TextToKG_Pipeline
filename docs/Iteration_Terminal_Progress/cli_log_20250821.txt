@@ -1,0 +1,67 @@
+2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3
+  +-- results/
+  |   +-- ectd/
+  |   +-- triple_generation/
+  |   +-- graph_judge/
+  |   +-- evaluation/
+  +-- logs/
+  |   +-- pipeline/
+  |   +-- stages/
+  |   +-- errors/
+  |   +-- performance/
+  +-- configs/
+  +-- reports/
+  |   +-- summary/
+  |   +-- analysis/
+  |   +-- comparison/
+  +-- analysis/
+  |   +-- charts/
+  |   +-- statistics/
+  |   +-- error_analysis/
+  +-- backups/
+ Created iteration config: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3\configs\iteration3_config.yaml
+[SUCCESS] Created iteration tracking: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3\iteration_info.json
+[SUCCESS] Loaded configuration: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3\configs\iteration3_config.yaml
+
+ Starting Iteration 3 pipeline execution...
+ Working directory: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3
+ Input file: ./datasets/DreamOf_RedChamber/chapter1_raw.txt
+ Started monitoring for Iteration 3
+ Monitor log: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3\logs\performance\pipeline_monitor_20250821_165954.log
+ Starting pipeline execution for Iteration 3
+ Working directory: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3
+ Input file: ./datasets/DreamOf_RedChamber/chapter1_raw.txt
+
+============================================================
+ STAGE 1/4: ECTD
+============================================================
+Starting ECTD stage at 16:59:54
+
+🔧 ECTD Stage Environment Configuration:
+   PIPELINE_ITERATION: 3
+   PIPELINE_ITERATION_PATH: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3
+   PIPELINE_DATASET_PATH: ../datasets/KIMI_result_DreamOf_RedChamber/  
+   PIPELINE_OUTPUT_DIR: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Rep   PYTHONIOENCODING: utf-8
+   LANG: en_US.UTF-8
+
+🚀 Executing: python D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\chat\run_kimi_entity.py
+📋 Configuration: {'model': 'kimi-k2', 'temperature': 0.3, 'batch_size': 20, 'cache_enabled': True}
+ [DEBUG] Executing command: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\.venv\Scripts\python.exe D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\chat\run_kimi_entity.py...     
+ [DEBUG] Working directory: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\chat
+ [DEBUG] Environment encoding: utf-8
+
+❌ ECTD Error: Script exited with code 1
+ [DEBUG] Environment encoding: utf-8
+
+❌ ECTD Error: Script exited with code 1
+ERROR: ECTD stage timed out after 30 minutes
+ECTD stage failed after 1800.0s
+
+ERROR: Pipeline failed at stage: ECTD
+ To resume, use: python cli.py run-pipeline --iteration 3
+
+
+ Iteration 3 pipeline completed successfully!
+ Iteration 3 pipeline completed successfully!
+ Results available in: D:\AboutUniversity\114 NSTC_and_SeniorProject\20 Results available in: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Repo25-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Repo25-IM-senior-project\Miscellaneous\KgGen\GraphJudge\docs\Iteration_Report\Iteration3/reports/
+ Pipeline monitoring stopped

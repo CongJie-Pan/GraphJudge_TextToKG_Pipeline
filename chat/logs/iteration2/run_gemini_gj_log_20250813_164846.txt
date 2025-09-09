@@ -1,0 +1,15 @@
+[2025-08-13 16:48:46] ================================================================================
+[2025-08-13 16:48:46] Gemini RAG Graph Judge Execution Log
+[2025-08-13 16:48:46] Started at: 2025-08-13 16:48:46
+[2025-08-13 16:48:46] ================================================================================
+[2025-08-13 16:48:46] ✓ Terminal logger initialized successfully
+[2025-08-13 16:48:46] 📝 Log file: D:\AboutUniversity\114 NSTC_and_SeniorProject\2025-IM-senior-project\Miscellaneous\KgGen\GraphJudge\chat\logs\iteration2\run_gemini_gj_log_20250813_164846.txt
+[2025-08-13 16:48:46] Testing regular print statements...
+[2025-08-13 16:48:46] 🎯 This is a test message
+[2025-08-13 16:48:46] 📊 Processing some data...
+[2025-08-13 16:48:46] ✅ Task completed successfully
+[2025-08-13 16:48:46] [INFO] This is an info message
+[2025-08-13 16:48:46] [WARNING] This is a warning message
+[2025-08-13 16:48:46] [ERROR] This is an error message
+[2025-08-13 16:48:46] [INFO] 🎯 Gemini RAG Graph Judge - Session Ended
+[2025-08-13 16:48:46] ================================================================================

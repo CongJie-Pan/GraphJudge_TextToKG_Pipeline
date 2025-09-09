@@ -1,0 +1,71 @@
+# GPT-5-mini Triple Generation v2.0 - Terminal Progress Log
+**Date**: 2025-09-07 19:38:17
+**Pipeline**: Enhanced Triple Generation (v2.0)
+**Status**: IN PROGRESS
+**Log File**: run_triple_progress_20250907_193817.txt
+
+## Overview
+Enhanced GPT-5-mini semantic graph generation pipeline with the following improvements:
+- Structured JSON output prompts for better consistency
+- Schema validation using Pydantic
+- Text chunking for large inputs (pagination support)
+- Integration with post-processor for comprehensive cleaning
+- Improved error handling and logging
+- Multiple output formats with quality metrics
+
+## Execution Progress
+PHASE: ============================================================
+PHASE: PHASE: Enhanced GPT-5-mini Semantic Graph Generation Pipeline v2.0
+PHASE: Description: Processing Dream of the Red Chamber - Graph Iteration 2
+PHASE: ============================================================
+INFO: Features: Structured JSON + Schema Validation + Pagination + Post-Processing
+PHASE: ============================================================
+PHASE: PHASE: PHASE 1: Enhanced Input Data Processing
+PHASE: Description: Validate and prepare input data
+PHASE: ============================================================
+STATS: 
+📊 Input Data Validation:
+STATS:    Text segments: 31
+STATS:    Entity sets: 31
+STATS:    Processing pairs: 31
+STATS:    Enhanced features: Chunking, Validation, Post-processing
+INFO: 📋 Sample Data Preview:
+INFO:    📄 Sample text (first 100 chars): 作者撰寫《石頭記》。作者曾歷夢幻，將真事隱去。作者借通靈之說撰書。作者記述當日閨友閨情。作者上賴天恩，下承祖德。作者錦衣紈絝之時、飫甘饜美肥之日，背父母教育之恩，負師兄規訓之德。作者今日一事無成、半生...
+INFO:    🏷️  Sample entities: ["作者", "石頭記", "甄士隱", "通靈", "天恩", "祖德", "閨閣", "茆椽蓬牖", "瓦灶繩床", "風塵懷閨秀"]
+INFO:    📊 Dataset path: ../datasets/KIMI_result_DreamOf_RedChamber/
+INFO:    🔢 Input iteration: 2
+INFO:    🎯 Enhanced graph iteration: 2
+PHASE: ============================================================
+PHASE: PHASE: PHASE 2: Enhanced Prompt Generation with Pagination
+PHASE: Description: Create structured prompts with chunking support
+PHASE: ============================================================
+[19:38:17] INFO: 📝 Creating enhanced prompts for 31 text-entity pairs...
+[19:38:17] INFO:    📄 Processing text 1/31
+[19:38:17] INFO:    📄 Processing text 5/31
+[19:38:17] INFO:    📄 Processing text 10/31
+[19:38:17] INFO:    📄 Processing text 15/31
+[19:38:17] INFO:    📄 Processing text 20/31
+[19:38:17] INFO:    📄 Processing text 25/31
+[19:38:17] INFO:    📄 Processing text 30/31
+[19:38:17] INFO:    📄 Processing text 31/31
+STATS: 
+📊 Prompt Generation Results:
+STATS:    Total prompts created: 31
+STATS:    Average prompt length: 713 characters
+STATS:    Text chunks created: 0
+STATS:    Original texts: 31
+[19:38:17] SUCCESS: 📁 Created enhanced output directory: ../datasets/KIMI_result_DreamOf_RedChamber/Graph_Iteration4
+[19:38:17] INFO: 📊 Using Input Iteration: 2, Graph Iteration: 2
+PHASE: ============================================================
+PHASE: PHASE: PHASE 3: Enhanced Semantic Graph Generation
+PHASE: Description: Process prompts with GPT-5-mini API
+PHASE: ============================================================
+STATS: 
+📊 API Configuration:
+STATS:    GPT-5-mini model: gpt-5-mini
+STATS:    Temperature setting: 1.00
+STATS:    Max tokens per response: 4000
+STATS:    Total prompts to process: 31
+[19:39:01] ERROR: 
+❌ Critical error during enhanced pipeline execution: [Errno 22] Invalid argument
+[19:39:01] ERROR: Please check your configuration and try again.

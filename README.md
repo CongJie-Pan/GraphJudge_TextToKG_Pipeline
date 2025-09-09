@@ -6,8 +6,6 @@ This is the repo for the paper [Can LLMs be Good Graph Judge for Knowledge Graph
 
 LoRA weights have been released: 🤗 <a href="https://huggingface.co/HaoyuHuang2/graphjudger" target="_blank">Hugging Face</a>.
 
-## News
-- **Accepted to [EMNLP 2025](https://2025.emnlp.org/) Main Conference! 🎉**
 
 
 ![Illustration of multi-agent collaborative framework](./img/graphjudger_context.drawio.png)
@@ -121,7 +119,7 @@ python ./chat/run_chatgpt.py
 ```
 
 ## Cite Us
-```python
+```
 @misc{huang2025llmsgoodgraphjudge,
       title={Can LLMs be Good Graph Judge for Knowledge Graph Construction?}, 
       author={Haoyu Huang and Chong Chen and Zeang Sheng and Yang Li and Wentao Zhang},

@@ -1,0 +1,12 @@
+{
+  "key": "e26674049e54ad0eda36314b17919251e4812926e76e52caa090c877637410e3",
+  "response": "test response",
+  "prompt": "test prompt",
+  "system_prompt": null,
+  "timestamp": 17720.687,
+  "model": "gpt-5-mini",
+  "temperature": 1.0,
+  "max_tokens": 4000,
+  "token_count": 100,
+  "file_size": 0
+}

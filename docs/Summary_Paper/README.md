@@ -1,0 +1,1 @@
+Learning how to set up Latex in vscode(Cursor) Video : https://youtu.be/4lyHIQl4VM8?si=2TaMICva6DSdTUV9

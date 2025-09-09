@@ -1,0 +1,7 @@
+
+================================================================================
+GPT-5-mini Entity Extraction and Text Denoising Pipeline - Terminal Progress Log
+Started at: 2025-09-06 15:32:25
+Log File: logs\gpt5mini_entity_iteration_20250906_153225.txt
+Configuration: None
+================================================================================

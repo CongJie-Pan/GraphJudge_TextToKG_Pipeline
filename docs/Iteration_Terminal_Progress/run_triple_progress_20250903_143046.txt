@@ -1,0 +1,22 @@
+# GPT-5-mini Triple Generation v2.0 - Terminal Progress Log
+**Date**: 2025-09-03 14:30:46
+**Pipeline**: Enhanced Triple Generation (v2.0)
+**Status**: IN PROGRESS
+**Log File**: run_triple_progress_20250903_143046.txt
+
+## Overview
+Enhanced GPT-5-mini semantic graph generation pipeline with the following improvements:
+- Structured JSON output prompts for better consistency
+- Schema validation using Pydantic
+- Text chunking for large inputs (pagination support)
+- Integration with post-processor for comprehensive cleaning
+- Improved error handling and logging
+- Multiple output formats with quality metrics
+
+## Execution Progress
+PHASE: ============================================================
+PHASE: PHASE: Enhanced GPT-5-mini Semantic Graph Generation Pipeline v2.0
+PHASE: Description: Processing Dream of the Red Chamber - Graph Iteration 3
+PHASE: ============================================================
+INFO: Features: Structured JSON + Schema Validation + Pagination + Post-Processing
+[14:30:46] ERROR: ✗ Error: No denoised text found. Please run GPT-5-mini ECTD pipeline first.
