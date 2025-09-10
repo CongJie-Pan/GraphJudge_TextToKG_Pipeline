@@ -451,16 +451,32 @@ if __name__ == "__main__":
                             print(f"✅ Found valid manifest in: {primary_output_dir}")
                 
                 if not working_location:
-                    # Fallback to legacy multi-location checking
-                    legacy_output_dir = os.path.join(env.get('PIPELINE_ITERATION_PATH', ''), "results", "ectd")
-                    
-                    # Also check the actual working directory where run_entity.py puts files
-                    current_working_dir = os.getcwd()
-                    actual_output_locations = [
-                        os.path.join(current_working_dir, "../datasets/KIMI_result_DreamOf_RedChamber", f"Graph_Iteration{env.get('PIPELINE_ITERATION', '1')}"),
-                        primary_output_dir,
-                        legacy_output_dir
-                    ]
+                    # Use centralized path resolver instead of hardcoded relative paths
+                    try:
+                        from path_resolver import resolve_pipeline_output
+                        iteration = int(env.get('PIPELINE_ITERATION', '1'))
+                        resolved_location = resolve_pipeline_output(iteration, create=False)
+                        
+                        # Fallback to legacy multi-location checking
+                        legacy_output_dir = os.path.join(env.get('PIPELINE_ITERATION_PATH', ''), "results", "ectd")
+                        
+                        # Use path resolver output as primary location, with legacy as backup
+                        actual_output_locations = [
+                            resolved_location,  # Use centralized path resolver
+                            primary_output_dir,
+                            legacy_output_dir
+                        ]
+                    except Exception as e:
+                        print(f"Warning: Path resolver failed in validation, using legacy paths: {e}")
+                        # Fallback to legacy hardcoded path only if path resolver fails
+                        current_working_dir = os.getcwd()
+                        legacy_output_dir = os.path.join(env.get('PIPELINE_ITERATION_PATH', ''), "results", "ectd")
+                        
+                        actual_output_locations = [
+                            os.path.join(current_working_dir, "../datasets/KIMI_result_DreamOf_RedChamber", f"Graph_Iteration{env.get('PIPELINE_ITERATION', '1')}"),
+                            primary_output_dir,
+                            legacy_output_dir
+                        ]
                     
                     # Normalize paths consistently - preserve relative paths if they were relative
                     normalized_locations = []

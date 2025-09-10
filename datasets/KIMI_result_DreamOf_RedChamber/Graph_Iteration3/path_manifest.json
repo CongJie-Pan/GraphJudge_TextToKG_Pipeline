@@ -1,0 +1,18 @@
+{
+  "stage": "ectd",
+  "iteration": 3,
+  "output_dir": "d:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\datasets\\KIMI_result_DreamOf_RedChamber\\Graph_Iteration3",
+  "files": [
+    "test_entity.txt",
+    "test_denoised.target"
+  ],
+  "created_at": "2025-09-10T22:05:02.588663",
+  "resolver_version": "1.0",
+  "metadata": {
+    "successful_extractions": 32,
+    "total_texts": 32,
+    "successful_denoising": 32,
+    "entity_file_size": 2863,
+    "denoised_file_size": 10867
+  }
+}

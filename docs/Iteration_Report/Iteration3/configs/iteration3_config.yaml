@@ -1,0 +1,44 @@
+pipeline:
+  base_path: ./docs/Iteration_Report/Iteration3
+  checkpoint_frequency: 10
+  created_at: '2025-09-10T21:56:16.715534'
+  error_tolerance: 0.1
+  iteration: 3
+  log_base_path: ./Iteration3/logs
+  output_base_path: ./Iteration3/results
+  parallel_workers: 5
+stages:
+  ectd:
+    batch_size: 20
+    cache_enabled: true
+    fallback_model: kimi-k2
+    force_primary_model: true
+    log_path: ./Iteration3/logs/ectd.log
+    model: gpt5-mini
+    output_path: ./Iteration3/results/ectd_output.json
+    temperature: 0.3
+  evaluation:
+    gold_standard: ./datasets/gold_standard.json
+    log_path: ./Iteration3/logs/evaluation.log
+    metrics:
+    - triple_match_f1
+    - graph_match_accuracy
+    - g_bleu
+    - g_rouge
+    - g_bert_score
+    report_output_path: ./Iteration3/reports/evaluation_report.json
+  graph_judge_phase:
+    confidence_threshold: 0.7
+    csv_output_path: ./Iteration3/results/judgment_results.csv
+    evidence_sources:
+    - source_text
+    - domain_knowledge
+    explainable_mode: true
+    log_path: ./Iteration3/logs/graph_judge.log
+    reasoning_output_path: ./Iteration3/results/judgment_reasoning.json
+  triple_generation:
+    log_path: ./Iteration3/logs/triple_generation.log
+    output_format: json
+    output_path: ./Iteration3/results/triples_output.json
+    relation_mapping: ./config/relation_map.json
+    validation_enabled: true

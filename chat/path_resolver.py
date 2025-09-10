@@ -36,9 +36,36 @@ class ManifestError(Exception):
     """Raised when manifest operations fail."""
     pass
 
+def find_project_root() -> Optional[Path]:
+    """
+    Find the project root directory by looking for characteristic files.
+    
+    This method is working-directory independent - it starts from the current
+    file's location and searches upward for project markers.
+    
+    Returns:
+        Path: Project root directory, or None if not found
+    """
+    # Start from this file's directory
+    current = Path(__file__).resolve().parent
+    
+    # Project markers that indicate the root directory
+    project_markers = ["README.md", "LICENSE", "config/pipeline_config.yaml"]
+    
+    # Search upward through parent directories
+    for parent in [current] + list(current.parents):
+        # Check if this directory contains project markers
+        if all((parent / marker).exists() for marker in project_markers[:2]):  # README + LICENSE
+            return parent
+    
+    return None
+
 def detect_dataset_base() -> Optional[str]:
     """
-    Auto-detect the dataset base directory by scanning for existing result directories.
+    Working-directory independent dataset base detection.
+    
+    Uses project root as reference point instead of relative paths,
+    eliminating the working directory dependency bug.
     
     Returns:
         str: The detected dataset base path, or None if not found
@@ -46,34 +73,41 @@ def detect_dataset_base() -> Optional[str]:
     Raises:
         PathResolutionError: If multiple conflicting bases are found
     """
-    # Search patterns for different model prefixes
-    search_patterns = [
-        "../datasets/*_result_DreamOf_RedChamber",
-        "datasets/*_result_DreamOf_RedChamber"
+    # Find project root first (working directory independent)
+    project_root = find_project_root()
+    if not project_root:
+        raise PathResolutionError(
+            "Cannot find project root directory. Expected to find README.md and LICENSE files."
+        )
+    
+    # Search for datasets in known locations relative to project root
+    search_locations = [
+        project_root / "datasets",
+        project_root / "chat" / "datasets"
     ]
     
     found_bases = set()
+    pattern = "*_result_DreamOf_RedChamber"
     
-    for pattern in search_patterns:
-        matches = glob.glob(pattern)
-        for match in matches:
-            # Extract the base pattern (e.g., "KIMI_result_", "GPT5mini_result_")
-            base_name = os.path.basename(match)
-            dataset_dir = os.path.dirname(os.path.abspath(match))
+    for search_dir in search_locations:
+        if not search_dir.exists():
+            continue
             
-            # Look for any Graph_Iteration directories to confirm this is active
-            iteration_dirs = glob.glob(os.path.join(match, "Graph_Iteration*"))
+        # Find matching dataset directories
+        matches = list(search_dir.glob(pattern))
+        for match in matches:
+            # Check if this directory has active iterations
+            iteration_dirs = list(match.glob("Graph_Iteration*"))
             if iteration_dirs:
-                found_bases.add((dataset_dir, base_name))
+                found_bases.add(str(match.resolve()))
     
     if len(found_bases) == 0:
         return None
     elif len(found_bases) == 1:
-        dataset_dir, base_name = list(found_bases)[0]
-        return os.path.join(dataset_dir, base_name)
+        return list(found_bases)[0]
     else:
-        # Multiple bases found - this is ambiguous
-        base_list = [f"{dataset_dir}/{base_name}" for dataset_dir, base_name in found_bases]
+        # Multiple bases found - provide helpful error
+        base_list = sorted(found_bases)
         raise PathResolutionError(
             f"Multiple dataset bases found: {base_list}. "
             f"Set PIPELINE_OUTPUT_DIR or PIPELINE_DATASET_PATH to disambiguate."
@@ -81,7 +115,9 @@ def detect_dataset_base() -> Optional[str]:
 
 def resolve_pipeline_output(iteration: int, create: bool = True) -> str:
     """
-    Resolve the output directory for a given iteration using the precedence order:
+    Working-directory independent output directory resolution.
+    
+    Uses the precedence order:
     1. PIPELINE_OUTPUT_DIR (explicit override)
     2. PIPELINE_DATASET_PATH + Graph_Iteration{iteration}
     3. Auto-detected dataset base + Graph_Iteration{iteration}
@@ -120,7 +156,7 @@ def resolve_pipeline_output(iteration: int, create: bool = True) -> str:
         
         return output_dir
     
-    # Priority 3: Auto-detect dataset base
+    # Priority 3: Auto-detect dataset base (now working-directory independent)
     try:
         dataset_base = detect_dataset_base()
         if dataset_base:
@@ -134,17 +170,22 @@ def resolve_pipeline_output(iteration: int, create: bool = True) -> str:
             
             return output_dir
     except PathResolutionError:
-        # Re-raise auto-detection errors
+        # Re-raise auto-detection errors with additional context
         raise
     
-    # Fallback: Default GPT5mini pattern
-    default_path = f"../datasets/GPT5mini_result_DreamOf_RedChamber/Graph_Iteration{iteration}"
-    output_dir = os.path.abspath(default_path)
-    
-    if create and not os.path.exists(output_dir):
-        os.makedirs(output_dir, exist_ok=True)
-    
-    return output_dir
+    # If all else fails, provide a helpful error message
+    project_root = find_project_root()
+    if project_root:
+        suggested_path = project_root / "datasets" / "KIMI_result_DreamOf_RedChamber"
+        raise PathResolutionError(
+            f"Cannot auto-detect dataset base. Please set PIPELINE_OUTPUT_DIR environment variable.\n"
+            f"Suggested value: {suggested_path / f'Graph_Iteration{iteration}'}"
+        )
+    else:
+        raise PathResolutionError(
+            "Cannot find project root or resolve output path. "
+            "Please set PIPELINE_OUTPUT_DIR environment variable."
+        )
 
 def load_manifest(directory: str) -> Optional[Dict]:
     """
