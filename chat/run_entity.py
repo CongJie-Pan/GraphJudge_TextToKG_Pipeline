@@ -717,6 +717,7 @@ async def main():
     
     # Step 1: Create output directory if it doesn't exist
     # Support output directory override through environment variables for pipeline integration
+    # This ensures consistency between run_entity.py (writer) and run_triple.py (reader)
     output_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Iteration}")
     os.makedirs(output_dir, exist_ok=True)
     get_logger().log(f"📁 Created output directory: {output_dir}")

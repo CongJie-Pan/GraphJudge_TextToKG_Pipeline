@@ -288,21 +288,27 @@ if __name__ == "__main__":
     # Initialize logger for data loading
     data_logger = TerminalProgressLogger()
     
+    # Support environment variable override for pipeline integration - consistent with run_entity.py
+    input_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Input_Iteration}")
+    data_logger.log(f"🔍 Using input directory: {os.path.abspath(input_dir)}")  # Debug: show absolute path
+    
     try:
-        with open(dataset_path + f'Graph_Iteration{Input_Iteration}/test_denoised.target', 'r', encoding='utf-8') as f:
+        denoised_file = os.path.join(input_dir, "test_denoised.target")
+        with open(denoised_file, 'r', encoding='utf-8') as f:
             text = [l.strip() for l in f.readlines()]
-        data_logger.log(f"✓ Loaded {len(text)} denoised text segments", "SUCCESS")
+        data_logger.log(f"✓ Loaded {len(text)} denoised text segments from: {denoised_file}", "SUCCESS")
     except FileNotFoundError:
-        data_logger.log(f"✗ Error: Could not find denoised text file at {dataset_path}Graph_Iteration{Input_Iteration}/test_denoised.target", "ERROR")
+        data_logger.log(f"✗ Error: Could not find denoised text file at {denoised_file}", "ERROR")
         data_logger.log("Please ensure the GPT-5-mini ECTD pipeline has been run successfully", "ERROR")
         exit(1)
 
     try:
-        with open(dataset_path + f'Graph_Iteration{Input_Iteration}/test_entity.txt', 'r', encoding='utf-8') as f:
+        entity_file = os.path.join(input_dir, "test_entity.txt")
+        with open(entity_file, 'r', encoding='utf-8') as f:
             entity = [l.strip() for l in f.readlines()]
-        data_logger.log(f"✓ Loaded {len(entity)} entity sets", "SUCCESS")
+        data_logger.log(f"✓ Loaded {len(entity)} entity sets from: {entity_file}", "SUCCESS")
     except FileNotFoundError:
-        data_logger.log(f"✗ Error: Could not find entity file at {dataset_path}Graph_Iteration{Input_Iteration}/test_entity.txt", "ERROR")
+        data_logger.log(f"✗ Error: Could not find entity file at {entity_file}", "ERROR")
         data_logger.log("Please ensure the GPT-5-mini ECTD pipeline has been run successfully", "ERROR")
         exit(1)
 
@@ -1022,9 +1028,12 @@ def validate_prerequisites():
         print(f"✗ API configuration error: {e}")
         return False
     
+    # Support environment variable override for pipeline integration - consistent with run_entity.py
+    input_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Input_Iteration}")
+    
     # Check input files existence
-    denoised_file = dataset_path + f'Graph_Iteration{Input_Iteration}/test_denoised.target'
-    entity_file = dataset_path + f'Graph_Iteration{Input_Iteration}/test_entity.txt'
+    denoised_file = os.path.join(input_dir, "test_denoised.target")
+    entity_file = os.path.join(input_dir, "test_entity.txt")
     
     if not os.path.exists(denoised_file):
         print(f"✗ Denoised text file not found: {denoised_file}")

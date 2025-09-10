@@ -168,4 +168,48 @@ if __name__ == "__main__":
     try:
         get_api_config()
     except ValueError:
-        exit(1) 
+        exit(1)
+
+
+# ==============================================================================
+# Pipeline Path Management Utilities
+# ==============================================================================
+
+def get_iteration_output_path(dataset_path: str, iteration: int) -> str:
+    """
+    Get the output path for a specific iteration.
+    
+    This function provides a centralized way to generate iteration output paths,
+    ensuring consistency between run_entity.py (writer) and run_triple.py (reader).
+    
+    Args:
+        dataset_path (str): Base dataset path
+        iteration (int): Iteration number
+        
+    Returns:
+        str: The output path for the iteration
+        
+    Note:
+        This function respects the PIPELINE_OUTPUT_DIR environment variable
+        when set by the CLI pipeline, ensuring proper integration.
+    """
+    # Support pipeline environment variable override for CLI integration
+    default_path = f"{dataset_path}Graph_Iteration{iteration}"
+    return os.environ.get('PIPELINE_OUTPUT_DIR', default_path)
+
+
+def get_iteration_input_path(dataset_path: str, iteration: int) -> str:
+    """
+    Get the input path for a specific iteration.
+    
+    This is typically the same as the output path, but separated for clarity
+    and potential future differentiation.
+    
+    Args:
+        dataset_path (str): Base dataset path  
+        iteration (int): Iteration number
+        
+    Returns:
+        str: The input path for the iteration
+    """
+    return get_iteration_output_path(dataset_path, iteration) 
