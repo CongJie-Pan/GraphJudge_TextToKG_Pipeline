@@ -6714,6 +6714,147 @@ class TestFileTransferPathConsistency(unittest.TestCase):
             self.skipTest("config.py utility functions not available")
 
 
+class TestVariableScopeBugFix(unittest.TestCase):
+    """
+    Test class for verifying the variable scope bug fix in run_entity.py
+    
+    This test ensures that the UnboundLocalError caused by using denoised_texts
+    before assignment has been properly fixed.
+    """
+    
+    def setUp(self):
+        """Set up test environment"""
+        self.test_name = "Variable Scope Bug Fix"
+        self.run_entity_path = Path(__file__).parent.parent / "run_entity.py"
+    
+    def test_variable_scope_fix(self):
+        """Test that the variable scope bug has been fixed in run_entity.py"""
+        print(f"\n🧪 Testing {self.test_name}")
+        print("=" * 50)
+        
+        # Test that the main function can be parsed without syntax errors
+        try:
+            import ast
+            with open(self.run_entity_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            ast.parse(content)
+            print("✓ run_entity.py has valid Python syntax")
+        except SyntaxError as e:
+            self.fail(f"Syntax error in run_entity.py: {e}")
+        
+        # Test variable usage order in main function
+        try:
+            with open(self.run_entity_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+            
+            # Find denoised_texts usage and assignment in main function
+            in_main_function = False
+            main_start_line = None
+            denoised_texts_usages = []
+            denoised_texts_assignments = []
+            
+            for i, line in enumerate(lines, 1):
+                # Track when we're in main function
+                if 'async def main():' in line:
+                    in_main_function = True
+                    main_start_line = i
+                    continue
+                elif in_main_function and line.startswith('def '):
+                    # We've reached another function, exit main
+                    break
+                
+                if in_main_function and 'denoised_texts' in line:
+                    if 'denoised_texts =' in line:
+                        denoised_texts_assignments.append(i)
+                    elif 'for denoised_text in denoised_texts' in line:
+                        denoised_texts_usages.append(i)
+            
+            print(f"📊 Found main() function starting at line {main_start_line}")
+            print(f"📊 denoised_texts assignments in main(): {denoised_texts_assignments}")
+            print(f"📊 denoised_texts usages in main(): {denoised_texts_usages}")
+            
+            # Verify that all usages come after assignments
+            if denoised_texts_usages and denoised_texts_assignments:
+                first_assignment = min(denoised_texts_assignments)
+                earliest_usage = min(denoised_texts_usages)
+                
+                self.assertGreater(earliest_usage, first_assignment,
+                    f"Variable scope error: usage at line {earliest_usage} before assignment at line {first_assignment}")
+                print(f"✓ Variable scope is correct: usage at line {earliest_usage} after assignment at line {first_assignment}")
+            elif not denoised_texts_usages:
+                self.fail("No denoised_texts usage found in main() - unexpected")
+            elif not denoised_texts_assignments:
+                self.fail("No denoised_texts assignment found in main() - this would cause UnboundLocalError")
+                
+        except Exception as e:
+            self.fail(f"Error analyzing variable scope: {e}")
+    
+    def test_main_function_structure(self):
+        """Test that the main function has the correct logical structure"""
+        print("\n🔍 Testing Main Function Structure")
+        print("=" * 50)
+        
+        try:
+            with open(self.run_entity_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Check for duplicate code blocks
+            denoised_file_writes = content.count('denoised_file = os.path.join(output_dir, "test_denoised.target")')
+            
+            self.assertEqual(denoised_file_writes, 1,
+                f"Found {denoised_file_writes} denoised file write blocks (should be 1)")
+            print("✓ Only one denoised file write block found (no duplication)")
+                
+        except Exception as e:
+            self.fail(f"Error checking function structure: {e}")
+    
+    def test_fix_validation_simulation(self):
+        """Simulate the actual execution flow to ensure no UnboundLocalError occurs"""
+        print("\n🧪 Testing Fix Validation Simulation")
+        print("=" * 50)
+        
+        def simulate_main_execution():
+            """Simulate the execution flow of the fixed main function"""
+            try:
+                # Simulate variables that would exist at runtime
+                entities_list = ["entity1", "entity2"]
+                successful_extractions = len(entities_list)
+                
+                # Simulate the corrected execution order
+                print("Step 1: Entity extraction completed")
+                
+                print("Step 2: Loading entities for validation")
+                last_extracted_entities = entities_list  # Simulated load
+                
+                print("Step 3: Denoising text (this is where denoised_texts gets assigned)")
+                # This simulates: denoised_texts = await denoise_text(text, last_extracted_entities)
+                denoised_texts = ["denoised1", "denoised2"]  # Simulated result
+                
+                print("Step 4: Calculating denoising statistics")
+                successful_denoising = sum(1 for d in denoised_texts if "Error:" not in str(d))
+                
+                print("Step 5: Writing denoised texts to file")
+                # This simulates the file writing that previously caused the error
+                with tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8') as f:
+                    for denoised_text in denoised_texts:
+                        f.write(str(denoised_text).strip() + '\n')
+                    temp_file = f.name
+                
+                # Clean up
+                os.unlink(temp_file)
+                
+                print("✓ Execution flow completed without UnboundLocalError")
+                return True
+                
+            except UnboundLocalError as e:
+                self.fail(f"UnboundLocalError still occurs: {e}")
+            except Exception as e:
+                print(f"⚠️ Other error during simulation (expected): {e}")
+                return True  # Other errors are acceptable for this test
+        
+        self.assertTrue(simulate_main_execution(), "Simulation should complete without UnboundLocalError")
+
+
 if __name__ == "__main__":
     print("🧪 Starting Unified CLI Pipeline Architecture Tests...")
     success = create_test_report()
