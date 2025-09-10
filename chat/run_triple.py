@@ -288,8 +288,31 @@ if __name__ == "__main__":
     # Initialize logger for data loading
     data_logger = TerminalProgressLogger()
     
-    # Support environment variable override for pipeline integration - consistent with run_entity.py
-    input_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Input_Iteration}")
+    # Use centralized path resolver to ensure consistency with run_entity.py
+    from path_resolver import resolve_pipeline_output, load_manifest, log_path_diagnostics
+    
+    # First try to load from manifest (highest priority)
+    input_dir = None
+    manifest = None
+    
+    # Check if PIPELINE_OUTPUT_DIR points to a directory with manifest
+    if 'PIPELINE_OUTPUT_DIR' in os.environ:
+        potential_dir = os.environ['PIPELINE_OUTPUT_DIR']
+        manifest = load_manifest(potential_dir)
+        if manifest and manifest.get('stage') == 'ectd':
+            input_dir = potential_dir
+            data_logger.log(f"📋 Using manifest from PIPELINE_OUTPUT_DIR: {input_dir}", "SUCCESS")
+    
+    # Fallback to path resolver
+    if input_dir is None:
+        input_dir = resolve_pipeline_output(Input_Iteration, create=False)
+        manifest = load_manifest(input_dir)
+        if manifest:
+            data_logger.log(f"📋 Found manifest in resolved directory: {input_dir}", "SUCCESS")
+        else:
+            data_logger.log(f"⚠️ No manifest found, using resolved directory: {input_dir}", "WARNING")
+    
+    log_path_diagnostics("triple_generation", Input_Iteration, input_dir)
     data_logger.log(f"🔍 Using input directory: {os.path.abspath(input_dir)}")  # Debug: show absolute path
     
     try:
@@ -1029,7 +1052,7 @@ def validate_prerequisites():
         return False
     
     # Support environment variable override for pipeline integration - consistent with run_entity.py
-    input_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Input_Iteration}")
+    input_dir = resolve_pipeline_output(Input_Iteration, create=False)
     
     # Check input files existence
     denoised_file = os.path.join(input_dir, "test_denoised.target")

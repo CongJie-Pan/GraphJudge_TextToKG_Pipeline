@@ -716,11 +716,12 @@ async def main():
     cache_misses = 0
     
     # Step 1: Create output directory if it doesn't exist
-    # Support output directory override through environment variables for pipeline integration
-    # This ensures consistency between run_entity.py (writer) and run_triple.py (reader)
-    output_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Iteration}")
-    os.makedirs(output_dir, exist_ok=True)
-    get_logger().log(f"📁 Created output directory: {output_dir}")
+    # Use centralized path resolver to ensure consistency with validation
+    from path_resolver import resolve_pipeline_output, write_manifest, log_path_diagnostics
+    
+    output_dir = resolve_pipeline_output(Iteration, create=True)
+    log_path_diagnostics("ectd", Iteration, output_dir)
+    get_logger().log(f"📁 Resolved output directory: {output_dir}")
     get_logger().log(f"📊 Using Iteration: {Iteration}, Dataset path: {dataset_path}")
     get_logger().log(f"🔍 Full output path: {os.path.abspath(output_dir)}")  # Debug: show absolute path
     
@@ -756,6 +757,41 @@ async def main():
     else:
         get_logger().log(f"❌ Entity file verification failed: file missing or empty")
         raise RuntimeError(f"Failed to write entity file: {entity_file}")
+    
+    # Save denoised texts to output file for use in subsequent processing steps
+    denoised_file = os.path.join(output_dir, "test_denoised.target")
+    with open(denoised_file, "w", encoding='utf-8') as output_file:
+        for denoised_text in denoised_texts:
+            # Clean and save each denoised text (remove excessive newlines)
+            output_file.write(str(denoised_text).strip().replace('\n\n', '\n') + '\n')
+        # Ensure data is written to disk immediately
+        output_file.flush()
+        os.fsync(output_file.fileno())
+    get_logger().log(f"✓ Denoised texts saved to: {denoised_file}")
+    
+    # Verify the denoised file was actually written with content
+    if os.path.exists(denoised_file) and os.path.getsize(denoised_file) > 0:
+        get_logger().log(f"✓ Denoised file verification passed: {os.path.getsize(denoised_file)} bytes")
+    else:
+        get_logger().log(f"❌ Denoised file verification failed: file missing or empty")
+        raise RuntimeError(f"Failed to write denoised file: {denoised_file}")
+    
+    # Write path manifest for stage validation and next stage consumption
+    created_files = ["test_entity.txt", "test_denoised.target"]
+    manifest_metadata = {
+        "successful_extractions": successful_extractions,
+        "total_texts": len(entities_list),
+        "successful_denoising": successful_denoising,
+        "entity_file_size": os.path.getsize(entity_file),
+        "denoised_file_size": os.path.getsize(denoised_file)
+    }
+    
+    try:
+        manifest_path = write_manifest(output_dir, "ectd", Iteration, created_files, manifest_metadata)
+        get_logger().log(f"✓ Path manifest written to: {manifest_path}")
+    except Exception as e:
+        get_logger().log(f"⚠️ Warning: Could not write path manifest: {e}")
+        # Continue execution - manifest is helpful but not critical
     
     # Step 2: Load the saved entities back from file for validation
     last_extracted_entities = []
@@ -850,8 +886,8 @@ def validate_prerequisites():
     
     # Check if output directory can be created
     try:
-        output_dir = os.environ.get('PIPELINE_OUTPUT_DIR', dataset_path + f"Graph_Iteration{Iteration}")
-        os.makedirs(output_dir, exist_ok=True)
+        from path_resolver import resolve_pipeline_output
+        output_dir = resolve_pipeline_output(Iteration, create=True)
     except Exception as e:
         if logger:
             get_logger().log(f"✗ Cannot create output directory: {e}")

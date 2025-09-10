@@ -387,10 +387,20 @@ if __name__ == "__main__":
             
             # Unified output directory configuration based on original scripts
             if stage_name == "ectd":
-                # Match run_entity.py expected output structure
-                dataset_base = "../datasets/KIMI_result_DreamOf_RedChamber/"
-                env['PIPELINE_OUTPUT_DIR'] = f"{dataset_base}Graph_Iteration{iteration}"
-                env['ECTD_OUTPUT_DIR'] = f"{dataset_base}Graph_Iteration{iteration}"
+                # Use centralized path resolver to eliminate hardcoded dataset prefixes
+                try:
+                    import sys
+                    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+                    from path_resolver import resolve_pipeline_output
+                    resolved_output = resolve_pipeline_output(iteration, create=True)
+                    env['PIPELINE_OUTPUT_DIR'] = resolved_output
+                    env['ECTD_OUTPUT_DIR'] = resolved_output  # Backward compatibility
+                except Exception as e:
+                    print(f"Warning: Path resolution failed, using legacy method: {e}")
+                    # Fallback to legacy hardcoded path
+                    dataset_base = "../datasets/KIMI_result_DreamOf_RedChamber/"
+                    env['PIPELINE_OUTPUT_DIR'] = f"{dataset_base}Graph_Iteration{iteration}"
+                    env['ECTD_OUTPUT_DIR'] = f"{dataset_base}Graph_Iteration{iteration}"
                 # Also set the iteration path for backward compatibility
                 env['PIPELINE_ITERATION_PATH'] = iteration_path
             elif stage_name == "triple_generation":
@@ -420,76 +430,101 @@ if __name__ == "__main__":
         expected_files = []
         
         if stage_name == "ectd":
-            # Get primary and legacy output directories
-            primary_output_dir = env.get('ECTD_OUTPUT_DIR', env.get('PIPELINE_OUTPUT_DIR', ''))
-            legacy_output_dir = os.path.join(env.get('PIPELINE_ITERATION_PATH', ''), "results", "ectd")
-            
-            # Also check the actual working directory where run_entity.py puts files
-            current_working_dir = os.getcwd()
-            actual_output_locations = [
-                os.path.join(current_working_dir, "../datasets/KIMI_result_DreamOf_RedChamber", f"Graph_Iteration{env.get('PIPELINE_ITERATION', '1')}"),
-                primary_output_dir,
-                legacy_output_dir
-            ]
-            
-            # Normalize paths consistently - preserve relative paths if they were relative
-            normalized_locations = []
-            for location in actual_output_locations:
-                if location:
-                    if os.path.isabs(location):
-                        normalized_locations.append(os.path.normpath(location))
-                    else:
-                        # Convert relative to absolute for better checking
-                        normalized_locations.append(os.path.abspath(os.path.normpath(location)))
-            
-            # Add delay to ensure file system operations complete
-            import time
-            time.sleep(0.5)  # 500ms buffer for file system operations
-            
-            # Check all potential locations
-            file_found = False
-            working_location = None
-            
-            for location in normalized_locations:
-                if not location:
-                    continue
+            # Enhanced validation using manifest-first approach
+            try:
+                import sys
+                sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+                from path_resolver import load_manifest, validate_manifest_files
+                
+                # Try to load manifest first (highest priority)
+                primary_output_dir = env.get('ECTD_OUTPUT_DIR', env.get('PIPELINE_OUTPUT_DIR', ''))
+                manifest = None
+                working_location = None
+                
+                if primary_output_dir:
+                    manifest = load_manifest(primary_output_dir)
+                    if manifest and manifest.get('stage') == 'ectd':
+                        is_valid, missing = validate_manifest_files(primary_output_dir, manifest)
+                        if is_valid:
+                            working_location = primary_output_dir
+                            expected_files = [os.path.join(primary_output_dir, f) for f in manifest.get('files', [])]
+                            print(f"✅ Found valid manifest in: {primary_output_dir}")
+                
+                if not working_location:
+                    # Fallback to legacy multi-location checking
+                    legacy_output_dir = os.path.join(env.get('PIPELINE_ITERATION_PATH', ''), "results", "ectd")
                     
-                files_to_check = [
-                    os.path.join(location, "test_entity.txt"),
-                    os.path.join(location, "test_denoised.target")
-                ]
+                    # Also check the actual working directory where run_entity.py puts files
+                    current_working_dir = os.getcwd()
+                    actual_output_locations = [
+                        os.path.join(current_working_dir, "../datasets/KIMI_result_DreamOf_RedChamber", f"Graph_Iteration{env.get('PIPELINE_ITERATION', '1')}"),
+                        primary_output_dir,
+                        legacy_output_dir
+                    ]
+                    
+                    # Normalize paths consistently - preserve relative paths if they were relative
+                    normalized_locations = []
+                    for location in actual_output_locations:
+                        if location:
+                            if os.path.isabs(location):
+                                normalized_locations.append(os.path.normpath(location))
+                            else:
+                                # Convert relative to absolute for better checking
+                                normalized_locations.append(os.path.abspath(os.path.normpath(location)))
+                    
+                    # Add delay to ensure file system operations complete
+                    import time
+                    time.sleep(0.5)  # 500ms buffer for file system operations
+                    
+                    # Check all potential locations
+                    file_found = False
+                    
+                    for location in normalized_locations:
+                        if not location:
+                            continue
+                            
+                        files_to_check = [
+                            os.path.join(location, "test_entity.txt"),
+                            os.path.join(location, "test_denoised.target")
+                        ]
+                        
+                        print(f"🔍 Checking location: {location}")
+                        location_files_exist = True
+                        for f in files_to_check:
+                            exists = os.path.exists(f)
+                            size = os.path.getsize(f) if exists else 0
+                            print(f"   {'✓' if exists and size > 0 else '✗'} {os.path.basename(f)} ({'exists' if exists else 'missing'}, {size} bytes)")
+                            if not exists or size == 0:
+                                location_files_exist = False
+                        
+                        if location_files_exist:
+                            expected_files = files_to_check
+                            working_location = location
+                            file_found = True
+                            print(f"✅ Found all output files in location: {location}")
+                            break
+                    
+                    if not file_found:
+                        print(f"❌ Output files not found in any checked locations:")
+                        for i, location in enumerate(normalized_locations):
+                            if location:
+                                label = ["Actual", "Primary", "Legacy"][i] if i < 3 else f"Location {i+1}"
+                                print(f"   {label}: {location}")
+                        print(f"   Note: Files must exist AND have non-zero size")
+                        return False
                 
-                print(f"🔍 Checking location: {location}")
-                location_files_exist = True
-                for f in files_to_check:
-                    exists = os.path.exists(f)
-                    size = os.path.getsize(f) if exists else 0
-                    print(f"   {'✓' if exists and size > 0 else '✗'} {os.path.basename(f)} ({'exists' if exists else 'missing'}, {size} bytes)")
-                    if not exists or size == 0:
-                        location_files_exist = False
+                # Update environment with working location for next stages
+                if working_location:
+                    env['VALIDATED_ECTD_OUTPUT_DIR'] = working_location
+                    # Store in pipeline state for subsequent stages
+                    self.pipeline_environment_state['VALIDATED_ECTD_OUTPUT_DIR'] = working_location
+                    print(f"🔗 Stored validated ECTD output path for next stages: {working_location}")
+                    return True
                 
-                if location_files_exist:
-                    expected_files = files_to_check
-                    working_location = location
-                    file_found = True
-                    print(f"✅ Found all output files in location: {location}")
-                    break
-            
-            if not file_found:
-                print(f"❌ Output files not found in any checked locations:")
-                for i, location in enumerate(normalized_locations):
-                    if location:
-                        label = ["Actual", "Primary", "Legacy"][i] if i < 3 else f"Location {i+1}"
-                        print(f"   {label}: {location}")
-                print(f"   Note: Files must exist AND have non-zero size")
-                return False
-                
-            # Update environment with working location for next stages
-            if working_location:
-                env['VALIDATED_ECTD_OUTPUT_DIR'] = working_location
-                # Store in pipeline state for subsequent stages
-                self.pipeline_environment_state['VALIDATED_ECTD_OUTPUT_DIR'] = working_location
-                print(f"🔗 Stored validated ECTD output path for next stages: {working_location}")
+            except Exception as e:
+                print(f"Warning: Enhanced validation failed, falling back to legacy: {e}")
+                # Fall through to legacy validation logic below
+                pass
                 
         elif stage_name == "triple_generation":
             # Use validated ECTD output directory if available, otherwise fall back to configured paths
