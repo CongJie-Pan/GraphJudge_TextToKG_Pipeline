@@ -5,9 +5,6 @@ This script implements a two-stage text processing pipeline optimized for Chines
 1. Entity Extraction: Identifies and extracts key entities from classical Chinese text using GPT-5-mini
 2. Text Denoising: Restructures and cleans the original text based on extracted entities
 
-The pipeline is specifically designed for Dream of the Red Chamber (紅樓夢) text processing,
-leveraging GPT-5-mini's advanced Chinese language understanding and reasoning capabilities.
-
 Key improvements over previous versions:
 - Enhanced Chinese text understanding with GPT-5-mini model
 - Optimized prompts for classical Chinese literature
