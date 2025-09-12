@@ -172,8 +172,8 @@ class TestApiConfiguration:
         """Test fallback to standard OpenAI when Azure not available."""
         with patch.dict(os.environ, {
             'OPENAI_API_KEY': 'openai-key-789'
-        }):
-            api_key, api_base = get_api_config()
+        }, clear=True):
+            api_key, api_base = get_api_config(load_env=False)
             
             assert api_key == 'openai-key-789'
             assert api_base is None  # Default endpoint
@@ -183,8 +183,8 @@ class TestApiConfiguration:
         with patch.dict(os.environ, {
             'OPENAI_API_KEY': 'openai-key-custom',
             'OPENAI_API_BASE': 'https://custom.openai.endpoint/'
-        }):
-            api_key, api_base = get_api_config()
+        }, clear=True):
+            api_key, api_base = get_api_config(load_env=False)
             
             assert api_key == 'openai-key-custom'
             assert api_base == 'https://custom.openai.endpoint/'
@@ -193,16 +193,16 @@ class TestApiConfiguration:
         """Test error when no API credentials are provided."""
         with patch.dict(os.environ, {}, clear=True):
             with pytest.raises(ValueError, match="No valid API configuration found"):
-                get_api_config()
+                get_api_config(load_env=False)
     
     def test_get_api_config_azure_incomplete(self):
         """Test Azure config with missing endpoint."""
         with patch.dict(os.environ, {
             'AZURE_OPENAI_KEY': 'azure-key-only'
             # Missing AZURE_OPENAI_ENDPOINT
-        }):
+        }, clear=True):
             with pytest.raises(ValueError, match="No valid API configuration found"):
-                get_api_config()
+                get_api_config(load_env=False)
     
     def test_get_api_config_with_load_env_file(self):
         """Test that get_api_config loads .env file."""
@@ -296,8 +296,8 @@ class TestEnvironmentVariableHandling:
         """Test handling of whitespace in environment variables."""
         with patch.dict(os.environ, {
             'OPENAI_API_KEY': '  test-key-with-spaces  '
-        }):
-            api_key, _ = get_api_config()
+        }, clear=True):
+            api_key, _ = get_api_config(load_env=False)
             # Config should handle whitespace properly
             assert api_key == '  test-key-with-spaces  '  # Current implementation preserves spaces
     
@@ -307,17 +307,29 @@ class TestEnvironmentVariableHandling:
             'OPENAI_API_KEY': '',
             'AZURE_OPENAI_KEY': '   ',  # Whitespace only
             'AZURE_OPENAI_ENDPOINT': ''
-        }):
+        }, clear=True):
             with pytest.raises(ValueError, match="No valid API configuration found"):
-                get_api_config()
+                get_api_config(load_env=False)
     
     def test_case_sensitivity(self):
         """Test that environment variable names are case sensitive."""
-        with patch.dict(os.environ, {
-            'openai_api_key': 'lowercase-key'  # Wrong case
-        }):
-            with pytest.raises(ValueError, match="No valid API configuration found"):
-                get_api_config()
+        import platform
+        
+        if platform.system() == 'Windows':
+            # Windows environment variables are case-insensitive, so this test
+            # will actually work and find the key
+            with patch.dict(os.environ, {
+                'openai_api_key': 'lowercase-key'  # This becomes OPENAI_API_KEY on Windows
+            }, clear=True):
+                api_key, _ = get_api_config(load_env=False)
+                assert api_key == 'lowercase-key'  # Should find the key on Windows
+        else:
+            # On Unix systems, environment variables are case-sensitive
+            with patch.dict(os.environ, {
+                'openai_api_key': 'lowercase-key'  # Wrong case
+            }, clear=True):
+                with pytest.raises(ValueError, match="No valid API configuration found"):
+                    get_api_config(load_env=False)
 
 
 # Integration tests
@@ -326,52 +338,22 @@ class TestConfigurationIntegration:
     
     def test_full_configuration_workflow(self):
         """Test complete configuration loading workflow."""
-        # Create temporary .env file
-        env_content = """
-OPENAI_API_KEY=integration-test-key
-OPENAI_API_BASE=https://integration.test.com/v1
-"""
-        
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.env', delete=False) as f:
-            f.write(env_content)
-            temp_path = Path(f.name)
-        
-        try:
-            # Clear environment
-            env_vars = ['OPENAI_API_KEY', 'OPENAI_API_BASE']
-            for var in env_vars:
-                if var in os.environ:
-                    del os.environ[var]
+        # Test the full configuration workflow with clean environment
+        with patch.dict(os.environ, {
+            'OPENAI_API_KEY': 'integration-test-key',
+            'OPENAI_API_BASE': 'https://integration.test.com/v1'
+        }, clear=True):
+            # Test all configuration functions together
+            api_key = get_api_key(load_env=False)
+            api_key_full, api_base_full = get_api_config(load_env=False)
+            model_config = get_model_config()
             
-            # Mock the path search to find our temp file
-            with patch('core.config.Path') as mock_path:
-                mock_current = mock_path(__file__).parent
-                # Mock path exists behavior
-                temp_path.exists.return_value = True
-                
-                with patch('core.config._load_env_from_path') as mock_load:
-                    # Manually set environment vars to simulate successful loading
-                    os.environ['OPENAI_API_KEY'] = 'integration-test-key'
-                    os.environ['OPENAI_API_BASE'] = 'https://integration.test.com/v1'
-                    
-                    # Test the full configuration workflow
-                    api_key = get_api_key()
-                    api_key_full, api_base_full = get_api_config()
-                    model_config = get_model_config()
-                    
-                    # Verify results
-                    assert api_key == 'integration-test-key'
-                    assert api_key_full == 'integration-test-key'
-                    assert api_base_full == 'https://integration.test.com/v1'
-                    assert isinstance(model_config, dict)
-                    assert len(model_config) == 7  # Expected number of config keys
-                    
-        finally:
-            # Cleanup
-            temp_path.unlink()
-            for var in env_vars:
-                if var in os.environ:
-                    del os.environ[var]
+            # Verify results
+            assert api_key == 'integration-test-key'
+            assert api_key_full == 'integration-test-key'
+            assert api_base_full == 'https://integration.test.com/v1'
+            assert isinstance(model_config, dict)
+            assert len(model_config) == 7  # Expected number of config keys
 
 
 class TestErrorMessages:
@@ -381,7 +363,7 @@ class TestErrorMessages:
         """Test that error messages are helpful for users."""
         with patch.dict(os.environ, {}, clear=True):
             try:
-                get_api_config()
+                get_api_config(load_env=False)
                 pytest.fail("Should have raised ValueError")
             except ValueError as e:
                 error_msg = str(e)

@@ -65,9 +65,12 @@ def _load_env_from_path(env_path: Path) -> None:
         pass  # Silently continue if file can't be read
 
 
-def get_api_config() -> Tuple[Optional[str], Optional[str]]:
+def get_api_config(load_env: bool = True) -> Tuple[Optional[str], Optional[str]]:
     """
     Get API configuration with simplified logic.
+    
+    Args:
+        load_env: Whether to load environment file (can be disabled for testing)
     
     Returns:
         Tuple of (api_key, api_base) where api_base may be None for default OpenAI endpoint
@@ -75,21 +78,23 @@ def get_api_config() -> Tuple[Optional[str], Optional[str]]:
     Raises:
         ValueError: If no valid API key is found
     """
-    # Load environment variables
-    load_env_file()
+    # Load environment variables (optional for testing)
+    if load_env:
+        load_env_file()
     
     # Try Azure OpenAI first (priority from original config)
     azure_key = os.getenv('AZURE_OPENAI_KEY')
     azure_endpoint = os.getenv('AZURE_OPENAI_ENDPOINT')
     
-    if azure_key and azure_endpoint:
+    # Check for valid non-empty values
+    if azure_key and azure_key.strip() and azure_endpoint and azure_endpoint.strip():
         return azure_key, azure_endpoint
     
     # Fall back to standard OpenAI
     openai_key = os.getenv('OPENAI_API_KEY')
     openai_base = os.getenv('OPENAI_API_BASE')  # Usually None for default endpoint
     
-    if openai_key:
+    if openai_key and openai_key.strip():
         return openai_key, openai_base
     
     # No valid configuration found
@@ -100,9 +105,12 @@ def get_api_config() -> Tuple[Optional[str], Optional[str]]:
     )
 
 
-def get_api_key() -> str:
+def get_api_key(load_env: bool = True) -> str:
     """
     Get just the API key, compatible with original chat/config.py interface.
+    
+    Args:
+        load_env: Whether to load environment file (can be disabled for testing)
     
     Returns:
         API key string
@@ -110,7 +118,7 @@ def get_api_key() -> str:
     Raises:
         ValueError: If no valid API key is found
     """
-    api_key, _ = get_api_config()
+    api_key, _ = get_api_config(load_env=load_env)
     if not api_key:
         raise ValueError("No API key found in configuration")
     return api_key
