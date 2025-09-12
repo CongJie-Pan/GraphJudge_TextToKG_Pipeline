@@ -16,7 +16,14 @@ import time
 from typing import Optional, Dict, Any
 from litellm import completion
 
-from ..core.config import get_api_config, get_model_config, GPT5_MINI_MODEL, PERPLEXITY_MODEL
+try:
+    from ..core.config import get_api_config, get_model_config, GPT5_MINI_MODEL, PERPLEXITY_MODEL
+except ImportError:
+    # For direct execution or testing
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    from core.config import get_api_config, get_model_config, GPT5_MINI_MODEL, PERPLEXITY_MODEL
 
 
 class APIClient:

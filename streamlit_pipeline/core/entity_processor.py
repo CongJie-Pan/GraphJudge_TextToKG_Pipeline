@@ -23,8 +23,16 @@ Preserved capabilities:
 import time
 from typing import List, Optional
 
-from .models import EntityResult, ProcessingTimer, create_error_result
-from ..utils.api_client import call_gpt5_mini
+try:
+    from .models import EntityResult, ProcessingTimer, create_error_result
+    from ..utils.api_client import call_gpt5_mini
+except ImportError:
+    # For direct execution or testing
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    from core.models import EntityResult, ProcessingTimer, create_error_result
+    from utils.api_client import call_gpt5_mini
 
 
 def extract_entities(text: str) -> EntityResult:
@@ -41,6 +49,13 @@ def extract_entities(text: str) -> EntityResult:
     Returns:
         EntityResult containing extracted entities, denoised text, and metadata
     """
+    if text is None:
+        return create_error_result(
+            EntityResult,
+            "Input text is None",
+            0.0
+        )
+    
     if not text or not text.strip():
         return create_error_result(
             EntityResult,

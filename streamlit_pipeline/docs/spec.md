@@ -537,6 +537,12 @@ The choice of Streamlit and direct script integration is a pragmatic trade-off, 
 -   **Performance:** Comparable processing speed with reduced overhead
 -   **Error Handling:** Graceful error reporting without complex retry mechanisms
 
+**Task Completion Requirements:**
+-   **Unit Test Execution:** All unit tests must pass before marking task as complete
+-   **Integration Testing:** Module must integrate correctly with existing components
+-   **Debugging Completion:** All identified bugs and issues must be resolved
+-   **Task Documentation:** Task status must be updated in TASK.md only after all testing is complete
+
 **Functional Requirements:**
 -   Successful entity extraction from Chinese text using GPT-5-mini
 -   Triple generation with JSON schema validation
@@ -566,6 +572,12 @@ The choice of Streamlit and direct script integration is a pragmatic trade-off, 
 - Faster iteration cycles due to reduced complexity
 - Easier debugging with simplified data flow
 - Improved testability with clean module interfaces
+
+**Quality Assurance:**
+- All unit tests pass consistently across different environments
+- Integration tests validate module interactions
+- Comprehensive debugging ensures production-ready code
+- Task completion requires verified testing before status update
 
 ## 20) Glossary, References, Change Log
 
