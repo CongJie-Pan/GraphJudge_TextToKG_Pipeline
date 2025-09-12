@@ -190,7 +190,8 @@ class TestEntityProcessor:
         assert isinstance(result, EntityResult)
         assert result.success is False
         assert result.error is not None
-        assert "empty" in result.error.lower() or "none" in result.error.lower()
+        # Updated to match new user-friendly error message
+        assert "no input text provided" in result.error.lower()
 
     # Internal function tests for comprehensive coverage
     

@@ -47,7 +47,8 @@ class TestAPIClientInitialization:
     
     def test_api_client_initialization(self):
         """Test that APIClient initializes with proper configuration."""
-        with patch('utils.api_client.get_model_config') as mock_config:
+        # Mock the imported function in the actual module location
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "entity_model": "gpt-5-mini",
                 "temperature": 0.0,
@@ -77,7 +78,7 @@ class TestRateLimiting:
     
     def test_rate_limiting_delay(self):
         """Test that rate limiting adds proper delays between requests."""
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -102,7 +103,7 @@ class TestRateLimiting:
     
     def test_rate_limiting_updates_last_request_time(self):
         """Test that rate limiting updates the last request time."""
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {"max_retries": 3}
             
             client = APIClient()
@@ -116,7 +117,7 @@ class TestRateLimiting:
 class TestGPT5MiniAPICalls:
     """Test GPT-5-mini API calls."""
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_call_gpt5_mini_success(self, mock_completion):
         """Test successful GPT-5-mini API call."""
         # Setup mock response
@@ -125,7 +126,7 @@ class TestGPT5MiniAPICalls:
         mock_response.choices[0].message.content = "Test response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -143,7 +144,7 @@ class TestGPT5MiniAPICalls:
             call_args = mock_completion.call_args
             assert call_args[1]['model'] == GPT5_MINI_MODEL
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_call_gpt5_mini_with_system_prompt(self, mock_completion):
         """Test GPT-5-mini call with system prompt."""
         mock_response = Mock()
@@ -151,7 +152,7 @@ class TestGPT5MiniAPICalls:
         mock_response.choices[0].message.content = "Test response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -176,7 +177,7 @@ class TestGPT5MiniAPICalls:
             assert messages[1]['role'] == 'user'
             assert messages[1]['content'] == "Test prompt"
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_call_gpt5_mini_with_custom_parameters(self, mock_completion):
         """Test GPT-5-mini call with custom temperature and max_tokens."""
         mock_response = Mock()
@@ -184,7 +185,7 @@ class TestGPT5MiniAPICalls:
         mock_response.choices[0].message.content = "Test response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -210,7 +211,7 @@ class TestGPT5MiniAPICalls:
 class TestPerplexityAPICalls:
     """Test Perplexity API calls."""
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_call_perplexity_success(self, mock_completion):
         """Test successful Perplexity API call."""
         mock_response = Mock()
@@ -218,7 +219,7 @@ class TestPerplexityAPICalls:
         mock_response.choices[0].message.content = "Perplexity response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -236,7 +237,7 @@ class TestPerplexityAPICalls:
             call_args = mock_completion.call_args
             assert call_args[1]['model'] == PERPLEXITY_MODEL
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_call_perplexity_with_system_prompt(self, mock_completion):
         """Test Perplexity call with system prompt."""
         mock_response = Mock()
@@ -244,7 +245,7 @@ class TestPerplexityAPICalls:
         mock_response.choices[0].message.content = "Judgment response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -271,8 +272,8 @@ class TestPerplexityAPICalls:
 class TestErrorHandling:
     """Test error handling and retry logic."""
     
-    @patch('utils.api_client.completion')
-    @patch('utils.api_client.time.sleep')  # Mock sleep to speed up tests
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.time.sleep')  # Mock sleep to speed up tests
     def test_retry_on_api_failure(self, mock_sleep, mock_completion):
         """Test that API calls are retried on failure."""
         # Configure mock to fail twice, then succeed
@@ -286,7 +287,7 @@ class TestErrorHandling:
             mock_response  # Third attempt succeeds
         ]
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -301,13 +302,13 @@ class TestErrorHandling:
             assert mock_completion.call_count == 3
             assert mock_sleep.call_count == 2  # Two sleeps between 3 attempts
     
-    @patch('utils.api_client.completion')
-    @patch('utils.api_client.time.sleep')
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.time.sleep')
     def test_exhaust_all_retries(self, mock_sleep, mock_completion):
         """Test that exception is raised when all retries are exhausted."""
         mock_completion.side_effect = Exception("Persistent failure")
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -324,8 +325,8 @@ class TestErrorHandling:
             assert mock_completion.call_count == 3
             assert mock_sleep.call_count == 2
     
-    @patch('utils.api_client.completion')
-    @patch('utils.api_client.time.sleep')
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.time.sleep')
     def test_exponential_backoff(self, mock_sleep, mock_completion):
         """Test that retry delays follow exponential backoff pattern."""
         mock_completion.side_effect = [
@@ -334,7 +335,7 @@ class TestErrorHandling:
             Exception("Failure 3")
         ]
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -353,7 +354,7 @@ class TestErrorHandling:
     
     def test_api_configuration_error_handling(self):
         """Test handling of configuration errors."""
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.side_effect = Exception("Configuration error")
             
             with pytest.raises(Exception):
@@ -363,7 +364,7 @@ class TestErrorHandling:
 class TestConvenienceFunctions:
     """Test module-level convenience functions."""
     
-    @patch('utils.api_client.get_api_client')
+    @patch('streamlit_pipeline.utils.api_client.get_api_client')
     def test_call_gpt5_mini_convenience(self, mock_get_client):
         """Test call_gpt5_mini convenience function."""
         mock_client = Mock()
@@ -377,7 +378,7 @@ class TestConvenienceFunctions:
             "Test prompt", "Test system"
         )
     
-    @patch('utils.api_client.get_api_client')
+    @patch('streamlit_pipeline.utils.api_client.get_api_client')
     def test_call_perplexity_convenience(self, mock_get_client):
         """Test call_perplexity convenience function."""
         mock_client = Mock()
@@ -399,7 +400,7 @@ class TestConvenienceFunctions:
 class TestAPIClientIntegration:
     """Integration tests with actual configuration."""
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_full_api_call_flow(self, mock_completion):
         """Test complete API call flow with real configuration loading."""
         mock_response = Mock()
@@ -425,7 +426,7 @@ class TestAPIClientIntegration:
 class TestEdgeCases:
     """Test edge cases and boundary conditions."""
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_empty_prompt_handling(self, mock_completion):
         """Test handling of empty prompts."""
         mock_response = Mock()
@@ -433,7 +434,7 @@ class TestEdgeCases:
         mock_response.choices[0].message.content = "Empty prompt response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -451,7 +452,7 @@ class TestEdgeCases:
             messages = call_args[1]['messages']
             assert messages[-1]['content'] == ""
     
-    @patch('utils.api_client.completion')
+    @patch('streamlit_pipeline.utils.api_client.completion')
     def test_very_long_prompt_handling(self, mock_completion):
         """Test handling of very long prompts."""
         mock_response = Mock()
@@ -459,7 +460,7 @@ class TestEdgeCases:
         mock_response.choices[0].message.content = "Long prompt response"
         mock_completion.return_value = mock_response
         
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -475,7 +476,7 @@ class TestEdgeCases:
     
     def test_zero_max_retries(self):
         """Test behavior when max_retries is set to 0."""
-        with patch('utils.api_client.get_model_config') as mock_config:
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
             mock_config.return_value = {
                 "temperature": 0.0,
                 "max_tokens": 4000,
@@ -483,7 +484,7 @@ class TestEdgeCases:
                 "max_retries": 0
             }
             
-            with patch('utils.api_client.completion') as mock_completion:
+            with patch('streamlit_pipeline.utils.api_client.completion') as mock_completion:
                 mock_completion.side_effect = Exception("API failure")
                 
                 client = APIClient()

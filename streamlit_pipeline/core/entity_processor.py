@@ -26,6 +26,7 @@ from typing import List, Optional
 try:
     from .models import EntityResult, ProcessingTimer, create_error_result
     from ..utils.api_client import call_gpt5_mini
+    from ..utils.error_handling import ErrorHandler, ErrorType, safe_execute, get_logger
 except ImportError:
     # For direct execution or testing
     import sys
@@ -33,6 +34,7 @@ except ImportError:
     sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
     from core.models import EntityResult, ProcessingTimer, create_error_result
     from utils.api_client import call_gpt5_mini
+    from utils.error_handling import ErrorHandler, ErrorType, safe_execute, get_logger
 
 
 def extract_entities(text: str) -> EntityResult:
@@ -43,48 +45,100 @@ def extract_entities(text: str) -> EntityResult:
     and text denoising in a single operation, following the spec.md
     requirement for clean function interfaces.
     
+    Enhanced with comprehensive error handling following spec.md Section 10.
+    
     Args:
         text: Input Chinese text to process
         
     Returns:
-        EntityResult containing extracted entities, denoised text, and metadata
+        EntityResult containing extracted entities, denoised text, and metadata.
+        Errors are returned as data, never raised as exceptions.
     """
+    logger = get_logger()
+    logger.info("Starting entity extraction", stage="entity_extraction")
+    
+    # Input validation with user-friendly errors
     if text is None:
-        return create_error_result(
-            EntityResult,
-            "Input text is None",
-            0.0
+        error_info = ErrorHandler.create_error(
+            ErrorType.INPUT_VALIDATION,
+            message="No input text provided",
+            stage="entity_extraction"
+        )
+        logger.error("Input validation failed: text is None", stage="entity_extraction")
+        return EntityResult(
+            entities=[],
+            denoised_text="",
+            success=False,
+            processing_time=0.0,
+            error=error_info.message
         )
     
     if not text or not text.strip():
-        return create_error_result(
-            EntityResult,
-            "Input text is empty or contains only whitespace",
-            0.0
+        error_info = ErrorHandler.create_error(
+            ErrorType.INPUT_VALIDATION,
+            message="Input text is empty or contains only whitespace",
+            stage="entity_extraction"
+        )
+        logger.error("Input validation failed: empty text", stage="entity_extraction")
+        return EntityResult(
+            entities=[],
+            denoised_text="",
+            success=False,
+            processing_time=0.0,
+            error=error_info.message
         )
     
     with ProcessingTimer() as timer:
-        try:
-            # Step 1: Extract entities
-            entities = _extract_entities_from_text(text)
-            
-            # Step 2: Denoise text using extracted entities
-            denoised_text = _denoise_text_with_entities(text, entities)
-            
+        # Use safe_execute for error handling
+        result, error_info = safe_execute(
+            _extract_entities_pipeline,
+            text,
+            logger=logger,
+            stage="entity_extraction"
+        )
+        
+        if error_info:
+            logger.error(f"Entity extraction failed: {error_info.message}", stage="entity_extraction")
             return EntityResult(
-                entities=entities,
-                denoised_text=denoised_text,
-                success=True,
+                entities=[],
+                denoised_text="",
+                success=False,
                 processing_time=timer.elapsed,
-                error=None
+                error=error_info.message
             )
-            
-        except Exception as e:
-            return create_error_result(
-                EntityResult,
-                f"Entity processing failed: {str(e)}",
-                timer.elapsed
-            )
+        
+        logger.info(f"Entity extraction completed successfully in {timer.elapsed:.2f}s", 
+                   stage="entity_extraction", 
+                   extra={"entity_count": len(result[0]), "processing_time": timer.elapsed})
+        
+        return EntityResult(
+            entities=result[0],
+            denoised_text=result[1],
+            success=True,
+            processing_time=timer.elapsed,
+            error=None
+        )
+
+
+def _extract_entities_pipeline(text: str) -> tuple[List[str], str]:
+    """
+    Internal pipeline function for entity extraction and text denoising.
+    
+    This function is wrapped by safe_execute for error handling.
+    
+    Args:
+        text: Input Chinese text
+        
+    Returns:
+        Tuple of (entities, denoised_text)
+    """
+    # Step 1: Extract entities
+    entities = _extract_entities_from_text(text)
+    
+    # Step 2: Denoise text using extracted entities  
+    denoised_text = _denoise_text_with_entities(text, entities)
+    
+    return entities, denoised_text
 
 
 def _extract_entities_from_text(text: str) -> List[str]:

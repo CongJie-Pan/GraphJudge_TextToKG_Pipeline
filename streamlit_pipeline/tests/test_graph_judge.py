@@ -48,7 +48,7 @@ class TestGraphJudgeInitialization:
     
     def test_graph_judge_initialization(self):
         """Test that GraphJudge initializes with proper configuration."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_api.return_value = Mock()
             
             judge = GraphJudge()
@@ -61,7 +61,7 @@ class TestGraphJudgeInitialization:
     
     def test_graph_judge_custom_model(self):
         """Test GraphJudge initialization with custom model."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_api.return_value = Mock()
             
             custom_model = "perplexity/custom-model"
@@ -75,7 +75,7 @@ class TestTripleJudgment:
     
     def test_judge_triples_empty_list(self):
         """Test handling of empty triples list."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             result = judge.judge_triples([])
             
@@ -88,7 +88,7 @@ class TestTripleJudgment:
     
     def test_judge_triples_single_triple_success(self):
         """Test successful judgment of single triple."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
@@ -108,7 +108,7 @@ class TestTripleJudgment:
     
     def test_judge_triples_multiple_triples(self):
         """Test judgment of multiple triples."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.side_effect = ["Yes", "No", "Yes"]
             mock_api.return_value = mock_client
@@ -131,7 +131,7 @@ class TestTripleJudgment:
     
     def test_judge_triples_api_failure_individual(self):
         """Test handling of individual API failures."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.side_effect = [
                 "Yes",
@@ -177,7 +177,7 @@ class TestInstructionCreation:
     
     def test_create_judgment_instruction(self):
         """Test conversion of Triple to instruction format."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             triple = Triple(subject="Apple", predicate="Founded by", object="Steve Jobs")
             
@@ -187,7 +187,7 @@ class TestInstructionCreation:
     
     def test_create_judgment_prompt_basic(self):
         """Test creation of binary judgment prompt."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             instruction = "Is this true: Apple Founded by Steve Jobs ?"
             
@@ -200,7 +200,7 @@ class TestInstructionCreation:
     
     def test_create_explainable_prompt_basic(self):
         """Test creation of explainable judgment prompt."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             instruction = "Is this true: 曹雪芹 創作 紅樓夢 ?"
             
@@ -218,7 +218,7 @@ class TestResponseParsing:
     
     def test_parse_binary_response_yes(self):
         """Test parsing of 'Yes' responses."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             
             test_responses = [
@@ -237,7 +237,7 @@ class TestResponseParsing:
     
     def test_parse_binary_response_no(self):
         """Test parsing of 'No' responses."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             
             test_responses = [
@@ -257,7 +257,7 @@ class TestResponseParsing:
     
     def test_parse_binary_response_ambiguous(self):
         """Test parsing of ambiguous responses defaults to No."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             
             ambiguous_responses = [
@@ -274,7 +274,7 @@ class TestResponseParsing:
     
     def test_parse_binary_response_sentiment_analysis(self):
         """Test sentiment-based parsing when no explicit Yes/No."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             
             # Test positive sentiment
@@ -289,7 +289,7 @@ class TestResponseParsing:
     
     def test_parse_explainable_response_basic(self):
         """Test parsing of explainable response with all components."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             
             response = """
@@ -307,7 +307,7 @@ class TestResponseParsing:
             # Mock time to simulate processing time
             # The _parse_explainable_response method calls time.time() - start_time
             start_time = 0.0  # Use as reference
-            with patch('core.graph_judge.time.time', return_value=0.2):  # Always return 0.2 for time.time()
+            with patch('streamlit_pipeline.core.graph_judge.time.time', return_value=0.2):  # Always return 0.2 for time.time()
                 result = judge._parse_explainable_response(response, start_time)
             
             assert isinstance(result, ExplainableJudgment)
@@ -320,7 +320,7 @@ class TestResponseParsing:
     
     def test_parse_explainable_response_malformed(self):
         """Test parsing of malformed explainable response."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             start_time = time.time()
             
@@ -340,7 +340,7 @@ class TestExplainableReasoning:
     
     def test_judge_triples_with_explanations_empty_list(self):
         """Test explainable judgment with empty triples list."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             result = judge.judge_triples_with_explanations([])
             
@@ -352,7 +352,7 @@ class TestExplainableReasoning:
     
     def test_judge_triples_with_explanations_success(self):
         """Test successful explainable judgment."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = """
             1. Judgment: Yes
@@ -374,7 +374,7 @@ class TestExplainableReasoning:
     
     def test_judge_triples_with_explanations_without_reasoning(self):
         """Test explainable judgment without detailed reasoning."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
@@ -394,21 +394,21 @@ class TestConfidenceEstimation:
     
     def test_estimate_confidence_yes(self):
         """Test confidence estimation for Yes judgment."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             confidence = judge._estimate_confidence("Yes")
             assert confidence == 0.8
     
     def test_estimate_confidence_no(self):
         """Test confidence estimation for No judgment."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             confidence = judge._estimate_confidence("No")
             assert confidence == 0.7
     
     def test_estimate_confidence_other(self):
         """Test confidence estimation for other responses."""
-        with patch('core.graph_judge.get_api_client'):
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
             judge = GraphJudge()
             confidence = judge._estimate_confidence("Maybe")
             assert confidence == 0.5
@@ -419,7 +419,7 @@ class TestConvenienceFunctions:
     
     def test_judge_triples_convenience_function(self):
         """Test judge_triples convenience function."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
@@ -433,7 +433,7 @@ class TestConvenienceFunctions:
     
     def test_judge_triples_with_explanations_convenience(self):
         """Test judge_triples_with_explanations convenience function."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = """
             1. Judgment: Yes
@@ -456,7 +456,7 @@ class TestEdgeCases:
     
     def test_judge_with_none_response(self):
         """Test handling of None API response."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = None
             mock_api.return_value = mock_client
@@ -470,7 +470,7 @@ class TestEdgeCases:
     
     def test_judge_with_empty_response(self):
         """Test handling of empty API response."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = ""
             mock_api.return_value = mock_client
@@ -483,7 +483,7 @@ class TestEdgeCases:
     
     def test_judge_with_very_long_triple(self):
         """Test handling of very long triple components."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
@@ -498,7 +498,7 @@ class TestEdgeCases:
     
     def test_judge_with_special_characters(self):
         """Test handling of triples with special characters."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
@@ -520,7 +520,7 @@ class TestAPIIntegration:
     
     def test_api_client_parameter_passing(self):
         """Test that correct parameters are passed to API client."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_api.return_value = mock_client
             
@@ -540,7 +540,7 @@ class TestAPIIntegration:
     
     def test_model_configuration_usage(self):
         """Test that model configuration is properly used."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_api.return_value = mock_client
             
@@ -556,13 +556,13 @@ class TestPerformanceAndTiming:
     
     def test_processing_time_recorded(self):
         """Test that processing time is properly recorded."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
             
             # Mock time.time() to simulate elapsed time
-            with patch('core.graph_judge.time.time', side_effect=[0.0, 0.1]):  # start=0.0, end=0.1
+            with patch('streamlit_pipeline.core.graph_judge.time.time', side_effect=[0.0, 0.1]):  # start=0.0, end=0.1
                 judge = GraphJudge()
                 triple = Triple(subject="Test", predicate="test", object="test")
                 result = judge.judge_triples([triple])
@@ -573,7 +573,7 @@ class TestPerformanceAndTiming:
     
     def test_explainable_processing_time(self):
         """Test processing time in explainable judgments."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = """
             1. Judgment: Yes
@@ -583,7 +583,7 @@ class TestPerformanceAndTiming:
             
             # Mock time.time() to simulate elapsed time for explainable judgments  
             # Need multiple time values for: start_time, _judge_with_explanation call, and final calculation
-            with patch('core.graph_judge.time.time', side_effect=[0.0, 0.05, 0.15, 0.15]):  # start, during processing, end, final
+            with patch('streamlit_pipeline.core.graph_judge.time.time', side_effect=[0.0, 0.05, 0.15, 0.15]):  # start, during processing, end, final
                 judge = GraphJudge()
                 triple = Triple(subject="Test", predicate="test", object="test")
                 result = judge.judge_triples_with_explanations([triple])
@@ -598,7 +598,7 @@ class TestMetadata:
     
     def test_metadata_collection_basic(self):
         """Test basic metadata collection."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = "Yes"
             mock_api.return_value = mock_client
@@ -616,7 +616,7 @@ class TestMetadata:
     
     def test_metadata_with_errors(self):
         """Test metadata collection when errors occur."""
-        with patch('core.graph_judge.get_api_client') as mock_api:
+        with patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api:
             mock_client = Mock()
             mock_client.call_perplexity.side_effect = [
                 "Yes",
