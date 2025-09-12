@@ -1,0 +1,9 @@
+# Core dependencies (required)
+streamlit>=1.44.0
+pandas>=2.0.0
+litellm>=1.0.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+
+# Optional dependencies for enhanced visualizations
+# plotly>=5.0.0
