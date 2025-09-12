@@ -1,52 +1,105 @@
-# GraphJudge Orchestrator: Design Document
+# GraphJudge Streamlit Refactoring: Design Document
 
-**Version:** 1.0
-**Date:** 2025-09-11
-**Status:** Draft
-**Author:** GitHub Copilot (as Senior Software Engineer)
-**Reviewers:** {{Technical Lead}}, {{Product Manager}}
+**Version:** 2.0
+**Date:** 2025-09-12
+**Status:** Refactoring Specification
+**Author:** Senior Software Engineer
+**Purpose:** Refactoring `run_entity.py`, `run_triple.py`, `run_gj.py` for Streamlit Integration
 
 ---
 
 ## 1) Abstract
 
-This document specifies the design for the **GraphJudge Orchestrator**, a Streamlit web application that provides a user-friendly interface for an end‑to‑end Knowledge Graph (KG) creation pipeline. The application orchestrates three distinct NLP inference stages: Entity Extraction, Triple Generation, and Graph Judging, by calling existing Python scripts (`run_entity.py`, `run_triple.py`, `run_gj.py`). The primary goal is to simplify the execution of this complex workflow, which currently relies on manual CLI execution and file management. The proposed solution is a monolithic Streamlit application that directly imports and calls the core logic from these scripts, using file-based caching and state management to handle the multi-step process. Key decisions include avoiding a microservices architecture for simplicity and using environment variables for managing API keys. The main risks involve the tight coupling to the existing script structure and potential performance bottlenecks from long-running, synchronous inference tasks. Success will be measured by a reduction in the end‑to‑end processing time for a user, increased successful pipeline runs, and positive feedback from research users. The application will be rolled out internally to the research team.
+This document specifies the refactoring strategy for transforming three complex CLI-based pipeline scripts (`chat/run_entity.py`, `chat/run_triple.py`, `chat/run_gj.py`) into clean, modular components optimized for the **GraphJudge Streamlit Pipeline**. The original scripts contain intricate logic with extensive file I/O, logging systems, rate limiting, caching mechanisms, and complex async operations that are not well-suited for direct integration into a web application. This refactoring aims to extract core business logic while creating clean, testable, and maintainable modules specifically designed for the Streamlit environment.
 
-This design provides a pragmatic path to delivering a valuable internal tool by wrapping existing logic in a user-friendly interface.
+**Key Refactoring Goals:**
+1. **Simplify Complex Logic**: Extract core AI pipeline functionality from heavy CLI scripts (2000+ lines each)
+2. **Clean API Design**: Create simple, focused interfaces replacing complex async file-based workflows  
+3. **Streamlit-Optimized Architecture**: Leverage session state instead of file-based data persistence
+4. **Maintainable Codebase**: Separate concerns between UI, business logic, and external API integrations
+5. **Preserved Functionality**: Maintain all essential features while removing CLI-specific complexity
 
-## 2) Introduction
+The refactoring strategy focuses on creating lightweight, focused modules that preserve the sophisticated NLP capabilities while providing a clean foundation for the Streamlit web interface.
 
--   **Context:** The current process for generating and validating knowledge graphs from text involves running a sequence of Python scripts from the command line. This process is error-prone, requires manual file handling between stages, and lacks a centralized view of the workflow's progress and results.
--   **Problem Statement:** Researchers need a simple, integrated tool to run the full text-to-KG pipeline, from raw text input to a final, judged set of knowledge triples, without managing intermediate files or CLI commands.
--   **Target Users:** NLP researchers and data scientists on the team who are not necessarily expert software engineers.
--   **Scope:** The project is limited to creating a Streamlit UI that orchestrates the existing Python inference scripts. It will not include model training, building new REST APIs, or complex database management.
--   **Goals:**
-    1.  Provide a single web interface to execute the three-stage NLP pipeline.
-    2.  Automate the passing of data between the entity, triple, and judging stages.
-    3.  Display the inputs, outputs, and progress for each stage.
-    4.  Allow users to provide raw text and view the final validated knowledge graph.
-    5.  Gracefully handle API rate limits and errors, surfacing them to the user.
--   **Non‑Goals:**
-    1.  Building a multi-user, production-grade SaaS platform.
-    2.  Implementing model training or fine-tuning capabilities.
-    3.  Creating a new, independent microservices-based architecture.
+## 2) Refactoring Challenge Analysis
 
-This project aims to build a simple orchestration layer on top of existing, powerful scripts to improve researcher velocity.
+### Current State Assessment
 
-## 3) Requirements
+The existing CLI scripts present significant integration challenges:
 
-### Functional Requirements
+**`chat/run_entity.py` (~800+ lines):**
+- Complex async entity extraction with GPT-5-mini
+- Intricate file-based caching system with hash-based storage
+- Custom TerminalLogger class with timestamped file outputs
+- Rate limiting with exponential backoff mechanisms
+- Manual directory creation and path resolution
+- Integration with separate `path_resolver.py` module
 
--   **FR‑1:** The system must provide a text area for users to input raw text.
--   **FR‑2:** The system must have a "Run Pipeline" button to start the end-to-end process.
--   **FR‑3:** The system must execute the Entity Extraction flow (`run_entity.py`) on the input text.
--   **FR‑4:** The system must display the extracted entities and denoised text after the first stage.
--   **FR‑5:** The system must automatically use the output of FR-3 to execute the Triple Generation flow (`run_triple.py`).
--   **FR‑6:** The system must display the generated triples (subject, predicate, object).
--   **FR‑7:** The system must automatically use the output of FR-5 to execute the Graph Judging flow (`run_gj.py`).
--   **FR‑8:** The system must display the final list of triples along with their "Yes/No" judgment.
--   **FR‑9:** The system must manage all intermediate files in a temporary, session-specific directory without requiring user interaction.
--   **FR‑10:** The system must display real-time progress updates and logs for each stage.
+**`chat/run_triple.py` (~750+ lines):**
+- Enhanced JSON schema validation with Pydantic models
+- Text chunking and pagination for large inputs
+- Complex prompt engineering with structured outputs
+- Post-processing pipeline integration
+- Comprehensive statistics tracking and logging
+- Multiple output format generation
+
+**`chat/run_gj.py` (~2200+ lines):**
+- Multi-API integration (Perplexity, Gemini, KIMI)
+- Gold label bootstrapping with RapidFuzz similarity matching
+- Explainable reasoning mode with detailed output
+- Complex error handling and retry mechanisms
+- CSV and JSON output formatting
+- Integration with external dataset libraries
+
+### Refactoring Strategy
+
+**Core Principle:** Extract essential business logic while eliminating CLI-specific complexity
+
+**Target Architecture:**
+1. **Simple Function Interfaces**: Replace complex async file workflows with clean synchronous functions
+2. **Streamlit Session State**: Use in-memory data passing instead of file-based intermediate storage
+3. **Simplified Error Handling**: Surface user-friendly errors without complex retry mechanisms
+4. **Focused Modules**: Create single-responsibility modules for each pipeline stage
+5. **Minimal Dependencies**: Reduce external library requirements where possible
+
+### Success Criteria
+
+- **Functionality Parity**: All core NLP capabilities preserved
+- **Code Reduction**: Target 70%+ reduction in lines of code per module
+- **Testability**: Clean interfaces suitable for comprehensive unit testing
+- **Maintainability**: Clear separation of concerns and minimal coupling
+- **Performance**: Comparable processing speed with reduced overhead
+
+## 3) Refactored Module Requirements
+
+### Core Module Functional Requirements
+
+**Refactored Entity Module (`streamlit_pipeline/core/entity_processor.py`):**
+-   **FR‑E1:** Provide clean function interface: `extract_entities(text: str) -> EntityResult`
+-   **FR‑E2:** Preserve GPT-5-mini entity extraction capabilities from original script
+-   **FR‑E3:** Implement in-memory result storage instead of file-based output
+-   **FR‑E4:** Include essential error handling without complex retry mechanisms
+-   **FR‑E5:** Maintain core text denoising functionality in simplified form
+
+**Refactored Triple Module (`streamlit_pipeline/core/triple_generator.py`):**
+-   **FR‑T1:** Provide clean function interface: `generate_triples(entities: List[str], text: str) -> TripleResult`
+-   **FR‑T2:** Preserve JSON schema validation and structured output generation
+-   **FR‑T3:** Implement text chunking logic for large inputs in simplified form
+-   **FR‑T4:** Maintain prompt engineering sophistication while reducing complexity
+-   **FR‑T5:** Support essential post-processing without external pipeline dependencies
+
+**Refactored Graph Judge Module (`streamlit_pipeline/core/graph_judge.py`):**
+-   **FR‑GJ1:** Provide clean function interface: `judge_triples(triples: List[Triple]) -> JudgmentResult`
+-   **FR‑GJ2:** Support primary API integration (focus on Perplexity API initially)
+-   **FR‑GJ3:** Preserve core graph judgment logic while simplifying multi-API complexity
+-   **FR‑GJ4:** Provide binary judgment results with optional confidence scores
+-   **FR‑GJ5:** Support explainable reasoning mode in simplified form
+
+**Integration Requirements:**
+-   **FR‑I1:** Seamless data flow between modules using Python data structures
+-   **FR‑I2:** Streamlit-compatible progress indication and error reporting
+-   **FR‑I3:** Session state management for intermediate results
+-   **FR‑I4:** Unified configuration system for API keys and model parameters
 
 ### Non‑Functional Requirements
 
@@ -188,20 +241,63 @@ This simple, in-process architecture minimizes complexity and is well-suited for
 
 The system relies entirely on external, pre-trained models and manages data ephemerally.
 
-## 8) Module Contracts
+## 8) Refactored Module Contracts
 
-The Streamlit app will interact with refactored functions from the `chat/` scripts, not via HTTP APIs.
+The Streamlit app will interact with clean, refactored functions that eliminate file-based complexity.
 
-| Function Signature (Conceptual)                               | Inputs                                                              | Outputs                                                                                             | Error Conditions                                                              | Retryable? |
-| ------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | :--------: |
-| `run_entity_pipeline(text: str, temp_dir: str) -> (str, str)`  | Raw input text, path to a temporary directory.                      | Tuple of paths: (path to `test_entity.txt`, path to `test_denoised.target`).                         | `ValueError` on API key issue, `APIError` on model failure.                   |    Yes     |
-| `run_triple_pipeline(input_dir: str, temp_dir: str) -> str`   | Path to directory with entity/denoised files, output temp directory. | Path to `test_instructions_context_..._v2.json`.                                                    | `FileNotFoundError` if inputs are missing, `APIError` on model failure.       |    Yes     |
-| `run_gj_pipeline(input_json_path: str, temp_dir: str) -> str` | Path to the JSON file with triples, output temp directory.          | Path to `pred_instructions_... .csv`.                                                               | `FileNotFoundError` if input is missing, `APIError` on model failure.         |    Yes     |
-| `run_with_rate_limit_fix(...)`                                | (Wrapper script)                                                    | (Not directly called, its logic is inside `run_entity_pipeline`)                                    | N/A                                                                           |    N/A     |
+### Core Module Interfaces
 
-These contracts define a clear separation of concerns between the orchestration logic and the individual pipeline stages.
+| Module                    | Function Signature                                                   | Inputs                                                 | Outputs                                                | Error Handling                                          |
+| ------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
+| **Entity Processor**      | `extract_entities(text: str) -> EntityResult`                      | Raw Chinese text string                               | `EntityResult(entities: List[str], denoised_text: str, success: bool, error: Optional[str])` | Returns error message in result object, no exceptions |
+| **Triple Generator**      | `generate_triples(entities: List[str], text: str) -> TripleResult` | List of entities, denoised text                       | `TripleResult(triples: List[Triple], metadata: dict, success: bool, error: Optional[str])` | Validation errors captured in result, graceful degradation |
+| **Graph Judge**           | `judge_triples(triples: List[Triple]) -> JudgmentResult`            | List of Triple objects                                 | `JudgmentResult(judgments: List[bool], confidence: List[float], success: bool, error: Optional[str])` | API errors handled gracefully, partial results supported |
 
-## 10) State Machines
+### Data Models
+
+```python
+@dataclass
+class Triple:
+    subject: str
+    predicate: str
+    object: str
+    confidence: Optional[float] = None
+
+@dataclass
+class EntityResult:
+    entities: List[str]
+    denoised_text: str
+    success: bool
+    processing_time: float
+    error: Optional[str] = None
+
+@dataclass
+class TripleResult:
+    triples: List[Triple]
+    metadata: dict  # Contains validation stats, chunk info, etc.
+    success: bool
+    processing_time: float
+    error: Optional[str] = None
+
+@dataclass
+class JudgmentResult:
+    judgments: List[bool]  # True/False for each triple
+    confidence: List[float]  # Confidence scores (0-1)
+    explanations: Optional[List[str]]  # For explainable mode
+    success: bool
+    processing_time: float
+    error: Optional[str] = None
+```
+
+### Key Simplifications
+
+1. **No File I/O**: All data passed as Python objects in memory
+2. **Synchronous Execution**: Simplified from complex async patterns for Streamlit compatibility
+3. **Unified Error Handling**: Errors returned as data, not raised as exceptions
+4. **Self-Contained Results**: All metadata included in result objects
+5. **Optional Features**: Advanced features (like explainable mode) made optional with simple flags
+
+## 9) State Machines
 
 The lifecycle of a single pipeline job can be modeled as a state machine.
 
@@ -232,7 +328,7 @@ stateDiagram-v2
 
 This state machine clearly defines the lifecycle of a job from user input to final result.
 
-## 11) Error Handling & Resilience
+## 10) Error Handling & Resilience
 
 -   **Error Taxonomy:**
     -   **Configuration Errors:** Invalid or missing API keys. Handled on startup with a clear error message.
@@ -246,7 +342,7 @@ This state machine clearly defines the lifecycle of a job from user input to fin
 
 A robust error handling strategy is crucial for providing a good user experience and preventing silent failures.
 
-## 12) Performance & Reliability
+## 11) Performance & Reliability
 
 -   **SLOs/SLIs:**
     -   **Latency:** p95 end-to-end pipeline execution time for a standard 1000-word document < 3 minutes (highly dependent on external API performance).
@@ -256,7 +352,7 @@ A robust error handling strategy is crucial for providing a good user experience
 
 Performance and reliability targets are set for an internal tool, prioritizing user experience over high-throughput scaling.
 
-## 13) Observability
+## 12) Observability
 
 -   **Structured Logging:** The existing scripts use Python's `logging` or custom `TerminalLogger` classes. These will be adapted to log to the Streamlit UI and a session-specific log file. Logs will include timestamps, stage, and status. PII will not be explicitly redacted but is not expected.
 -   **Metrics:** Basic metrics will be tracked and displayed at the end of a run:
@@ -268,7 +364,7 @@ Performance and reliability targets are set for an internal tool, prioritizing u
 
 Observability will be focused on providing immediate feedback to the user within the application itself.
 
-## 14) Security & Privacy
+## 13) Security & Privacy
 
 -   **Authentication/Authorization:** None. The app will be deployed internally on a trusted network.
 -   **Secrets Management:** API keys will be loaded from an `.env` file or environment variables on the server, following the pattern in `config.py`. They will not be exposed to the client.
@@ -277,7 +373,7 @@ Observability will be focused on providing immediate feedback to the user within
 
 Security measures are appropriate for an internal tool running on a secure network.
 
-## 15) Deployment & Environments
+## 14) Deployment & Environments
 
 -   **Environments:** A single `production` environment for internal use. Development occurs on local machines.
 -   **CI/CD:** A simple GitHub Actions workflow will be set up to run a linter and smoke tests on push. Deployment will be a manual `git pull` and server restart.
@@ -286,7 +382,7 @@ Security measures are appropriate for an internal tool running on a secure netwo
 
 The deployment strategy is minimal and manual, which is sufficient for the project's scope.
 
-## 16) Testing Strategy & Matrix
+## 15) Testing Strategy & Matrix
 
 | Test Type     | Method                                                              | Scope                                                                                             | Owner      |
 | :------------ | :------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------ | :--------- |
@@ -304,40 +400,69 @@ The deployment strategy is minimal and manual, which is sufficient for the proje
 
 A multi-layered testing approach will ensure code quality and reliability.
 
-## 17) Folder/Repo Structure
+## 16) Refactored Repository Structure
 
-The new Streamlit app will be housed in the `streamlit_pipeline/` directory, alongside the existing project structure.
+The refactored Streamlit pipeline will be organized with clear separation between refactored modules and original scripts.
 
 ```
 GraphJudge_TextToKG_CLI/
 ├── streamlit_pipeline/
-│   ├── app.py                # Main Streamlit application
-│   ├── ui/                   # UI components (e.g., header, results display)
-│   │   └── __init__.py
-│   ├── domain/               # Core orchestration logic
+│   ├── app.py                          # Main Streamlit application
+│   ├── core/                           # Refactored core modules (extracted from chat/)
 │   │   ├── __init__.py
-│   │   └── pipeline.py       # Functions to run each stage
-│   ├── api/                  # Wrappers for external APIs (if refactored)
-│   │   └── __init__.py
-│   ├── tests/                # Pytest unit and integration tests
+│   │   ├── entity_processor.py         # Refactored from run_entity.py
+│   │   ├── triple_generator.py         # Refactored from run_triple.py
+│   │   ├── graph_judge.py              # Refactored from run_gj.py
+│   │   ├── models.py                   # Shared data models (Triple, EntityResult, etc.)
+│   │   └── config.py                   # Simplified configuration management
+│   ├── utils/                          # Shared utilities
 │   │   ├── __init__.py
-│   │   └── test_pipeline.py
+│   │   ├── api_client.py               # Simplified API client wrapper
+│   │   ├── text_processing.py          # Common text processing functions
+│   │   └── validation.py               # Input validation utilities
+│   ├── ui/                            # UI components
+│   │   ├── __init__.py
+│   │   ├── components.py               # Reusable Streamlit components
+│   │   └── display.py                  # Result display functions
+│   ├── tests/                          # Comprehensive test suite
+│   │   ├── __init__.py
+│   │   ├── test_entity_processor.py    # Unit tests for entity module
+│   │   ├── test_triple_generator.py    # Unit tests for triple module
+│   │   ├── test_graph_judge.py         # Unit tests for judge module
+│   │   ├── test_integration.py         # Integration tests
+│   │   └── fixtures/                   # Test data and fixtures
 │   ├── docs/
-│   │   └── spec.md           # This design document
-│   └── .env                  # Environment variables for local dev
-├── chat/                     # Existing scripts (will be imported by streamlit_pipeline)
-│   ├── run_entity.py
-│   ├── run_triple.py
-│   └── run_gj.py
+│   │   ├── spec.md                     # This refactoring specification
+│   │   └── refactoring_guide.md        # Code extraction guidelines
+│   └── .env                            # Environment variables
+├── chat/                               # Original scripts (preserved for reference)
+│   ├── run_entity.py                   # Original entity extraction script
+│   ├── run_triple.py                   # Original triple generation script
+│   ├── run_gj.py                       # Original graph judgment script
+│   └── ... (other existing files)
 ├── ... (other existing folders)
 └── README.md
 ```
 
--   **Ownership:** The `streamlit_pipeline/` directory will be owned by the App Dev team. The `chat/` directory remains under the ownership of the Research team.
+### Key Architectural Decisions
 
-This structure cleanly separates the new UI application from the existing core logic.
+**Core Module Design:**
+- `entity_processor.py`: ~150-200 lines (vs. 800+ original)
+- `triple_generator.py`: ~200-250 lines (vs. 750+ original)  
+- `graph_judge.py`: ~300-400 lines (vs. 2200+ original)
 
-## 18) Public Interfaces per Module
+**Separation Strategy:**
+- **Original Scripts Preserved**: Keep `chat/` directory intact for reference and fallback
+- **Clean Extraction**: Extract only essential business logic into `core/` modules
+- **Shared Components**: Common functionality moved to `utils/` for reuse
+- **Test-Driven Design**: Comprehensive test coverage for all refactored modules
+
+**Dependencies Management:**
+- Minimize external dependencies in refactored modules
+- Isolate complex dependencies (e.g., RapidFuzz) to specific modules
+- Use simple, well-tested libraries for core functionality
+
+## 17) Public Interfaces per Module
 
 -   **`streamlit_pipeline/app.py`**
     -   **Responsibility:** Renders the Streamlit UI and manages session state.
@@ -355,7 +480,7 @@ This structure cleanly separates the new UI application from the existing core l
 
 Clear module responsibilities are defined to ensure a clean, maintainable codebase.
 
-## 19) Alternatives, Dependencies, Risks
+## 18) Alternatives, Dependencies, Risks
 
 -   **Alternatives Considered:**
     -   **Microservices with FastAPI & React:** Rejected as overly complex for an internal tool. It would require significant infrastructure and development overhead.
@@ -375,36 +500,115 @@ Clear module responsibilities are defined to ensure a clean, maintainable codeba
 
 The choice of Streamlit and direct script integration is a pragmatic trade-off, favoring development speed over architectural purity.
 
-## 20) Timeline, Acceptance Criteria, Ownership
+## 19) Refactoring Timeline & Acceptance Criteria
 
--   **Timeline:**
-    -   **Milestone 1 (Week 1):** Refactor `chat/` scripts into importable modules. Basic Streamlit UI with text input.
-    -   **Milestone 2 (Week 2):** Implement and integrate Stage 1 (Entity Extraction).
-    -   **Milestone 3 (Week 3):** Implement and integrate Stage 2 (Triple Gen) and Stage 3 (Graph Judge).
-    -   **Milestone 4 (Week 4):** Implement error handling, caching, and final UI polish. Internal release.
--   **Acceptance Criteria:**
-    -   The application successfully runs the full pipeline on a golden-path text sample.
-    -   All functional requirements (FR-1 to FR-10) are met.
-    -   Performance SLOs for UI load and pipeline execution are met.
-    -   The application is deployed and accessible to the research team.
--   **Ownership:**
-    -   **DRI (Directly Responsible Individual):** {{DRI_name}}
-    -   **Product/Feature Owner:** {{Product_Owner_name}}
-    -   **Reviewers:** {{Reviewer_1}}, {{Reviewer_2}}
+### Refactoring Timeline
 
-This timeline provides an aggressive but achievable plan for delivering value quickly.
+-   **Phase 1 (Week 1): Core Module Extraction**
+    -   Extract `entity_processor.py` from `run_entity.py` with essential GPT-5-mini functionality
+    -   Create clean data models (`models.py`) with `EntityResult`, `TripleResult`, `JudgmentResult`
+    -   Set up basic test framework with mock API responses
+    -   **Target:** Functional entity extraction module with 80%+ code reduction
 
-## 21) Glossary, References, Change Log
+-   **Phase 2 (Week 2): Triple Generation Refactoring**
+    -   Extract `triple_generator.py` from `run_triple.py` preserving JSON schema validation
+    -   Implement simplified text chunking for large inputs
+    -   Create unified `api_client.py` wrapper for consistent API interactions
+    -   **Target:** Working triple generation with validation and chunking support
 
--   **Glossary:**
-    -   **KG:** Knowledge Graph. A graph-structured data model representing knowledge.
-    -   **Triple:** A single fact in a KG, composed of a subject, predicate, and object.
-    -   **GraphJudge:** The name of the overall project and the third stage of the pipeline.
--   **References:**
-    -   [Streamlit Documentation](https://docs.streamlit.io/)
-    -   [LiteLLM Documentation](https://docs.litellm.ai/)
-    -   `GraphJudge_TextToKG_CLI/README.md`
--   **Change Log:**
-    -   **v1.0 (2025-09-11):** Initial draft.
+-   **Phase 3 (Week 3): Graph Judge Simplification**
+    -   Extract `graph_judge.py` from complex `run_gj.py` (2200+ lines → 300-400 lines)
+    -   Focus on Perplexity API integration initially, defer multi-API complexity
+    -   Implement basic explainable reasoning mode
+    -   **Target:** Functional graph judgment with 85%+ complexity reduction
 
-This section provides context and tracks the document's evolution.
+-   **Phase 4 (Week 4): Streamlit Integration & Polish**
+    -   Integrate all refactored modules into Streamlit app
+    -   Implement session state management for data flow
+    -   Add comprehensive error handling and user feedback
+    -   **Target:** Complete working Streamlit application
+
+### Acceptance Criteria
+
+**Technical Requirements:**
+-   **Code Quality:** 70%+ reduction in lines of code per module
+-   **Test Coverage:** 90%+ unit test coverage for all refactored modules
+-   **Functionality Parity:** All essential NLP capabilities preserved
+-   **Performance:** Comparable processing speed with reduced overhead
+-   **Error Handling:** Graceful error reporting without complex retry mechanisms
+
+**Functional Requirements:**
+-   Successful entity extraction from Chinese text using GPT-5-mini
+-   Triple generation with JSON schema validation
+-   Graph judgment with Perplexity API integration
+-   Seamless data flow between all three stages
+-   User-friendly error messages and progress indication
+
+**Integration Requirements:**
+-   Clean module interfaces suitable for unit testing
+-   Streamlit-compatible synchronous execution
+-   Session state management for intermediate results
+-   Unified configuration system for API keys
+
+### Success Metrics
+
+**Maintainability:**
+- Reduced cyclomatic complexity in all modules
+- Clear separation of concerns between UI, business logic, and API integration
+- Comprehensive documentation for all refactored components
+
+**User Experience:**
+- Simplified execution flow compared to CLI scripts
+- Real-time progress feedback
+- Clear error messages and recovery suggestions
+
+**Development Velocity:**
+- Faster iteration cycles due to reduced complexity
+- Easier debugging with simplified data flow
+- Improved testability with clean module interfaces
+
+## 20) Glossary, References, Change Log
+
+### Glossary
+
+**Refactoring Terms:**
+-   **Code Extraction:** The process of identifying and extracting essential business logic from complex CLI scripts
+-   **Module Simplification:** Reducing complexity while preserving core functionality
+-   **Interface Cleaning:** Creating simple, focused APIs that replace complex file-based workflows
+
+**Technical Terms:**
+-   **KG:** Knowledge Graph. A graph-structured data model representing knowledge
+-   **Triple:** A single fact in a KG, composed of a subject, predicate, and object  
+-   **ECTD Pipeline:** Entity Extraction, Text Denoising pipeline stage
+-   **GraphJudge:** The overall project name and the third stage of the pipeline
+-   **Session State:** Streamlit's in-memory data management system
+
+**Original Scripts:**
+-   **`run_entity.py`:** Complex 800+ line entity extraction script with GPT-5-mini
+-   **`run_triple.py`:** Enhanced 750+ line triple generation with JSON schema validation
+-   **`run_gj.py`:** Comprehensive 2200+ line graph judgment script with multi-API support
+
+### References
+
+-   [Streamlit Documentation](https://docs.streamlit.io/)
+-   [LiteLLM Documentation](https://docs.litellm.ai/)
+-   [Original Scripts Analysis](../../../chat/)
+-   [CLAUDE.md Project Guidelines](../../../CLAUDE.md)
+-   [GraphJudge_TextToKG_CLI README](../../../README.md)
+
+### Change Log
+
+-   **v1.0 (2025-09-11):** Initial Streamlit orchestrator specification
+-   **v2.0 (2025-09-12):** Updated to focus on refactoring strategy for `run_entity.py`, `run_triple.py`, `run_gj.py`
+    -   Added comprehensive analysis of original scripts complexity
+    -   Specified clean module interfaces and data models
+    -   Defined refactoring timeline with specific code reduction targets
+    -   Updated architecture to emphasize simplification and maintainability
+    -   Provided detailed module contracts and repository structure
+    -   Added success metrics focused on code quality and maintainability
+
+---
+
+## Summary
+
+This specification provides a comprehensive refactoring strategy for transforming three complex CLI-based pipeline scripts into clean, maintainable modules optimized for Streamlit integration. The approach prioritizes simplification while preserving essential NLP capabilities, targeting significant code reduction and improved maintainability. The refactoring will enable researchers to access the full GraphJudge pipeline through a user-friendly web interface without the complexity of CLI script management.
