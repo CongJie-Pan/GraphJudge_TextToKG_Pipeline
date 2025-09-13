@@ -14,7 +14,11 @@ Key simplifications:
 
 import time
 from typing import Optional, Dict, Any
+import litellm
 from litellm import completion
+
+# Configure litellm to drop unsupported parameters for GPT-5 models
+litellm.drop_params = True
 
 try:
     from ..core.config import get_api_config, get_model_config, GPT5_MINI_MODEL, PERPLEXITY_MODEL
@@ -112,7 +116,7 @@ class APIClient:
         model: str,
         prompt: str,
         system_prompt: Optional[str] = None,
-        temperature: float = 0.0,
+        temperature: float = 1.0,
         max_tokens: int = 4000
     ) -> str:
         """
@@ -164,6 +168,55 @@ class APIClient:
         
         # All retries failed
         raise Exception(f"API call failed after {self.config['max_retries']} attempts: {last_exception}")
+
+    def test_api_connection(self) -> Dict[str, Any]:
+        """
+        Test API connectivity and return status information.
+
+        Returns:
+            Dictionary with test results for each model
+        """
+        results = {}
+
+        # Test GPT-5-mini
+        try:
+            test_response = self.call_gpt5_mini(
+                "Hello, this is a connection test.",
+                "Respond with 'Connection successful' if you receive this message.",
+                max_tokens=50
+            )
+            results["gpt5_mini"] = {
+                "status": "success",
+                "response_length": len(test_response),
+                "model": GPT5_MINI_MODEL
+            }
+        except Exception as e:
+            results["gpt5_mini"] = {
+                "status": "failed",
+                "error": str(e),
+                "model": GPT5_MINI_MODEL
+            }
+
+        # Test Perplexity
+        try:
+            test_response = self.call_perplexity(
+                "Hello, this is a connection test.",
+                "Respond with 'Connection successful' if you receive this message.",
+                max_tokens=50
+            )
+            results["perplexity"] = {
+                "status": "success",
+                "response_length": len(test_response),
+                "model": PERPLEXITY_MODEL
+            }
+        except Exception as e:
+            results["perplexity"] = {
+                "status": "failed",
+                "error": str(e),
+                "model": PERPLEXITY_MODEL
+            }
+
+        return results
 
 
 # Global client instance

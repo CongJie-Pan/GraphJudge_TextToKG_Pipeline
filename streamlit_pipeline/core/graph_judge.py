@@ -71,7 +71,7 @@ class GraphJudge:
         self.api_client = get_api_client()
         
         # Configuration from original script
-        self.temperature = 0.2  # Low temperature for consistent judgments
+        self.temperature = 1.0  # GPT-5 models only support temperature=1
         self.max_tokens = 2000  # Sufficient for judgment responses
     
     def judge_triples(self, triples: List[Triple]) -> JudgmentResult:

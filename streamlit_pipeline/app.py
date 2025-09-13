@@ -279,21 +279,35 @@ class GraphJudgeApp:
     def _test_api_connections(self):
         """Test API connections and display status."""
         try:
-            # Simple API test - try to get the API client
+            # Get API client
             api_client = get_api_client()
             st.sidebar.success("✅ API Configuration: Loaded successfully")
-            
+
             # Test basic configuration
             from streamlit_pipeline.core.config import get_api_config
             try:
                 api_key, api_base = get_api_config(load_env=True)
                 if api_key:
                     st.sidebar.success("✅ API Key: Configured")
+
+                    # Perform actual API connection test
+                    st.sidebar.info("🔗 Testing actual API connections...")
+                    test_results = api_client.test_api_connection()
+
+                    # Display test results for each model
+                    for model_name, result in test_results.items():
+                        if result["status"] == "success":
+                            st.sidebar.success(f"✅ {model_name}: Connection successful")
+                            st.sidebar.caption(f"Model: {result['model']}")
+                        else:
+                            st.sidebar.error(f"❌ {model_name}: {result['error']}")
+                            st.sidebar.caption(f"Model: {result['model']}")
+
                 else:
                     st.sidebar.error("❌ API Key: Not configured")
             except Exception as e:
                 st.sidebar.error(f"❌ API Configuration Error: {str(e)}")
-                    
+
         except Exception as e:
             st.sidebar.error(f"API Test Failed: {str(e)}")
     

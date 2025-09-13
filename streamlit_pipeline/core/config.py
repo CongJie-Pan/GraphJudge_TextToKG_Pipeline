@@ -22,7 +22,7 @@ GPT5_MINI_MODEL = "gpt-5-mini"
 PERPLEXITY_MODEL = "perplexity/sonar-reasoning"
 
 # Essential API parameters
-OPENAI_TEMPERATURE = 0.0  # Deterministic output
+OPENAI_TEMPERATURE = 1.0  # GPT-5 models only support temperature=1
 OPENAI_MAX_TOKENS = 4000  # Conservative token limit
 
 # Simplified rate limiting (no complex tracking)
