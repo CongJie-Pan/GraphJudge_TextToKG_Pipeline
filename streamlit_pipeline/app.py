@@ -39,7 +39,7 @@ from streamlit_pipeline.ui.error_display import (
 )
 
 # Utilities
-from streamlit_pipeline.utils.error_handling import ErrorHandler, ErrorInfo, ErrorType, StreamlitLogger
+from streamlit_pipeline.utils.error_handling import ErrorHandler, ErrorInfo, ErrorType, ErrorSeverity, StreamlitLogger
 from streamlit_pipeline.utils.api_client import get_api_client
 from streamlit_pipeline.utils.session_state import get_session_manager, store_pipeline_result
 from streamlit_pipeline.utils.state_persistence import persist_pipeline_result, get_persistence_manager
@@ -431,6 +431,7 @@ class GraphJudgeApp:
             # Create error info for display
             error_info = ErrorInfo(
                 error_type=ErrorType.PROCESSING,
+                severity=ErrorSeverity.HIGH,
                 message="An error occurred during pipeline processing",
                 technical_details=str(e),
                 stage="pipeline_execution"
@@ -489,6 +490,7 @@ class GraphJudgeApp:
             # Recovery suggestions
             error_info = ErrorInfo(
                 error_type=ErrorType.PROCESSING,
+                severity=ErrorSeverity.HIGH,
                 message=result.error or "Unknown error occurred",
                 stage=result.error_stage
             )
