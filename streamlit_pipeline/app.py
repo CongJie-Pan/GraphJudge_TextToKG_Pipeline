@@ -48,7 +48,7 @@ from streamlit_pipeline.utils.state_cleanup import get_cleanup_manager, check_an
 
 # Configure Streamlit page
 st.set_page_config(
-    page_title="GraphJudge - 智能知识图谱构建",
+    page_title="GraphJudge - Intelligent Knowledge Graph Construction",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -181,10 +181,11 @@ class GraphJudgeApp:
     
     def _render_header(self):
         """Render the application header."""
-        st.title("🧠 GraphJudge - 智能知识图谱构建系统")
+        st.title("🧠 GraphJudge - Intelligent Knowledge Graph Construction System")
         st.markdown("""
-        **GraphJudge** 是一个基于大语言模型的智能知识图谱构建系统。通过三阶段处理流程，
-        从中文文本中提取实体、生成知识三元组，并使用AI进行质量判断。
+        **GraphJudge** is an intelligent knowledge graph construction system based on large language models.
+        Through a three-stage processing pipeline, it extracts entities from Chinese text, generates knowledge triples,
+        and uses AI for quality assessment.
         """)
         
         # Quick stats if we have results
@@ -202,23 +203,23 @@ class GraphJudgeApp:
             col1, col2, col3, col4 = st.columns(4)
             
             with col1:
-                st.metric("总运行次数", len(st.session_state.pipeline_results))
-            
+                st.metric("Total Runs", len(st.session_state.pipeline_results))
+
             with col2:
                 avg_time = sum(r.total_time for r in successful_runs) / len(successful_runs)
-                st.metric("平均处理时间", f"{avg_time:.1f}s")
-            
+                st.metric("Average Processing Time", f"{avg_time:.1f}s")
+
             with col3:
                 total_triples = sum(
                     len(r.triple_result.triples) if r.triple_result else 0
                     for r in successful_runs
                 )
-                st.metric("累计生成三元组", total_triples)
-            
+                st.metric("Total Generated Triples", total_triples)
+
             with col4:
                 if successful_runs and successful_runs[-1].stats:
                     approval_rate = successful_runs[-1].stats.get('approval_rate', 0)
-                    st.metric("最近通过率", f"{approval_rate:.1%}")
+                    st.metric("Recent Approval Rate", f"{approval_rate:.1%}")
     
     def _render_sidebar(self):
         """Render the sidebar with configuration options."""
@@ -227,20 +228,20 @@ class GraphJudgeApp:
         
         # API Status
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### 🔌 API状态检查")
-        
-        if st.sidebar.button("测试API连接", key="test_apis"):
-            with st.sidebar.spinner("测试中..."):
+        st.sidebar.markdown("### 🔌 API Status Check")
+
+        if st.sidebar.button("Test API Connection", key="test_apis"):
+            with st.sidebar.spinner("Testing..."):
                 self._test_api_connections()
         
         # Application info
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### ℹ️ 关于")
+        st.sidebar.markdown("### ℹ️ About")
         st.sidebar.info("""
-        **版本**: 2.0  
-        **模型**: GPT-5-mini + Perplexity  
-        **最适合**: 中文古典文学文本  
-        **开发**: GraphJudge Research Team
+        **Version**: 2.0
+        **Models**: GPT-5-mini + Perplexity
+        **Best for**: Chinese classical literature texts
+        **Developed by**: GraphJudge Research Team
         """)
         
         # Clear results option with enhanced cleanup
@@ -249,50 +250,50 @@ class GraphJudgeApp:
             col1, col2 = st.sidebar.columns(2)
             
             with col1:
-                if st.button("🗑️ 清除结果", key="clear_results"):
+                if st.button("🗑️ Clear Results", key="clear_results"):
                     self.session_manager.reset_pipeline_data()
                     st.rerun()
-            
+
             with col2:
-                if st.button("🧹 完整清理", key="full_cleanup"):
+                if st.button("🧹 Full Cleanup", key="full_cleanup"):
                     self.cleanup_manager.force_complete_cleanup()
                     st.rerun()
         
         # Session statistics in sidebar
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### 📊 会话统计")
+        st.sidebar.markdown("### 📊 Session Statistics")
         metadata = self.session_manager.get_session_metadata()
         cache_stats = self.session_manager.get_cache_stats()
-        
-        st.sidebar.text(f"运行次数: {metadata.run_count}")
-        st.sidebar.text(f"成功次数: {metadata.successful_runs}")
+
+        st.sidebar.text(f"Run Count: {metadata.run_count}")
+        st.sidebar.text(f"Successful Runs: {metadata.successful_runs}")
         if metadata.run_count > 0:
             success_rate = metadata.successful_runs / metadata.run_count
-            st.sidebar.text(f"成功率: {success_rate:.1%}")
-        
-        st.sidebar.text(f"缓存命中率: {cache_stats.hit_rate:.1%}")
-        st.sidebar.text(f"缓存大小: {cache_stats.total_size_bytes / 1024 / 1024:.1f} MB")
+            st.sidebar.text(f"Success Rate: {success_rate:.1%}")
+
+        st.sidebar.text(f"Cache Hit Rate: {cache_stats.hit_rate:.1%}")
+        st.sidebar.text(f"Cache Size: {cache_stats.total_size_bytes / 1024 / 1024:.1f} MB")
     
     def _test_api_connections(self):
         """Test API connections and display status."""
         try:
             # Simple API test - try to get the API client
             api_client = get_api_client()
-            st.sidebar.success("✅ API配置: 正常加载")
+            st.sidebar.success("✅ API Configuration: Loaded successfully")
             
             # Test basic configuration
             from streamlit_pipeline.core.config import get_api_config
             try:
                 api_key, api_base = get_api_config(load_env=True)
                 if api_key:
-                    st.sidebar.success("✅ API密钥: 已配置")
+                    st.sidebar.success("✅ API Key: Configured")
                 else:
-                    st.sidebar.error("❌ API密钥: 未配置")
+                    st.sidebar.error("❌ API Key: Not configured")
             except Exception as e:
-                st.sidebar.error(f"❌ API配置错误: {str(e)}")
+                st.sidebar.error(f"❌ API Configuration Error: {str(e)}")
                     
         except Exception as e:
-            st.sidebar.error(f"API测试失败: {str(e)}")
+            st.sidebar.error(f"API Test Failed: {str(e)}")
     
     def _render_main_interface(self):
         """Render the main interface for input and results."""
@@ -304,19 +305,19 @@ class GraphJudgeApp:
         
         with col1:
             process_button = st.button(
-                "🚀 开始处理 (Start Processing)",
+                "🚀 Start Processing",
                 disabled=not input_text.strip(),
                 type="primary",
-                help="点击开始三阶段知识图谱构建流程"
+                help="Click to start the three-stage knowledge graph construction pipeline"
             )
         
         with col2:
             if st.session_state.current_result:
-                st.button("📊 查看详细结果", key="view_details", on_click=self._show_detailed_results)
+                st.button("📊 View Detailed Results", key="view_details", on_click=self._show_detailed_results)
         
         with col3:
             if st.session_state.pipeline_results:
-                st.button("📈 历史对比", key="show_comparison", on_click=self._show_comparison)
+                st.button("📈 Historical Comparison", key="show_comparison", on_click=self._show_comparison)
         
         # Process the input if button clicked
         if process_button and input_text.strip():
@@ -328,14 +329,14 @@ class GraphJudgeApp:
     
     def _render_processing_view(self):
         """Render the processing view with progress indicators."""
-        st.markdown("## 🔄 处理中...")
-        
+        st.markdown("## 🔄 Processing...")
+
         # This would typically be handled by the progress callback
         # For now, show a static processing message
         st.info("Pipeline is processing your input. This may take a few minutes...")
-        
+
         # Add a cancel button
-        if st.button("❌ 取消处理", key="cancel_processing"):
+        if st.button("❌ Cancel Processing", key="cancel_processing"):
             st.session_state.processing = False
             st.rerun()
     
@@ -374,9 +375,9 @@ class GraphJudgeApp:
                     st.progress(progress, text=message)
                 
                 with status_container.container():
-                    stage_names = ["🔍 实体提取", "🔗 三元组生成", "⚖️ 图判断", "✅ 完成"]
+                    stage_names = ["🔍 Entity Extraction", "🔗 Triple Generation", "⚖️ Graph Judgment", "✅ Complete"]
                     if stage < len(stage_names):
-                        st.info(f"当前阶段: {stage_names[stage]}")
+                        st.info(f"Current Stage: {stage_names[stage]}")
             
             # Run the pipeline
             start_time = time.time()
@@ -413,10 +414,10 @@ class GraphJudgeApp:
             status_container.empty()
             
             if result.success:
-                st.success(f"🎉 处理完成！总耗时: {result.total_time:.2f} 秒")
+                st.success(f"🎉 Processing Complete! Total time: {result.total_time:.2f} seconds")
                 st.balloons()
             else:
-                st.error(f"❌ 处理失败: {result.error}")
+                st.error(f"❌ Processing Failed: {result.error}")
             
             st.rerun()
             
@@ -428,7 +429,7 @@ class GraphJudgeApp:
             # Create error info for display
             error_info = ErrorInfo(
                 error_type=ErrorType.PROCESSING,
-                message="流水线处理过程中发生错误",
+                message="An error occurred during pipeline processing",
                 technical_details=str(e),
                 stage="pipeline_execution"
             )
@@ -453,7 +454,7 @@ class GraphJudgeApp:
             display_final_results(result)
             
             # Detailed results in expandable sections
-            with st.expander("🔍 查看各阶段详细结果", expanded=False):
+            with st.expander("🔍 View Detailed Results by Stage", expanded=False):
                 if result.entity_result:
                     display_entity_results(result.entity_result)
                     st.markdown("---")
@@ -466,7 +467,7 @@ class GraphJudgeApp:
                     display_judgment_results(result.judgment_result, result.triple_result.triples)
             
             # Pipeline summary
-            with st.expander("📊 运行总结", expanded=False):
+            with st.expander("📊 Execution Summary", expanded=False):
                 display_pipeline_summary(result)
         
         else:
@@ -476,11 +477,11 @@ class GraphJudgeApp:
             
             # Show partial results if available
             if result.entity_result and result.entity_result.success:
-                with st.expander("🔍 实体提取结果 (部分完成)"):
+                with st.expander("🔍 Entity Extraction Results (Partial)"):
                     display_entity_results(result.entity_result)
-            
+
             if result.triple_result and result.triple_result.success:
-                with st.expander("🔗 三元组生成结果 (部分完成)"):
+                with st.expander("🔗 Triple Generation Results (Partial)"):
                     display_triple_results(result.triple_result)
             
             # Recovery suggestions
@@ -494,13 +495,13 @@ class GraphJudgeApp:
     def _show_detailed_results(self):
         """Show detailed results in a dedicated section."""
         if st.session_state.current_result:
-            st.markdown("## 📋 详细结果分析")
+            st.markdown("## 📋 Detailed Results Analysis")
             self._render_results_section(st.session_state.current_result)
     
     def _show_comparison(self):
         """Show comparison with historical results."""
         if st.session_state.current_result and st.session_state.pipeline_results:
-            st.markdown("## 📈 历史对比分析")
+            st.markdown("## 📈 Historical Comparison Analysis")
             display_comparison_view(
                 st.session_state.current_result,
                 st.session_state.pipeline_results[:-1]  # Exclude current result
@@ -518,11 +519,11 @@ class GraphJudgeApp:
         
         with col2:
             if st.session_state.current_result:
-                st.markdown(f"**运行时间**: {st.session_state.current_result.total_time:.2f}s")
-                st.caption(f"处理于: {datetime.now().strftime('%H:%M:%S')}")
+                st.markdown(f"**Runtime**: {st.session_state.current_result.total_time:.2f}s")
+                st.caption(f"Processed at: {datetime.now().strftime('%H:%M:%S')}")
         
         with col3:
-            st.markdown("**状态**: 就绪")
+            st.markdown("**Status**: Ready")
             st.caption("Ready for next processing")
 
 

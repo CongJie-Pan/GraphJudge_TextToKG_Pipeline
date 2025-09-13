@@ -29,11 +29,11 @@ from ..core.pipeline import PipelineResult
 def display_final_results(pipeline_result: PipelineResult):
     """
     Display the final consolidated results from all pipeline stages.
-    
+
     Args:
         pipeline_result: Complete pipeline execution results
     """
-    st.markdown("# 🏆 最终结果 (Final Results)")
+    st.markdown("# 🏆 Final Results")
     
     if not pipeline_result.success:
         st.error(f"Pipeline failed at {pipeline_result.error_stage}: {pipeline_result.error}")
@@ -67,71 +67,71 @@ def display_final_results(pipeline_result: PipelineResult):
         
         with col1:
             st.metric(
-                "✅ 通过的三元组",
+                "✅ Approved Triples",
                 approved_count,
-                delta=f"{(1-rejection_rate)*100:.1f}% 通过率"
+                delta=f"{(1-rejection_rate)*100:.1f}% approval rate"
             )
-        
+
         with col2:
             st.metric(
-                "❌ 被拒绝的",
+                "❌ Rejected Triples",
                 total_triples - approved_count,
-                delta=f"{rejection_rate*100:.1f}% 拒绝率"
+                delta=f"{rejection_rate*100:.1f}% rejection rate"
             )
-        
+
         with col3:
             avg_confidence = (
-                sum(pipeline_result.judgment_result.confidence) / 
+                sum(pipeline_result.judgment_result.confidence) /
                 len(pipeline_result.judgment_result.confidence)
                 if pipeline_result.judgment_result.confidence else 0
             )
             st.metric(
-                "🎯 平均置信度",
+                "🎯 Average Confidence",
                 f"{avg_confidence:.3f}"
             )
-        
+
         with col4:
             st.metric(
-                "⏱️ 总处理时间",
+                "⏱️ Total Processing Time",
                 f"{pipeline_result.total_time:.1f}s"
             )
         
         # Display approved triples as the final knowledge graph
         if approved_triples:
-            st.markdown("## 🧠 最终知识图谱")
-            st.markdown(f"经过AI判断后，以下 **{len(approved_triples)}** 个知识三元组被认为是准确的：")
+            st.markdown("## 🧠 Final Knowledge Graph")
+            st.markdown(f"After AI judgment, the following **{len(approved_triples)}** knowledge triples were deemed accurate:")
             
             display_final_knowledge_graph(approved_triples, pipeline_result.judgment_result)
             
             # Export options
-            st.markdown("### 📤 导出选项")
+            st.markdown("### 📤 Export Options")
             col1, col2, col3 = st.columns(3)
-            
+
             with col1:
-                if st.button("📄 导出为 JSON", key="export_final_json"):
+                if st.button("📄 Export as JSON", key="export_final_json"):
                     export_final_results_json(approved_triples, pipeline_result)
-            
+
             with col2:
-                if st.button("📊 导出为 CSV", key="export_final_csv"):
+                if st.button("📊 Export as CSV", key="export_final_csv"):
                     export_final_results_csv(approved_triples, pipeline_result)
-            
+
             with col3:
-                if st.button("📋 生成报告", key="generate_report"):
+                if st.button("📋 Generate Report", key="generate_report"):
                     display_analysis_report(pipeline_result)
         
         else:
-            st.warning("⚠️ 没有三元组通过AI判断。您可能需要调整输入文本或检查处理逻辑。")
-            
+            st.warning("⚠️ No triples passed AI judgment. You may need to adjust the input text or check the processing logic.")
+
             # Show rejected triples for reference
             if rejected_triples:
-                with st.expander("🔍 查看被拒绝的三元组"):
+                with st.expander("🔍 View Rejected Triples"):
                     display_rejected_triples_analysis(rejected_triples, pipeline_result.judgment_result)
 
 
 def display_final_knowledge_graph(triples: List[Triple], judgment_result: JudgmentResult):
     """
     Display the final approved knowledge graph in an attractive format.
-    
+
     Args:
         triples: List of approved triples
         judgment_result: Judgment results for confidence scores
@@ -150,54 +150,54 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
         
         # Create a formatted entry
         final_data.append({
-            "序号": i + 1,
-            "知识三元组": f"【{triple.subject}】 → {triple.predicate} → 【{triple.object}】",
-            "主语": triple.subject,
-            "关系": triple.predicate,
-            "宾语": triple.object,
-            "AI置信度": f"{confidence:.3f}" if confidence > 0 else "N/A",
-            "质量等级": get_quality_grade(confidence) if confidence > 0 else "未评级"
+            "#": i + 1,
+            "Knowledge Triple": f"【{triple.subject}】 → {triple.predicate} → 【{triple.object}】",
+            "Subject": triple.subject,
+            "Relation": triple.predicate,
+            "Object": triple.object,
+            "AI Confidence": f"{confidence:.3f}" if confidence > 0 else "N/A",
+            "Quality Grade": get_quality_grade(confidence) if confidence > 0 else "Not Rated"
         })
     
     df = pd.DataFrame(final_data)
     
     # Display with custom styling
-    st.markdown("### 📋 知识三元组详情")
+    st.markdown("### 📋 Knowledge Triple Details")
     
     # Interactive data table with selection
     selected_indices = st.dataframe(
-        df[["序号", "知识三元组", "AI置信度", "质量等级"]],
+        df[["#", "Knowledge Triple", "AI Confidence", "Quality Grade"]],
         use_container_width=True,
         hide_index=True,
         on_select="rerun",
         selection_mode="multi-row",
         column_config={
-            "知识三元组": st.column_config.TextColumn(
-                "知识三元组",
-                help="点击查看详细信息",
+            "Knowledge Triple": st.column_config.TextColumn(
+                "Knowledge Triple",
+                help="Click to view detailed information",
                 width="large"
             ),
-            "AI置信度": st.column_config.ProgressColumn(
-                "AI置信度",
+            "AI Confidence": st.column_config.ProgressColumn(
+                "AI Confidence",
                 min_value=0.0,
                 max_value=1.0,
                 format="%.3f"
             ),
-            "质量等级": st.column_config.TextColumn(
-                "质量等级",
-                help="基于置信度的质量评级"
+            "Quality Grade": st.column_config.TextColumn(
+                "Quality Grade",
+                help="Quality rating based on confidence"
             )
         }
     )
     
     # Show knowledge graph visualization
     if len(triples) > 1:
-        st.markdown("### 🕸️ 关系网络图")
+        st.markdown("### 🕸️ Relationship Network Graph")
         if PLOTLY_AVAILABLE:
             create_enhanced_knowledge_graph(triples)
         else:
-            st.info("📊 网络图需要安装 Plotly 库: `pip install plotly`")
-            st.text("文本形式的关系展示:")
+            st.info("📊 Network graph requires Plotly library: `pip install plotly`")
+            st.text("Text-based relationship display:")
             for i, triple in enumerate(triples[:15], 1):
                 st.text(f"{i}. {triple.subject} → {triple.predicate} → {triple.object}")
 
@@ -205,12 +205,12 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
 def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_result: JudgmentResult):
     """
     Display analysis of rejected triples to help users understand the filtering.
-    
+
     Args:
         rejected_triples: List of rejected triples
         judgment_result: Judgment results with explanations
     """
-    st.markdown("#### 被拒绝的三元组分析")
+    st.markdown("#### Rejected Triples Analysis")
     
     rejection_data = []
     explanation_idx = 0
@@ -223,9 +223,9 @@ def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_r
             explanation = judgment_result.explanations[explanation_idx]
         
         rejection_data.append({
-            "三元组": f"{triple.subject} - {triple.predicate} - {triple.object}",
-            "可能原因": explanation or "AI判断该关系不够准确或相关",
-            "建议": get_rejection_suggestion(triple, explanation)
+            "Triple": f"{triple.subject} - {triple.predicate} - {triple.object}",
+            "Possible Reason": explanation or "AI judged this relationship as insufficiently accurate or relevant",
+            "Suggestion": get_rejection_suggestion(triple, explanation)
         })
         explanation_idx += 1
     
@@ -263,7 +263,7 @@ def create_enhanced_knowledge_graph(triples: List[Triple]):
         
         # Limit visualization size for performance
         if len(entities) > 15:
-            st.warning(f"实体数量较多({len(entities)}个)，显示前15个实体的关系图")
+            st.warning(f"Too many entities ({len(entities)}), showing relationships for the first 15 entities")
             entities = entities[:15]
             relationships = [r for r in relationships 
                            if r['source'] in entities and r['target'] in entities]
@@ -343,7 +343,7 @@ def create_enhanced_knowledge_graph(triples: List[Triple]):
         # Update layout
         fig.update_layout(
             title={
-                'text': "知识图谱网络可视化",
+                'text': "Knowledge Graph Network Visualization",
                 'x': 0.5,
                 'font': {'size': 16}
             },
@@ -351,7 +351,7 @@ def create_enhanced_knowledge_graph(triples: List[Triple]):
             hovermode='closest',
             margin=dict(b=20, l=5, r=5, t=40),
             annotations=[dict(
-                text="节点：实体 | 边：关系 | 线条粗细：AI置信度",
+                text="Nodes: Entities | Edges: Relations | Line thickness: AI confidence",
                 showarrow=False,
                 xref="paper", yref="paper",
                 x=0.005, y=-0.002,
@@ -367,8 +367,8 @@ def create_enhanced_knowledge_graph(triples: List[Triple]):
         st.plotly_chart(fig, use_container_width=True)
         
     except Exception as e:
-        st.error(f"可视化生成失败: {str(e)}")
-        st.info("您仍可以查看上方的表格形式结果")
+        st.error(f"Visualization generation failed: {str(e)}")
+        st.info("You can still view the table format results above")
 
 
 def export_final_results_json(triples: List[Triple], pipeline_result: PipelineResult):
@@ -397,7 +397,7 @@ def export_final_results_json(triples: List[Triple], pipeline_result: PipelineRe
     json_str = json.dumps(export_data, ensure_ascii=False, indent=2)
     
     st.download_button(
-        label="📁 下载 JSON 文件",
+        label="📁 Download JSON File",
         data=json_str,
         file_name=f"knowledge_graph_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
         mime="application/json"
@@ -410,19 +410,19 @@ def export_final_results_csv(triples: List[Triple], pipeline_result: PipelineRes
     
     for i, triple in enumerate(triples):
         csv_data.append({
-            "序号": i + 1,
-            "主语": triple.subject,
-            "谓语": triple.predicate,
-            "宾语": triple.object,
-            "置信度": triple.confidence or 0.0,
-            "质量等级": get_quality_grade(triple.confidence or 0.0)
+            "#": i + 1,
+            "Subject": triple.subject,
+            "Predicate": triple.predicate,
+            "Object": triple.object,
+            "Confidence": triple.confidence or 0.0,
+            "Quality Grade": get_quality_grade(triple.confidence or 0.0)
         })
     
     df = pd.DataFrame(csv_data)
     csv_string = df.to_csv(index=False, encoding='utf-8')
     
     st.download_button(
-        label="📊 下载 CSV 文件", 
+        label="📊 Download CSV File",
         data=csv_string,
         file_name=f"knowledge_graph_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
         mime="text/csv"
@@ -431,7 +431,7 @@ def export_final_results_csv(triples: List[Triple], pipeline_result: PipelineRes
 
 def display_analysis_report(pipeline_result: PipelineResult):
     """Display a comprehensive analysis report."""
-    st.markdown("## 📊 分析报告")
+    st.markdown("## 📊 Analysis Report")
     
     # Generate report content
     report_sections = []
@@ -443,33 +443,33 @@ def display_analysis_report(pipeline_result: PipelineResult):
         approval_rate = approved_count / total_count if total_count > 0 else 0
         
         report_sections.append(f"""
-        ### 📋 执行摘要
-        
-        - **总体状态**: ✅ 成功完成
-        - **处理时间**: {pipeline_result.total_time:.2f} 秒
-        - **知识提取**: 从输入文本中成功提取了 {approved_count} 个高质量知识三元组
-        - **质量评级**: {approval_rate:.1%} 的生成三元组通过了AI质量检查
+        ### 📋 Executive Summary
+
+        - **Overall Status**: ✅ Successfully completed
+        - **Processing Time**: {pipeline_result.total_time:.2f} seconds
+        - **Knowledge Extraction**: Successfully extracted {approved_count} high-quality knowledge triples from input text
+        - **Quality Rating**: {approval_rate:.1%} of generated triples passed AI quality checks
         """)
     
     # Stage Analysis
     if pipeline_result.entity_result:
         entities_count = len(pipeline_result.entity_result.entities)
         report_sections.append(f"""
-        ### 🔍 实体提取分析
-        
-        - **实体数量**: {entities_count} 个
-        - **处理时间**: {pipeline_result.entity_result.processing_time:.2f} 秒
-        - **效率**: {entities_count/pipeline_result.entity_result.processing_time:.1f} 实体/秒
+        ### 🔍 Entity Extraction Analysis
+
+        - **Entity Count**: {entities_count} entities
+        - **Processing Time**: {pipeline_result.entity_result.processing_time:.2f} seconds
+        - **Efficiency**: {entities_count/pipeline_result.entity_result.processing_time:.1f} entities/second
         """)
     
     if pipeline_result.triple_result:
         triples_count = len(pipeline_result.triple_result.triples)
         report_sections.append(f"""
-        ### 🔗 三元组生成分析
-        
-        - **生成数量**: {triples_count} 个三元组
-        - **处理时间**: {pipeline_result.triple_result.processing_time:.2f} 秒
-        - **生成效率**: {triples_count/pipeline_result.triple_result.processing_time:.1f} 三元组/秒
+        ### 🔗 Triple Generation Analysis
+
+        - **Generated Count**: {triples_count} triples
+        - **Processing Time**: {pipeline_result.triple_result.processing_time:.2f} seconds
+        - **Generation Efficiency**: {triples_count/pipeline_result.triple_result.processing_time:.1f} triples/second
         """)
     
     # Quality Analysis
@@ -479,12 +479,12 @@ def display_analysis_report(pipeline_result: PipelineResult):
         low_quality = sum(1 for c in pipeline_result.judgment_result.confidence if c < 0.5)
         
         report_sections.append(f"""
-        ### ⚖️ 质量分析
-        
-        - **高质量** (>0.8): {high_quality} 个
-        - **中等质量** (0.5-0.8): {medium_quality} 个
-        - **待改进** (<0.5): {low_quality} 个
-        - **平均置信度**: {sum(pipeline_result.judgment_result.confidence)/len(pipeline_result.judgment_result.confidence):.3f}
+        ### ⚖️ Quality Analysis
+
+        - **High Quality** (>0.8): {high_quality} items
+        - **Medium Quality** (0.5-0.8): {medium_quality} items
+        - **Needs Improvement** (<0.5): {low_quality} items
+        - **Average Confidence**: {sum(pipeline_result.judgment_result.confidence)/len(pipeline_result.judgment_result.confidence):.3f}
         """)
     
     # Display report
@@ -493,64 +493,64 @@ def display_analysis_report(pipeline_result: PipelineResult):
     
     # Recommendations
     st.markdown("""
-    ### 💡 建议
-    
-    1. **高质量结果**: 置信度超过0.8的三元组可以直接使用
-    2. **人工审核**: 建议对置信度0.5-0.8的结果进行人工检查
-    3. **结果优化**: 如需更多高质量结果，可尝试调整输入文本的表述方式
+    ### 💡 Recommendations
+
+    1. **High Quality Results**: Triples with confidence >0.8 can be used directly
+    2. **Manual Review**: Recommend manual review for results with confidence 0.5-0.8
+    3. **Result Optimization**: For more high-quality results, try adjusting the expression of input text
     """)
 
 
 def get_quality_grade(confidence: float) -> str:
     """Convert confidence score to quality grade."""
     if confidence >= 0.9:
-        return "🏆 优秀"
+        return "🏆 Excellent"
     elif confidence >= 0.8:
-        return "🥇 良好"
+        return "🥇 Good"
     elif confidence >= 0.6:
-        return "🥈 中等"
+        return "🥈 Average"
     elif confidence >= 0.4:
-        return "🥉 一般"
+        return "🥉 Fair"
     else:
-        return "⚠️ 待改进"
+        return "⚠️ Needs Improvement"
 
 
 def get_rejection_suggestion(triple: Triple, explanation: Optional[str]) -> str:
     """Generate suggestion for rejected triples."""
-    if explanation and "不准确" in explanation:
-        return "检查主语和宾语的关系是否正确表述"
-    elif explanation and "不相关" in explanation:
-        return "确认该关系是否与主题相关"
-    elif explanation and "模糊" in explanation:
-        return "尝试使用更明确的表述"
+    if explanation and "inaccurate" in explanation.lower():
+        return "Check if the relationship between subject and object is correctly expressed"
+    elif explanation and "irrelevant" in explanation.lower():
+        return "Confirm whether this relationship is relevant to the topic"
+    elif explanation and "vague" in explanation.lower():
+        return "Try using more explicit expressions"
     else:
-        return "重新审视该关系的表述方式或上下文"
+        return "Re-examine the expression or context of this relationship"
 
 
 def display_comparison_view(current_result: PipelineResult, previous_results: List[PipelineResult]):
     """
     Display comparison between current and previous results.
-    
+
     Args:
         current_result: Current pipeline result
         previous_results: List of previous results for comparison
     """
     if not previous_results:
         return
-    
-    st.markdown("## 📈 历史对比")
+
+    st.markdown("## 📈 Historical Comparison")
     
     # Create comparison metrics
     comparison_data = []
     for i, result in enumerate([current_result] + previous_results[:4]):  # Current + last 4
         if result.success and result.stats:
             comparison_data.append({
-                "运行": "当前" if i == 0 else f"历史-{i}",
-                "总时间": result.total_time,
-                "实体数": result.stats.get('entity_count', 0),
-                "三元组数": result.stats.get('triple_count', 0),
-                "通过数": result.stats.get('approved_triples', 0),
-                "通过率": result.stats.get('approval_rate', 0)
+                "Run": "Current" if i == 0 else f"History-{i}",
+                "Total Time": result.total_time,
+                "Entity Count": result.stats.get('entity_count', 0),
+                "Triple Count": result.stats.get('triple_count', 0),
+                "Approved Count": result.stats.get('approved_triples', 0),
+                "Approval Rate": result.stats.get('approval_rate', 0)
             })
     
     if comparison_data:
@@ -560,12 +560,12 @@ def display_comparison_view(current_result: PipelineResult, previous_results: Li
         # Performance trends
         if len(comparison_data) > 1 and PLOTLY_AVAILABLE:
             fig = px.line(
-                df, 
-                x="运行", 
-                y=["总时间", "通过率"],
-                title="性能趋势",
-                labels={"value": "数值", "variable": "指标"}
+                df,
+                x="Run",
+                y=["Total Time", "Approval Rate"],
+                title="Performance Trends",
+                labels={"value": "Value", "variable": "Metric"}
             )
             st.plotly_chart(fig, use_container_width=True)
         elif len(comparison_data) > 1:
-            st.info("📊 趋势图需要安装 Plotly 库: `pip install plotly`")
+            st.info("📊 Trend chart requires Plotly library: `pip install plotly`")
