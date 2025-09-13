@@ -186,6 +186,8 @@ class GraphJudgeApp:
         **GraphJudge** is an intelligent knowledge graph construction system based on large language models.
         Through a three-stage processing pipeline, it extracts entities from Chinese text, generates knowledge triples,
         and uses AI for quality assessment.
+
+        💡 **Getting Started**: Upload a Chinese text file (.txt) or paste text directly to begin analysis.
         """)
         
         # Quick stats if we have results
@@ -231,7 +233,7 @@ class GraphJudgeApp:
         st.sidebar.markdown("### 🔌 API Status Check")
 
         if st.sidebar.button("Test API Connection", key="test_apis"):
-            with st.sidebar.spinner("Testing..."):
+            with st.spinner("Testing API connections..."):
                 self._test_api_connections()
         
         # Application info

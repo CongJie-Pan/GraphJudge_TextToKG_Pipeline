@@ -182,6 +182,19 @@ class StreamlitLogger:
     def debug(self, message: str, stage: Optional[str] = None, extra: Optional[Dict] = None):
         """Log a debug message."""
         self._log("DEBUG", message, stage, extra)
+
+    # Convenience methods for backward compatibility
+    def log_info(self, message: str, extra: Optional[Dict] = None):
+        """Log an info message (backward compatibility)."""
+        self.info(message, extra=extra)
+
+    def log_error(self, message: str, extra: Optional[Dict] = None):
+        """Log an error message (backward compatibility)."""
+        self.error(message, extra=extra)
+
+    def log_warning(self, message: str, extra: Optional[Dict] = None):
+        """Log a warning message (backward compatibility)."""
+        self.warning(message, extra=extra)
     
     def _log(self, level: str, message: str, stage: Optional[str], extra: Optional[Dict]):
         """Internal logging method."""

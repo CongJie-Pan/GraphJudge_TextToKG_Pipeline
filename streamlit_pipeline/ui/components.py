@@ -28,36 +28,150 @@ from ..core.pipeline import PipelineResult
 from .error_display import display_success_message, display_processing_stats
 
 
-def display_input_section() -> str:
+def validate_text_file(uploaded_file) -> tuple[str, str, bool]:
     """
-    Display the main input section for text entry.
+    Validate and read uploaded text file with proper encoding detection.
+
+    Args:
+        uploaded_file: Streamlit uploaded file object
 
     Returns:
-        The input text from the user
+        tuple: (file_content, encoding_used, success_flag)
+    """
+    if uploaded_file is None:
+        return "", "", False
+
+    # Check file size (limit to 10MB for safety)
+    max_size = 10 * 1024 * 1024  # 10MB
+    if uploaded_file.size > max_size:
+        st.error(f"❌ File too large. Maximum size allowed: {max_size / (1024*1024):.1f}MB")
+        return "", "", False
+
+    # Check if file is empty
+    if uploaded_file.size == 0:
+        st.error("❌ File is empty. Please upload a file with content.")
+        return "", "", False
+
+    # Try multiple encodings for Chinese text files
+    encodings_to_try = ['utf-8', 'gbk', 'gb2312', 'big5', 'utf-16', 'utf-16le', 'utf-16be']
+
+    for encoding in encodings_to_try:
+        try:
+            uploaded_file.seek(0)  # Reset file pointer
+            file_content = uploaded_file.read().decode(encoding)
+
+            # Basic validation: check if content has Chinese characters
+            chinese_char_count = sum(1 for char in file_content if '\u4e00' <= char <= '\u9fff')
+            total_chars = len(file_content.strip())
+
+            if total_chars == 0:
+                continue  # Try next encoding
+
+            # If at least 10% of characters are Chinese, consider it valid
+            if chinese_char_count / total_chars >= 0.1 or total_chars < 100:
+                return file_content.strip(), encoding, True
+
+        except (UnicodeDecodeError, UnicodeError):
+            continue
+        except Exception as e:
+            st.error(f"❌ Error reading file with {encoding}: {str(e)}")
+            continue
+
+    return "", "", False
+
+
+def display_input_section() -> str:
+    """
+    Display the main input section for file upload or text entry.
+
+    Returns:
+        The input text from the user (either uploaded or typed)
     """
     st.markdown("## 📝 Input Text")
-    st.markdown("Please enter the Chinese text you want to analyze:")
-    
-    # Text area for input
-    input_text = st.text_area(
-        "Text Input",
-        height=200,
-        placeholder="Please enter your Chinese text here. Example: 红楼梦是清代作家曹雪芹创作的章回体长篇小说...",
-        help="Supports Chinese classical literature texts, model is optimized for Chinese",
-        label_visibility="collapsed"
-    )
-    
-    # Input statistics
+    st.markdown("Please upload a Chinese text file (.txt) or enter text directly:")
+
+    # Create tabs for different input methods
+    tab1, tab2 = st.tabs(["📁 Upload File", "✏️ Type Text"])
+
+    input_text = ""
+
+    with tab1:
+        # File upload section
+        uploaded_file = st.file_uploader(
+            "Choose a text file",
+            type=['txt'],
+            help="Upload a .txt file containing Chinese text for analysis",
+            label_visibility="collapsed"
+        )
+
+        if uploaded_file is not None:
+            # Use the validation helper function
+            file_content, used_encoding, success = validate_text_file(uploaded_file)
+
+            if success:
+                input_text = file_content
+                st.success(f"✅ File uploaded successfully! (Encoding: {used_encoding})")
+
+                # Show file info
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric("File Name", uploaded_file.name)
+                with col2:
+                    st.metric("File Size", f"{uploaded_file.size:,} bytes")
+                with col3:
+                    st.metric("Encoding Used", used_encoding)
+                with col4:
+                    # Count Chinese characters
+                    chinese_chars = sum(1 for char in file_content if '\u4e00' <= char <= '\u9fff')
+                    st.metric("Chinese Chars", f"{chinese_chars:,}")
+
+                # Show preview of file content
+                with st.expander("📋 File Content Preview"):
+                    preview_text = input_text[:500] + "..." if len(input_text) > 500 else input_text
+                    st.text_area(
+                        "Preview",
+                        value=preview_text,
+                        height=150,
+                        disabled=True,
+                        label_visibility="collapsed"
+                    )
+
+                    # Show additional file analysis
+                    if len(input_text) > 500:
+                        st.info(f"📄 Showing first 500 characters of {len(input_text):,} total characters")
+
+            else:
+                st.error("❌ Failed to read the file. Please ensure it's a valid Chinese text file with proper encoding.")
+
+    with tab2:
+        # Text area for manual input
+        manual_text = st.text_area(
+            "Text Input",
+            height=200,
+            placeholder="Please enter your Chinese text here. Example: 红楼梦是清代作家曹雪芹创作的章回体长篇小说...",
+            help="Supports Chinese classical literature texts, model is optimized for Chinese",
+            label_visibility="collapsed"
+        )
+
+        if manual_text:
+            input_text = manual_text.strip()
+
+    # Input statistics (show for both file upload and manual input)
     if input_text:
-        col1, col2, col3 = st.columns(3)
+        st.markdown("### 📊 Text Statistics")
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric("Character Count", len(input_text))
         with col2:
             st.metric("Line Count", len(input_text.split('\n')))
         with col3:
             st.metric("Paragraph Count", len([p for p in input_text.split('\n\n') if p.strip()]))
-    
-    return input_text.strip()
+        with col4:
+            # Estimate reading time (assuming 300 characters per minute for Chinese)
+            reading_time = len(input_text) / 300
+            st.metric("Est. Reading Time", f"{reading_time:.1f} min")
+
+    return input_text
 
 
 def display_entity_results(entity_result: EntityResult):
