@@ -10,6 +10,7 @@ from Section 6, with proper error handling and progress tracking.
 
 import time
 import logging
+from datetime import datetime
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, asdict
 
@@ -89,7 +90,7 @@ class PipelineOrchestrator:
         # Initialize pipeline state
         self.pipeline_state = PipelineState(
             input_text=input_text.strip(),
-            start_time=start_time
+            started_at=datetime.now().isoformat()
         )
         
         result = PipelineResult(
@@ -191,24 +192,23 @@ class PipelineOrchestrator:
         def entity_execution():
             return extract_entities(input_text)
         
-        result = safe_execute(
+        entity_result, error_info = safe_execute(
             entity_execution,
-            "Entity extraction failed",
-            self.error_handler,
+            logger=self.logger,
             stage="entity_extraction"
         )
         
-        # If safe_execute returns a dict with error, convert to EntityResult
-        if isinstance(result, dict) and result.get('error'):
+        # If safe_execute returned an error, convert to EntityResult
+        if error_info is not None:
             return EntityResult(
                 entities=[],
                 denoised_text=input_text,
                 success=False,
                 processing_time=0.0,
-                error=result['error']
+                error=error_info.message
             )
         
-        return result
+        return entity_result
     
     def _execute_triple_stage(self, entities: List[str], denoised_text: str) -> TripleResult:
         """
@@ -222,26 +222,26 @@ class PipelineOrchestrator:
             TripleResult containing generated triples
         """
         def triple_execution():
-            return generate_triples(entities, denoised_text)
+            api_client = get_api_client()  # Get API client for triple generation
+            return generate_triples(entities, denoised_text, api_client)
         
-        result = safe_execute(
+        triple_result, error_info = safe_execute(
             triple_execution,
-            "Triple generation failed",
-            self.error_handler,
+            logger=self.logger,
             stage="triple_generation"
         )
         
-        # If safe_execute returns a dict with error, convert to TripleResult
-        if isinstance(result, dict) and result.get('error'):
+        # If safe_execute returned an error, convert to TripleResult
+        if error_info is not None:
             return TripleResult(
                 triples=[],
                 metadata={},
                 success=False,
                 processing_time=0.0,
-                error=result['error']
+                error=error_info.message
             )
         
-        return result
+        return triple_result
     
     def _execute_judgment_stage(self, triples: List[Triple]) -> JudgmentResult:
         """
@@ -256,25 +256,24 @@ class PipelineOrchestrator:
         def judgment_execution():
             return judge_triples(triples)
         
-        result = safe_execute(
+        judgment_result, error_info = safe_execute(
             judgment_execution,
-            "Graph judgment failed",
-            self.error_handler,
+            logger=self.logger,
             stage="graph_judgment"
         )
         
-        # If safe_execute returns a dict with error, convert to JudgmentResult
-        if isinstance(result, dict) and result.get('error'):
+        # If safe_execute returned an error, convert to JudgmentResult
+        if error_info is not None:
             return JudgmentResult(
                 judgments=[],
                 confidence=[],
                 explanations=None,
                 success=False,
                 processing_time=0.0,
-                error=result['error']
+                error=error_info.message
             )
         
-        return result
+        return judgment_result
     
     def _generate_stats(self, result: PipelineResult) -> Dict[str, Any]:
         """

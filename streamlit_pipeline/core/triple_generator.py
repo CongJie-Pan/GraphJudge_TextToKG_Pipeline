@@ -365,7 +365,7 @@ def generate_triples(entities: List[str], text: str,
             # Make API call (if api_client provided)
             if api_client:
                 try:
-                    response = api_client.complete(prompt)
+                    response = api_client.call_gpt5_mini(prompt)
                     chunk_info['chunks_processed'] += 1
                     
                     # Validate and parse response

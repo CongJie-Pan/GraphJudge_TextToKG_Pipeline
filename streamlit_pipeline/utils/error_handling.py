@@ -152,7 +152,7 @@ class StreamlitLogger:
     def _setup_file_logger(self):
         """Set up file-based logging for debugging purposes."""
         log_dir = Path("streamlit_pipeline/logs")
-        log_dir.mkdir(exist_ok=True)
+        log_dir.mkdir(parents=True, exist_ok=True)
         
         log_file = log_dir / f"pipeline_{self.run_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
         
