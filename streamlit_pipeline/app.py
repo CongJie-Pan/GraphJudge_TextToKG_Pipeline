@@ -41,6 +41,9 @@ from streamlit_pipeline.ui.error_display import (
 # Utilities
 from streamlit_pipeline.utils.error_handling import ErrorHandler, ErrorInfo, ErrorType, StreamlitLogger
 from streamlit_pipeline.utils.api_client import get_api_client
+from streamlit_pipeline.utils.session_state import get_session_manager, store_pipeline_result
+from streamlit_pipeline.utils.state_persistence import persist_pipeline_result, get_persistence_manager
+from streamlit_pipeline.utils.state_cleanup import get_cleanup_manager, check_and_run_cleanup
 
 
 # Configure Streamlit page
@@ -99,28 +102,44 @@ class GraphJudgeApp:
         self.orchestrator = PipelineOrchestrator()
         self.progress_display = PipelineProgressDisplay()
         
-        # Initialize session state
+        # Initialize enhanced session state management
+        self.session_manager = get_session_manager()
+        self.persistence_manager = get_persistence_manager()
+        self.cleanup_manager = get_cleanup_manager()
+        
+        # Initialize session state (now handled by session manager)
         self._initialize_session_state()
         
         # Set up logging
         self._setup_logging()
+        
+        # Schedule automatic cleanup
+        self.cleanup_manager.schedule_automatic_cleanup(interval_minutes=30)
     
     def _initialize_session_state(self):
-        """Initialize Streamlit session state variables."""
+        """Initialize Streamlit session state variables using enhanced session manager."""
+        # Session state is now handled by the SessionStateManager
+        # This method ensures compatibility with the enhanced system
+        
+        # Check and run scheduled cleanup
+        check_and_run_cleanup()
+        
+        # Ensure backward compatibility with existing UI code
         if 'pipeline_results' not in st.session_state:
-            st.session_state.pipeline_results = []
+            st.session_state.pipeline_results = self.session_manager.get_pipeline_results()
         
         if 'current_result' not in st.session_state:
-            st.session_state.current_result = None
+            st.session_state.current_result = self.session_manager.get_current_result()
         
         if 'processing' not in st.session_state:
-            st.session_state.processing = False
+            st.session_state.processing = self.session_manager.is_processing()
         
         if 'run_count' not in st.session_state:
-            st.session_state.run_count = 0
+            metadata = self.session_manager.get_session_metadata()
+            st.session_state.run_count = metadata.run_count
         
         if 'config_options' not in st.session_state:
-            st.session_state.config_options = {}
+            st.session_state.config_options = self.session_manager.get_ui_state('config_options', {})
     
     def _setup_logging(self):
         """Set up logging for the application."""
@@ -224,13 +243,35 @@ class GraphJudgeApp:
         **开发**: GraphJudge Research Team
         """)
         
-        # Clear results option
+        # Clear results option with enhanced cleanup
         if st.session_state.pipeline_results:
             st.sidebar.markdown("---")
-            if st.sidebar.button("🗑️ 清除历史结果", key="clear_results"):
-                st.session_state.pipeline_results = []
-                st.session_state.current_result = None
-                st.rerun()
+            col1, col2 = st.sidebar.columns(2)
+            
+            with col1:
+                if st.button("🗑️ 清除结果", key="clear_results"):
+                    self.session_manager.reset_pipeline_data()
+                    st.rerun()
+            
+            with col2:
+                if st.button("🧹 完整清理", key="full_cleanup"):
+                    self.cleanup_manager.force_complete_cleanup()
+                    st.rerun()
+        
+        # Session statistics in sidebar
+        st.sidebar.markdown("---")
+        st.sidebar.markdown("### 📊 会话统计")
+        metadata = self.session_manager.get_session_metadata()
+        cache_stats = self.session_manager.get_cache_stats()
+        
+        st.sidebar.text(f"运行次数: {metadata.run_count}")
+        st.sidebar.text(f"成功次数: {metadata.successful_runs}")
+        if metadata.run_count > 0:
+            success_rate = metadata.successful_runs / metadata.run_count
+            st.sidebar.text(f"成功率: {success_rate:.1%}")
+        
+        st.sidebar.text(f"缓存命中率: {cache_stats.hit_rate:.1%}")
+        st.sidebar.text(f"缓存大小: {cache_stats.total_size_bytes / 1024 / 1024:.1f} MB")
     
     def _test_api_connections(self):
         """Test API connections and display status."""
@@ -300,21 +341,33 @@ class GraphJudgeApp:
     
     def _start_processing(self, input_text: str):
         """
-        Start the pipeline processing with progress tracking.
+        Start the pipeline processing with enhanced session management.
         
         Args:
             input_text: The input text to process
         """
+        # Set processing state using session manager
+        self.session_manager.set_processing_state(True, 0)
         st.session_state.processing = True
         st.session_state.original_input = input_text
+        
+        # Store input text in session manager for potential recovery
+        self.session_manager.set_ui_state('temp_input', input_text)
         
         # Initialize progress display
         progress_container = st.empty()
         status_container = st.empty()
         
         try:
-            # Progress callback function
+            # Progress callback function with enhanced tracking
             def progress_callback(stage: int, message: str):
+                # Update session manager progress data
+                self.session_manager.update_progress_data(
+                    stage, message, 
+                    timestamp=time.time(),
+                    input_length=len(input_text)
+                )
+                
                 with progress_container.container():
                     # Update progress bar
                     progress = (stage + 1) / 4  # 4 total stages (including completion)
@@ -330,13 +383,22 @@ class GraphJudgeApp:
             result = self.orchestrator.run_pipeline(input_text, progress_callback)
             end_time = time.time()
             
-            # Store results
+            # Store results using enhanced session management
             result.total_time = end_time - start_time
-            st.session_state.current_result = result
-            st.session_state.pipeline_results.append(result)
-            st.session_state.run_count += 1
             
-            # Clear processing state
+            # Store result in session manager (automatically handles history and metadata)
+            self.session_manager.set_current_result(result)
+            
+            # Persist large results for performance
+            persist_pipeline_result(f"run_{self.session_manager.get_session_metadata().run_count}", result)
+            
+            # Update backward compatibility variables
+            st.session_state.current_result = result
+            st.session_state.pipeline_results = self.session_manager.get_pipeline_results()
+            st.session_state.run_count = self.session_manager.get_session_metadata().run_count
+            
+            # Clear processing state using session manager
+            self.session_manager.set_processing_state(False)
             st.session_state.processing = False
             
             # Log the completion
