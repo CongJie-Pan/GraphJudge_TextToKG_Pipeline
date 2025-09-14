@@ -87,3 +87,165 @@ So, for the sake of just combine function of the `run_entity.py` and `run_triple
 
    ```
 
+### 2025/9/14
+
+#### streamlit_pipeline graphjudge 改進點
+
+1) 介面需要為英文 ok
+2) 輸入文字請改為browse文件的(txt file) ok
+3) ok - when click "api connection check" button, it will show the bug of :
+```
+Application error occurred
+
+StreamlitAPIException: Method spinner() does not exist for st.sidebar. Did you mean st.spinner()?
+
+Traceback:
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 160, in run
+    self._render_sidebar()
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 233, in _render_sidebar
+    with st.sidebar.spinner("测试中..."):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\.venv\Lib\site-packages\streamlit\delta_generator.py", line 373, in wrapper
+    raise StreamlitAPIException(message)
+    
+and
+
+Failed to initialize application
+
+AttributeError: 'StreamlitLogger' object has no attribute 'log_error'
+Traceback:
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 533, in main
+    app.run()
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 177, in run
+    st.session_state.logger.log_error(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+```
+
+---
+
+4) OK when texts entered and click start processing button, shows the error below :
+
+```
+Processing failed: 'StreamlitLogger' object has no attribute 'log_info'
+
+Application error occurred
+
+TypeError: ErrorInfo.__init__() missing 1 required positional argument: 'severity'
+Traceback:
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 166, in run
+    self._render_main_interface()
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 323, in _render_main_interface
+    self._start_processing(input_text.strip())
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 429, in _start_processing
+    error_info = ErrorInfo(
+                 ^^^^^^^^^^
+
+```
+
+and 
+
+```
+Failed to initialize application
+
+AttributeError: 'StreamlitLogger' object has no attribute 'log_error'
+Traceback:
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 533, in main
+    app.run()
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 177, in run
+    st.session_state.logger.log_error(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+---
+
+5) ok - The pipeline successfully completes entity extraction and finds entities in the input text, but when it proceeds to the triple generation stage, no triples are generated from these extracted entities.
+
+The system displays the error message "Pipeline failed at stage: triple_generation" followed by "Error: No triples were generated from the extracted entities" even though entities were successfully found in the previous stage.
+
+The extracted entities are not being saved to the project folder as expected, and there is suspicion that the denoised text processing step in the ECTD (Entity Extraction, Cleaning, Text Denoising) phase may not be functioning properly.
+
+   - Streamlit output: [in "streamlit_pipeline" folder, when running to the triple generation(entity extraction complete),
+  occured the problem below :
+  Pipeline failed at stage: triple_generation. Error: No triples were generated from the extracted entities]
+  
+6) ok - please show more processing 過程 in the streamlit_pipeline , more detail process in every phase, like the original source code.
+  
+7) ok - and there's no log saved in the project folder 
+  
+8) need to edit the denoised texts prompt into the :
+   
+```
+  目標：
+基於給定的實體，對古典中文文本進行去噪處理，即移除無關的描述性文字並重組為清晰的事實陳述。
+
+以下是《紅樓夢》的三個範例：
+範例#1:
+原始文本："廟旁住著一家鄉宦，姓甄，名費，字士隱。嫡妻封氏，情性賢淑，深明禮義。家中雖不甚富貴，然本地便也推他為望族了。"
+實體：["甄費", "甄士隱", "封氏", "鄉宦"]
+去噪文本："甄士隱是一家鄉宦。甄士隱姓甄名費字士隱。甄士隱的妻子是封氏。封氏情性賢淑深明禮義。甄家是本地望族。"
+
+範例#2:
+原始文本："賈雨村原系胡州人氏，也是詩書仕宦之族，因他生於末世，父母祖宗根基已盡，人口衰喪，只剩得他一身一口，在家鄉無益，因進京求取功名，再整基業。"
+實體：["賈雨村", "胡州", "詩書仕宦之族"]
+去噪文本："賈雨村是胡州人氏。賈雨村是詩書仕宦之族。賈雨村生於末世。賈雨村父母祖宗根基已盡。賈雨村進京求取功名。賈雨村想要重整基業。"
+
+範例#3:
+原始文本："賈寶玉因夢遊太虛幻境，頓生疑懼，醒來後心中不安，遂將此事告知林黛玉，黛玉聽後亦感驚異。"
+實體：["賈寶玉", "太虛幻境", "林黛玉"]
+去噪文本："賈寶玉夢遊太虛幻境。賈寶玉夢醒後頓生疑懼。賈寶玉將此事告知林黛玉。林黛玉聽後感到驚異。"
+
+請參考以上範例，處理以下文本：
+原始文本：{t}
+實體：{entities}
+去噪文本："""
+```
+  
+9) You pretend as a user, definitely want to see more actual processing in streamlit ui, if can show the process of the every phase processing. e.g. in the entity extract phase  need to show 1/27 entites or in the in the triple phase need to show the 1/27 triples ..., and so on on the graph judge.
+
+10)  please read "chat\run_gj.py" and "chat\convert_Judge_To_jsonGraph.py" to parse to the proper graph json file(as the source code demanded format). And  show the graph in streamlit "Relationship Network Graph" (Now, it's only showed : Network graph requires Plotly library: pip install plotly
+
+Text-based relationship display:
+1. 女媧氏 → 地點 → 大荒山
+2. 女媧氏 → 地點 → 無稽崖
+3. 石頭 → 地點 → 青埂峰
+...)
+
+11) the bug occured : 
+
+```
+"Application error occurred
+
+StreamlitAPIException: Expanders may not be nested inside other expanders.
+
+Traceback:
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 171, in run
+    self._render_main_interface()
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 349, in _render_main_interface
+    self._render_results_section(st.session_state.current_result)
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 551, in _render_results_section
+    display_triple_results(result.triple_result)
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\ui\components.py", line 398, in display_triple_results
+    with st.expander("🔬 Detailed Triple Generation Phases", expanded=True):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\runtime\metrics_util.py", line 410, in wrapped_func
+    result = non_optional_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\elements\layouts.py", line 601, in expander
+    return self.dg._block(block_proto=block_proto)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\delta_generator.py", line 518, in _block
+    _check_nested_element_violation(self, block_type, ancestor_block_types)
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\delta_generator.py", line 598, in _check_nested_element_violation
+    raise StreamlitAPIException("
+```
+
+---
+
+#### Claude Code Development improvement skill
+
+1) [In this video](https://www.youtube.com/watch?v=amEUIuBKwvg&t=2558s&ab_channel=ColeMedin&loop=0)
+   - add primer.md in the project
+   - Add the MCP Serena Sever in Claude code
+   - (continue video...)
+
