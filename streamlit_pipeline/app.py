@@ -544,19 +544,19 @@ class GraphJudgeApp:
             # Detailed results in expandable sections
             with st.expander("🔍 View Detailed Results by Stage", expanded=False):
                 if result.entity_result:
-                    display_entity_results(result.entity_result)
+                    display_entity_results(result.entity_result, show_expanders=False)
                     st.markdown("---")
-                
+
                 if result.triple_result:
-                    display_triple_results(result.triple_result)
+                    display_triple_results(result.triple_result, show_expanders=False)
                     st.markdown("---")
-                
+
                 if result.judgment_result and result.triple_result:
-                    display_judgment_results(result.judgment_result, result.triple_result.triples)
-            
+                    display_judgment_results(result.judgment_result, result.triple_result.triples, show_expanders=False)
+
             # Pipeline summary
             with st.expander("📊 Execution Summary", expanded=False):
-                display_pipeline_summary(result)
+                display_pipeline_summary(result, show_expanders=False)
         
         else:
             # Show error information
@@ -566,11 +566,11 @@ class GraphJudgeApp:
             # Show partial results if available
             if result.entity_result and result.entity_result.success:
                 with st.expander("🔍 Entity Extraction Results (Partial)"):
-                    display_entity_results(result.entity_result)
+                    display_entity_results(result.entity_result, show_expanders=False)
 
             if result.triple_result and result.triple_result.success:
                 with st.expander("🔗 Triple Generation Results (Partial)"):
-                    display_triple_results(result.triple_result)
+                    display_triple_results(result.triple_result, show_expanders=False)
             
             # Recovery suggestions
             error_info = ErrorInfo(
