@@ -155,8 +155,35 @@ class APIClient:
                     max_completion_tokens=max_tokens,
                     timeout=self.config["timeout"]
                 )
-                
-                return response.choices[0].message.content
+
+                # Debug: Check response structure
+                print(f"DEBUG: API call successful. Model: {model}, Temperature: {temperature}")
+                if hasattr(response, 'choices') and len(response.choices) > 0:
+                    choice = response.choices[0]
+                    if hasattr(choice, 'message') and hasattr(choice.message, 'content'):
+                        content = choice.message.content
+                        # Debug log for empty content
+                        if not content:
+                            print(f"DEBUG: Empty content received from API!")
+                            print(f"DEBUG: Model: {model} - GPT-5-mini reasoning mode issue suspected")
+                            print(f"DEBUG: Response object: {response}")
+                            print(f"DEBUG: Choice object: {choice}")
+                            print(f"DEBUG: Message object: {choice.message}")
+                            print(f"DEBUG: Finish reason: {getattr(choice, 'finish_reason', 'unknown')}")
+                            # Check for reasoning tokens in response (GPT-5-mini specific issue)
+                            if hasattr(response, 'choices') and hasattr(response.choices[0], 'reasoning'):
+                                print(f"DEBUG: Reasoning tokens present: {bool(getattr(response.choices[0], 'reasoning', None))}")
+                            if hasattr(choice, 'reasoning'):
+                                print(f"DEBUG: Choice has reasoning: {bool(getattr(choice, 'reasoning', None))}")
+                        else:
+                            print(f"DEBUG: Content received, length: {len(content)}")
+                        return content or ""  # Return empty string instead of None
+                    else:
+                        print(f"DEBUG: No message.content in choice. Choice structure: {choice}")
+                        return ""
+                else:
+                    print(f"DEBUG: No choices in response. Response structure: {response}")
+                    return ""
                 
             except Exception as e:
                 last_exception = e

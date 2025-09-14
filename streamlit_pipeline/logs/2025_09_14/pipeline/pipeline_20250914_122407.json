@@ -1,0 +1,136 @@
+{
+  "session_info": {
+    "phase": "pipeline",
+    "session_id": "20250914_122407",
+    "start_time": "2025-09-14 12:24:07",
+    "log_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\pipeline\\pipeline_20250914_122407.log",
+    "json_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\pipeline\\pipeline_20250914_122407.json"
+  },
+  "entries": [
+    {
+      "timestamp": "2025-09-14 12:24:07.727",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "Logger initialized for phase: pipeline",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:07.735",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "Log files created in: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\pipeline",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:07.783",
+      "level": "PIPELINE",
+      "phase": "pipeline",
+      "message": "Pipeline execution started",
+      "details": {
+        "input_length": 8120,
+        "timestamp": "2025-09-14T12:24:07.783304"
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:07.897",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "[STORAGE] Created iteration folder: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\datasets\\iteration_1",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:07.907",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "[PIPELINE] Starting Stage 1: Entity Extraction",
+      "details": {
+        "stage": "entity_extraction",
+        "input_preview": "紅樓夢\r\n\r\n第一回　甄士隱夢幻識通靈　賈雨村風塵懷閨秀\r\n\r\n作者自云：因曾歷過一番夢幻之後，故將真事隱去，而借通靈之說，撰此《石頭記》一書也。故曰「甄士隱夢幻識通靈」。但書中所記何事，又因何而撰是書哉？自又云：今風塵碌碌，一事無成，忽念及當日所有之女子，一一細推了去，覺其行止見識，皆出於我之上。何我堂堂之鬚眉，曾不若彼裙釵哉！實愧則有餘，悔又無益之大無可奈何之日也！當此時，則自欲將已往所賴，上..."
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.332",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "[ENTITY] Entity extraction completed successfully",
+      "details": {
+        "entity_count": 37,
+        "entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹",
+          "脂硯齋",
+          "吳玉峰",
+          "孔梅溪",
+          "女媧氏",
+          "大荒山"
+        ],
+        "denoised_text_length": 1397,
+        "processing_time": 73.37135100364685
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.355",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "[STORAGE] ECTD results saved to: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\datasets\\iteration_1\\ectd\\entities.json",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.374",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "[PIPELINE] Starting Stage 2: Triple Generation",
+      "details": {
+        "stage": "triple_generation",
+        "input_entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹"
+        ],
+        "denoised_text_preview": "石頭本紀\n女媧氏於大荒山無稽崖煉石補天，三萬六千五百塊石盡用，唯留一塊棄於青埂峰下。石既煉成，靈性遂通，因見暮石皆補而獨自遺棄，心生自怨。恰值僧道二人過峰，或言塵世榮華，或說出世無常；石慕紅塵，乞攜入世享受。二仙施法，化石為一塊玲瓏美玉，鐫名「通靈寶玉」，並約其入世歷劫，終還本質。\n\n因果並出\n西方靈河畔，三生石旁有絳珠草，為赤瑕宮神瑛侍者以甘露灌溉，草遂化為絳珠仙子；仙子欠恩未償，與警幻仙子、神瑛侍者之愛恨牽連，故有一干風流冤孽待下世了結。通靈寶玉被夾帶入塵，與絳珠仙子之因緣相繫，凡事由此演起。\n\n文本流傳\n空空道人得見石上文字，錄其所述，因見其情事瑣細，遂改號情僧，將《石頭記》入抄。後世傳..."
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.802",
+      "level": "ERROR",
+      "phase": "pipeline",
+      "message": "[TRIPLE] Triple generation failed",
+      "details": {
+        "error": "No triples were generated from the provided entities and text",
+        "processing_time": 114.21694374084473,
+        "metadata": {
+          "text_processing": {
+            "original_length": 1397,
+            "chunks_created": 1,
+            "chunks_processed": 1,
+            "chunks_with_triples": 0
+          },
+          "extraction_stats": {
+            "entities_provided": 37,
+            "total_triples_extracted": 0,
+            "unique_triples": 0,
+            "duplicates_removed": 0
+          },
+          "validation": {
+            "pydantic_available": true,
+            "schema_validation": "enabled"
+          }
+        }
+      },
+      "session_id": "20250914_122407"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "session_info": {
+    "phase": "pipeline",
+    "session_id": "20250914_122318",
+    "start_time": "2025-09-14 12:23:18",
+    "log_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\pipeline\\pipeline_20250914_122318.log",
+    "json_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\pipeline\\pipeline_20250914_122318.json"
+  },
+  "entries": [
+    {
+      "timestamp": "2025-09-14 12:23:18.180",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "Logger initialized for phase: pipeline",
+      "details": {},
+      "session_id": "20250914_122318"
+    },
+    {
+      "timestamp": "2025-09-14 12:23:18.194",
+      "level": "INFO",
+      "phase": "pipeline",
+      "message": "Log files created in: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\pipeline",
+      "details": {},
+      "session_id": "20250914_122318"
+    }
+  ]
+}

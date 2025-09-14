@@ -1,0 +1,199 @@
+{
+  "session_info": {
+    "phase": "ectd",
+    "session_id": "20250914_122407",
+    "start_time": "2025-09-14 12:24:07",
+    "log_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\ectd\\ectd_20250914_122407.log",
+    "json_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\ectd\\ectd_20250914_122407.json"
+  },
+  "entries": [
+    {
+      "timestamp": "2025-09-14 12:24:07.986",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "Logger initialized for phase: ectd",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:07.988",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "Log files created in: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\ectd",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:07.994",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Starting API call for entity extraction",
+      "details": {
+        "text_length": 8120,
+        "text_preview": "紅樓夢\r\n\r\n第一回　甄士隱夢幻識通靈　賈雨村風塵懷閨秀\r\n\r\n作者自云：因曾歷過一番夢幻之後，故將..."
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:08.009",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Prepared prompts for entity extraction",
+      "details": {
+        "system_prompt_length": 209,
+        "user_prompt_length": 8206
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:08.019",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[API] Making API call to GPT-5-mini for entity extraction",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.584",
+      "level": "API",
+      "phase": "ectd",
+      "message": "API call to GPT-5-mini succeeded",
+      "details": {
+        "api_name": "GPT-5-mini",
+        "prompt_length": 8206,
+        "response_length": 264,
+        "success": true,
+        "error": null
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.594",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Received API response",
+      "details": {
+        "response_length": 264,
+        "response_preview": "[\"紅樓夢\", \"石頭記\", \"金陵十二釵\", \"風月寶鑒\", \"曹雪芹\", \"脂硯齋\", \"吳玉峰\", \"孔梅溪\", \"女媧氏\", \"大荒山\", \"無稽崖\", \"青埂峰\", \"石頭\", \"通靈寶玉\"..."
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.602",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Parsing entity response",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.671",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[ENTITY] Successfully extracted 37 entities",
+      "details": {
+        "entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹",
+          "脂硯齋",
+          "吳玉峰",
+          "孔梅溪",
+          "女媧氏",
+          "大荒山",
+          "無稽崖",
+          "青埂峰",
+          "石頭",
+          "通靈寶玉",
+          "空空道人/情僧",
+          "警幻仙子",
+          "神瑛侍者",
+          "絳珠草",
+          "絳珠仙子",
+          "三生石",
+          "赤瑕宮",
+          "太虛幻境",
+          "好了歌",
+          "甄士隱",
+          "封氏",
+          "英蓮",
+          "賈雨村",
+          "仁清巷",
+          "十里街",
+          "閶門",
+          "姑蘇",
+          "葫蘆廟",
+          "封肅",
+          "霍啟",
+          "北邙山",
+          "西方靈河",
+          "神都"
+        ],
+        "entity_count": 37
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.687",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[ENTITY] Extracted 37 entities",
+      "details": {
+        "entity_count": 37,
+        "entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹"
+        ]
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.687",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[ENTITY] Starting text denoising with extracted entities",
+      "details": {},
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.314",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[ENTITY] Text denoising completed",
+      "details": {
+        "original_length": 8120,
+        "denoised_length": 1397
+      },
+      "session_id": "20250914_122407"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.324",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[ENTITY] Entity extraction completed successfully",
+      "details": {
+        "entity_count": 37,
+        "entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹",
+          "脂硯齋",
+          "吳玉峰",
+          "孔梅溪",
+          "女媧氏",
+          "大荒山"
+        ],
+        "denoised_text_length": 1397,
+        "processing_time": 73.36359906196594
+      },
+      "session_id": "20250914_122407"
+    }
+  ]
+}

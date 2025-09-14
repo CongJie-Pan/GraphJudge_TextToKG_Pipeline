@@ -1,0 +1,260 @@
+{
+  "session_info": {
+    "phase": "triples",
+    "session_id": "20250914_122521",
+    "start_time": "2025-09-14 12:25:21",
+    "log_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\triples\\triples_20250914_122521.log",
+    "json_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\triples\\triples_20250914_122521.json"
+  },
+  "entries": [
+    {
+      "timestamp": "2025-09-14 12:25:21.392",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "Logger initialized for phase: triples",
+      "details": {},
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.400",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "Log files created in: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\triples",
+      "details": {},
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.412",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "[TRIPLE] Starting triple generation",
+      "details": {
+        "entity_count": 37,
+        "entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹",
+          "脂硯齋",
+          "吳玉峰",
+          "孔梅溪",
+          "女媧氏",
+          "大荒山"
+        ],
+        "text_length": 1397,
+        "text_preview": "石頭本紀\n女媧氏於大荒山無稽崖煉石補天，三萬六千五百塊石盡用，唯留一塊棄於青埂峰下。石既煉成，靈性遂通，因見暮石皆補而獨自遺棄，心生自怨。恰值僧道二人過峰，或言塵世榮華，或說出世無常；石慕紅塵，乞攜入世享受。二仙施法，化石為一塊玲瓏美玉，鐫名「通靈寶玉」，並約其入世歷劫，終還本質。\n\n因果並出\n西方靈河畔，三生石旁有絳珠草，為赤瑕宮神瑛侍者以甘露灌溉，草遂化為絳珠仙子；仙子欠恩未償，與警幻仙子、神..."
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.491",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Starting text chunking",
+      "details": {},
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.503",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "[TRIPLE] Text chunked for processing",
+      "details": {
+        "total_chunks": 1,
+        "chunk_lengths": [
+          1397
+        ]
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.511",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Processing chunk 1/1",
+      "details": {
+        "chunk_index": 0,
+        "chunk_length": 1397,
+        "chunk_preview": "石頭本紀\n女媧氏於大荒山無稽崖煉石補天，三萬六千五百塊石盡用，唯留一塊棄於青埂峰下。石既煉成，靈性遂通，因見暮石皆補而獨自遺棄，心生自怨。恰值僧道二人過峰，或言塵世榮華，或說出世無常；石慕紅塵，乞攜入..."
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.522",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Created enhanced prompt for chunk",
+      "details": {
+        "prompt_length": 2229,
+        "chunk_index": 0
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.531",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "[API] Making API call for chunk 1",
+      "details": {},
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.634",
+      "level": "ERROR",
+      "phase": "triples",
+      "message": "[API] Empty response received from GPT-5-mini",
+      "details": {
+        "chunk_index": 0,
+        "response_type": "str",
+        "response_is_none": false,
+        "response_is_empty_string": true,
+        "entities_count": 37,
+        "prompt_length": 2229
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.655",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Received API response for chunk",
+      "details": {
+        "chunk_index": 0,
+        "response_length": 0,
+        "response_preview": ""
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.666",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Validating response schema",
+      "details": {},
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.677",
+      "level": "WARNING",
+      "phase": "triples",
+      "message": "[TRIPLE] Schema validation failed for chunk 1",
+      "details": {
+        "chunk_index": 0,
+        "response": ""
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.688",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Starting triple deduplication",
+      "details": {
+        "total_triples_before": 0
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.697",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "[TRIPLE] Triple deduplication completed",
+      "details": {
+        "total_triples_before": 0,
+        "unique_triples_after": 0,
+        "duplicates_removed": 0
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.708",
+      "level": "DEBUG",
+      "phase": "triples",
+      "message": "[TRIPLE] Prepared extraction metadata",
+      "details": {
+        "text_processing": {
+          "original_length": 1397,
+          "chunks_created": 1,
+          "chunks_processed": 1,
+          "chunks_with_triples": 0
+        },
+        "extraction_stats": {
+          "entities_provided": 37,
+          "total_triples_extracted": 0,
+          "unique_triples": 0,
+          "duplicates_removed": 0
+        },
+        "validation": {
+          "pydantic_available": true,
+          "schema_validation": "enabled"
+        }
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.716",
+      "level": "INFO",
+      "phase": "triples",
+      "message": "[TRIPLE] Triple generation analysis",
+      "details": {
+        "has_triples": false,
+        "processing_successful": true,
+        "overall_success": false,
+        "success_rate": 1.0,
+        "total_unique_triples": 0
+      },
+      "session_id": "20250914_122521"
+    },
+    {
+      "timestamp": "2025-09-14 12:27:15.726",
+      "level": "ERROR",
+      "phase": "triples",
+      "message": "[TRIPLE] Triple generation failed: no triples generated",
+      "details": {
+        "entities_provided": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹",
+          "脂硯齋",
+          "吳玉峰",
+          "孔梅溪",
+          "女媧氏",
+          "大荒山",
+          "無稽崖",
+          "青埂峰",
+          "石頭",
+          "通靈寶玉",
+          "空空道人/情僧",
+          "警幻仙子",
+          "神瑛侍者",
+          "絳珠草",
+          "絳珠仙子",
+          "三生石",
+          "赤瑕宮",
+          "太虛幻境",
+          "好了歌",
+          "甄士隱",
+          "封氏",
+          "英蓮",
+          "賈雨村",
+          "仁清巷",
+          "十里街",
+          "閶門",
+          "姑蘇",
+          "葫蘆廟",
+          "封肅",
+          "霍啟",
+          "北邙山",
+          "西方靈河",
+          "神都"
+        ],
+        "chunks_processed": 1,
+        "chunks_with_triples": 0
+      },
+      "session_id": "20250914_122521"
+    }
+  ]
+}

@@ -410,11 +410,32 @@ def generate_triples(entities: List[str], text: str) -> TripleResult:
                 "chunk_index": chunk_idx
             })
 
+            # DEBUG: Log the actual prompt being sent
+            print(f"DEBUG PROMPT (Chunk {chunk_idx + 1}): {prompt[:500]}...")
+            print(f"DEBUG ENTITIES: {entities[:10]}")
+            print(f"DEBUG CHUNK PREVIEW: {chunk[:200]}...")
+
             # Make API call using the standalone function (consistent with entity processor)
             try:
                 detailed_logger.log_info("API", f"Making API call for chunk {chunk_idx + 1}")
                 response = call_gpt5_mini(prompt)
                 chunk_info['chunks_processed'] += 1
+
+                # Enhanced API response debugging for empty response troubleshooting
+                if not response or not response.strip():
+                    print(f"DEBUG API RESPONSE: Empty or None response received for chunk {chunk_idx + 1}!")
+                    print(f"DEBUG: Response type: {type(response)}")
+                    print(f"DEBUG: Response repr: {repr(response)}")
+                    detailed_logger.log_error("API", "Empty response received from GPT-5-mini", {
+                        "chunk_index": chunk_idx,
+                        "response_type": type(response).__name__,
+                        "response_is_none": response is None,
+                        "response_is_empty_string": response == "",
+                        "entities_count": len(entities),
+                        "prompt_length": len(prompt)
+                    })
+                else:
+                    print(f"DEBUG API RESPONSE: Valid response received, length: {len(response)}")
 
                 detailed_logger.log_debug("TRIPLE", "Received API response for chunk", {
                     "chunk_index": chunk_idx,

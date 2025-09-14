@@ -291,3 +291,31 @@ Remember: **Prevention is better than debugging** - Well-designed tests and cons
 - Always confirm file paths and module names exist before referencing them in code or tests.
 - Never delete or overwrite existing code unless explicitly instructed.
 - While in debugging, Except necessary, otherwise don't create new file while in debuging, just edited in the original file.
+
+### 🔍 MANDATORY PRE-TASK COMPLIANCE CHECK
+> **STOP: Before starting any task, Claude Code must explicitly verify ALL points:**
+
+**Step 1: Rule Acknowledgment**
+- [ ] ✅ I acknowledge all critical rules in CLAUDE.md and will follow them
+
+**Step 2: Task Analysis**  
+- [ ] Will this create files in root? → If YES, use proper module structure instead
+- [ ] Will this take >30 seconds? → If YES, use Task agents not Bash
+- [ ] Is this 3+ steps? → If YES, use TodoWrite breakdown first
+- [ ] Am I about to use grep/find/cat? → If YES, use proper tools instead
+
+**Step 3: Technical Debt Prevention (MANDATORY SEARCH FIRST)**
+- [ ] **SEARCH FIRST**: Use Grep pattern="<functionality>.*<keyword>" to find existing implementations
+- [ ] **CHECK EXISTING**: Read any found files to understand current functionality
+- [ ] Does similar functionality already exist? → If YES, extend existing code
+- [ ] Am I creating a duplicate class/manager? → If YES, consolidate instead
+- [ ] Will this create multiple sources of truth? → If YES, redesign approach
+- [ ] Have I searched for existing implementations? → Use Grep/Glob tools first
+- [ ] Can I extend existing code instead of creating new? → Prefer extension over creation
+- [ ] Am I about to copy-paste code? → Extract to shared utility instead
+
+**Step 4: Session Management**
+- [ ] Is this a long/complex task? → If YES, plan context checkpoints
+- [ ] Have I been working >1 hour? → If YES, consider /compact or session break
+
+> **⚠️ DO NOT PROCEED until all checkboxes are explicitly verified**

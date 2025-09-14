@@ -8,7 +8,8 @@
       "Bash(streamlit run:*)",
       "Bash(dir datasets)",
       "Bash(dir:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebSearch"
     ]
   },
   "outputStyle": "default"

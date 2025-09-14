@@ -1,0 +1,133 @@
+{
+  "session_info": {
+    "phase": "ectd",
+    "session_id": "20250914_122443",
+    "start_time": "2025-09-14 12:24:43",
+    "log_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\ectd\\ectd_20250914_122443.log",
+    "json_file": "D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\ectd\\ectd_20250914_122443.json"
+  },
+  "entries": [
+    {
+      "timestamp": "2025-09-14 12:24:43.704",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "Logger initialized for phase: ectd",
+      "details": {},
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.704",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "Log files created in: D:\\AboutCoding\\AI_Research\\GraphJudge_TextToKG_CLI\\streamlit_pipeline\\logs\\2025_09_14\\ectd",
+      "details": {},
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.716",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Starting text denoising with entities",
+      "details": {
+        "text_length": 8120,
+        "entity_count": 37,
+        "entities": [
+          "紅樓夢",
+          "石頭記",
+          "金陵十二釵",
+          "風月寶鑒",
+          "曹雪芹",
+          "脂硯齋",
+          "吳玉峰",
+          "孔梅溪",
+          "女媧氏",
+          "大荒山",
+          "無稽崖",
+          "青埂峰",
+          "石頭",
+          "通靈寶玉",
+          "空空道人/情僧",
+          "警幻仙子",
+          "神瑛侍者",
+          "絳珠草",
+          "絳珠仙子",
+          "三生石",
+          "赤瑕宮",
+          "太虛幻境",
+          "好了歌",
+          "甄士隱",
+          "封氏",
+          "英蓮",
+          "賈雨村",
+          "仁清巷",
+          "十里街",
+          "閶門",
+          "姑蘇",
+          "葫蘆廟",
+          "封肅",
+          "霍啟",
+          "北邙山",
+          "西方靈河",
+          "神都"
+        ]
+      },
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.725",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Prepared prompts for text denoising",
+      "details": {
+        "system_prompt_length": 164,
+        "user_prompt_length": 8472,
+        "entities_format": "['紅樓夢', '石頭記', '金陵十二釵', '風月寶鑒', '曹雪芹', '脂硯齋', '吳玉峰', '孔梅溪', '女媧氏', '大荒山', '無稽崖', '青埂峰', '石頭', '通靈寶玉', '空空道人/情僧', '警幻仙子', '神瑛侍者', '絳珠草', '絳珠仙子', '三生石', '赤瑕宮', '太虛幻境', '好了歌', '甄士隱', '封氏', '英蓮', '賈雨村', '仁清巷', '十里街', '閶門', '姑蘇', '葫蘆廟', '封肅', '霍啟', '北邙山', '西方靈河', '神都']"
+      },
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:24:43.728",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[API] Making API call to GPT-5-mini for text denoising",
+      "details": {},
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.279",
+      "level": "API",
+      "phase": "ectd",
+      "message": "API call to GPT-5-mini succeeded",
+      "details": {
+        "api_name": "GPT-5-mini",
+        "prompt_length": 8472,
+        "response_length": 1397,
+        "success": true,
+        "error": null
+      },
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.295",
+      "level": "DEBUG",
+      "phase": "ectd",
+      "message": "[ENTITY] Received denoised text response",
+      "details": {
+        "response_length": 1397,
+        "response_preview": "石頭本紀\n女媧氏於大荒山無稽崖煉石補天，三萬六千五百塊石盡用，唯留一塊棄於青埂峰下。石既煉成，靈性遂通，因見暮石皆補而獨自遺棄，心生自怨。恰值僧道二人過峰，或言塵世榮華，或說出世無常；石慕紅塵，乞攜入..."
+      },
+      "session_id": "20250914_122443"
+    },
+    {
+      "timestamp": "2025-09-14 12:25:21.306",
+      "level": "INFO",
+      "phase": "ectd",
+      "message": "[ENTITY] Successfully denoised text",
+      "details": {
+        "original_length": 8120,
+        "denoised_length": 1397
+      },
+      "session_id": "20250914_122443"
+    }
+  ]
+}

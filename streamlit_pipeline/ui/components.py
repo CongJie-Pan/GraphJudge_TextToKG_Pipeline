@@ -202,134 +202,134 @@ def display_entity_results(entity_result: EntityResult):
                 st.metric("Model", "GPT-5-mini", "Enhanced Chinese")
 
         # Detailed processing phases display
-        with st.expander("🔬 Detailed Processing Phases", expanded=True):
-            st.markdown("### Phase 1: Entity Extraction with GPT-5-mini")
-            st.info("📝 **Advanced Language Understanding**: GPT-5-mini analyzes classical Chinese text using contextual understanding and entity recognition patterns optimized for Chinese literature.")
+        st.markdown("### 🔬 Detailed Processing Phases")
+        st.markdown("#### Phase 1: Entity Extraction with GPT-5-mini")
+        st.info("📝 **Advanced Language Understanding**: GPT-5-mini analyzes classical Chinese text using contextual understanding and entity recognition patterns optimized for Chinese literature.")
 
-            # Entity categorization and display
-            if entity_result.entities:
-                st.markdown("#### 📊 Extracted Entities with Smart Categorization")
+        # Entity categorization and display
+        if entity_result.entities:
+            st.markdown("##### 📊 Extracted Entities with Smart Categorization")
 
-                # Enhanced entity display with categorization
-                entity_categories = {
-                    "👤 人物 (Characters)": [],
-                    "🏛️ 地點 (Locations)": [],
-                    "📚 物品 (Objects)": [],
-                    "💭 概念 (Concepts)": []
-                }
+            # Enhanced entity display with categorization
+            entity_categories = {
+                "👤 人物 (Characters)": [],
+                "🏛️ 地點 (Locations)": [],
+                "📚 物品 (Objects)": [],
+                "💭 概念 (Concepts)": []
+            }
 
-                # Smart categorization logic with Chinese character patterns
-                for entity in entity_result.entities:
-                    entity_str = str(entity)
-                    if any(char in entity_str for char in ['氏', '公', '君', '先生', '夫人', '姓', '名']):
-                        entity_categories["👤 人物 (Characters)"].append(entity_str)
-                    elif any(char in entity_str for char in ['城', '府', '廟', '巷', '街', '州', '門']):
-                        entity_categories["🏛️ 地點 (Locations)"].append(entity_str)
-                    elif any(char in entity_str for char in ['書', '廟', '房', '園', '院', '館']):
-                        entity_categories["📚 物品 (Objects)"].append(entity_str)
-                    else:
-                        entity_categories["💭 概念 (Concepts)"].append(entity_str)
+            # Smart categorization logic with Chinese character patterns
+            for entity in entity_result.entities:
+                entity_str = str(entity)
+                if any(char in entity_str for char in ['氏', '公', '君', '先生', '夫人', '姓', '名']):
+                    entity_categories["👤 人物 (Characters)"].append(entity_str)
+                elif any(char in entity_str for char in ['城', '府', '廟', '巷', '街', '州', '門']):
+                    entity_categories["🏛️ 地點 (Locations)"].append(entity_str)
+                elif any(char in entity_str for char in ['書', '廟', '房', '園', '院', '館']):
+                    entity_categories["📚 物品 (Objects)"].append(entity_str)
+                else:
+                    entity_categories["💭 概念 (Concepts)"].append(entity_str)
 
-                # Display categorized entities with enhanced UI
-                cols = st.columns(2)
-                col_idx = 0
-                for category, entities in entity_categories.items():
-                    if entities:
-                        with cols[col_idx % 2]:
-                            st.markdown(f"**{category}**")
-                            # Create colorful entity tags
-                            colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FECA57", "#FF9FF3"]
-                            entity_html = ""
-                            for i, entity in enumerate(entities[:8]):  # Show first 8 per category
-                                color = colors[i % len(colors)]
-                                entity_html += f'<span style="background-color: {color}; color: white; padding: 0.25rem 0.6rem; margin: 0.15rem; border-radius: 0.4rem; font-size: 0.85rem; display: inline-block;">{entity}</span> '
+            # Display categorized entities with enhanced UI
+            cols = st.columns(2)
+            col_idx = 0
+            for category, entities in entity_categories.items():
+                if entities:
+                    with cols[col_idx % 2]:
+                        st.markdown(f"**{category}**")
+                        # Create colorful entity tags
+                        colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FECA57", "#FF9FF3"]
+                        entity_html = ""
+                        for i, entity in enumerate(entities[:8]):  # Show first 8 per category
+                            color = colors[i % len(colors)]
+                            entity_html += f'<span style="background-color: {color}; color: white; padding: 0.25rem 0.6rem; margin: 0.15rem; border-radius: 0.4rem; font-size: 0.85rem; display: inline-block;">{entity}</span> '
 
-                            st.markdown(entity_html, unsafe_allow_html=True)
-                            if len(entities) > 8:
-                                st.caption(f"... and {len(entities) - 8} more {category.split(' ')[1]}")
+                        st.markdown(entity_html, unsafe_allow_html=True)
+                        if len(entities) > 8:
+                            st.caption(f"... and {len(entities) - 8} more {category.split(' ')[1]}")
 
-                        col_idx += 1
+                    col_idx += 1
 
-            st.markdown("### Phase 2: Text Denoising and Restructuring")
-            st.info("🧹 **GPT-5-mini Text Optimization**: Intelligently restructures and cleans the text based on extracted entities, removing redundant descriptions while preserving essential factual content for accurate knowledge graph generation.")
+        st.markdown("#### Phase 2: Text Denoising and Restructuring")
+        st.info("🧹 **GPT-5-mini Text Optimization**: Intelligently restructures and cleans the text based on extracted entities, removing redundant descriptions while preserving essential factual content for accurate knowledge graph generation.")
 
-            # Denoising comparison with enhanced display
-            original_input = st.session_state.get('original_input', '')
-            if entity_result.denoised_text and original_input:
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    st.markdown("**📄 Original Input Text**")
-                    st.text_area(
-                        "Raw Input",
-                        original_input[:400] + ("..." if len(original_input) > 400 else ""),
-                        height=140,
-                        disabled=True,
-                        key="original_entity_text"
-                    )
-                    st.caption(f"Total length: {len(original_input):,} characters")
-
-                with col2:
-                    st.markdown("**✨ Denoised & Structured Text**")
-                    st.text_area(
-                        "Processed Output",
-                        entity_result.denoised_text[:400] + ("..." if len(entity_result.denoised_text) > 400 else ""),
-                        height=140,
-                        disabled=True,
-                        key="denoised_entity_text"
-                    )
-                    st.caption(f"Processed length: {len(entity_result.denoised_text):,} characters")
-
-                # Show denoising statistics
-                st.markdown("#### 📈 Denoising Statistics")
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    compression_ratio = len(entity_result.denoised_text) / len(original_input)
-                    st.metric("Compression Ratio", f"{compression_ratio:.2f}", f"{(1-compression_ratio)*100:.1f}% reduction")
-                with col2:
-                    entity_density = len(entity_result.entities) / max(len(entity_result.denoised_text.split()), 1)
-                    st.metric("Entity Density", f"{entity_density:.3f}", "entities per word")
-                with col3:
-                    st.metric("Processing Quality", "High", "Optimized for KG")
-
-        # Performance metrics section with enhanced details
-        with st.expander("📊 Detailed Processing Metrics"):
+        # Denoising comparison with enhanced display
+        original_input = st.session_state.get('original_input', '')
+        if entity_result.denoised_text and original_input:
             col1, col2 = st.columns(2)
 
             with col1:
-                st.markdown("**🔧 API Performance Analysis**")
-                api_metrics = {
-                    "model": "GPT-5-mini",
-                    "processing_time_ms": f"{entity_result.processing_time * 1000:.1f}",
-                    "entities_extracted": len(entity_result.entities),
-                    "success_rate": "100%",
-                    "api_calls": "2 (extraction + denoising)",
-                    "language_support": "Advanced Chinese"
-                }
-                st.json(api_metrics)
+                st.markdown("**📄 Original Input Text**")
+                st.text_area(
+                    "Raw Input",
+                    original_input[:400] + ("..." if len(original_input) > 400 else ""),
+                    height=140,
+                    disabled=True,
+                    key="original_entity_text"
+                )
+                st.caption(f"Total length: {len(original_input):,} characters")
 
             with col2:
-                st.markdown("**📏 Quality & Content Metrics**")
-                unique_entities = len(set(entity_result.entities)) if entity_result.entities else 0
-                metrics = {
-                    "unique_entities": unique_entities,
-                    "total_entities": len(entity_result.entities),
-                    "deduplication_rate": f"{(1 - unique_entities/max(len(entity_result.entities), 1))*100:.1f}%",
-                    "text_structure_improved": "Yes",
-                    "classical_chinese_optimized": "Yes"
-                }
-                st.json(metrics)
+                st.markdown("**✨ Denoised & Structured Text**")
+                st.text_area(
+                    "Processed Output",
+                    entity_result.denoised_text[:400] + ("..." if len(entity_result.denoised_text) > 400 else ""),
+                    height=140,
+                    disabled=True,
+                    key="denoised_entity_text"
+                )
+                st.caption(f"Processed length: {len(entity_result.denoised_text):,} characters")
 
-            # Processing timeline visualization
-            st.markdown("**⏱️ Processing Timeline**")
-            timeline_data = [
-                {"Phase": "Input Validation", "Duration": "0.1s", "Status": "✅"},
-                {"Phase": "Entity Extraction", "Duration": f"{entity_result.processing_time/2:.1f}s", "Status": "✅"},
-                {"Phase": "Text Denoising", "Duration": f"{entity_result.processing_time/2:.1f}s", "Status": "✅"},
-                {"Phase": "Quality Validation", "Duration": "0.1s", "Status": "✅"}
-            ]
-            df = pd.DataFrame(timeline_data)
-            st.dataframe(df, use_container_width=True, hide_index=True)
+            # Show denoising statistics
+            st.markdown("##### 📈 Denoising Statistics")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                compression_ratio = len(entity_result.denoised_text) / len(original_input)
+                st.metric("Compression Ratio", f"{compression_ratio:.2f}", f"{(1-compression_ratio)*100:.1f}% reduction")
+            with col2:
+                entity_density = len(entity_result.entities) / max(len(entity_result.denoised_text.split()), 1)
+                st.metric("Entity Density", f"{entity_density:.3f}", "entities per word")
+            with col3:
+                st.metric("Processing Quality", "High", "Optimized for KG")
+
+        # Performance metrics section with enhanced details
+        st.markdown("### 📊 Detailed Processing Metrics")
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown("**🔧 API Performance Analysis**")
+            api_metrics = {
+                "model": "GPT-5-mini",
+                "processing_time_ms": f"{entity_result.processing_time * 1000:.1f}",
+                "entities_extracted": len(entity_result.entities),
+                "success_rate": "100%",
+                "api_calls": "2 (extraction + denoising)",
+                "language_support": "Advanced Chinese"
+            }
+            st.json(api_metrics)
+
+        with col2:
+            st.markdown("**📏 Quality & Content Metrics**")
+            unique_entities = len(set(entity_result.entities)) if entity_result.entities else 0
+            metrics = {
+                "unique_entities": unique_entities,
+                "total_entities": len(entity_result.entities),
+                "deduplication_rate": f"{(1 - unique_entities/max(len(entity_result.entities), 1))*100:.1f}%",
+                "text_structure_improved": "Yes",
+                "classical_chinese_optimized": "Yes"
+            }
+            st.json(metrics)
+
+        # Processing timeline visualization
+        st.markdown("**⏱️ Processing Timeline**")
+        timeline_data = [
+            {"Phase": "Input Validation", "Duration": "0.1s", "Status": "✅"},
+            {"Phase": "Entity Extraction", "Duration": f"{entity_result.processing_time/2:.1f}s", "Status": "✅"},
+            {"Phase": "Text Denoising", "Duration": f"{entity_result.processing_time/2:.1f}s", "Status": "✅"},
+            {"Phase": "Quality Validation", "Duration": "0.1s", "Status": "✅"}
+        ]
+        df = pd.DataFrame(timeline_data)
+        st.dataframe(df, use_container_width=True, hide_index=True)
 
     else:
         # Enhanced error display
