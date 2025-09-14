@@ -271,11 +271,11 @@ class TestEntityProcessor:
         
         # First call should be for entity extraction
         first_call_args = call_args_list[0][0]
-        assert "提取所有重要實體" in first_call_args[0]
+        assert "請從以下古典中文文本中提取重要實體" in first_call_args[0]
         
         # Second call should be for denoising
-        second_call_args = call_args_list[1][0] 
-        assert "人物A、地點B" in second_call_args[0]  # Should include extracted entities
+        second_call_args = call_args_list[1][0]
+        assert "基於給定的實體，對文本進行去噪處理" in second_call_args[0]  # Should include new denoising prompt
 
     # Error propagation tests
     

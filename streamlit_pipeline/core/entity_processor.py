@@ -284,30 +284,46 @@ def _denoise_text_with_entities(text: str, entities: List[str]) -> str:
         "entities": entities
     })
 
-    # System prompt exactly matching the original run_entity.py denoising implementation
-    system_prompt = """你是一個古典中文文本重構專家。請根據提供的實體清單，將原始文本重新整理為更清晰、更結構化的版本。
+    # System prompt updated for multilingual text processing
+    system_prompt = """你是一個多語言文本重構專家。請根據提供的實體清單，將原始文本重新整理為更清晰、更結構化的版本。
 
 要求：
-1. 保持古典中文的語言風格和韻味
+1. 保持原文的語言風格和特色（中文/英文）
 2. 圍繞提供的實體組織內容
 3. 移除冗餘和不相關的描述
 4. 將內容重組為清晰的事實陳述
 5. 突出實體之間的關係
+6. 根據輸入語言選擇相應的輸出語言
 
-請確保重構後的文本簡潔明瞭，同時保持原文的核心信息和文學價值。"""
+請確保重構後的文本簡潔明瞭，同時保持原文的核心信息和價值。"""
 
     # Format entities exactly like the original code (as string representation)
     entities_str = str(entities)
 
-    # User prompt exactly matching the original format
-    prompt = f"""請基於以下實體清單，將原始文本重新整理為更清晰、結構化的版本：
+    # User prompt with multilingual examples for universal text processing
+    prompt = f"""目標：
+基於給定的實體，對文本進行去噪處理，即移除無關的描述性文字並重組為清晰的事實陳述。
 
-實體清單：{entities_str}
+以下是三個範例：
+範例#1 (古典中文):
+原始文本："廟旁住著一家鄉宦，姓甄，名費，字士隱。嫡妻封氏，情性賢淑，深明禮義。家中雖不甚富貴，然本地便也推他為望族了。"
+實體：["甄士隱", "封氏", "鄉宦"]
+去噪文本："甄士隱是一家鄉宦。甄士隱姓甄名費字士隱。甄士隱的妻子是封氏。封氏情性賢淑深明禮義。甄家是本地望族。"
 
-原始文本：
-{text}
+範例#2 (現代中文):
+原始文本："在繁忙的都市生活中，李明是一位在科技公司工作的軟體工程師，他每天都要處理各種複雜的程式問題，雖然工作壓力很大，但他對程式設計充滿熱忱。"
+實體：["李明", "科技公司", "軟體工程師", "程式設計"]
+去噪文本："李明是軟體工程師。李明在科技公司工作。李明每天處理程式問題。李明對程式設計充滿熱忱。"
 
-請返回重構後的文本，要求簡潔明瞭，突出實體間的關係，同時保持古典中文的優雅風格。"""
+範例#3 (English):
+原始文本："In the bustling city of New York, Sarah Johnson works as a marketing director at a Fortune 500 company, where she manages complex advertising campaigns and leads a team of creative professionals."
+實體：["Sarah Johnson", "New York", "marketing director", "Fortune 500 company"]
+去噪文本："Sarah Johnson is a marketing director. Sarah Johnson works at a Fortune 500 company. Sarah Johnson works in New York. Sarah Johnson manages advertising campaigns. Sarah Johnson leads a creative team."
+
+請參考以上範例，處理以下文本：
+原始文本：{text}
+實體：{entities_str}
+去噪文本："""
 
     detailed_logger.log_debug("ENTITY", "Prepared prompts for text denoising", {
         "system_prompt_length": len(system_prompt),
