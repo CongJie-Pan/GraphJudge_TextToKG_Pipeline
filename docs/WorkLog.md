@@ -173,7 +173,7 @@ The extracted entities are not being saved to the project folder as expected, an
   
 7) ok - and there's no log saved in the project folder 
   
-8) need to edit the denoised texts prompt into the :
+8) Continue - need to edit the denoised texts prompt into the :
    
 ```
   目標：
