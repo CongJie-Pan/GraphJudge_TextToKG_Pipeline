@@ -497,5 +497,306 @@ class TestEdgeCases:
                 assert mock_completion.call_count == 0
 
 
+class TestGPT5MiniCompatibility:
+    """Test GPT-5-mini specific compatibility and reasoning mode handling."""
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_gpt5_mini_reasoning_effort_parameter(self, mock_completion):
+        """Test that reasoning_effort parameter is passed for GPT-5-mini calls."""
+        mock_response = Mock()
+        mock_response.choices = [Mock()]
+        mock_response.choices[0].message.content = "Response with minimal reasoning"
+        mock_completion.return_value = mock_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Test prompt")
+
+            assert result == "Response with minimal reasoning"
+
+            # Verify reasoning_effort parameter was passed
+            call_args = mock_completion.call_args
+            assert call_args[1]['reasoning_effort'] == 'minimal'
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_gpt5_mini_empty_response_recovery(self, mock_completion):
+        """Test recovery mechanism when GPT-5-mini returns empty content."""
+        # Create properly mocked empty responses without default Mock attributes
+        def create_empty_response():
+            choice = Mock()
+            choice.message.content = ""
+            choice.finish_reason = "length"
+            # Remove Mock default attributes that might interfere
+            del choice.reasoning
+            del choice.delta
+
+            response = Mock()
+            response.choices = [choice]
+            return response
+
+        empty_response1 = create_empty_response()
+        empty_response2 = create_empty_response()
+
+        success_response = Mock()
+        success_response.choices = [Mock()]
+        success_response.choices[0].message.content = "Success after retry"
+
+        mock_completion.side_effect = [
+            empty_response1,  # First attempt with minimal reasoning
+            empty_response2,  # Second attempt with medium reasoning
+            success_response  # Third attempt succeeds
+        ]
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Test prompt")
+
+            assert result == "Success after retry"
+            assert mock_completion.call_count == 3
+
+            # Verify reasoning_effort progression: minimal -> medium -> None (not set)
+            call_args_list = mock_completion.call_args_list
+            assert call_args_list[0][1]['reasoning_effort'] == 'minimal'
+            assert call_args_list[1][1]['reasoning_effort'] == 'medium'
+            # Third call should not have reasoning_effort parameter since it was set to None
+            assert 'reasoning_effort' not in call_args_list[2][1]
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_gpt5_mini_reasoning_response_extraction(self, mock_completion):
+        """Test extraction of content from reasoning-mode responses."""
+        # Mock response with reasoning but empty message content
+        reasoning_response = Mock()
+        reasoning_response.choices = [Mock()]
+        reasoning_response.choices[0].message.content = ""
+        reasoning_response.choices[0].reasoning = "This is content from reasoning field"
+        reasoning_response.choices[0].finish_reason = "stop"
+
+        mock_completion.return_value = reasoning_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Test prompt")
+
+            # Should extract content from reasoning field
+            assert result == "This is content from reasoning field"
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_gpt5_mini_token_usage_logging(self, mock_completion):
+        """Test proper logging of reasoning tokens usage."""
+        # Create properly mocked empty response
+        choice = Mock()
+        choice.message.content = ""
+        choice.finish_reason = "length"
+        # Remove Mock default attributes
+        del choice.reasoning
+        del choice.delta
+
+        mock_response = Mock()
+        mock_response.choices = [choice]
+
+        # Mock usage details with reasoning tokens
+        mock_usage = Mock()
+        mock_usage.completion_tokens_details = Mock()
+        mock_usage.completion_tokens_details.reasoning_tokens = 4000
+        mock_response.usage = mock_usage
+
+        mock_completion.return_value = mock_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 1  # Only one attempt to trigger empty response handling
+            }
+
+            client = APIClient()
+
+            # Capture print output for debugging verification
+            with patch('builtins.print') as mock_print:
+                result = client.call_gpt5_mini("Test prompt")
+
+                # Should log reasoning tokens usage
+                print_calls = [str(call) for call in mock_print.call_args_list]
+                reasoning_token_logged = any("Reasoning tokens used: 4000" in call for call in print_calls)
+                assert reasoning_token_logged, f"Expected reasoning tokens log not found in: {print_calls}"
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_non_gpt5_model_no_reasoning_effort(self, mock_completion):
+        """Test that reasoning_effort is not passed to non-GPT-5 models."""
+        mock_response = Mock()
+        mock_response.choices = [Mock()]
+        mock_response.choices[0].message.content = "Standard response"
+        mock_completion.return_value = mock_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+
+            # Call perplexity (non-GPT-5 model)
+            result = client.call_perplexity("Test prompt")
+
+            assert result == "Standard response"
+
+            # Verify reasoning_effort parameter was NOT passed
+            call_args = mock_completion.call_args
+            assert 'reasoning_effort' not in call_args[1]
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_gpt5_mini_max_tokens_increased(self, mock_completion):
+        """Test that GPT-5-mini uses increased token limit."""
+        mock_response = Mock()
+        mock_response.choices = [Mock()]
+        mock_response.choices[0].message.content = "Response with high token limit"
+        mock_completion.return_value = mock_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,  # Updated from 4000
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Test prompt")
+
+            assert result == "Response with high token limit"
+
+            # Verify increased token limit was used
+            call_args = mock_completion.call_args
+            assert call_args[1]['max_completion_tokens'] == 8000
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_gpt5_mini_finish_reason_length_handling(self, mock_completion):
+        """Test proper handling when finish_reason is 'length' (token limit hit)."""
+        # Create properly mocked empty response
+        length_choice = Mock()
+        length_choice.message.content = ""
+        length_choice.finish_reason = "length"
+        # Remove Mock default attributes
+        del length_choice.reasoning
+        del length_choice.delta
+
+        length_response = Mock()
+        length_response.choices = [length_choice]
+
+        success_response = Mock()
+        success_response.choices = [Mock()]
+        success_response.choices[0].message.content = "Success with different reasoning effort"
+        success_response.choices[0].finish_reason = "stop"
+
+        mock_completion.side_effect = [length_response, success_response]
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Test prompt")
+
+            assert result == "Success with different reasoning effort"
+            assert mock_completion.call_count == 2
+
+            # First call should have minimal reasoning effort
+            assert mock_completion.call_args_list[0][1]['reasoning_effort'] == 'minimal'
+            # Second call should have medium reasoning effort
+            assert mock_completion.call_args_list[1][1]['reasoning_effort'] == 'medium'
+
+
+class TestReasoningModeScenarios:
+    """Test specific reasoning mode scenarios that cause empty content."""
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_all_reasoning_no_content_scenario(self, mock_completion):
+        """Test scenario where model uses all tokens for reasoning, produces no content."""
+        mock_response = Mock()
+        mock_response.choices = [Mock()]
+        mock_response.choices[0].message.content = ""
+        mock_response.choices[0].finish_reason = "length"
+
+        # Mock usage showing all tokens went to reasoning
+        mock_usage = Mock()
+        mock_usage.completion_tokens_details = Mock()
+        mock_usage.completion_tokens_details.reasoning_tokens = 7500  # Most tokens used for reasoning
+        mock_response.usage = mock_usage
+
+        mock_completion.return_value = mock_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 1
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Complex reasoning prompt")
+
+            # Should return empty string gracefully
+            assert result == ""
+
+    @patch('streamlit_pipeline.utils.api_client.completion')
+    def test_mixed_reasoning_and_content_scenario(self, mock_completion):
+        """Test scenario with both reasoning tokens and content."""
+        mock_response = Mock()
+        mock_response.choices = [Mock()]
+        mock_response.choices[0].message.content = "Final answer after reasoning"
+        mock_response.choices[0].finish_reason = "stop"
+
+        # Mock balanced token usage
+        mock_usage = Mock()
+        mock_usage.completion_tokens_details = Mock()
+        mock_usage.completion_tokens_details.reasoning_tokens = 2000
+        mock_response.usage = mock_usage
+
+        mock_completion.return_value = mock_response
+
+        with patch('streamlit_pipeline.utils.api_client.get_model_config') as mock_config:
+            mock_config.return_value = {
+                "temperature": 1.0,
+                "max_tokens": 8000,
+                "timeout": 60,
+                "max_retries": 3
+            }
+
+            client = APIClient()
+            result = client.call_gpt5_mini("Reasoning prompt")
+
+            assert result == "Final answer after reasoning"
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

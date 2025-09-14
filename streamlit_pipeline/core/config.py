@@ -23,7 +23,7 @@ PERPLEXITY_MODEL = "perplexity/sonar-reasoning"
 
 # Essential API parameters
 OPENAI_TEMPERATURE = 1.0  # GPT-5 models only support temperature=1
-OPENAI_MAX_TOKENS = 4000  # Conservative token limit
+OPENAI_MAX_TOKENS = 8000  # Increased for GPT-5 reasoning models to allow both reasoning and content generation
 
 # Simplified rate limiting (no complex tracking)
 DEFAULT_TIMEOUT = 60  # Seconds

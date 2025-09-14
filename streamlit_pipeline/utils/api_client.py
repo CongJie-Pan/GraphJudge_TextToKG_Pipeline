@@ -78,7 +78,8 @@ class APIClient:
             prompt=prompt,
             system_prompt=system_prompt,
             temperature=temperature or self.config["temperature"],
-            max_tokens=max_tokens or self.config["max_tokens"]
+            max_tokens=max_tokens or self.config["max_tokens"],
+            reasoning_effort="minimal"  # Use minimal reasoning to prioritize content generation
         )
     
     def call_perplexity(
@@ -117,7 +118,8 @@ class APIClient:
         prompt: str,
         system_prompt: Optional[str] = None,
         temperature: float = 1.0,
-        max_tokens: int = 4000
+        max_tokens: int = 4000,
+        reasoning_effort: Optional[str] = None
     ) -> str:
         """
         Internal method to make API calls with basic retry logic.
@@ -144,46 +146,53 @@ class APIClient:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
         
-        # Retry logic
+        # Retry logic with reasoning effort progression for GPT-5 models
         last_exception = None
+        current_reasoning_effort = reasoning_effort  # Make a mutable copy
+
         for attempt in range(self.config["max_retries"]):
             try:
-                response = completion(
-                    model=model,
-                    messages=messages,
-                    temperature=temperature,
-                    max_completion_tokens=max_tokens,
-                    timeout=self.config["timeout"]
-                )
+                # Build completion parameters
+                completion_params = {
+                    "model": model,
+                    "messages": messages,
+                    "temperature": temperature,
+                    "max_completion_tokens": max_tokens,
+                    "timeout": self.config["timeout"]
+                }
+
+                # Add reasoning_effort for GPT-5 models to control reasoning behavior
+                if "gpt-5" in model.lower() and current_reasoning_effort:
+                    completion_params["reasoning_effort"] = current_reasoning_effort
+
+                response = completion(**completion_params)
 
                 # Debug: Check response structure
-                print(f"DEBUG: API call successful. Model: {model}, Temperature: {temperature}")
-                if hasattr(response, 'choices') and len(response.choices) > 0:
-                    choice = response.choices[0]
-                    if hasattr(choice, 'message') and hasattr(choice.message, 'content'):
-                        content = choice.message.content
-                        # Debug log for empty content
-                        if not content:
-                            print(f"DEBUG: Empty content received from API!")
-                            print(f"DEBUG: Model: {model} - GPT-5-mini reasoning mode issue suspected")
-                            print(f"DEBUG: Response object: {response}")
-                            print(f"DEBUG: Choice object: {choice}")
-                            print(f"DEBUG: Message object: {choice.message}")
-                            print(f"DEBUG: Finish reason: {getattr(choice, 'finish_reason', 'unknown')}")
-                            # Check for reasoning tokens in response (GPT-5-mini specific issue)
-                            if hasattr(response, 'choices') and hasattr(response.choices[0], 'reasoning'):
-                                print(f"DEBUG: Reasoning tokens present: {bool(getattr(response.choices[0], 'reasoning', None))}")
-                            if hasattr(choice, 'reasoning'):
-                                print(f"DEBUG: Choice has reasoning: {bool(getattr(choice, 'reasoning', None))}")
-                        else:
-                            print(f"DEBUG: Content received, length: {len(content)}")
-                        return content or ""  # Return empty string instead of None
+                print(f"DEBUG: API call successful. Model: {model}, Temperature: {temperature}, Max tokens: {max_tokens}")
+                print(f"DEBUG: Completion params: {completion_params}")
+
+                # Enhanced content extraction for GPT-5 reasoning models
+                content = self._extract_content_from_response(response, model, attempt)
+
+                # If content is still empty and this is GPT-5-mini, try retry with different reasoning effort
+                print(f"DEBUG: Retry condition check - content: '{content}', model: {model}, attempt: {attempt}, max_retries: {self.config['max_retries']}")
+                if not content and "gpt-5" in model.lower() and attempt < self.config["max_retries"] - 1:
+                    print(f"DEBUG: Retrying with different reasoning effort for attempt {attempt + 1}")
+                    print(f"DEBUG: Current reasoning_effort: {current_reasoning_effort}")
+                    # Update reasoning_effort for next retry
+                    if current_reasoning_effort == "minimal":
+                        current_reasoning_effort = "medium"
+                        print(f"DEBUG: Updated reasoning_effort to: medium")
+                    elif current_reasoning_effort == "medium":
+                        current_reasoning_effort = None  # Use default
+                        print(f"DEBUG: Updated reasoning_effort to: None (default)")
                     else:
-                        print(f"DEBUG: No message.content in choice. Choice structure: {choice}")
-                        return ""
+                        print(f"DEBUG: No reasoning_effort change needed")
+                    continue  # Retry with different parameters
                 else:
-                    print(f"DEBUG: No choices in response. Response structure: {response}")
-                    return ""
+                    print(f"DEBUG: Retry conditions not met - returning content: '{content}'")
+
+                return content or ""  # Return empty string instead of None
                 
             except Exception as e:
                 last_exception = e
@@ -192,9 +201,89 @@ class APIClient:
                     wait_time = (2 ** attempt) * 0.5  # 0.5, 1.0, 2.0 seconds
                     time.sleep(wait_time)
                     continue
-        
+
         # All retries failed
         raise Exception(f"API call failed after {self.config['max_retries']} attempts: {last_exception}")
+
+    def _extract_content_from_response(self, response, model: str, attempt: int) -> str:
+        """
+        Extract content from API response with enhanced handling for GPT-5 reasoning models.
+
+        Args:
+            response: API response object
+            model: Model name for debugging
+            attempt: Current retry attempt number
+
+        Returns:
+            Extracted content string or empty string
+        """
+        if not hasattr(response, 'choices') or len(response.choices) == 0:
+            print(f"DEBUG: No choices in response. Response structure: {response}")
+            return ""
+
+        choice = response.choices[0]
+        extracted_content = ""
+
+        # Primary extraction: Standard message content
+        if hasattr(choice, 'message') and hasattr(choice.message, 'content'):
+            content = choice.message.content
+            if content:
+                print(f"DEBUG: Content received via message.content, length: {len(content)}")
+                extracted_content = content
+            else:
+                print(f"DEBUG: Empty content in message.content")
+
+        # Secondary extraction: Try to get content from reasoning responses
+        if not extracted_content:
+            content_from_reasoning = self._extract_from_reasoning_response(choice, model)
+            if content_from_reasoning:
+                print(f"DEBUG: Content extracted from reasoning response, length: {len(content_from_reasoning)}")
+                extracted_content = content_from_reasoning
+
+        # If still no content, perform final debugging
+        if not extracted_content:
+            print(f"DEBUG: Empty content received from API!")
+            print(f"DEBUG: Model: {model} - GPT-5-mini reasoning mode issue suspected")
+            print(f"DEBUG: Finish reason: {getattr(choice, 'finish_reason', 'unknown')}")
+            print(f"DEBUG: Attempt: {attempt + 1}")
+
+            # Check for reasoning tokens in response (GPT-5-mini specific debugging)
+            if hasattr(response, 'usage') and hasattr(response.usage, 'completion_tokens_details'):
+                details = response.usage.completion_tokens_details
+                if hasattr(details, 'reasoning_tokens'):
+                    print(f"DEBUG: Reasoning tokens used: {details.reasoning_tokens}")
+
+        return extracted_content
+
+    def _extract_from_reasoning_response(self, choice, model: str) -> str:
+        """
+        Attempt to extract content from reasoning-mode responses.
+
+        Args:
+            choice: API response choice object
+            model: Model name
+
+        Returns:
+            Extracted content or empty string
+        """
+        # For GPT-5 models, try to extract from various possible response structures
+        if "gpt-5" not in model.lower():
+            return ""
+
+        # Check if there's a reasoning attribute with content
+        if hasattr(choice, 'reasoning'):
+            reasoning = choice.reasoning
+            if isinstance(reasoning, str) and reasoning.strip():
+                # Sometimes reasoning contains the actual content
+                return reasoning.strip()
+
+        # Check for alternative content structures in GPT-5 responses
+        if hasattr(choice, 'delta') and hasattr(choice.delta, 'content'):
+            delta_content = choice.delta.content
+            if delta_content:
+                return delta_content
+
+        return ""
 
     def test_api_connection(self) -> Dict[str, Any]:
         """
