@@ -173,7 +173,7 @@ The extracted entities are not being saved to the project folder as expected, an
   
 7) ok - and there's no log saved in the project folder 
   
-8) Continue - need to edit the denoised texts prompt into the :
+8) ok - need to edit the denoised texts prompt into the :
    
 ```
   目標：
@@ -211,7 +211,7 @@ Text-based relationship display:
 3. 石頭 → 地點 → 青埂峰
 ...)
 
-11) the bug occured : 
+11) ok - the bug occured : 
 
 ```
 "Application error occurred
