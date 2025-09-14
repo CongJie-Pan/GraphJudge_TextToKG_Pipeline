@@ -417,8 +417,12 @@ def generate_triples(entities: List[str], text: str) -> TripleResult:
 
             # Make API call using the standalone function (consistent with entity processor)
             try:
-                detailed_logger.log_info("API", f"Making API call for chunk {chunk_idx + 1}")
-                response = call_gpt5_mini(prompt)
+                # System prompt to guide GPT-5-mini behavior and prevent reasoning mode issues
+                system_prompt = "你是一個專業的中文文本分析助手，專門提取語義關係。請嚴格按照輸出格式要求生成JSON格式的三元組，避免冗長推理。"
+                print(f"DEBUG SYSTEM PROMPT: {system_prompt}")
+
+                detailed_logger.log_info("API", f"Making API call for chunk {chunk_idx + 1} with system prompt")
+                response = call_gpt5_mini(prompt, system_prompt)
                 chunk_info['chunks_processed'] += 1
 
                 # Enhanced API response debugging for empty response troubleshooting

@@ -677,26 +677,144 @@ class TestIntegrationScenarios:
         assert result.success
 
 
+class TestSystemPromptRequirement:
+    """Test suite for system prompt requirement in triple generation."""
+
+    def test_generate_triples_uses_system_prompt(self):
+        """Test that generate_triples calls API with system prompt to prevent GPT-5-mini reasoning mode issues."""
+        from unittest.mock import patch, MagicMock
+
+        entities = ["甄士隱", "封氏"]
+        text = "甄士隱是姑蘇城內的鄉宦，妻子是封氏。"
+
+        # Mock the call_gpt5_mini function to verify it's called with system prompt
+        with patch('core.triple_generator.call_gpt5_mini') as mock_api_call:
+            # Setup mock to return valid response
+            mock_api_call.return_value = '{"triples": [["甄士隱", "職業", "鄉宦"]]}'
+
+            # Call generate_triples
+            result = generate_triples(entities, text)
+
+            # Verify the API was called
+            assert mock_api_call.called, "call_gpt5_mini should have been called"
+
+            # Get the actual call arguments
+            call_args = mock_api_call.call_args
+            assert call_args is not None, "call_gpt5_mini should have been called with arguments"
+
+            # Verify it was called with both prompt and system_prompt
+            args, kwargs = call_args
+            assert len(args) >= 2, f"Expected at least 2 arguments (prompt, system_prompt), got {len(args)}"
+
+            # Check that second argument (system_prompt) is not None
+            system_prompt = args[1]
+            assert system_prompt is not None, "System prompt should not be None"
+            assert isinstance(system_prompt, str), "System prompt should be a string"
+            assert len(system_prompt) > 0, "System prompt should not be empty"
+
+            # Verify system prompt contains expected guidance
+            assert "專業" in system_prompt, "System prompt should contain '專業' (professional)"
+            assert "中文" in system_prompt, "System prompt should contain '中文' (Chinese)"
+            assert "分析" in system_prompt, "System prompt should contain '分析' (analysis)"
+            assert "三元組" in system_prompt or "JSON" in system_prompt, "System prompt should mention triples or JSON format"
+
+            # Verify successful result
+            assert result.success, "Triple generation should succeed with proper system prompt"
+
+    def test_system_prompt_content_quality(self):
+        """Test that the system prompt contains appropriate guidance for GPT-5-mini."""
+        from unittest.mock import patch
+
+        entities = ["測試實體"]
+        text = "測試文本內容。"
+
+        captured_system_prompt = None
+
+        def capture_system_prompt(prompt, system_prompt=None):
+            nonlocal captured_system_prompt
+            captured_system_prompt = system_prompt
+            return '{"triples": [["主體", "關係", "客體"]]}'
+
+        with patch('core.triple_generator.call_gpt5_mini', side_effect=capture_system_prompt):
+            generate_triples(entities, text)
+
+            # Verify system prompt was captured
+            assert captured_system_prompt is not None, "System prompt should be provided"
+
+            # Check specific requirements to prevent GPT-5-mini reasoning issues
+            prompt_lower = captured_system_prompt.lower()
+
+            # Should guide the model to be professional and focused
+            assert "專業" in captured_system_prompt, "Should indicate professional behavior"
+
+            # Should specify the task domain (Chinese text analysis)
+            assert "中文" in captured_system_prompt, "Should specify Chinese text analysis"
+            assert "分析" in captured_system_prompt, "Should specify analysis task"
+
+            # Should provide output format guidance
+            assert "json" in prompt_lower or "格式" in captured_system_prompt, "Should mention output format"
+
+            # Should discourage excessive reasoning (key for GPT-5-mini fix)
+            reasoning_prevention_keywords = ["避免", "冗長", "推理", "嚴格", "按照"]
+            has_reasoning_prevention = any(keyword in captured_system_prompt for keyword in reasoning_prevention_keywords)
+            assert has_reasoning_prevention, f"System prompt should discourage excessive reasoning. Got: {captured_system_prompt}"
+
+    def test_system_prompt_prevents_reasoning_mode_timeout(self):
+        """Test that system prompt helps prevent GPT-5-mini reasoning mode timeouts."""
+        from unittest.mock import patch
+
+        # This test simulates the scenario that was failing before the fix
+        entities = ["紅樓夢", "石頭記", "女媧氏"]
+        text = "女媧氏於大荒山無稽崖煉石補天，三萬六千五百零一塊石中，僅遺一塊於青埂峰下。"
+
+        call_args_list = []
+
+        def mock_call_with_logging(*args, **kwargs):
+            call_args_list.append((args, kwargs))
+            # Return valid response to simulate successful API call
+            return '{"triples": [["女媧氏", "行為", "煉石補天"], ["石頭", "位置", "青埂峰下"]]}'
+
+        with patch('core.triple_generator.call_gpt5_mini', side_effect=mock_call_with_logging):
+            result = generate_triples(entities, text)
+
+            # Verify the call was made with system prompt
+            assert len(call_args_list) > 0, "API should have been called"
+
+            args, kwargs = call_args_list[0]
+            assert len(args) >= 2, "Should have prompt and system_prompt"
+
+            user_prompt = args[0]
+            system_prompt = args[1]
+
+            # Verify system prompt is present and well-formed
+            assert system_prompt is not None, "System prompt must be provided"
+            assert len(system_prompt) > 20, "System prompt should be substantial"
+
+            # Verify the result is successful (indicating no timeout)
+            assert result.success, "Should succeed with proper system prompt"
+            assert len(result.triples) > 0, "Should generate actual triples"
+
+
 if __name__ == "__main__":
     # Run basic smoke tests if executed directly
     print("Running basic smoke tests for triple generator...")
-    
+
     # Test 1: Text chunking
     test_text = "這是測試文本。" * 50
     chunks = chunk_text(test_text, max_tokens=50)
     print(f"✓ Text chunking: {len(chunks)} chunks created")
-    
+
     # Test 2: JSON extraction
     test_response = '{"triples": [["主體", "關係", "客體"]]}'
     extracted = extract_json_from_response(test_response)
     print(f"✓ JSON extraction: {'Success' if extracted else 'Failed'}")
-    
+
     # Test 3: Schema validation
     validated = validate_response_schema(test_response)
     print(f"✓ Schema validation: {'Success' if validated else 'Failed'}")
-    
+
     # Test 4: Triple generation (without API)
     result = generate_triples(["實體"], "測試文本", api_client=None)
     print(f"✓ Triple generation: {'Success' if isinstance(result, TripleResult) else 'Failed'}")
-    
+
     print("All smoke tests completed!")
