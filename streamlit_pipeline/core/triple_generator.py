@@ -31,7 +31,18 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
 
-from .models import Triple, TripleResult, ProcessingTimer, create_error_result
+try:
+    from .models import Triple, TripleResult, ProcessingTimer, create_error_result
+    from ..utils.api_client import call_gpt5_mini
+    from ..utils.detailed_logger import DetailedLogger
+except ImportError:
+    # For direct execution or testing
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    from core.models import Triple, TripleResult, ProcessingTimer, create_error_result
+    from utils.api_client import call_gpt5_mini
+    from utils.detailed_logger import DetailedLogger
 
 
 # Configuration constants
@@ -117,19 +128,21 @@ def chunk_text(text: str, max_tokens: int = MAX_TOKENS_PER_CHUNK,
 def create_enhanced_prompt(text_content: str, entity_list: List[str]) -> str:
     """
     Create enhanced prompt with structured JSON output requirements.
-    
-    Based on the sophisticated prompt engineering from the original
-    run_triple.py, optimized for Chinese text and entity-guided extraction.
-    
+
+    Based on the exact prompt format from the original run_triple.py,
+    ensuring compatibility with the original implementation.
+
     Args:
         text_content: Chinese text to process
         entity_list: List of entity names to guide extraction
-        
+
     Returns:
-        Formatted prompt string for GPT model
+        Formatted prompt string for GPT model (exact format from original)
     """
-    entities_str = ", ".join(f'"{entity}"' for entity in entity_list)
-    
+    # Convert entity list to the exact string format expected by the original code
+    # The original uses a string representation of the entity list
+    entity_str = str(entity_list)
+
     return f"""
 任務：分析古典中文文本，提取實體間的語義關係，輸出標準JSON格式的三元組。
 
@@ -173,7 +186,7 @@ def create_enhanced_prompt(text_content: str, entity_list: List[str]) -> str:
 
 ## 當前任務：
 文本：{text_content}
-實體列表：[{entities_str}]
+實體列表：{entity_str}
 
 請按照上述格式要求輸出JSON："""
 
@@ -313,42 +326,62 @@ def parse_triples_from_validated_data(validated_data: Dict[str, Any],
     return triples
 
 
-def generate_triples(entities: List[str], text: str, 
-                   api_client=None) -> TripleResult:
+def generate_triples(entities: List[str], text: str) -> TripleResult:
     """
     Generate knowledge graph triples from entities and text.
-    
+
     This is the main public interface that replaces the complex async
     pipeline from the original run_triple.py script. It provides clean,
     synchronous processing suitable for Streamlit integration.
-    
+
     Args:
         entities: List of entity names to guide triple extraction
         text: Denoised Chinese text for processing
-        api_client: API client instance for GPT model calls (optional for testing)
-        
+
     Returns:
         TripleResult containing extracted triples and metadata
     """
+    # Initialize detailed logger for triples phase
+    detailed_logger = DetailedLogger(phase="triples")
+    detailed_logger.log_info("TRIPLE", "Starting triple generation", {
+        "entity_count": len(entities) if entities else 0,
+        "entities": entities[:10] if entities else [],  # First 10 entities for debugging
+        "text_length": len(text) if text else 0,
+        "text_preview": text[:200] + "..." if text and len(text) > 200 else text
+    })
+
     start_time = time.time()
-    
+
     try:
         # Input validation
         if not text or not text.strip():
-            return create_error_result(
-                TripleResult, 
-                "Input text is empty or invalid",
-                time.time() - start_time
-            )
-        
-        if not entities or len(entities) == 0:
+            error_msg = "Input text is empty or invalid"
+            detailed_logger.log_error("TRIPLE", "Input validation failed", {
+                "error_type": "EMPTY_TEXT",
+                "text_provided": text,
+                "text_length": len(text) if text else 0
+            })
             return create_error_result(
                 TripleResult,
-                "Entity list is empty or invalid", 
+                error_msg,
+                time.time() - start_time
+            )
+
+        if not entities or len(entities) == 0:
+            error_msg = "Entity list is empty or invalid"
+            detailed_logger.log_error("TRIPLE", "Input validation failed", {
+                "error_type": "EMPTY_ENTITIES",
+                "entities_provided": entities,
+                "entity_count": len(entities) if entities else 0
+            })
+            return create_error_result(
+                TripleResult,
+                error_msg,
                 time.time() - start_time
             )
         
         # Text chunking for large inputs
+        detailed_logger.log_debug("TRIPLE", "Starting text chunking")
         text_chunks = chunk_text(text)
         all_triples = []
         chunk_info = {
@@ -356,48 +389,103 @@ def generate_triples(entities: List[str], text: str,
             'chunks_processed': 0,
             'chunks_with_triples': 0
         }
-        
+
+        detailed_logger.log_info("TRIPLE", "Text chunked for processing", {
+            "total_chunks": len(text_chunks),
+            "chunk_lengths": [len(chunk) for chunk in text_chunks]
+        })
+
         # Process each chunk
         for chunk_idx, chunk in enumerate(text_chunks):
+            detailed_logger.log_debug("TRIPLE", f"Processing chunk {chunk_idx + 1}/{len(text_chunks)}", {
+                "chunk_index": chunk_idx,
+                "chunk_length": len(chunk),
+                "chunk_preview": chunk[:100] + "..." if len(chunk) > 100 else chunk
+            })
+
             # Create enhanced prompt
             prompt = create_enhanced_prompt(chunk, entities)
-            
-            # Make API call (if api_client provided)
-            if api_client:
-                try:
-                    response = api_client.call_gpt5_mini(prompt)
-                    chunk_info['chunks_processed'] += 1
-                    
-                    # Validate and parse response
-                    validated_data = validate_response_schema(response)
-                    if validated_data:
-                        chunk_triples = parse_triples_from_validated_data(
-                            validated_data, chunk
-                        )
-                        if chunk_triples:
-                            all_triples.extend(chunk_triples)
-                            chunk_info['chunks_with_triples'] += 1
-                            
-                except Exception as e:
-                    # Continue processing other chunks on error
-                    continue
-            else:
-                # Mock processing for testing without API client
+            detailed_logger.log_debug("TRIPLE", "Created enhanced prompt for chunk", {
+                "prompt_length": len(prompt),
+                "chunk_index": chunk_idx
+            })
+
+            # Make API call using the standalone function (consistent with entity processor)
+            try:
+                detailed_logger.log_info("API", f"Making API call for chunk {chunk_idx + 1}")
+                response = call_gpt5_mini(prompt)
                 chunk_info['chunks_processed'] += 1
+
+                detailed_logger.log_debug("TRIPLE", "Received API response for chunk", {
+                    "chunk_index": chunk_idx,
+                    "response_length": len(response) if response else 0,
+                    "response_preview": response[:200] + "..." if response and len(response) > 200 else response
+                })
+
+                # Validate and parse response
+                detailed_logger.log_debug("TRIPLE", "Validating response schema")
+                validated_data = validate_response_schema(response)
+
+                if validated_data:
+                    detailed_logger.log_debug("TRIPLE", "Schema validation successful", {
+                        "chunk_index": chunk_idx,
+                        "validated_data_type": type(validated_data).__name__
+                    })
+
+                    chunk_triples = parse_triples_from_validated_data(
+                        validated_data, chunk
+                    )
+                    if chunk_triples:
+                        all_triples.extend(chunk_triples)
+                        chunk_info['chunks_with_triples'] += 1
+                        detailed_logger.log_info("TRIPLE", f"Successfully extracted triples from chunk {chunk_idx + 1}", {
+                            "chunk_index": chunk_idx,
+                            "triples_found": len(chunk_triples),
+                            "triple_details": [{"subject": t.subject, "predicate": t.predicate, "object": t.object} for t in chunk_triples[:5]]  # First 5 triples
+                        })
+                    else:
+                        detailed_logger.log_warning("TRIPLE", f"No triples extracted from chunk {chunk_idx + 1}", {
+                            "chunk_index": chunk_idx,
+                            "validated_data": validated_data
+                        })
+                else:
+                    detailed_logger.log_warning("TRIPLE", f"Schema validation failed for chunk {chunk_idx + 1}", {
+                        "chunk_index": chunk_idx,
+                        "response": response[:200] + "..." if response and len(response) > 200 else response
+                    })
+
+            except Exception as e:
+                detailed_logger.log_error("TRIPLE", f"Error processing chunk {chunk_idx + 1}", {
+                    "chunk_index": chunk_idx,
+                    "error": str(e),
+                    "error_type": type(e).__name__
+                })
+                # Continue processing other chunks on error
+                continue
         
         # Remove duplicate triples
+        detailed_logger.log_debug("TRIPLE", "Starting triple deduplication", {
+            "total_triples_before": len(all_triples)
+        })
+
         unique_triples = []
         seen_triples = set()
-        
+
         for triple in all_triples:
             triple_key = (triple.subject, triple.predicate, triple.object)
             if triple_key not in seen_triples:
                 unique_triples.append(triple)
                 seen_triples.add(triple_key)
-        
+
+        detailed_logger.log_info("TRIPLE", "Triple deduplication completed", {
+            "total_triples_before": len(all_triples),
+            "unique_triples_after": len(unique_triples),
+            "duplicates_removed": len(all_triples) - len(unique_triples)
+        })
+
         # Calculate processing time
         processing_time = time.time() - start_time
-        
+
         # Prepare metadata
         metadata = {
             'text_processing': {
@@ -417,20 +505,63 @@ def generate_triples(entities: List[str], text: str,
                 'schema_validation': 'enabled' if PYDANTIC_AVAILABLE else 'disabled'
             }
         }
-        
+
+        detailed_logger.log_debug("TRIPLE", "Prepared extraction metadata", metadata)
+
         # Calculate success rate
-        success_rate = (chunk_info['chunks_processed'] / 
+        success_rate = (chunk_info['chunks_processed'] /
                       max(chunk_info['total_chunks'], 1))
-        
-        return TripleResult(
+
+        # Determine success based on both processing and triple generation
+        has_triples = len(unique_triples) > 0
+        processing_successful = success_rate > 0.5
+        overall_success = has_triples and processing_successful
+
+        detailed_logger.log_info("TRIPLE", "Triple generation analysis", {
+            "has_triples": has_triples,
+            "processing_successful": processing_successful,
+            "overall_success": overall_success,
+            "success_rate": success_rate,
+            "total_unique_triples": len(unique_triples)
+        })
+
+        # Determine error message
+        error_message = None
+        if not overall_success:
+            if not has_triples:
+                error_message = "No triples were generated from the provided entities and text"
+                detailed_logger.log_error("TRIPLE", "Triple generation failed: no triples generated", {
+                    "entities_provided": entities,
+                    "chunks_processed": chunk_info['chunks_processed'],
+                    "chunks_with_triples": chunk_info['chunks_with_triples']
+                })
+            elif not processing_successful:
+                error_message = f"Low success rate: {success_rate:.1%}"
+                detailed_logger.log_warning("TRIPLE", f"Triple generation had low success rate: {success_rate:.1%}")
+
+        # Log final results
+        if overall_success:
+            detailed_logger.log_info("TRIPLE", "Triple generation completed successfully", {
+                "total_triples": len(unique_triples),
+                "processing_time": processing_time,
+                "metadata": metadata
+            })
+
+        result = TripleResult(
             triples=unique_triples,
             metadata=metadata,
-            success=success_rate > 0.5,  # Consider successful if >50% chunks processed
+            success=overall_success,
             processing_time=processing_time,
-            error=None if success_rate > 0.5 else f"Low success rate: {success_rate:.1%}"
+            error=error_message
         )
-        
+
+        return result
+
     except Exception as e:
+        detailed_logger.log_error("TRIPLE", "Triple generation failed with exception", {
+            "error": str(e),
+            "error_type": type(e).__name__
+        })
         return create_error_result(
             TripleResult,
             f"Triple generation failed: {str(e)}",

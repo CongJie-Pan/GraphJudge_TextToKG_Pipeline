@@ -28,6 +28,7 @@ from dataclasses import dataclass
 try:
     from ..core.models import Triple, JudgmentResult
     from ..utils.api_client import get_api_client
+    from ..utils.detailed_logger import DetailedLogger
 except ImportError:
     # For direct execution or testing
     import sys
@@ -35,6 +36,7 @@ except ImportError:
     sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
     from core.models import Triple, JudgmentResult
     from utils.api_client import get_api_client
+    from utils.detailed_logger import DetailedLogger
 
 
 @dataclass
@@ -63,13 +65,14 @@ class GraphJudge:
     def __init__(self, model_name: str = "perplexity/sonar-reasoning"):
         """
         Initialize the Graph Judge with Perplexity API integration.
-        
+
         Args:
             model_name: Perplexity model identifier for judgment
         """
         self.model_name = model_name
         self.api_client = get_api_client()
-        
+        self.detailed_logger = DetailedLogger(phase="judgment")
+
         # Configuration from original script
         self.temperature = 1.0  # GPT-5 models only support temperature=1
         self.max_tokens = 2000  # Sufficient for judgment responses
@@ -77,66 +80,125 @@ class GraphJudge:
     def judge_triples(self, triples: List[Triple]) -> JudgmentResult:
         """
         Judge a list of triples and return binary judgment results.
-        
+
         This is the main interface function as specified in spec.md Section 8.
-        
+
         Args:
             triples: List of Triple objects to validate
-            
+
         Returns:
             JudgmentResult with judgments, confidence scores, and metadata
         """
+        self.detailed_logger.log_info("JUDGMENT", "Starting graph judgment process", {
+            "triple_count": len(triples),
+            "triples": [{"subject": t.subject, "predicate": t.predicate, "object": t.object} for t in triples[:5]],  # First 5 triples
+            "model": self.model_name
+        })
+
         if not triples:
+            self.detailed_logger.log_warning("JUDGMENT", "No triples provided for judgment")
             return JudgmentResult(
                 judgments=[],
                 confidence=[],
                 success=True,
                 processing_time=0.0
             )
-        
+
         start_time = time.time()
         judgments = []
         confidence_scores = []
         api_calls = 0
-        
+
         try:
-            for triple in triples:
+            for idx, triple in enumerate(triples):
+                self.detailed_logger.log_debug("JUDGMENT", f"Processing triple {idx + 1}/{len(triples)}", {
+                    "triple_index": idx,
+                    "subject": triple.subject,
+                    "predicate": triple.predicate,
+                    "object": triple.object
+                })
+
                 try:
                     # Convert triple to judgment instruction format
                     instruction = self._create_judgment_instruction(triple)
-                    
+                    self.detailed_logger.log_debug("JUDGMENT", "Created judgment instruction", {
+                        "triple_index": idx,
+                        "instruction_length": len(instruction)
+                    })
+
                     # Get binary judgment from Perplexity
+                    self.detailed_logger.log_info("API", f"Making judgment API call for triple {idx + 1}")
                     judgment, had_error = self._judge_single_triple_with_error_flag(instruction)
-                    judgments.append(judgment == "Yes")
-                    
+
+                    binary_judgment = judgment == "Yes"
+                    judgments.append(binary_judgment)
+
                     # Assign confidence based on response clarity and error status
                     if had_error:
                         confidence = 0.0  # Zero confidence for API errors
+                        self.detailed_logger.log_warning("JUDGMENT", f"API error for triple {idx + 1}, setting confidence to 0", {
+                            "triple_index": idx,
+                            "judgment_response": judgment
+                        })
                     else:
                         confidence = self._estimate_confidence(judgment)
+                        self.detailed_logger.log_debug("JUDGMENT", f"Triple {idx + 1} judged successfully", {
+                            "triple_index": idx,
+                            "judgment": judgment,
+                            "binary_result": binary_judgment,
+                            "confidence": confidence
+                        })
+
                     confidence_scores.append(confidence)
-                    
                     api_calls += 1
-                    
+
                 except Exception as e:
                     # Handle individual triple errors gracefully
                     judgments.append(False)  # Conservative default
                     confidence_scores.append(0.0)  # Zero confidence for errors
-                    print(f"Error judging triple {triple}: {e}")
+                    self.detailed_logger.log_error("JUDGMENT", f"Error judging triple {idx + 1}", {
+                        "triple_index": idx,
+                        "error": str(e),
+                        "error_type": type(e).__name__,
+                        "subject": triple.subject,
+                        "predicate": triple.predicate,
+                        "object": triple.object
+                    })
             
             processing_time = time.time() - start_time
-            
+
+            # Log final judgment results
+            approved_count = sum(1 for j in judgments if j)
+            avg_confidence = sum(confidence_scores) / len(confidence_scores) if confidence_scores else 0.0
+
+            self.detailed_logger.log_info("JUDGMENT", "Graph judgment completed successfully", {
+                "total_triples": len(triples),
+                "approved_triples": approved_count,
+                "rejected_triples": len(triples) - approved_count,
+                "approval_rate": approved_count / len(triples) if triples else 0.0,
+                "average_confidence": avg_confidence,
+                "api_calls_made": api_calls,
+                "processing_time": processing_time
+            })
+
             return JudgmentResult(
                 judgments=judgments,
                 confidence=confidence_scores,
                 success=True,
                 processing_time=processing_time
             )
-            
+
         except Exception as e:
             # Handle catastrophic errors
             processing_time = time.time() - start_time
-            
+
+            self.detailed_logger.log_error("JUDGMENT", "Graph judgment failed with catastrophic error", {
+                "error": str(e),
+                "error_type": type(e).__name__,
+                "triples_count": len(triples),
+                "processing_time": processing_time
+            })
+
             return JudgmentResult(
                 judgments=[False] * len(triples),  # Conservative defaults
                 confidence=[0.0] * len(triples),
@@ -146,23 +208,30 @@ class GraphJudge:
             )
     
     def judge_triples_with_explanations(
-        self, 
+        self,
         triples: List[Triple],
         include_reasoning: bool = True
     ) -> Dict[str, Any]:
         """
         Judge triples with detailed explanations for each judgment.
-        
+
         This provides the explainable reasoning mode as specified in spec.md FR-GJ5.
-        
+
         Args:
             triples: List of Triple objects to validate
             include_reasoning: Whether to include detailed reasoning
-            
+
         Returns:
             Dictionary with judgments and detailed explanations
         """
+        self.detailed_logger.log_info("JUDGMENT", "Starting explainable graph judgment process", {
+            "triple_count": len(triples),
+            "include_reasoning": include_reasoning,
+            "triples": [{"subject": t.subject, "predicate": t.predicate, "object": t.object} for t in triples[:3]]  # First 3 triples
+        })
+
         if not triples:
+            self.detailed_logger.log_warning("JUDGMENT", "No triples provided for explainable judgment")
             return {
                 "judgments": [],
                 "explanations": [],
@@ -171,39 +240,68 @@ class GraphJudge:
                 "processing_time": 0.0,
                 "metadata": {"total_triples": 0, "api_calls": 0}
             }
-        
+
         start_time = time.time()
         judgments = []
         explanations = []
         confidence_scores = []
         api_calls = 0
-        
+
         try:
-            for triple in triples:
+            for idx, triple in enumerate(triples):
+                self.detailed_logger.log_debug("JUDGMENT", f"Processing explainable judgment for triple {idx + 1}/{len(triples)}", {
+                    "triple_index": idx,
+                    "subject": triple.subject,
+                    "predicate": triple.predicate,
+                    "object": triple.object,
+                    "include_reasoning": include_reasoning
+                })
+
                 try:
                     # Convert triple to judgment instruction format
                     instruction = self._create_judgment_instruction(triple)
-                    
+
                     if include_reasoning:
                         # Get detailed explanation
+                        self.detailed_logger.log_info("API", f"Making explainable judgment API call for triple {idx + 1}")
                         explanation_result = self._judge_with_explanation(instruction)
-                        
-                        judgments.append(explanation_result.judgment == "Yes")
+
+                        binary_judgment = explanation_result.judgment == "Yes"
+                        judgments.append(binary_judgment)
                         confidence_scores.append(explanation_result.confidence)
                         explanations.append({
                             "reasoning": explanation_result.reasoning,
                             "evidence_sources": explanation_result.evidence_sources,
                             "error_type": explanation_result.error_type
                         })
+
+                        self.detailed_logger.log_debug("JUDGMENT", f"Explainable judgment completed for triple {idx + 1}", {
+                            "triple_index": idx,
+                            "judgment": explanation_result.judgment,
+                            "binary_result": binary_judgment,
+                            "confidence": explanation_result.confidence,
+                            "reasoning_length": len(explanation_result.reasoning) if explanation_result.reasoning else 0,
+                            "evidence_sources_count": len(explanation_result.evidence_sources) if explanation_result.evidence_sources else 0
+                        })
                     else:
                         # Simple binary judgment
+                        self.detailed_logger.log_info("API", f"Making simple judgment API call for triple {idx + 1}")
                         judgment = self._judge_single_triple(instruction)
-                        judgments.append(judgment == "Yes")
-                        confidence_scores.append(self._estimate_confidence(judgment))
+                        binary_judgment = judgment == "Yes"
+                        judgments.append(binary_judgment)
+                        confidence = self._estimate_confidence(judgment)
+                        confidence_scores.append(confidence)
                         explanations.append({"reasoning": f"Binary judgment: {judgment}"})
-                    
+
+                        self.detailed_logger.log_debug("JUDGMENT", f"Simple judgment completed for triple {idx + 1}", {
+                            "triple_index": idx,
+                            "judgment": judgment,
+                            "binary_result": binary_judgment,
+                            "confidence": confidence
+                        })
+
                     api_calls += 1
-                    
+
                 except Exception as e:
                     # Handle individual triple errors gracefully
                     judgments.append(False)
@@ -212,10 +310,32 @@ class GraphJudge:
                         "reasoning": f"Error during processing: {str(e)}",
                         "error_type": "processing_error"
                     })
-                    print(f"Error judging triple {triple} with explanation: {e}")
-            
+                    self.detailed_logger.log_error("JUDGMENT", f"Error judging triple {idx + 1} with explanation", {
+                        "triple_index": idx,
+                        "error": str(e),
+                        "error_type": type(e).__name__,
+                        "subject": triple.subject,
+                        "predicate": triple.predicate,
+                        "object": triple.object
+                    })
+
             processing_time = time.time() - start_time
-            
+
+            # Log final explainable judgment results
+            approved_count = sum(1 for j in judgments if j)
+            avg_confidence = sum(confidence_scores) / len(confidence_scores) if confidence_scores else 0.0
+
+            self.detailed_logger.log_info("JUDGMENT", "Explainable graph judgment completed successfully", {
+                "total_triples": len(triples),
+                "approved_triples": approved_count,
+                "rejected_triples": len(triples) - approved_count,
+                "approval_rate": approved_count / len(triples) if triples else 0.0,
+                "average_confidence": avg_confidence,
+                "api_calls_made": api_calls,
+                "reasoning_enabled": include_reasoning,
+                "processing_time": processing_time
+            })
+
             return {
                 "judgments": judgments,
                 "explanations": explanations,
@@ -229,11 +349,19 @@ class GraphJudge:
                     "reasoning_enabled": include_reasoning
                 }
             }
-            
+
         except Exception as e:
             # Handle catastrophic errors
             processing_time = time.time() - start_time
-            
+
+            self.detailed_logger.log_error("JUDGMENT", "Explainable graph judgment failed with catastrophic error", {
+                "error": str(e),
+                "error_type": type(e).__name__,
+                "triples_count": len(triples),
+                "include_reasoning": include_reasoning,
+                "processing_time": processing_time
+            })
+
             return {
                 "judgments": [False] * len(triples),
                 "explanations": [{"reasoning": str(e), "error_type": "catastrophic_failure"}] * len(triples),
@@ -264,17 +392,27 @@ class GraphJudge:
     def _judge_single_triple_with_error_flag(self, instruction: str) -> Tuple[str, bool]:
         """
         Get binary judgment for a single triple with error flag.
-        
+
         Args:
             instruction: Judgment instruction string
-            
+
         Returns:
             Tuple of (judgment, had_error) where had_error indicates API failure
         """
         try:
             judgment = self._judge_single_triple(instruction)
+            self.detailed_logger.log_debug("JUDGMENT", "Single triple judgment successful", {
+                "judgment": judgment,
+                "had_error": False
+            })
             return judgment, False  # No error
-        except Exception:
+        except Exception as e:
+            self.detailed_logger.log_warning("JUDGMENT", "Single triple judgment failed, using conservative default", {
+                "error": str(e),
+                "error_type": type(e).__name__,
+                "default_judgment": "No",
+                "had_error": True
+            })
             return "No", True  # Error occurred, conservative default
     
     def _judge_single_triple(self, instruction: str) -> str:

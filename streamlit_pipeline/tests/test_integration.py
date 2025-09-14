@@ -572,3 +572,274 @@ class TestDataConsistency(BaseIntegrationTest):
             assert hasattr(stage, 'processing_time'), "All stages should track timing"
             assert isinstance(stage.processing_time, (int, float)), "Processing time should be numeric"
             assert stage.processing_time > 0, "Processing time should be positive"
+
+
+# =============================================================================
+# LOGGING INTEGRATION TESTS
+# =============================================================================
+
+@pytest.mark.integration
+class TestLoggingIntegration(BaseIntegrationTest):
+    """Test logging system integration across pipeline stages."""
+
+    def setup_method(self):
+        """Set up test fixtures for logging tests."""
+        # Initialize base class attributes
+        self.data_generator = TestDataGenerator()
+        self.error_simulator = ErrorSimulator()
+        self.performance_utils = PerformanceTestUtils()
+
+        # Create temporary directory for test logs
+        import tempfile
+        self.test_logs_dir = tempfile.mkdtemp()
+
+    def teardown_method(self):
+        """Clean up test fixtures after logging tests."""
+        import shutil
+        import os
+        if os.path.exists(self.test_logs_dir):
+            shutil.rmtree(self.test_logs_dir)
+
+    @patch('streamlit_pipeline.utils.detailed_logger.DetailedLogger')
+    def test_entity_processor_logging_integration(self, mock_logger_class):
+        """Test that entity processor integrates correctly with logging system."""
+        from core.entity_processor import extract_entities
+
+        # Create mock logger instance
+        mock_logger = MagicMock()
+        mock_logger_class.return_value = mock_logger
+
+        # Mock API call to avoid actual API request
+        with patch('core.entity_processor.call_gpt5_mini') as mock_api:
+            mock_api.return_value = '["entity1", "entity2", "entity3"]'
+
+            # Test entity extraction with logging
+            result = extract_entities("Sample Chinese text for testing")
+
+            # Verify logger was initialized for ECTD phase
+            mock_logger_class.assert_called_with(phase="ectd")
+
+            # Verify key logging calls were made
+            mock_logger.log_info.assert_called()
+            mock_logger.log_debug.assert_called()
+
+            # Verify result structure
+            assert result.success is True
+            assert len(result.entities) == 3
+
+    @patch('streamlit_pipeline.utils.detailed_logger.DetailedLogger')
+    def test_triple_generator_logging_integration(self, mock_logger_class):
+        """Test that triple generator integrates correctly with logging system."""
+        from core.triple_generator import generate_triples
+
+        mock_logger = MagicMock()
+        mock_logger_class.return_value = mock_logger
+
+        # Mock API call
+        with patch('core.triple_generator.call_gpt5_mini') as mock_api:
+            mock_api.return_value = '''[
+                {"subject": "subject1", "predicate": "predicate1", "object": "object1"},
+                {"subject": "subject2", "predicate": "predicate2", "object": "object2"}
+            ]'''
+
+            # Test triple generation with logging
+            result = generate_triples("Sample denoised text", ["entity1", "entity2"])
+
+            # Verify logger was initialized for triple generation phase
+            mock_logger_class.assert_called_with(phase="triple_gen")
+
+            # Verify logging calls
+            mock_logger.log_info.assert_called()
+
+            # Verify result structure
+            assert result.success is True
+            assert len(result.triples) == 2
+
+    @patch('streamlit_pipeline.utils.detailed_logger.DetailedLogger')
+    def test_graph_judge_logging_integration(self, mock_logger_class):
+        """Test that graph judge integrates correctly with logging system."""
+        from core.graph_judge import judge_triples
+
+        mock_logger = MagicMock()
+        mock_logger_class.return_value = mock_logger
+
+        # Mock API call
+        with patch('core.graph_judge.call_perplexity_api') as mock_api:
+            mock_api.return_value = '''[
+                {"judgment": "correct", "confidence": 0.95},
+                {"judgment": "incorrect", "confidence": 0.85}
+            ]'''
+
+            # Test graph judgment with logging
+            from core.models import Triple
+            test_triples = [
+                Triple("subject1", "predicate1", "object1"),
+                Triple("subject2", "predicate2", "object2")
+            ]
+
+            result = judge_triples(test_triples, "Original text context")
+
+            # Verify logger was initialized for graph judge phase
+            mock_logger_class.assert_called_with(phase="graph_judge")
+
+            # Verify logging calls
+            mock_logger.log_info.assert_called()
+
+    def test_logging_directory_structure(self):
+        """Test that logging creates proper directory structure."""
+        from utils.detailed_logger import DetailedLogger
+        from datetime import datetime
+
+        logger = DetailedLogger(phase="test_phase")
+
+        # Verify date-based directory structure
+        expected_date = datetime.now().strftime("%Y_%m_%d")
+        assert expected_date in str(logger.logs_dir)
+        assert "test_phase" in str(logger.logs_dir)
+        assert logger.logs_dir.exists()
+
+        # Test that log files are created
+        logger.log_info("TEST", "Test message")
+
+        debug_file = logger.logs_dir / f"test_phase_{logger.session_id}.log"
+        assert debug_file.exists()
+
+        content = debug_file.read_text(encoding='utf-8')
+        assert "Test message" in content
+
+    def test_concurrent_phase_logging(self):
+        """Test that multiple pipeline phases can log concurrently."""
+        from utils.detailed_logger import DetailedLogger
+
+        # Create loggers for different phases
+        ectd_logger = DetailedLogger(phase="ectd")
+        triple_logger = DetailedLogger(phase="triple_gen")
+        judge_logger = DetailedLogger(phase="graph_judge")
+
+        # Log messages from each phase
+        ectd_logger.log_info("ENTITY", "Entity extraction started")
+        triple_logger.log_info("TRIPLE", "Triple generation started")
+        judge_logger.log_info("JUDGE", "Graph judgment started")
+
+        # Verify separate log files exist
+        ectd_file = ectd_logger.logs_dir / f"ectd_{ectd_logger.session_id}.log"
+        triple_file = triple_logger.logs_dir / f"triple_gen_{triple_logger.session_id}.log"
+        judge_file = judge_logger.logs_dir / f"graph_judge_{judge_logger.session_id}.log"
+
+        assert ectd_file.exists()
+        assert triple_file.exists()
+        assert judge_file.exists()
+
+        # Verify content isolation
+        ectd_content = ectd_file.read_text(encoding='utf-8')
+        triple_content = triple_file.read_text(encoding='utf-8')
+        judge_content = judge_file.read_text(encoding='utf-8')
+
+        assert "Entity extraction started" in ectd_content
+        assert "Triple generation started" in triple_content
+        assert "Graph judgment started" in judge_content
+
+        # Verify no cross-contamination
+        assert "Triple generation started" not in ectd_content
+        assert "Graph judgment started" not in ectd_content
+        assert "Entity extraction started" not in triple_content
+
+    def test_error_logging_integration(self):
+        """Test that errors are properly logged across the pipeline."""
+        from utils.detailed_logger import DetailedLogger
+
+        logger = DetailedLogger(phase="test_error")
+
+        # Log various error types
+        logger.log_error("API", "API connection failed", {
+            "error_code": 500,
+            "retry_count": 3
+        })
+
+        logger.log_warning("STORAGE", "Disk space running low")
+
+        # Verify error file creation
+        error_file = logger.logs_dir / f"test_error_{logger.session_id}_errors.log"
+        warning_file = logger.logs_dir / f"test_error_{logger.session_id}_warnings.log"
+
+        assert error_file.exists()
+        assert warning_file.exists()
+
+        # Verify error content
+        error_content = error_file.read_text(encoding='utf-8')
+        warning_content = warning_file.read_text(encoding='utf-8')
+
+        assert "API connection failed" in error_content
+        assert "error_code" in error_content
+        assert "Disk space running low" in warning_content
+
+    def test_api_call_logging_integration(self):
+        """Test that API calls are properly logged with metrics."""
+        from utils.detailed_logger import DetailedLogger
+
+        logger = DetailedLogger(phase="test_api")
+
+        # Log successful API call
+        logger.log_api_call("GPT-5-mini", 500, 150, success=True)
+
+        # Log failed API call
+        logger.log_api_call("GPT-5-mini", 300, 0, success=False, error="Rate limit exceeded")
+
+        # Verify logging
+        debug_file = logger.logs_dir / f"test_api_{logger.session_id}.log"
+        error_file = logger.logs_dir / f"test_api_{logger.session_id}_errors.log"
+
+        debug_content = debug_file.read_text(encoding='utf-8')
+        error_content = error_file.read_text(encoding='utf-8')
+
+        # Verify successful call logging
+        assert "API call to GPT-5-mini" in debug_content
+        assert "input_tokens: 500" in debug_content
+        assert "success: true" in debug_content
+
+        # Verify failed call logging
+        assert "success: false" in debug_content
+        assert "Rate limit exceeded" in error_content
+
+    def test_pipeline_lifecycle_logging(self):
+        """Test complete pipeline lifecycle logging."""
+        from utils.detailed_logger import DetailedLogger
+
+        logger = DetailedLogger(phase="pipeline_test")
+
+        # Simulate complete pipeline lifecycle
+        config = {"model": "gpt-5-mini", "temperature": 0.7}
+        logger.log_pipeline_start(config)
+
+        # Entity extraction phase
+        logger.log_phase_start("entity_extraction", {"text_length": 5000})
+        logger.log_api_call("GPT-5-mini", 500, 150, success=True)
+        logger.log_phase_complete("entity_extraction", True, {"entity_count": 25})
+
+        # Triple generation phase
+        logger.log_phase_start("triple_generation", {"entity_count": 25})
+        logger.log_api_call("GPT-5-mini", 600, 200, success=True)
+        logger.log_phase_complete("triple_generation", True, {"triple_count": 40})
+
+        # Graph judgment phase
+        logger.log_phase_start("graph_judgment", {"triple_count": 40})
+        logger.log_api_call("Perplexity", 800, 100, success=True)
+        logger.log_phase_complete("graph_judgment", True, {"judged_count": 40})
+
+        results = {"total_entities": 25, "total_triples": 40, "success": True}
+        logger.log_pipeline_complete(results)
+
+        # Verify complete lifecycle logging
+        debug_file = logger.logs_dir / f"pipeline_test_{logger.session_id}.log"
+        content = debug_file.read_text(encoding='utf-8')
+
+        assert "Pipeline execution started" in content
+        assert "entity_extraction" in content
+        assert "triple_generation" in content
+        assert "graph_judgment" in content
+        assert "Pipeline execution completed" in content
+
+        # Verify metrics were logged
+        assert "entity_count: 25" in content
+        assert "triple_count: 40" in content
+        assert "judged_count: 40" in content
