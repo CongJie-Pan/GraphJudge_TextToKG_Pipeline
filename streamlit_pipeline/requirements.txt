@@ -7,3 +7,4 @@ python-dotenv>=1.0.0
 
 # Graph visualization dependencies (required for knowledge graph display)
 plotly>=5.0.0
+pyvis>=0.3.2

@@ -12,7 +12,7 @@ from typing import List, Dict, Any, Optional, Tuple
 import json
 from datetime import datetime
 
-# Optional plotly import with graceful fallback
+# Optional visualization library imports with graceful fallback
 try:
     import plotly.express as px
     import plotly.graph_objects as go
@@ -21,6 +21,15 @@ except ImportError:
     PLOTLY_AVAILABLE = False
     px = None
     go = None
+
+try:
+    from pyvis.network import Network
+    import streamlit.components.v1 as components
+    PYVIS_AVAILABLE = True
+except ImportError:
+    PYVIS_AVAILABLE = False
+    Network = None
+    components = None
 
 from ..core.models import EntityResult, TripleResult, JudgmentResult, Triple
 from ..core.pipeline import PipelineResult
@@ -101,6 +110,8 @@ def display_final_results(pipeline_result: PipelineResult):
             st.markdown("## 🧠 Final Knowledge Graph")
             st.markdown(f"After AI judgment, the following **{len(approved_triples)}** knowledge triples were deemed accurate:")
             
+            # Store pipeline result in session state for graph visualization
+            st.session_state.pipeline_result = pipeline_result
             display_final_knowledge_graph(approved_triples, pipeline_result.judgment_result, pipeline_result.graph_data)
             
             # Export options
@@ -193,9 +204,21 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
     
     # Show knowledge graph visualization
     if len(triples) > 0:
-        st.markdown("### 🕸️ Relationship Network Graph")
+        st.markdown("### 🕸️ Interactive Knowledge Graph")
 
-        create_enhanced_knowledge_graph(triples, graph_data)
+        # Check if we have pipeline result with pyvis data
+        if hasattr(st.session_state, 'pipeline_result') and hasattr(st.session_state.pipeline_result, 'pyvis_data'):
+            pyvis_data = st.session_state.pipeline_result.pyvis_data
+        else:
+            pyvis_data = None
+
+        # Use Pyvis viewer as primary option
+        if pyvis_data and PYVIS_AVAILABLE:
+            display_pyvis_knowledge_graph(pyvis_data, triples)
+        else:
+            # Fallback to Plotly or text display
+            st.info("💡 Using fallback visualization (Pyvis data not available)")
+            create_enhanced_knowledge_graph(triples, graph_data)
 
 
 def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_result: JudgmentResult):
@@ -711,3 +734,181 @@ def display_comparison_view(current_result: PipelineResult, previous_results: Li
             st.plotly_chart(fig, use_container_width=True)
         elif len(comparison_data) > 1:
             st.info("📊 Trend chart requires Plotly library: `pip install plotly`")
+
+
+def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) -> Optional[str]:
+    """
+    Create an interactive Pyvis network visualization from pyvis_data.
+
+    Args:
+        pyvis_data: Processed Pyvis format data with nodes and edges
+        height: Height of the visualization in pixels
+
+    Returns:
+        HTML string of the visualization, or None if failed
+    """
+    if not PYVIS_AVAILABLE:
+        st.error("🌐 Pyvis network visualization requires Pyvis library")
+        st.info("💡 Install with: `pip install pyvis>=0.3.2`")
+        return None
+
+    try:
+        # Create Network instance
+        net = Network(
+            height=f"{height}px",
+            width="100%",
+            bgcolor="#ffffff",
+            font_color="black",
+            select_menu=True,
+            filter_menu=True
+        )
+
+        # Configure physics for better layout
+        physics_options = pyvis_data.get("physics", {
+            "enabled": True,
+            "stabilization": {"iterations": 100},
+            "barnesHut": {
+                "gravitationalConstant": -2000,
+                "centralGravity": 0.3,
+                "springLength": 95,
+                "springConstant": 0.04,
+                "damping": 0.09
+            }
+        })
+        net.set_options(f"""
+        var options = {{
+          "physics": {json.dumps(physics_options)},
+          "interaction": {{
+            "hover": true,
+            "tooltipDelay": 200,
+            "hideEdgesOnDrag": false,
+            "hideNodesOnDrag": false
+          }},
+          "layout": {{
+            "improvedLayout": true
+          }}
+        }}
+        """)
+
+        # Add nodes
+        nodes = pyvis_data.get("nodes", [])
+        for node in nodes:
+            net.add_node(
+                node["id"],
+                label=node.get("label", node["id"]),
+                color=node.get("color", "#1f77b4"),
+                size=node.get("size", 25),
+                title=node.get("title", node.get("label", node["id"])),
+                font=node.get("font", {"size": 12})
+            )
+
+        # Add edges
+        edges = pyvis_data.get("edges", [])
+        for edge in edges:
+            net.add_edge(
+                edge["from"],
+                edge["to"],
+                label=edge.get("label", ""),
+                color=edge.get("color", "#848484"),
+                width=edge.get("width", 1),
+                title=edge.get("title", edge.get("label", "")),
+                arrows=edge.get("arrows", "to")
+            )
+
+        # Generate HTML
+        html = net.generate_html()
+
+        return html
+
+    except Exception as e:
+        st.error(f"❌ Pyvis visualization failed: {str(e)}")
+        return None
+
+
+def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
+                                 triples: Optional[List[Triple]] = None,
+                                 height: int = 600):
+    """
+    Display interactive Pyvis knowledge graph with fallback options.
+
+    Args:
+        pyvis_data: Pre-processed Pyvis graph data
+        triples: Fallback triples for text display
+        height: Height of visualization in pixels
+    """
+    if not pyvis_data:
+        st.warning("🤷‍♂️ No graph data available for visualization")
+        if triples:
+            _display_text_based_graph(triples)
+        return
+
+    # Display metrics from Pyvis data
+    metadata = pyvis_data.get("metadata", {})
+    nodes_count = metadata.get("nodes_count", len(pyvis_data.get("nodes", [])))
+    edges_count = metadata.get("edges_count", len(pyvis_data.get("edges", [])))
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("🔹 Entities", nodes_count)
+    with col2:
+        st.metric("🔗 Relationships", edges_count)
+    with col3:
+        physics_status = "✅ Enabled" if metadata.get("physics_enabled", True) else "❌ Disabled"
+        st.metric("⚡ Physics", physics_status)
+
+    # Viewer selection
+    viewer_option = st.selectbox(
+        "🎨 Choose Visualization:",
+        ["Interactive Network (Pyvis)", "Simple Text Display"],
+        index=0
+    )
+
+    if viewer_option == "Interactive Network (Pyvis)":
+        if PYVIS_AVAILABLE:
+            # Generate Pyvis visualization
+            html = create_pyvis_knowledge_graph(pyvis_data, height)
+            if html:
+                st.success(f"🌐 Interactive knowledge graph loaded: {nodes_count} entities, {edges_count} relationships")
+
+                # Display in Streamlit
+                components.html(html, height=height + 50, scrolling=True)
+
+                # Display export information
+                st.info("💡 **Interaction tips:** Drag nodes to rearrange, scroll to zoom, hover for details")
+
+                # Add download option
+                if st.button("📥 Download HTML"):
+                    st.download_button(
+                        label="Save Interactive Graph",
+                        data=html,
+                        file_name=f"knowledge_graph_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html",
+                        mime="text/html"
+                    )
+            else:
+                st.error("Failed to generate Pyvis visualization")
+                if triples:
+                    _display_text_based_graph(triples)
+        else:
+            st.error("🚫 Pyvis library not available")
+            if triples:
+                _display_text_based_graph(triples)
+    else:
+        # Text-based display
+        if triples:
+            _display_text_based_graph(triples)
+        else:
+            # Convert from pyvis data to basic text display
+            entities = set()
+            relationships = []
+
+            for edge in pyvis_data.get("edges", []):
+                entities.add(edge["from"])
+                entities.add(edge["to"])
+                rel_text = f"{edge['from']} → {edge.get('label', 'related to')} → {edge['to']}"
+                relationships.append(rel_text)
+
+            st.markdown("### 📝 Text-Based Knowledge Graph")
+            st.write(f"**Entities:** {', '.join(sorted(entities))}")
+            st.markdown("**Relationships:**")
+            for i, rel in enumerate(relationships, 1):
+                st.write(f"{i}. {rel}")

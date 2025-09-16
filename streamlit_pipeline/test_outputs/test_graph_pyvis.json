@@ -1,0 +1,231 @@
+{
+  "nodes": [
+    {
+      "id": "《紅樓夢》",
+      "label": "《紅樓夢》",
+      "color": "#9467bd",
+      "size": 18,
+      "title": "《紅樓夢》\n类型: 作品\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "主角",
+      "label": "主角",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "主角\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "京城",
+      "label": "京城",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "京城\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "曹雪芹",
+      "label": "曹雪芹",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "曹雪芹\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "林黛玉",
+      "label": "林黛玉",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "林黛玉\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛家",
+      "label": "薛家",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "薛家\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛寶釵",
+      "label": "薛寶釵",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "薛寶釵\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "表妹",
+      "label": "表妹",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "表妹\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈家",
+      "label": "賈家",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "賈家\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈寶玉",
+      "label": "賈寶玉",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "賈寶玉\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈府",
+      "label": "賈府",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "賈府\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "賈寶玉",
+      "to": "主角",
+      "label": "身份",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈寶玉 → 身份 → 主角\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "賈家",
+      "label": "家族",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈寶玉 → 家族 → 賈家\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "林黛玉",
+      "to": "表妹",
+      "label": "身份",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "林黛玉 → 身份 → 表妹\n置信度: 0.85",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "林黛玉",
+      "to": "賈府",
+      "label": "居住",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "林黛玉 → 居住 → 賈府\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛寶釵",
+      "to": "薛家",
+      "label": "家族",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛寶釵 → 家族 → 薛家\n置信度: 0.88",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈府",
+      "to": "京城",
+      "label": "地點",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈府 → 地點 → 京城\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "《紅樓夢》",
+      "to": "曹雪芹",
+      "label": "作者",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "《紅樓夢》 → 作者 → 曹雪芹\n置信度: 0.98",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    }
+  ],
+  "physics": {
+    "enabled": true,
+    "stabilization": {
+      "iterations": 100
+    },
+    "barnesHut": {
+      "gravitationalConstant": -2000,
+      "centralGravity": 0.3,
+      "springLength": 95,
+      "springConstant": 0.04,
+      "damping": 0.09
+    }
+  },
+  "metadata": {
+    "format": "pyvis",
+    "nodes_count": 11,
+    "edges_count": 7,
+    "conversion_timestamp": "2025-09-16T17:51:12.938519",
+    "physics_enabled": true
+  }
+}

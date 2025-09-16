@@ -912,9 +912,12 @@ def display_knowledge_graph_viz(triples: List[Triple]):
         showlegend=False
     ))
     
+    # Updated layout with modern Plotly syntax
     fig.update_layout(
-        title="Knowledge Graph Visualization",
-        titlefont_size=16,
+        title=dict(
+            text="Knowledge Graph Visualization",
+            font=dict(size=16)
+        ),
         showlegend=False,
         hovermode='closest',
         margin=dict(b=20,l=5,r=5,t=40),

@@ -19,7 +19,14 @@ try:
     from .triple_generator import generate_triples
     from .graph_judge import judge_triples
     from .models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
-    from .graph_converter import create_graph_from_judgment_result, create_graph_from_triples, validate_graph_data, get_graph_statistics
+    from .graph_converter import (
+        create_graph_from_judgment_result,
+        create_graph_from_triples,
+        create_pyvis_graph_from_judgment_result,
+        create_kgshows_graph_from_judgment_result,
+        validate_graph_data,
+        get_graph_statistics
+    )
     from ..utils.error_handling import ErrorHandler, ErrorType, safe_execute
     from ..utils.api_client import get_api_client
     from ..utils.storage_manager import get_storage_manager, create_new_pipeline_iteration, save_phase_result
@@ -33,7 +40,14 @@ except ImportError:
     from core.triple_generator import generate_triples
     from core.graph_judge import judge_triples
     from core.models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
-    from core.graph_converter import create_graph_from_judgment_result, create_graph_from_triples, validate_graph_data, get_graph_statistics
+    from core.graph_converter import (
+        create_graph_from_judgment_result,
+        create_graph_from_triples,
+        create_pyvis_graph_from_judgment_result,
+        create_kgshows_graph_from_judgment_result,
+        validate_graph_data,
+        get_graph_statistics
+    )
     from utils.error_handling import ErrorHandler, ErrorType, safe_execute
     from utils.api_client import get_api_client
     from utils.storage_manager import get_storage_manager, create_new_pipeline_iteration, save_phase_result
@@ -51,7 +65,11 @@ class PipelineResult:
     entity_result: Optional[EntityResult] = None
     triple_result: Optional[TripleResult] = None
     judgment_result: Optional[JudgmentResult] = None
-    graph_data: Optional[Dict[str, Any]] = None  # Graph visualization data
+
+    # Graph data in multiple formats
+    graph_data: Optional[Dict[str, Any]] = None  # Plotly format (backward compatibility)
+    pyvis_data: Optional[Dict[str, Any]] = None  # Pyvis format (primary viewer)
+    kgshows_data: Optional[Dict[str, Any]] = None  # kgGenShows format (for other projects)
 
     # Error information
     error: Optional[str] = None
@@ -283,8 +301,17 @@ class PipelineOrchestrator:
             })
 
             try:
-                # Convert judgment results to graph format for visualization
+                # Convert judgment results to multiple graph formats for different viewers
+                self.detailed_logger.log_info("GRAPH", "Generating multiple graph formats...")
+
+                # 1. Plotly format (backward compatibility)
                 graph_data = create_graph_from_judgment_result(triple_result, judgment_result)
+
+                # 2. Pyvis format (primary interactive viewer)
+                pyvis_data = create_pyvis_graph_from_judgment_result(triple_result, judgment_result)
+
+                # 3. kgGenShows format (for other projects)
+                kgshows_data = create_kgshows_graph_from_judgment_result(triple_result, judgment_result)
 
                 # Validate the generated graph data
                 is_valid, validation_errors = validate_graph_data(graph_data)
@@ -299,22 +326,37 @@ class PipelineOrchestrator:
 
                 # Generate graph statistics
                 graph_stats = get_graph_statistics(graph_data)
-                self.detailed_logger.log_info("GRAPH", "Graph conversion completed successfully", {
-                    "nodes_count": graph_stats["nodes_count"],
-                    "edges_count": graph_stats["edges_count"],
-                    "entities_count": graph_stats["entities_count"],
-                    "relationships_count": graph_stats["relationships_count"],
-                    "validation_status": graph_stats["validation_status"],
-                    "average_node_degree": graph_stats["average_node_degree"],
-                    "isolated_nodes": graph_stats["isolated_nodes"]
+                self.detailed_logger.log_info("GRAPH", "Multi-format graph conversion completed successfully", {
+                    "plotly_nodes": graph_stats["nodes_count"],
+                    "plotly_edges": graph_stats["edges_count"],
+                    "pyvis_nodes": pyvis_data["metadata"]["nodes_count"],
+                    "pyvis_edges": pyvis_data["metadata"]["edges_count"],
+                    "kgshows_entities": len(kgshows_data["entities"]),
+                    "kgshows_relationships": len(kgshows_data["relationships"]),
+                    "validation_status": graph_stats["validation_status"]
                 })
 
-                result.graph_data = graph_data
+                # Store all formats in result
+                result.graph_data = graph_data      # Plotly format
+                result.pyvis_data = pyvis_data      # Pyvis format
+                result.kgshows_data = kgshows_data  # kgGenShows format
 
-                # Save graph data to storage if possible
+                # Save all graph formats to storage if possible
                 try:
+                    # Save Plotly format
                     saved_graph_path = self.storage_manager.save_graph_data(graph_data)
-                    self.detailed_logger.log_info("STORAGE", f"Graph data saved to: {saved_graph_path}")
+
+                    # Save Pyvis format
+                    saved_pyvis_path = self.storage_manager.save_pyvis_data(pyvis_data)
+
+                    # Save kgGenShows format
+                    saved_kgshows_path = self.storage_manager.save_kgshows_data(kgshows_data)
+
+                    self.detailed_logger.log_info("STORAGE", "All graph formats saved", {
+                        "plotly_path": saved_graph_path,
+                        "pyvis_path": saved_pyvis_path,
+                        "kgshows_path": saved_kgshows_path
+                    })
                 except Exception as e:
                     self.detailed_logger.log_error("STORAGE", f"Failed to save graph data: {e}")
                     # Don't fail the pipeline for graph storage issues

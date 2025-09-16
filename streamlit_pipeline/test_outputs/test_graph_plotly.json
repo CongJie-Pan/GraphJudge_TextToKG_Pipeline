@@ -1,0 +1,178 @@
+{
+  "nodes": [
+    {
+      "id": "《紅樓夢》",
+      "label": "《紅樓夢》",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "主角",
+      "label": "主角",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "京城",
+      "label": "京城",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "曹雪芹",
+      "label": "曹雪芹",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "林黛玉",
+      "label": "林黛玉",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "薛家",
+      "label": "薛家",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "薛寶釵",
+      "label": "薛寶釵",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "表妹",
+      "label": "表妹",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈家",
+      "label": "賈家",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈寶玉",
+      "label": "賈寶玉",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈府",
+      "label": "賈府",
+      "size": 14,
+      "color": "#45B7D1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "賈寶玉",
+      "target": "主角",
+      "label": "身份",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈寶玉",
+      "target": "賈家",
+      "label": "家族",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林黛玉",
+      "target": "表妹",
+      "label": "身份",
+      "weight": 0.85,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林黛玉",
+      "target": "賈府",
+      "label": "居住",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "薛寶釵",
+      "target": "薛家",
+      "label": "家族",
+      "weight": 0.88,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈府",
+      "target": "京城",
+      "label": "地點",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "《紅樓夢》",
+      "target": "曹雪芹",
+      "label": "作者",
+      "weight": 0.98,
+      "color": "#2ECC40",
+      "width": 4
+    }
+  ],
+  "entities": [
+    "《紅樓夢》",
+    "主角",
+    "京城",
+    "曹雪芹",
+    "林黛玉",
+    "薛家",
+    "薛寶釵",
+    "表妹",
+    "賈家",
+    "賈寶玉",
+    "賈府"
+  ],
+  "relationships": [
+    "賈寶玉 - 身份 - 主角",
+    "賈寶玉 - 家族 - 賈家",
+    "林黛玉 - 身份 - 表妹",
+    "林黛玉 - 居住 - 賈府",
+    "薛寶釵 - 家族 - 薛家",
+    "賈府 - 地點 - 京城",
+    "《紅樓夢》 - 作者 - 曹雪芹"
+  ],
+  "report": {
+    "summary": {
+      "entities": 11,
+      "relationships": 7,
+      "total_evaluated": 8,
+      "approved_triples": 7,
+      "rejected_triples": 1,
+      "average_confidence": 0.873,
+      "processing_timestamp": "2025-09-16T17:51:12.938519"
+    },
+    "processing_summary": {
+      "total_evaluated": 8,
+      "approved_extracted": 7,
+      "approval_rate": 87.5
+    },
+    "quality_metrics": {
+      "entity_count": 11,
+      "relationship_count": 7,
+      "data_source": "Streamlit GraphJudge pipeline",
+      "filter_criteria": "Only approved relationships included"
+    }
+  },
+  "metadata": {
+    "source_type": "streamlit_pipeline",
+    "conversion_timestamp": "2025-09-16T17:51:12.938519",
+    "converter_version": "1.0.0",
+    "visualization_ready": true
+  }
+}

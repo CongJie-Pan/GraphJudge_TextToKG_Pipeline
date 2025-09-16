@@ -307,6 +307,50 @@ class StorageManager:
         print(f"[STORAGE] Saved Graph data: {graph_metadata['nodes_count']} nodes, {graph_metadata['edges_count']} edges")
         return str(graph_file)
 
+    def save_pyvis_data(self, pyvis_data: Dict[str, Any]) -> str:
+        """
+        Save Pyvis graph data to the current iteration folder.
+
+        Args:
+            pyvis_data: Pyvis format graph data containing nodes and edges
+
+        Returns:
+            Path to saved file
+        """
+        if not self.current_iteration_path:
+            raise ValueError("No current iteration. Call create_new_iteration() first.")
+
+        judgment_folder = self.current_iteration_path / "judgment"
+
+        # Save Pyvis data as JSON
+        pyvis_file = judgment_folder / "knowledge_graph_pyvis.json"
+        with open(pyvis_file, "w", encoding="utf-8") as f:
+            json.dump(pyvis_data, f, ensure_ascii=False, indent=2)
+
+        return str(pyvis_file)
+
+    def save_kgshows_data(self, kgshows_data: Dict[str, Any]) -> str:
+        """
+        Save kgGenShows format graph data to the current iteration folder.
+
+        Args:
+            kgshows_data: kgGenShows format containing entities and relationships arrays
+
+        Returns:
+            Path to saved file
+        """
+        if not self.current_iteration_path:
+            raise ValueError("No current iteration. Call create_new_iteration() first.")
+
+        judgment_folder = self.current_iteration_path / "judgment"
+
+        # Save kgGenShows data as JSON
+        kgshows_file = judgment_folder / "knowledge_graph_kgshows.json"
+        with open(kgshows_file, "w", encoding="utf-8") as f:
+            json.dump(kgshows_data, f, ensure_ascii=False, indent=2)
+
+        return str(kgshows_file)
+
     def load_entity_result(self, iteration_path: str = None) -> Optional[EntityResult]:
         """
         Load ECTD results from an iteration folder.

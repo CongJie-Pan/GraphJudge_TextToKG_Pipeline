@@ -301,6 +301,167 @@ class GraphConverter:
 
         return graph_data
 
+    def convert_to_pyvis_format(self) -> Dict[str, Any]:
+        """
+        Convert current graph data to Pyvis format.
+
+        Returns:
+            Dict containing nodes and edges for Pyvis network visualization
+        """
+        # Sort entities for consistent output
+        sorted_entities = sorted(list(self.entities))
+
+        # Create nodes for Pyvis
+        nodes = []
+        for entity in sorted_entities:
+            # Count connections for this entity
+            connection_count = sum(1 for rel in self.valid_triplets
+                                 if rel[0] == entity or rel[2] == entity)
+
+            # Determine entity category and color
+            entity_type, color = self._categorize_entity(entity)
+
+            nodes.append({
+                "id": entity,
+                "label": entity,
+                "color": color,
+                "size": min(15 + connection_count * 3, 50),  # Size based on connections
+                "title": f"{entity}\n类型: {entity_type}\n连接数: {connection_count}",  # Hover tooltip
+                "font": {"size": 12},
+                "borderWidth": 2
+            })
+
+        # Create edges for Pyvis
+        edges = []
+        for i, (subject, predicate, obj) in enumerate(self.valid_triplets):
+            confidence = self.confidence_scores[i] if i < len(self.confidence_scores) else 0.5
+
+            edges.append({
+                "from": subject,
+                "to": obj,
+                "label": predicate,
+                "width": max(1, int(confidence * 5)),  # Width based on confidence
+                "color": self._get_edge_color(confidence),
+                "title": f"{subject} → {predicate} → {obj}\n置信度: {confidence:.2f}",
+                "arrows": "to",
+                "smooth": {"type": "continuous"}
+            })
+
+        # Prepare Pyvis format data
+        pyvis_data = {
+            "nodes": nodes,
+            "edges": edges,
+            "physics": {
+                "enabled": True,
+                "stabilization": {"iterations": 100},
+                "barnesHut": {
+                    "gravitationalConstant": -2000,
+                    "centralGravity": 0.3,
+                    "springLength": 95,
+                    "springConstant": 0.04,
+                    "damping": 0.09
+                }
+            },
+            "metadata": {
+                "format": "pyvis",
+                "nodes_count": len(nodes),
+                "edges_count": len(edges),
+                "conversion_timestamp": datetime.now().isoformat(),
+                "physics_enabled": True
+            }
+        }
+
+        return pyvis_data
+
+    def convert_to_kgshows_format(self) -> Dict[str, Any]:
+        """
+        Convert current graph data to kgGenShows format.
+
+        Returns:
+            Dict containing entities and relationships arrays for kgGenShows viewer
+        """
+        # Sort entities for consistent output
+        sorted_entities = sorted(list(self.entities))
+
+        # Create relationships in kgGenShows format: "subject - predicate - object"
+        relationships = []
+        for subject, predicate, obj in self.valid_triplets:
+            relationship = f"{subject} - {predicate} - {obj}"
+            relationships.append(relationship)
+
+        # Create kgGenShows format data
+        kgshows_data = {
+            "entities": sorted_entities,
+            "relationships": relationships,
+            "report": {
+                "summary": {
+                    "entities": len(sorted_entities),
+                    "relationships": len(relationships),
+                    "total_evaluated": self.stats['total_triples'],
+                    "approved_triples": self.stats['approved_triples'],
+                    "rejected_triples": self.stats['rejected_triples'],
+                    "average_confidence": round(self.stats['average_confidence'], 3),
+                    "processing_timestamp": datetime.now().isoformat()
+                },
+                "processing_summary": {
+                    "total_evaluated": self.stats['total_triples'],
+                    "approved_extracted": self.stats['approved_triples'],
+                    "approval_rate": (round(self.stats['approved_triples'] / max(1, self.stats['total_triples']) * 100, 2)
+                                    if self.stats['total_triples'] > 0 else 0)
+                },
+                "quality_metrics": {
+                    "entity_count": len(sorted_entities),
+                    "relationship_count": len(relationships),
+                    "data_source": "Streamlit GraphJudge pipeline",
+                    "filter_criteria": "Only approved relationships included"
+                }
+            },
+            "metadata": {
+                "format": "kgshows",
+                "source_type": "streamlit_pipeline",
+                "conversion_timestamp": datetime.now().isoformat(),
+                "converter_version": "1.1.0",
+                "kgshows_compatible": True
+            }
+        }
+
+        return kgshows_data
+
+    def _categorize_entity(self, entity: str) -> tuple[str, str]:
+        """
+        Categorize entity and return type with color (similar to kgGenShows).
+
+        Args:
+            entity: Entity name to categorize
+
+        Returns:
+            Tuple of (category_name, color_hex)
+        """
+        entity_lower = entity.lower()
+
+        # Character names (orange)
+        character_indicators = ['賈', '林', '薛', '王', '史', '鳳', '寶玉', '黛玉', '寶釵', '鳳姐']
+        if any(indicator in entity for indicator in character_indicators):
+            return ("人物", "#ff7f0e")
+
+        # Places (green)
+        place_indicators = ['府', '園', '院', '廳', '房', '山', '河', '京城', '廟', '宮']
+        if any(indicator in entity for indicator in place_indicators):
+            return ("地点", "#2ca02c")
+
+        # Literary works (purple)
+        work_indicators = ['記', '夢', '歌', '詩', '曲', '《', '》', '書']
+        if any(indicator in entity for indicator in work_indicators):
+            return ("作品", "#9467bd")
+
+        # Concepts/Events (red)
+        concept_indicators = ['功名', '富貴', '情', '愛', '恩', '緣', '命', '運']
+        if any(indicator in entity for indicator in concept_indicators):
+            return ("概念", "#d62728")
+
+        # Default: other (blue)
+        return ("其他", "#1f77b4")
+
     def _get_entity_color(self, connection_count: int) -> str:
         """Get color for entity based on connection count."""
         if connection_count >= 5:
@@ -472,6 +633,70 @@ def validate_graph_data(graph_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
 
     is_valid = len(errors) == 0
     return is_valid, errors
+
+
+def create_pyvis_graph_from_judgment_result(triple_result: TripleResult,
+                                          judgment_result: JudgmentResult) -> Dict[str, Any]:
+    """
+    Convenience function to create Pyvis graph from judgment result.
+
+    Args:
+        triple_result: Result containing generated triples
+        judgment_result: Result containing judgment decisions
+
+    Returns:
+        Dict[str, Any]: Pyvis graph data format
+    """
+    converter = GraphConverter()
+    converter.convert_judgment_result_to_graph(triple_result, judgment_result)
+    return converter.convert_to_pyvis_format()
+
+
+def create_pyvis_graph_from_triples(triples: List[Triple]) -> Dict[str, Any]:
+    """
+    Convenience function to create Pyvis graph from list of triples.
+
+    Args:
+        triples: List of approved triples
+
+    Returns:
+        Dict[str, Any]: Pyvis graph data format
+    """
+    converter = GraphConverter()
+    converter.convert_triples_to_graph(triples)
+    return converter.convert_to_pyvis_format()
+
+
+def create_kgshows_graph_from_judgment_result(triple_result: TripleResult,
+                                            judgment_result: JudgmentResult) -> Dict[str, Any]:
+    """
+    Convenience function to create kgGenShows graph from judgment result.
+
+    Args:
+        triple_result: Result containing generated triples
+        judgment_result: Result containing judgment decisions
+
+    Returns:
+        Dict[str, Any]: kgGenShows graph data format
+    """
+    converter = GraphConverter()
+    converter.convert_judgment_result_to_graph(triple_result, judgment_result)
+    return converter.convert_to_kgshows_format()
+
+
+def create_kgshows_graph_from_triples(triples: List[Triple]) -> Dict[str, Any]:
+    """
+    Convenience function to create kgGenShows graph from list of triples.
+
+    Args:
+        triples: List of approved triples
+
+    Returns:
+        Dict[str, Any]: kgGenShows graph data format
+    """
+    converter = GraphConverter()
+    converter.convert_triples_to_graph(triples)
+    return converter.convert_to_kgshows_format()
 
 
 def get_graph_statistics(graph_data: Dict[str, Any]) -> Dict[str, Any]:
