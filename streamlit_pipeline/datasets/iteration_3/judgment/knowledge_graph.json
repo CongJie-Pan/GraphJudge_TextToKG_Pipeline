@@ -1,0 +1,683 @@
+{
+  "nodes": [
+    {
+      "id": "三生石",
+      "label": "三生石",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "三萬六千五百零一塊頑石",
+      "label": "三萬六千五百零一塊頑石",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "仁清巷",
+      "label": "仁清巷",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "吳玉峰",
+      "label": "吳玉峰",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "增刪整理成冊",
+      "label": "增刪整理成冊",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "大荒山",
+      "label": "大荒山",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "太虛幻境",
+      "label": "太虛幻境",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "太虛幻境對聯（假作真時真亦假，無為有處有還無）",
+      "label": "太虛幻境對聯（假作真時真亦假，無為有處有還無）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "太虛幻境牌坊對聯",
+      "label": "太虛幻境牌坊對聯",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "女媧",
+      "label": "女媧",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "好了歌",
+      "label": "好了歌",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "姑蘇",
+      "label": "姑蘇",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "封氏",
+      "label": "封氏",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "封肅",
+      "label": "封肅",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "悼紅軒",
+      "label": "悼紅軒",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "情僧",
+      "label": "情僧",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "抄閱評點",
+      "label": "抄閱評點",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "曹雪芹",
+      "label": "曹雪芹",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "無材補天",
+      "label": "無材補天",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "無稽崖",
+      "label": "無稽崖",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "甄士隱",
+      "label": "甄士隱",
+      "size": 18,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "甄家僕役",
+      "label": "甄家僕役",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "石頭",
+      "label": "石頭",
+      "size": 24,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "石頭記",
+      "label": "石頭記",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "神瑛侍者",
+      "label": "神瑛侍者",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "空空道人",
+      "label": "空空道人",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "紅樓夢",
+      "label": "紅樓夢",
+      "size": 28,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "絳珠仙子",
+      "label": "絳珠仙子",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "絳珠草",
+      "label": "絳珠草",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "脂硯齋",
+      "label": "脂硯齋",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "英蓮",
+      "label": "英蓮",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "葫蘆廟",
+      "label": "葫蘆廟",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "警幻仙子",
+      "label": "警幻仙子",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈雨村",
+      "label": "賈雨村",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "赤瑕宮",
+      "label": "赤瑕宮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "通靈寶玉",
+      "label": "通靈寶玉",
+      "size": 18,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "金陵十二釵",
+      "label": "金陵十二釵",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "閶門",
+      "label": "閶門",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "霍啟",
+      "label": "霍啟",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "青埂峰",
+      "label": "青埂峰",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "題詩",
+      "label": "題詩",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "風月寶鑒",
+      "label": "風月寶鑒",
+      "size": 12,
+      "color": "#45B7D1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "紅樓夢",
+      "target": "紅樓夢",
+      "label": "書名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "石頭記",
+      "label": "別名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "風月寶鑒",
+      "label": "別名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "金陵十二釵",
+      "label": "別名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "曹雪芹",
+      "label": "作者",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "通靈寶玉",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "石頭",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "太虛幻境",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "好了歌",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄士隱",
+      "target": "封氏",
+      "label": "妻子",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄士隱",
+      "target": "英蓮",
+      "label": "女兒",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄士隱",
+      "target": "仁清巷",
+      "label": "居住地",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "葫蘆廟",
+      "label": "寄居地",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "甄士隱",
+      "label": "獲資助者",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "封氏",
+      "target": "封肅",
+      "label": "父親",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "英蓮",
+      "target": "霍啟",
+      "label": "失蹤事件相關人",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "通靈寶玉",
+      "target": "石頭",
+      "label": "來源",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "通靈寶玉",
+      "target": "太虛幻境",
+      "label": "出現於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "石頭",
+      "target": "無稽崖",
+      "label": "被棄於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "石頭",
+      "target": "青埂峰",
+      "label": "被棄於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "女媧",
+      "target": "大荒山",
+      "label": "在",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "女媧",
+      "target": "三萬六千五百零一塊頑石",
+      "label": "煉石補天",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "三萬六千五百零一塊頑石",
+      "target": "石頭",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "石頭",
+      "target": "無材補天",
+      "label": "稱呼",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "石頭",
+      "target": "通靈寶玉",
+      "label": "變為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "空空道人",
+      "target": "石頭記",
+      "label": "記錄",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "空空道人",
+      "target": "情僧",
+      "label": "改名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "警幻仙子",
+      "target": "三生石",
+      "label": "牽涉",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "警幻仙子",
+      "target": "絳珠草",
+      "label": "牽涉",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "絳珠仙子",
+      "target": "神瑛侍者",
+      "label": "牽涉",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "三生石",
+      "target": "赤瑕宮",
+      "label": "相關於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "太虛幻境牌坊對聯",
+      "target": "太虛幻境對聯（假作真時真亦假，無為有處有還無）",
+      "label": "內容",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "太虛幻境",
+      "target": "太虛幻境牌坊對聯",
+      "label": "有",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "葫蘆廟",
+      "target": "仁清巷",
+      "label": "位於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "閶門",
+      "target": "姑蘇",
+      "label": "位於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "霍啟",
+      "target": "甄家僕役",
+      "label": "職務",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "脂硯齋",
+      "target": "抄閱評點",
+      "label": "行為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "悼紅軒",
+      "target": "增刪整理成冊",
+      "label": "整理方式",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "吳玉峰",
+      "target": "題詩",
+      "label": "行為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    }
+  ],
+  "entities": [
+    "三生石",
+    "三萬六千五百零一塊頑石",
+    "仁清巷",
+    "吳玉峰",
+    "增刪整理成冊",
+    "大荒山",
+    "太虛幻境",
+    "太虛幻境對聯（假作真時真亦假，無為有處有還無）",
+    "太虛幻境牌坊對聯",
+    "女媧",
+    "好了歌",
+    "姑蘇",
+    "封氏",
+    "封肅",
+    "悼紅軒",
+    "情僧",
+    "抄閱評點",
+    "曹雪芹",
+    "無材補天",
+    "無稽崖",
+    "甄士隱",
+    "甄家僕役",
+    "石頭",
+    "石頭記",
+    "神瑛侍者",
+    "空空道人",
+    "紅樓夢",
+    "絳珠仙子",
+    "絳珠草",
+    "脂硯齋",
+    "英蓮",
+    "葫蘆廟",
+    "警幻仙子",
+    "賈雨村",
+    "赤瑕宮",
+    "通靈寶玉",
+    "金陵十二釵",
+    "閶門",
+    "霍啟",
+    "青埂峰",
+    "題詩",
+    "風月寶鑒"
+  ],
+  "relationships": [
+    "紅樓夢 - 書名 - 紅樓夢",
+    "紅樓夢 - 別名 - 石頭記",
+    "紅樓夢 - 別名 - 風月寶鑒",
+    "紅樓夢 - 別名 - 金陵十二釵",
+    "紅樓夢 - 作者 - 曹雪芹",
+    "紅樓夢 - 包含 - 通靈寶玉",
+    "紅樓夢 - 包含 - 石頭",
+    "紅樓夢 - 包含 - 太虛幻境",
+    "紅樓夢 - 包含 - 好了歌",
+    "甄士隱 - 妻子 - 封氏",
+    "甄士隱 - 女兒 - 英蓮",
+    "甄士隱 - 居住地 - 仁清巷",
+    "賈雨村 - 寄居地 - 葫蘆廟",
+    "賈雨村 - 獲資助者 - 甄士隱",
+    "封氏 - 父親 - 封肅",
+    "英蓮 - 失蹤事件相關人 - 霍啟",
+    "通靈寶玉 - 來源 - 石頭",
+    "通靈寶玉 - 出現於 - 太虛幻境",
+    "石頭 - 被棄於 - 無稽崖",
+    "石頭 - 被棄於 - 青埂峰",
+    "女媧 - 在 - 大荒山",
+    "女媧 - 煉石補天 - 三萬六千五百零一塊頑石",
+    "三萬六千五百零一塊頑石 - 包含 - 石頭",
+    "石頭 - 稱呼 - 無材補天",
+    "石頭 - 變為 - 通靈寶玉",
+    "空空道人 - 記錄 - 石頭記",
+    "空空道人 - 改名 - 情僧",
+    "警幻仙子 - 牽涉 - 三生石",
+    "警幻仙子 - 牽涉 - 絳珠草",
+    "絳珠仙子 - 牽涉 - 神瑛侍者",
+    "三生石 - 相關於 - 赤瑕宮",
+    "太虛幻境牌坊對聯 - 內容 - 太虛幻境對聯（假作真時真亦假，無為有處有還無）",
+    "太虛幻境 - 有 - 太虛幻境牌坊對聯",
+    "葫蘆廟 - 位於 - 仁清巷",
+    "閶門 - 位於 - 姑蘇",
+    "霍啟 - 職務 - 甄家僕役",
+    "脂硯齋 - 行為 - 抄閱評點",
+    "悼紅軒 - 整理方式 - 增刪整理成冊",
+    "吳玉峰 - 行為 - 題詩"
+  ],
+  "report": {
+    "summary": {
+      "entities": 42,
+      "relationships": 39,
+      "total_evaluated": 49,
+      "approved_triples": 39,
+      "rejected_triples": 10,
+      "average_confidence": 0.8,
+      "processing_timestamp": "2025-09-16T16:59:55.705470"
+    },
+    "processing_summary": {
+      "total_evaluated": 49,
+      "approved_extracted": 39,
+      "approval_rate": 79.59
+    },
+    "quality_metrics": {
+      "entity_count": 42,
+      "relationship_count": 39,
+      "data_source": "Streamlit GraphJudge pipeline",
+      "filter_criteria": "Only approved relationships included"
+    }
+  },
+  "metadata": {
+    "source_type": "streamlit_pipeline",
+    "conversion_timestamp": "2025-09-16T16:59:55.705470",
+    "converter_version": "1.0.0",
+    "visualization_ready": true
+  }
+}

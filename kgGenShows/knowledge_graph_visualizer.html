@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知識圖譜可視化器</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Check if D3.js loaded successfully
+        function checkD3() {
+            if (typeof d3 === 'undefined') {
+                console.error('❌ D3.js failed to load, trying fallback...');
+                
+                // Try alternative CDN
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/d3@7';
+                script.onload = function() {
+                    console.log('✅ D3.js fallback loaded successfully');
+                    if (typeof d3 !== 'undefined') {
+                        initWhenReady();
+                    } else {
+                        showD3Error();
+                    }
+                };
+                script.onerror = function() {
+                    console.error('❌ D3.js fallback also failed to load');
+                    showD3Error();
+                };
+                document.head.appendChild(script);
+                return false;
+            }
+            console.log('✅ D3.js loaded successfully');
+            return true;
+        }
+        
+        function showD3Error() {
+            document.body.innerHTML = `
+                <div style="text-align: center; padding: 50px; color: #dc3545;">
+                    <h2>❌ D3.js 庫載入失敗</h2>
+                    <p>請檢查網路連接或嘗試以下解決方案：</p>
+                    <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                        <li>確保網路連接正常</li>
+                        <li>檢查防火牆或代理設置</li>
+                        <li>嘗試重新整理頁面</li>
+                        <li>聯繫系統管理員</li>
+                    </ul>
+                </div>
+            `;
+        }
+        
+        function initWhenReady() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', startApp);
+            } else {
+                startApp();
+            }
+        }
+        
+        function startApp() {
+            console.log('🚀 Full viewer - DOM loaded, initializing visualizer...');
+            
+            try {
+                const visualizer = new KnowledgeGraphVisualizer('graph-container');
+                console.log('✅ Full viewer visualizer initialization completed');
+            } catch (error) {
+                console.error('❌ Full viewer initialization failed:', error);
+                console.error('Error details:', error.stack);
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .controls {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px;
+        }
+        
+        .control-group label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        input[type="range"] {
+            width: 150px;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .stats {
+            background: #e9ecef;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        #graph-container {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            overflow: hidden;
+        }
+        
+        #search-box {
+            width: 200px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .node {
+            cursor: pointer;
+            stroke: #333;
+            stroke-width: 1.5px;
+        }
+        
+        .node.highlighted {
+            stroke: #ff6b6b;
+            stroke-width: 3px;
+        }
+        
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+            stroke-width: 1px;
+        }
+        
+        .link.highlighted {
+            stroke: #ff6b6b;
+            stroke-width: 2px;
+            stroke-opacity: 1;
+        }
+        
+        .node-label {
+            font-size: 10px;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            max-width: 200px;
+            word-wrap: break-word;
+        }
+        
+        .legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>知識圖譜可視化器</h1>
+            <p id="file-info">載入中...</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="search-box">搜尋節點：</label>
+                <input type="text" id="search-box" placeholder="輸入實體名稱...">
+            </div>
+            
+            <div class="control-group">
+                <label for="zoom-slider">縮放：</label>
+                <input type="range" id="zoom-slider" min="0.1" max="3" step="0.1" value="1">
+                <span id="zoom-value">1.0x</span>
+            </div>
+            
+            <div class="control-group">
+                <button id="reset-btn">重置視圖</button>
+                <button id="pause-btn">暫停/繼續</button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <span id="stats-text">載入中...</span>
+        </div>
+        
+        <div id="graph-container">
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff7f0e;"></div>
+                    <span>人物</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #2ca02c;"></div>
+                    <span>地點</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #d62728;"></div>
+                    <span>事件/概念</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #9467bd;"></div>
+                    <span>文學作品</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #1f77b4;"></div>
+                    <span>其他</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Main visualization class for knowledge graph
+        class KnowledgeGraphVisualizer {
+            constructor(containerId) {
+                this.containerId = containerId;
+                this.container = d3.select(`#${containerId}`);
+                this.width = 1200;
+                this.height = 700;
+                this.isPaused = false;
+                
+                // Initialize the visualization
+                this.initSVG();
+                this.initTooltip();
+                this.setupEventListeners();
+                
+                // Load and render the data
+                this.loadData();
+            }
+            
+            // Initialize SVG canvas and zoom behavior
+            initSVG() {
+                this.svg = this.container.append('svg')
+                    .attr('width', this.width)
+                    .attr('height', this.height);
+                
+                // Create zoom behavior
+                this.zoom = d3.zoom()
+                    .scaleExtent([0.1, 3])
+                    .on('zoom', (event) => {
+                        this.g.attr('transform', event.transform);
+                        // Update zoom display
+                        document.getElementById('zoom-value').textContent = 
+                            event.transform.k.toFixed(1) + 'x';
+                        document.getElementById('zoom-slider').value = event.transform.k;
+                    });
+                
+                this.svg.call(this.zoom);
+                
+                // Create main group for all graph elements
+                this.g = this.svg.append('g');
+            }
+            
+            // Initialize tooltip for hover information
+            initTooltip() {
+                this.tooltip = d3.select('body').append('div')
+                    .attr('class', 'tooltip')
+                    .style('opacity', 0);
+            }
+            
+            // Set up event listeners for controls
+            setupEventListeners() {
+                // Search functionality
+                d3.select('#search-box').on('input', (event) => {
+                    this.searchNodes(event.target.value);
+                });
+                
+                // Zoom slider control
+                d3.select('#zoom-slider').on('input', (event) => {
+                    const scale = parseFloat(event.target.value);
+                    this.svg.transition().duration(300).call(
+                        this.zoom.transform,
+                        d3.zoomIdentity.scale(scale)
+                    );
+                });
+                
+                // Reset view button
+                d3.select('#reset-btn').on('click', () => {
+                    this.resetView();
+                });
+                
+                // Pause/Resume button
+                d3.select('#pause-btn').on('click', () => {
+                    this.toggleSimulation();
+                });
+            }
+            
+            // Load data from API
+            async loadData() {
+                console.log('🔄 Full viewer - Starting data loading...');
+                document.getElementById('stats-text').textContent = '正在載入數據...';
+                
+                try {
+                    // Check if specific file is requested via URL parameter
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const selectedFile = urlParams.get('file');
+                    
+                    console.log(`📁 Requested file: ${selectedFile || 'default file'}`);
+                    
+                    // Construct API URL with file parameter if specified
+                    const apiUrl = selectedFile ? `/api/graph-data?file=${encodeURIComponent(selectedFile)}` : '/api/graph-data';
+                    console.log(`📡 API URL: ${apiUrl}`);
+                    
+                    console.log('📞 Sending API request...');
+                    // Load the JSON data from API
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    console.log('✅ API response successful, parsing JSON...');
+                    const data = await response.json();
+                    console.log('📊 Received data:', {
+                        entities: data.entities?.length || 0,
+                        relationships: data.relationships?.length || 0,
+                        fixes: data.fixes_applied || 0
+                    });
+                    
+                    // Check if this is an empty graph response
+                    if (data.empty_graph) {
+                        // Handle empty graph case
+                        document.getElementById('file-info').textContent = `互動式知識圖譜 (完整版) - 暫無資料`;
+                        this.showNotification('沒有可用的圖譜資料。請上傳 JSON 格式的圖譜檔案來開始視覺化。', 'info');
+                        
+                        // Show empty state message in the visualization area
+                        this.g.selectAll('*').remove();
+                        
+                        this.g.append('text')
+                            .attr('x', this.width / 2)
+                            .attr('y', this.height / 2)
+                            .attr('text-anchor', 'middle')
+                            .attr('font-family', 'Arial, sans-serif')
+                            .attr('font-size', '24px')
+                            .attr('fill', '#666')
+                            .text('暫無圖譜資料');
+                        
+                        this.g.append('text')
+                            .attr('x', this.width / 2)
+                            .attr('y', this.height / 2 + 40)
+                            .attr('text-anchor', 'middle')
+                            .attr('font-family', 'Arial, sans-serif')
+                            .attr('font-size', '16px')
+                            .attr('fill', '#999')
+                            .text('請上傳 JSON 格式的圖譜檔案來開始視覺化');
+                        
+                        // Update stats for empty graph
+                        this.updateStatsForEmptyGraph();
+                        
+                        console.log('✅ Empty graph state displayed');
+                        return;
+                    }
+                    
+                    // Update file info display
+                    const sourceFile = data.source_file || '預設檔案';
+                    document.getElementById('file-info').textContent = `基於 ${sourceFile} 的互動式知識圖譜 (完整版)`;
+                    console.log(`📝 Updated file info display: ${sourceFile}`);
+                    
+                    // Check if server applied fixes
+                    if (data.fixes_applied > 0) {
+                        console.log(`✅ Server automatically fixed ${data.fixes_applied} missing entities`);
+                        console.log('Fixed entities:', data.missing_entities_found);
+                        
+                        // Show notification to user
+                        this.showNotification(`已自動修復 ${data.fixes_applied} 個數據不一致問題`, 'success');
+                    }
+                    
+                    console.log('🔧 Starting data processing...');
+                    this.processData(data);
+                    
+                    console.log('🎨 Starting visualization creation...');
+                    this.createVisualization();
+                    
+                    console.log('✅ Full viewer loading completed!');
+                    
+                } catch (error) {
+                    console.error('❌ Full viewer loading error:', error);
+                    console.error('Error details:', error.stack);
+                    this.showError(`無法載入數據：${error.message}`);
+                }
+            }
+            
+            // Process raw JSON data into D3-compatible format
+            processData(rawData) {
+                console.log('🔧 Full viewer - Starting raw data processing...');
+                console.log('📊 Raw data structure:', {
+                    hasEntities: !!rawData.entities,
+                    hasRelationships: !!rawData.relationships,
+                    entitiesType: typeof rawData.entities,
+                    relationshipsType: typeof rawData.relationships,
+                    entitiesLength: rawData.entities?.length,
+                    relationshipsLength: rawData.relationships?.length
+                });
+                
+                this.rawData = rawData;
+                
+                if (!rawData.entities || !Array.isArray(rawData.entities)) {
+                    console.error('❌ Invalid entities data:', rawData.entities);
+                    throw new Error('Entity data format error');
+                }
+                
+                if (!rawData.relationships || !Array.isArray(rawData.relationships)) {
+                    console.error('❌ Invalid relationships data:', rawData.relationships);
+                    throw new Error('Relationship data format error');
+                }
+                
+                console.log('✅ 數據格式驗證通過');
+                
+                // Create nodes from entities
+                console.log('🔨 創建節點數據...');
+                this.nodes = rawData.entities.map((entity, index) => {
+                    const node = {
+                        id: entity,
+                        name: entity,
+                        type: this.classifyEntity(entity),
+                        index: index
+                    };
+                    
+                    if (index < 5) { // 只記錄前5個節點的詳細信息
+                        console.log(`  節點 ${index + 1}: ${entity} (類型: ${node.type})`);
+                    }
+                    
+                    return node;
+                });
+                
+                console.log(`✅ 成功創建 ${this.nodes.length} 個節點`);
+                
+                // Create links from relationships
+                console.log('🔗 創建關係數據...');
+                let validLinks = 0;
+                let invalidLinks = 0;
+                
+                this.links = rawData.relationships.map((rel, index) => {
+                    const parts = rel.split(' - ');
+                    if (parts.length >= 3) {
+                        const source = parts[0];
+                        const target = parts[2];
+                        const relationship = parts[1];
+                        
+                        const link = {
+                            source: source,
+                            target: target,
+                            relationship: relationship,
+                            id: index
+                        };
+                        
+                        if (index < 5) { // 只記錄前5個關係的詳細信息
+                            console.log(`  關係 ${index + 1}: ${link.source} -> ${link.target} (${link.relationship})`);
+                        }
+                        
+                        validLinks++;
+                        return link;
+                    } else {
+                        console.warn(`⚠️ 關係格式錯誤: ${rel}`);
+                        invalidLinks++;
+                        return null;
+                    }
+                }).filter(link => link !== null);
+                
+                console.log(`✅ 成功創建 ${this.links.length} 個有效關係 (無效: ${invalidLinks})`);
+                console.log(`🔧 數據處理完成: ${this.nodes.length} 節點, ${this.links.length} 關係`);
+                
+                console.log('📊 更新統計資訊...');
+                // Update statistics
+                this.updateStats();
+            }
+            
+            // Classify entities into different types for color coding
+            classifyEntity(entity) {
+                // Character names (people)
+                if (entity.includes('隱') || entity.includes('村') || entity.includes('英蓮') || 
+                    entity.includes('封氏') || entity.includes('封肅') || entity.includes('潘安') ||
+                    entity.includes('西子') || entity.includes('曹雪芹')) {
+                    return 'person';
+                }
+                
+                // Locations
+                if (entity.includes('廟') || entity.includes('山') || entity.includes('峰') || 
+                    entity.includes('巷') || entity.includes('門') || entity.includes('街') ||
+                    entity.includes('京城') || entity.includes('故鄉') || entity.includes('家鄉')) {
+                    return 'location';
+                }
+                
+                // Literary works
+                if (entity.includes('《') && entity.includes('》')) {
+                    return 'literature';
+                }
+                
+                // Events and concepts
+                if (entity.includes('夢') || entity.includes('情') || entity.includes('詩') ||
+                    entity.includes('功名') || entity.includes('富貴') || entity.includes('愛')) {
+                    return 'concept';
+                }
+                
+                return 'other';
+            }
+            
+            // Create the main visualization
+            createVisualization() {
+                console.log('🎨 完整版 - 開始創建可視化...');
+                console.log(`📐 畫布尺寸: ${this.width} x ${this.height}`);
+                
+                if (!this.nodes || this.nodes.length === 0) {
+                    console.error('❌ 節點數據為空，無法創建可視化');
+                    throw new Error('節點數據為空');
+                }
+                
+                if (!this.links || this.links.length === 0) {
+                    console.error('❌ 關係數據為空，無法創建可視化');
+                    throw new Error('關係數據為空');
+                }
+                
+                console.log(`🔧 準備創建力導向圖: ${this.nodes.length} 節點, ${this.links.length} 關係`);
+                
+                try {
+                    // Clear any existing visualization
+                    this.g.selectAll('*').remove();
+                    console.log('🧹 清除舊的可視化元素');
+                    
+                    // Initialize force simulation
+                    console.log('⚡ 初始化力導向模擬...');
+                    this.simulation = d3.forceSimulation(this.nodes)
+                        .force('link', d3.forceLink(this.links)
+                            .id(d => d.id)
+                            .distance(80)
+                            .strength(0.3)
+                        )
+                        .force('charge', d3.forceManyBody()
+                            .strength(-200)
+                            .distanceMax(300)
+                        )
+                        .force('center', d3.forceCenter(this.width / 2, this.height / 2))
+                        .force('collision', d3.forceCollide().radius(25));
+                    
+                    console.log('✅ 力導向模擬初始化完成');
+                    
+                    // Create links
+                    console.log('🔗 創建關係可視化元素...');
+                    this.linkElements = this.g.append('g')
+                        .attr('class', 'links')
+                        .selectAll('line')
+                        .data(this.links)
+                        .enter().append('line')
+                        .attr('class', 'link')
+                        .style('stroke-width', 1);
+                    
+                    console.log(`✅ 成功創建 ${this.linkElements.size()} 個關係線條`);
+                    
+                    // Create nodes
+                    console.log('⭕ 創建節點可視化元素...');
+                    this.nodeElements = this.g.append('g')
+                        .attr('class', 'nodes')
+                        .selectAll('circle')
+                        .data(this.nodes)
+                        .enter().append('circle')
+                        .attr('class', 'node')
+                        .attr('r', d => Math.max(8, Math.min(15, d.name.length * 2)))
+                        .style('fill', d => this.getNodeColor(d.type))
+                        .call(this.createDragBehavior());
+                    
+                    console.log(`✅ 成功創建 ${this.nodeElements.size()} 個節點圓圈`);
+                    
+                    // Add labels
+                    console.log('🏷️ 創建標籤元素...');
+                    this.labelElements = this.g.append('g')
+                        .attr('class', 'labels')
+                        .selectAll('text')
+                        .data(this.nodes)
+                        .enter().append('text')
+                        .attr('class', 'node-label')
+                        .text(d => d.name.length > 6 ? d.name.substring(0, 6) + '...' : d.name)
+                        .style('font-size', '10px');
+                    
+                    console.log(`✅ 成功創建 ${this.labelElements.size()} 個標籤`);
+                    
+                    // Add event listeners
+                    console.log('👆 添加事件監聽器...');
+                    this.addEventListeners();
+                    console.log('✅ 事件監聽器添加完成');
+                    
+                    // Start simulation
+                    console.log('🔄 啟動動畫模擬...');
+                    let tickCount = 0;
+                    this.simulation.on('tick', () => {
+                        tickCount++;
+                        this.updatePositions();
+                        
+                        // 只在前幾次 tick 時記錄
+                        if (tickCount <= 5) {
+                            console.log(`🔄 Tick ${tickCount}: 位置更新完成`);
+                        }
+                    });
+                    
+                    console.log('✅ 完整版可視化創建完成！');
+                    
+                } catch (error) {
+                    console.error('❌ 創建可視化時發生錯誤:', error);
+                    throw error;
+                }
+            }
+            
+            // Get color for different node types
+            getNodeColor(type) {
+                const colors = {
+                    'person': '#ff7f0e',
+                    'location': '#2ca02c', 
+                    'concept': '#d62728',
+                    'literature': '#9467bd',
+                    'other': '#1f77b4'
+                };
+                return colors[type] || colors.other;
+            }
+            
+            // Create drag behavior for nodes
+            createDragBehavior() {
+                return d3.drag()
+                    .on('start', (event, d) => {
+                        if (!event.active) this.simulation.alphaTarget(0.3).restart();
+                        d.fx = d.x;
+                        d.fy = d.y;
+                    })
+                    .on('drag', (event, d) => {
+                        d.fx = event.x;
+                        d.fy = event.y;
+                    })
+                    .on('end', (event, d) => {
+                        if (!event.active) this.simulation.alphaTarget(0);
+                        // Keep node fixed after dragging (double-click to unfix)
+                    });
+            }
+            
+            // Add event listeners for interactions
+            addEventListeners() {
+                try {
+                    console.log('👆 設定節點事件監聽器...');
+                    
+                    if (!this.nodeElements || this.nodeElements.empty()) {
+                        console.error('❌ 節點元素為空，無法添加事件監聽器');
+                        return;
+                    }
+                    
+                    // Node hover events
+                    this.nodeElements
+                        .on('mouseover', (event, d) => {
+                            console.log(`🖱️ 鼠標懸停節點: ${d.name}`);
+                            this.showTooltip(event, d);
+                            this.highlightConnections(d);
+                        })
+                        .on('mouseout', (event, d) => {
+                            console.log(`🖱️ 鼠標離開節點: ${d.name}`);
+                            this.hideTooltip();
+                            this.clearHighlights();
+                        })
+                        .on('dblclick', (event, d) => {
+                            console.log(`🖱️ 雙擊節點取消固定: ${d.name}`);
+                            // Double-click to unpin node
+                            d.fx = null;
+                            d.fy = null;
+                        });
+                        
+                    console.log(`✅ 已為 ${this.nodeElements.size()} 個節點添加事件監聽器`);
+                    
+                } catch (error) {
+                    console.error('❌ 添加事件監聽器時發生錯誤:', error);
+                }
+            }
+            
+            // Update positions during simulation
+            updatePositions() {
+                if (this.isPaused) return;
+                
+                this.linkElements
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+                
+                this.nodeElements
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+                
+                this.labelElements
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y + 20);
+            }
+            
+            // Show tooltip with node information
+            showTooltip(event, d) {
+                const connections = this.getNodeConnections(d);
+                const content = `
+                    <strong>${d.name}</strong><br/>
+                    類型: ${this.getTypeLabel(d.type)}<br/>
+                    連接數: ${connections.length}
+                `;
+                
+                this.tooltip
+                    .style('opacity', 1)
+                    .html(content)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+            }
+            
+            // Hide tooltip
+            hideTooltip() {
+                this.tooltip.style('opacity', 0);
+            }
+            
+            // Get Chinese label for entity type
+            getTypeLabel(type) {
+                const labels = {
+                    'person': '人物',
+                    'location': '地點',
+                    'concept': '事件/概念', 
+                    'literature': '文學作品',
+                    'other': '其他'
+                };
+                return labels[type] || '未知';
+            }
+            
+            // Get all connections for a node
+            getNodeConnections(node) {
+                return this.links.filter(link => 
+                    link.source.id === node.id || link.target.id === node.id
+                );
+            }
+            
+            // Highlight connections for selected node
+            highlightConnections(selectedNode) {
+                const connections = this.getNodeConnections(selectedNode);
+                const connectedNodeIds = new Set();
+                
+                connections.forEach(link => {
+                    connectedNodeIds.add(link.source.id);
+                    connectedNodeIds.add(link.target.id);
+                });
+                
+                // Highlight connected nodes
+                this.nodeElements
+                    .classed('highlighted', d => connectedNodeIds.has(d.id));
+                
+                // Highlight connected links
+                this.linkElements
+                    .classed('highlighted', d => 
+                        d.source.id === selectedNode.id || d.target.id === selectedNode.id
+                    );
+            }
+            
+            // Clear all highlights
+            clearHighlights() {
+                this.nodeElements.classed('highlighted', false);
+                this.linkElements.classed('highlighted', false);
+            }
+            
+            // Search nodes by name
+            searchNodes(searchTerm) {
+                if (!searchTerm.trim()) {
+                    this.clearHighlights();
+                    return;
+                }
+                
+                const term = searchTerm.toLowerCase();
+                this.nodeElements
+                    .classed('highlighted', d => 
+                        d.name.toLowerCase().includes(term)
+                    );
+            }
+            
+            // Reset view to initial state
+            resetView() {
+                this.svg.transition().duration(750).call(
+                    this.zoom.transform,
+                    d3.zoomIdentity
+                );
+                
+                this.clearHighlights();
+                document.getElementById('search-box').value = '';
+                
+                // Restart simulation
+                this.simulation.alpha(0.3).restart();
+            }
+            
+            // Toggle simulation pause/resume
+            toggleSimulation() {
+                this.isPaused = !this.isPaused;
+                const button = document.getElementById('pause-btn');
+                button.textContent = this.isPaused ? '繼續' : '暫停';
+                
+                if (!this.isPaused) {
+                    this.simulation.alpha(0.1).restart();
+                }
+            }
+            
+            // Update statistics display
+            updateStats() {
+                try {
+                    const entityCounts = this.getEntityTypeCounts();
+                    const statsText = `實體數量: ${this.nodes.length} | 關係數量: ${this.links.length} | 人物: ${entityCounts.person} | 地點: ${entityCounts.location} | 文學作品: ${entityCounts.literature}`;
+                    document.getElementById('stats-text').textContent = statsText;
+                    console.log('✅ 統計資訊已更新:', statsText);
+                } catch (error) {
+                    console.error('❌ 更新統計資訊時發生錯誤:', error);
+                    document.getElementById('stats-text').textContent = `實體數量: ${this.nodes.length} | 關係數量: ${this.links.length}`;
+                }
+            }
+            
+            // Update statistics display for empty graph
+            updateStatsForEmptyGraph() {
+                try {
+                    const statsText = `實體數量: 0 | 關係數量: 0 | 人物: 0 | 地點: 0 | 文學作品: 0`;
+                    document.getElementById('stats-text').textContent = statsText;
+                    console.log('✅ 空圖譜統計資訊已更新:', statsText);
+                } catch (error) {
+                    console.error('❌ 更新空圖譜統計資訊時發生錯誤:', error);
+                    document.getElementById('stats-text').textContent = `實體數量: 0 | 關係數量: 0`;
+                }
+            }
+            
+            // Get counts of different entity types
+            getEntityTypeCounts() {
+                const counts = {
+                    person: 0,
+                    location: 0,
+                    literature: 0,
+                    concept: 0,
+                    other: 0
+                };
+                
+                this.nodes.forEach(node => {
+                    counts[node.type] = (counts[node.type] || 0) + 1;
+                });
+                
+                return counts;
+            }
+            
+            // Show error message
+            showError(message) {
+                this.container.append('div')
+                    .style('text-align', 'center')
+                    .style('padding', '50px')
+                    .style('color', '#dc3545')
+                    .text(message);
+            }
+            
+            // Show notification message
+            showNotification(message, type = 'info') {
+                const colors = {
+                    'success': '#28a745',
+                    'warning': '#ffc107',
+                    'error': '#dc3545',
+                    'info': '#17a2b8'
+                };
+                
+                const notification = d3.select('body')
+                    .append('div')
+                    .style('position', 'fixed')
+                    .style('top', '20px')
+                    .style('right', '20px')
+                    .style('background', colors[type] || colors.info)
+                    .style('color', 'white')
+                    .style('padding', '10px 15px')
+                    .style('border-radius', '5px')
+                    .style('box-shadow', '0 2px 10px rgba(0,0,0,0.1)')
+                    .style('z-index', '1000')
+                    .style('opacity', '0')
+                    .text(message);
+                
+                // Fade in
+                notification.transition()
+                    .duration(300)
+                    .style('opacity', '1');
+                
+                // Auto remove after 3 seconds
+                setTimeout(() => {
+                    notification.transition()
+                        .duration(300)
+                        .style('opacity', '0')
+                        .remove();
+                }, 3000);
+            }
+        }
+        
+        // Initialize visualization when page loads
+        window.onload = function() {
+            console.log('🔍 Checking D3.js loading status...');
+            if (checkD3()) {
+                initWhenReady();
+            }
+        };
+    </script>
+</body>
+</html> 

@@ -9,7 +9,12 @@
       "Bash(dir datasets)",
       "Bash(dir:*)",
       "Bash(mkdir:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(tree:*)",
+      "Bash(claude mcp)",
+      "Bash(claude mcp:*)",
+      "Bash(uvx:*)",
+      "mcp__serena"   
     ]
   },
   "outputStyle": "default"

@@ -275,6 +275,38 @@ class StorageManager:
         print(f"[STORAGE] Saved Judgment results: {len(approved_triples)}/{len(original_triples)} approved")
         return str(judgment_file)
 
+    def save_graph_data(self, graph_data: Dict[str, Any]) -> str:
+        """
+        Save graph visualization data to the current iteration folder.
+
+        Args:
+            graph_data: Graph data dictionary containing nodes, edges, and metadata
+
+        Returns:
+            Path to saved file
+        """
+        if not self.current_iteration_path:
+            raise ValueError("No current iteration. Call create_new_iteration() first.")
+
+        judgment_folder = self.current_iteration_path / "judgment"
+
+        # Save graph data as JSON
+        graph_file = judgment_folder / "knowledge_graph.json"
+        with open(graph_file, "w", encoding="utf-8") as f:
+            json.dump(graph_data, f, ensure_ascii=False, indent=2)
+
+        # Update metadata with graph info
+        graph_metadata = {
+            "nodes_count": len(graph_data.get("nodes", [])),
+            "edges_count": len(graph_data.get("edges", [])),
+            "entities_count": len(graph_data.get("entities", [])),
+            "has_visualization_data": True
+        }
+        self._update_metadata("graph_visualization", graph_metadata)
+
+        print(f"[STORAGE] Saved Graph data: {graph_metadata['nodes_count']} nodes, {graph_metadata['edges_count']} edges")
+        return str(graph_file)
+
     def load_entity_result(self, iteration_path: str = None) -> Optional[EntityResult]:
         """
         Load ECTD results from an iteration folder.

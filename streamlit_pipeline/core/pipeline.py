@@ -19,6 +19,7 @@ try:
     from .triple_generator import generate_triples
     from .graph_judge import judge_triples
     from .models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
+    from .graph_converter import create_graph_from_judgment_result, create_graph_from_triples, validate_graph_data, get_graph_statistics
     from ..utils.error_handling import ErrorHandler, ErrorType, safe_execute
     from ..utils.api_client import get_api_client
     from ..utils.storage_manager import get_storage_manager, create_new_pipeline_iteration, save_phase_result
@@ -32,6 +33,7 @@ except ImportError:
     from core.triple_generator import generate_triples
     from core.graph_judge import judge_triples
     from core.models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
+    from core.graph_converter import create_graph_from_judgment_result, create_graph_from_triples, validate_graph_data, get_graph_statistics
     from utils.error_handling import ErrorHandler, ErrorType, safe_execute
     from utils.api_client import get_api_client
     from utils.storage_manager import get_storage_manager, create_new_pipeline_iteration, save_phase_result
@@ -44,16 +46,17 @@ class PipelineResult:
     success: bool
     stage_reached: int  # 0=entity, 1=triple, 2=judgment, 3=complete
     total_time: float
-    
+
     # Stage results
     entity_result: Optional[EntityResult] = None
     triple_result: Optional[TripleResult] = None
     judgment_result: Optional[JudgmentResult] = None
-    
+    graph_data: Optional[Dict[str, Any]] = None  # Graph visualization data
+
     # Error information
     error: Optional[str] = None
     error_stage: Optional[str] = None
-    
+
     # Summary statistics
     stats: Dict[str, Any] = None
 
@@ -273,6 +276,67 @@ class PipelineOrchestrator:
             result.stage_reached = 3
             self.pipeline_state.judgment_result = judgment_result
 
+            # Stage 4: Graph Conversion for Visualization
+            self.detailed_logger.log_info("PIPELINE", "Starting Stage 4: Graph Conversion", {
+                "stage": "graph_conversion",
+                "approved_triples": approved_count
+            })
+
+            try:
+                # Convert judgment results to graph format for visualization
+                graph_data = create_graph_from_judgment_result(triple_result, judgment_result)
+
+                # Validate the generated graph data
+                is_valid, validation_errors = validate_graph_data(graph_data)
+                if not is_valid:
+                    self.detailed_logger.log_error("GRAPH", "Graph data validation failed", {
+                        "validation_errors": validation_errors[:3],  # First 3 errors
+                        "total_errors": len(validation_errors)
+                    })
+                    # Continue with invalid data but log the issues
+                else:
+                    self.detailed_logger.log_info("GRAPH", "Graph data validation passed")
+
+                # Generate graph statistics
+                graph_stats = get_graph_statistics(graph_data)
+                self.detailed_logger.log_info("GRAPH", "Graph conversion completed successfully", {
+                    "nodes_count": graph_stats["nodes_count"],
+                    "edges_count": graph_stats["edges_count"],
+                    "entities_count": graph_stats["entities_count"],
+                    "relationships_count": graph_stats["relationships_count"],
+                    "validation_status": graph_stats["validation_status"],
+                    "average_node_degree": graph_stats["average_node_degree"],
+                    "isolated_nodes": graph_stats["isolated_nodes"]
+                })
+
+                result.graph_data = graph_data
+
+                # Save graph data to storage if possible
+                try:
+                    saved_graph_path = self.storage_manager.save_graph_data(graph_data)
+                    self.detailed_logger.log_info("STORAGE", f"Graph data saved to: {saved_graph_path}")
+                except Exception as e:
+                    self.detailed_logger.log_error("STORAGE", f"Failed to save graph data: {e}")
+                    # Don't fail the pipeline for graph storage issues
+
+            except Exception as e:
+                # Graph conversion failure shouldn't fail the entire pipeline
+                self.detailed_logger.log_error("GRAPH", f"Graph conversion failed: {e}", {
+                    "error_type": type(e).__name__,
+                    "error_message": str(e)
+                })
+                # Create empty graph data structure
+                result.graph_data = {
+                    "nodes": [],
+                    "edges": [],
+                    "entities": [],
+                    "relationships": [],
+                    "metadata": {
+                        "conversion_error": str(e),
+                        "source_type": "streamlit_pipeline"
+                    }
+                }
+
             if progress_callback:
                 progress_callback(3, "Pipeline completed successfully!")
 
@@ -286,7 +350,8 @@ class PipelineOrchestrator:
             self.detailed_logger.log_pipeline_complete({
                 "success": True,
                 "total_time": result.total_time,
-                "stats": result.stats
+                "stats": result.stats,
+                "graph_data_available": result.graph_data is not None and len(result.graph_data.get("nodes", [])) > 0
             })
 
             return result

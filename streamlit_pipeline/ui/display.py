@@ -8,7 +8,7 @@ module with focused display logic for complex data structures.
 
 import streamlit as st
 import pandas as pd
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 import json
 from datetime import datetime
 
@@ -101,7 +101,7 @@ def display_final_results(pipeline_result: PipelineResult):
             st.markdown("## 🧠 Final Knowledge Graph")
             st.markdown(f"After AI judgment, the following **{len(approved_triples)}** knowledge triples were deemed accurate:")
             
-            display_final_knowledge_graph(approved_triples, pipeline_result.judgment_result)
+            display_final_knowledge_graph(approved_triples, pipeline_result.judgment_result, pipeline_result.graph_data)
             
             # Export options
             st.markdown("### 📤 Export Options")
@@ -128,13 +128,14 @@ def display_final_results(pipeline_result: PipelineResult):
                     display_rejected_triples_analysis(rejected_triples, pipeline_result.judgment_result)
 
 
-def display_final_knowledge_graph(triples: List[Triple], judgment_result: JudgmentResult):
+def display_final_knowledge_graph(triples: List[Triple], judgment_result: JudgmentResult, graph_data: Optional[Dict[str, Any]] = None):
     """
     Display the final approved knowledge graph in an attractive format.
 
     Args:
         triples: List of approved triples
         judgment_result: Judgment results for confidence scores
+        graph_data: Pre-processed graph data from pipeline conversion
     """
     # Create a beautiful table format
     final_data = []
@@ -191,15 +192,10 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
     )
     
     # Show knowledge graph visualization
-    if len(triples) > 1:
+    if len(triples) > 0:
         st.markdown("### 🕸️ Relationship Network Graph")
-        if PLOTLY_AVAILABLE:
-            create_enhanced_knowledge_graph(triples)
-        else:
-            st.info("📊 Network graph requires Plotly library: `pip install plotly`")
-            st.text("Text-based relationship display:")
-            for i, triple in enumerate(triples[:15], 1):
-                st.text(f"{i}. {triple.subject} → {triple.predicate} → {triple.object}")
+
+        create_enhanced_knowledge_graph(triples, graph_data)
 
 
 def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_result: JudgmentResult):
@@ -233,142 +229,288 @@ def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_r
     st.dataframe(df, use_container_width=True, hide_index=True)
 
 
-def create_enhanced_knowledge_graph(triples: List[Triple]):
+def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[Dict[str, Any]] = None):
     """
     Create an enhanced interactive knowledge graph visualization.
-    
+
     Args:
-        triples: List of triples to visualize
+        triples: List of triples to visualize (fallback if no graph_data)
+        graph_data: Pre-processed graph data from pipeline with nodes and edges
     """
     if not PLOTLY_AVAILABLE:
-        st.error("Plotly库未安装，无法显示图形可视化")
+        st.error("📊 Interactive graph visualization requires Plotly library")
+        st.info("💡 Install with: `pip install plotly>=5.0.0`")
+        _display_text_based_graph(triples)
         return
-    
+
     try:
-        # Extract entities and relationships
-        entities = set()
-        relationships = []
-        
-        for triple in triples:
-            entities.add(triple.subject)
-            entities.add(triple.object)
-            relationships.append({
-                'source': triple.subject,
-                'target': triple.object,
-                'relation': triple.predicate,
-                'confidence': triple.confidence or 0.5
-            })
-        
-        entities = list(entities)
-        
-        # Limit visualization size for performance
-        if len(entities) > 15:
-            st.warning(f"Too many entities ({len(entities)}), showing relationships for the first 15 entities")
-            entities = entities[:15]
-            relationships = [r for r in relationships 
-                           if r['source'] in entities and r['target'] in entities]
-        
-        # Create network graph using Plotly
-        # Position entities using a simple circular layout
-        import math
-        positions = {}
-        n = len(entities)
-        
-        for i, entity in enumerate(entities):
-            angle = 2 * math.pi * i / n
-            radius = 3
-            positions[entity] = {
-                'x': radius * math.cos(angle),
-                'y': radius * math.sin(angle)
-            }
-        
-        # Create the visualization
-        fig = go.Figure()
-        
-        # Add edges
-        for rel in relationships:
-            source_pos = positions.get(rel['source'])
-            target_pos = positions.get(rel['target'])
-            
-            if source_pos and target_pos:
-                # Draw edge
-                fig.add_trace(go.Scatter(
-                    x=[source_pos['x'], target_pos['x'], None],
-                    y=[source_pos['y'], target_pos['y'], None],
-                    mode='lines',
-                    line=dict(
-                        width=2 + rel['confidence'] * 3,  # Thickness based on confidence
-                        color=f"rgba(100, 100, 100, {0.3 + rel['confidence'] * 0.7})"
-                    ),
-                    hoverinfo='none',
-                    showlegend=False
-                ))
-                
-                # Add relationship label
-                mid_x = (source_pos['x'] + target_pos['x']) / 2
-                mid_y = (source_pos['y'] + target_pos['y']) / 2
-                
-                fig.add_annotation(
-                    x=mid_x,
-                    y=mid_y,
-                    text=rel['relation'],
-                    showarrow=False,
-                    font=dict(size=10, color='blue'),
-                    bgcolor="rgba(255,255,255,0.8)",
-                    bordercolor="blue",
-                    borderwidth=1,
-                    borderpad=2
-                )
-        
-        # Add nodes
-        for entity in entities:
-            pos = positions[entity]
-            fig.add_trace(go.Scatter(
-                x=[pos['x']],
-                y=[pos['y']],
-                mode='markers+text',
-                text=[entity],
-                textposition='middle center',
-                textfont=dict(size=10, color='white'),
-                marker=dict(
-                    size=40,
-                    color='lightblue',
-                    line=dict(width=3, color='darkblue')
-                ),
-                hoverinfo='text',
-                hovertext=entity,
-                showlegend=False
-            ))
-        
-        # Update layout
-        fig.update_layout(
-            title={
-                'text': "Knowledge Graph Network Visualization",
-                'x': 0.5,
-                'font': {'size': 16}
-            },
-            showlegend=False,
-            hovermode='closest',
-            margin=dict(b=20, l=5, r=5, t=40),
-            annotations=[dict(
-                text="Nodes: Entities | Edges: Relations | Line thickness: AI confidence",
-                showarrow=False,
-                xref="paper", yref="paper",
-                x=0.005, y=-0.002,
-                xanchor='left', yanchor='bottom',
-                font=dict(size=12, color='gray')
-            )],
-            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            plot_bgcolor='white',
-            height=500
-        )
-        
+        # Use processed graph data if available, otherwise create from triples
+        if graph_data and graph_data.get("nodes") and graph_data.get("edges"):
+            nodes = graph_data["nodes"]
+            edges = graph_data["edges"]
+
+            st.success(f"🎨 Visualizing knowledge graph: {len(nodes)} entities, {len(edges)} relationships")
+
+            # Display summary metrics from graph data
+            if "report" in graph_data and "summary" in graph_data["report"]:
+                summary = graph_data["report"]["summary"]
+                col1, col2, col3, col4 = st.columns(4)
+
+                with col1:
+                    st.metric("Entities", summary.get("entities", len(nodes)))
+                with col2:
+                    st.metric("Relationships", summary.get("relationships", len(edges)))
+                with col3:
+                    if "approved_triples" in summary:
+                        st.metric("Approved", summary["approved_triples"])
+                with col4:
+                    if "average_confidence" in summary:
+                        st.metric("Avg Confidence", f"{summary['average_confidence']:.3f}")
+
+            # Create visualization using pre-processed data
+            fig = _create_plotly_graph_from_data(nodes, edges)
+
+        else:
+            # Fallback: create graph data from triples
+            st.info("🔄 Creating graph from triples (graph data not available)")
+            nodes, edges = _convert_triples_to_graph_data(triples)
+            fig = _create_plotly_graph_from_data(nodes, edges)
+
+        # Display the interactive graph
         st.plotly_chart(fig, use_container_width=True)
-        
+
+        # Add export options
+        _display_graph_export_options(graph_data or {"nodes": nodes, "edges": edges})
+
     except Exception as e:
-        st.error(f"Visualization generation failed: {str(e)}")
-        st.info("You can still view the table format results above")
+        st.error(f"❌ Graph visualization failed: {str(e)}")
+        st.info("📋 Displaying text-based relationship view instead:")
+        _display_text_based_graph(triples)
+
+
+def _create_plotly_graph_from_data(nodes: List[Dict], edges: List[Dict]):
+    """Create a Plotly figure from nodes and edges data."""
+    import math
+
+    # Limit visualization size for performance
+    if len(nodes) > 20:
+        st.warning(f"⚠️ Large graph detected ({len(nodes)} entities). Showing first 20 for performance.")
+        nodes = nodes[:20]
+        node_ids = {node["id"] for node in nodes}
+        edges = [edge for edge in edges
+                if edge["source"] in node_ids and edge["target"] in node_ids]
+
+    # Create circular layout for nodes
+    positions = {}
+    n = len(nodes)
+
+    for i, node in enumerate(nodes):
+        angle = 2 * math.pi * i / n if n > 1 else 0
+        radius = 3
+        positions[node["id"]] = {
+            'x': radius * math.cos(angle),
+            'y': radius * math.sin(angle)
+        }
+
+    # Create Plotly figure
+    fig = go.Figure()
+
+    # Add edges (relationships)
+    for edge in edges:
+        source_pos = positions.get(edge["source"])
+        target_pos = positions.get(edge["target"])
+
+        if source_pos and target_pos:
+            # Draw edge line
+            edge_width = edge.get("width", 2)
+            edge_color = edge.get("color", "rgba(100, 100, 100, 0.6)")
+
+            fig.add_trace(go.Scatter(
+                x=[source_pos['x'], target_pos['x'], None],
+                y=[source_pos['y'], target_pos['y'], None],
+                mode='lines',
+                line=dict(
+                    width=edge_width,
+                    color=edge_color
+                ),
+                hoverinfo='none',
+                showlegend=False,
+                name='edge'
+            ))
+
+            # Add relationship label
+            mid_x = (source_pos['x'] + target_pos['x']) / 2
+            mid_y = (source_pos['y'] + target_pos['y']) / 2
+
+            fig.add_annotation(
+                x=mid_x,
+                y=mid_y,
+                text=edge["label"],
+                showarrow=False,
+                font=dict(size=9, color='darkblue'),
+                bgcolor="rgba(255,255,255,0.9)",
+                bordercolor="lightblue",
+                borderwidth=1,
+                borderpad=2
+            )
+
+    # Add nodes (entities)
+    for node in nodes:
+        pos = positions[node["id"]]
+        node_size = node.get("size", 30)
+        node_color = node.get("color", "#4ECDC4")
+
+        fig.add_trace(go.Scatter(
+            x=[pos['x']],
+            y=[pos['y']],
+            mode='markers+text',
+            text=[node["label"]],
+            textposition='middle center',
+            textfont=dict(size=min(10, max(8, node_size // 4)), color='white', family="Arial Black"),
+            marker=dict(
+                size=node_size,
+                color=node_color,
+                line=dict(width=2, color='white'),
+                opacity=0.9
+            ),
+            hoverinfo='text',
+            hovertext=f"Entity: {node['label']}<br>Connections: {node.get('size', 0) // 2}",
+            showlegend=False,
+            name='node'
+        ))
+
+    # Update layout with improved styling
+    fig.update_layout(
+        title={
+            'text': "🕸️ Knowledge Graph Network Visualization",
+            'x': 0.5,
+            'font': {'size': 18, 'color': 'darkblue'}
+        },
+        showlegend=False,
+        hovermode='closest',
+        margin=dict(b=40, l=20, r=20, t=50),
+        annotations=[dict(
+            text="💡 Hover over nodes and edges for details | Node size = relationship count | Edge thickness = confidence",
+            showarrow=False,
+            xref="paper", yref="paper",
+            x=0.5, y=-0.05,
+            xanchor='center', yanchor='bottom',
+            font=dict(size=11, color='gray')
+        )],
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, fixedrange=True),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, fixedrange=True),
+        plot_bgcolor='rgba(248, 249, 250, 0.8)',
+        paper_bgcolor='white',
+        height=600
+    )
+
+    return fig
+
+
+def _convert_triples_to_graph_data(triples: List[Triple]) -> Tuple[List[Dict], List[Dict]]:
+    """Convert triples to nodes and edges data structure."""
+    from collections import defaultdict
+
+    entity_connections = defaultdict(int)
+    edges = []
+
+    # Process triples to create edges and count entity connections
+    for triple in triples:
+        entity_connections[triple.subject] += 1
+        entity_connections[triple.object] += 1
+
+        edges.append({
+            "source": triple.subject,
+            "target": triple.object,
+            "label": triple.predicate,
+            "weight": triple.confidence or 0.5,
+            "width": max(2, int((triple.confidence or 0.5) * 5)),
+            "color": _get_confidence_color(triple.confidence or 0.5)
+        })
+
+    # Create nodes
+    nodes = []
+    for entity, connections in entity_connections.items():
+        nodes.append({
+            "id": entity,
+            "label": entity,
+            "size": min(15 + connections * 3, 50),
+            "color": _get_node_color_by_connections(connections)
+        })
+
+    return nodes, edges
+
+
+def _get_confidence_color(confidence: float) -> str:
+    """Get edge color based on confidence score."""
+    if confidence >= 0.8:
+        return "rgba(46, 204, 64, 0.7)"  # Green for high confidence
+    elif confidence >= 0.6:
+        return "rgba(255, 133, 27, 0.7)"  # Orange for medium confidence
+    else:
+        return "rgba(170, 170, 170, 0.7)"  # Gray for low confidence
+
+
+def _get_node_color_by_connections(connections: int) -> str:
+    """Get node color based on connection count."""
+    if connections >= 5:
+        return "#FF6B6B"  # Red for highly connected
+    elif connections >= 3:
+        return "#4ECDC4"  # Teal for moderately connected
+    else:
+        return "#45B7D1"  # Blue for less connected
+
+
+def _display_text_based_graph(triples: List[Triple]):
+    """Display a text-based representation of the graph when Plotly is not available."""
+    if not triples:
+        st.info("No relationships to display")
+        return
+
+    st.markdown("**📋 Text-based relationship display:**")
+
+    # Group relationships by predicate for better organization
+    from collections import defaultdict
+    grouped_relations = defaultdict(list)
+
+    for triple in triples:
+        grouped_relations[triple.predicate].append((triple.subject, triple.object))
+
+    # Display grouped relationships
+    for predicate, relations in grouped_relations.items():
+        with st.expander(f"🔗 {predicate} ({len(relations)} relationships)"):
+            for i, (subject, obj) in enumerate(relations[:20], 1):  # Limit display
+                confidence = ""
+                if hasattr(triples[i-1], 'confidence') and triples[i-1].confidence:
+                    confidence = f" (confidence: {triples[i-1].confidence:.3f})"
+                st.text(f"{i}. {subject} → {predicate} → {obj}{confidence}")
+
+            if len(relations) > 20:
+                st.info(f"... and {len(relations) - 20} more relationships")
+
+
+def _display_graph_export_options(graph_data: Dict[str, Any]):
+    """Display export options for the graph data."""
+    if not graph_data:
+        return
+
+    with st.expander("📤 Export Graph Data"):
+        col1, col2 = st.columns(2)
+
+        with col1:
+            if st.button("📄 Download as JSON"):
+                import json
+                json_str = json.dumps(graph_data, ensure_ascii=False, indent=2)
+                st.download_button(
+                    label="💾 Download JSON",
+                    data=json_str,
+                    file_name=f"knowledge_graph_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                    mime="application/json"
+                )
+
+        with col2:
+            if st.button("📊 Show Raw Data"):
+                st.json(graph_data)
 
 
 def export_final_results_json(triples: List[Triple], pipeline_result: PipelineResult):
