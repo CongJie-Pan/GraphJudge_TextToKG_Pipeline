@@ -760,7 +760,9 @@ def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) 
             bgcolor="#ffffff",
             font_color="black",
             select_menu=True,
-            filter_menu=True
+            filter_menu=True,
+            directed=True,
+            cdn_resources="in_line"
         )
 
         # Configure physics for better layout
@@ -794,11 +796,11 @@ def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) 
         nodes = pyvis_data.get("nodes", [])
         for node in nodes:
             net.add_node(
-                node["id"],
-                label=node.get("label", node["id"]),
+                str(node["id"]),
+                label=node.get("label", str(node["id"])) ,
                 color=node.get("color", "#1f77b4"),
                 size=node.get("size", 25),
-                title=node.get("title", node.get("label", node["id"])),
+                title=node.get("title", node.get("label", str(node["id"]))),
                 font=node.get("font", {"size": 12})
             )
 
@@ -806,8 +808,8 @@ def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) 
         edges = pyvis_data.get("edges", [])
         for edge in edges:
             net.add_edge(
-                edge["from"],
-                edge["to"],
+                str(edge.get("from")),
+                str(edge.get("to")),
                 label=edge.get("label", ""),
                 color=edge.get("color", "#848484"),
                 width=edge.get("width", 1),
