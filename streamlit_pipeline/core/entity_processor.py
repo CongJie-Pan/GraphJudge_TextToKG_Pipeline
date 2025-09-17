@@ -39,7 +39,7 @@ except ImportError:
     from utils.detailed_logger import DetailedLogger
 
 
-def extract_entities(text: str) -> EntityResult:
+def extract_entities(text: str, progress_callback=None) -> EntityResult:
     """
     Extract entities and denoise text using GPT-5-mini.
 
@@ -51,6 +51,7 @@ def extract_entities(text: str) -> EntityResult:
 
     Args:
         text: Input Chinese text to process
+        progress_callback: Optional callback function for progress updates
 
     Returns:
         EntityResult containing extracted entities, denoised text, and metadata.
@@ -108,6 +109,10 @@ def extract_entities(text: str) -> EntityResult:
         )
     
     with ProcessingTimer() as timer:
+        # Progress callback for start of processing
+        if progress_callback:
+            progress_callback(0, 1, "entities")
+
         # Use safe_execute for error handling
         result, error_info = safe_execute(
             _extract_entities_pipeline,
@@ -129,6 +134,10 @@ def extract_entities(text: str) -> EntityResult:
                 processing_time=timer.elapsed,
                 error=error_info.message
             )
+
+        # Progress callback for completion
+        if progress_callback:
+            progress_callback(len(result[0]), len(result[0]), "entities")
 
         # Log successful entity extraction
         detailed_logger.log_info("ENTITY", "Entity extraction completed successfully", {

@@ -54,7 +54,7 @@ class TestGraphJudgeInitialization:
             judge = GraphJudge()
             
             assert judge.model_name == "perplexity/sonar-reasoning"
-            assert judge.temperature == 0.2
+            assert judge.temperature == 1.0  # GPT-5 models only support temperature=1
             assert judge.max_tokens == 2000
             assert judge.api_client is not None
             mock_api.assert_called_once()
@@ -535,7 +535,7 @@ class TestAPIIntegration:
             assert 'prompt' in call_args.kwargs
             assert 'temperature' in call_args.kwargs
             assert 'max_tokens' in call_args.kwargs
-            assert call_args.kwargs['temperature'] == 0.2
+            assert call_args.kwargs['temperature'] == 1.0  # GPT-5 models only support temperature=1
             assert call_args.kwargs['max_tokens'] == 2000
     
     def test_model_configuration_usage(self):

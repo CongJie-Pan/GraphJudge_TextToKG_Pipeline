@@ -350,10 +350,10 @@ class MockAPIClient:
         import time
         # Add small delay to simulate API call and ensure processing_time > 0
         time.sleep(0.001)
-        
+
         if self.should_fail:
             raise Exception("API call failed")
-            
+
         if self.call_count < len(self.responses):
             response = self.responses[self.call_count]
             self.call_count += 1
@@ -361,6 +361,10 @@ class MockAPIClient:
         else:
             # Default response for additional calls
             return '{"triples": [["測試主體", "測試關係", "測試客體"]]}'
+
+    def call_gpt5_mini(self, prompt: str, system_prompt: str = None) -> str:
+        """Mock call_gpt5_mini method for compatibility."""
+        return self.complete(prompt)
 
 
 class TestTripleGeneration:

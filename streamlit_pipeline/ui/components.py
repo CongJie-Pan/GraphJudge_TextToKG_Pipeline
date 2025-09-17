@@ -185,22 +185,14 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
     st.markdown("## 🔍 Entity Extraction Results")
 
     if entity_result.success:
-        # Main success indicator with detailed metrics
-        col1, col2, col3, col4 = st.columns(4)
+        # Simple success indicator
+        col1, col2, col3 = st.columns(3)
         with col1:
-            st.metric("Status", "✅ Success", "Processing Complete")
+            st.metric("Status", "✅ Success")
         with col2:
-            st.metric("Entities Found", len(entity_result.entities), f"{len(entity_result.entities)} items")
+            st.metric("Entities Found", len(entity_result.entities))
         with col3:
-            st.metric("Processing Time", f"{entity_result.processing_time:.2f}s", "GPT-5-mini API")
-        with col4:
-            # Calculate text reduction ratio if available
-            original_input = st.session_state.get('original_input', '')
-            if original_input and entity_result.denoised_text:
-                reduction = ((len(original_input) - len(entity_result.denoised_text)) / len(original_input) * 100)
-                st.metric("Text Reduction", f"{reduction:.1f}%", "Denoising Effect")
-            else:
-                st.metric("Model", "GPT-5-mini", "Enhanced Chinese")
+            st.metric("Processing Time", f"{entity_result.processing_time:.2f}s")
 
         # Detailed processing phases display
         st.markdown("### 🔬 Detailed Processing Phases")
@@ -281,56 +273,6 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
                 )
                 st.caption(f"Processed length: {len(entity_result.denoised_text):,} characters")
 
-            # Show denoising statistics
-            st.markdown("##### 📈 Denoising Statistics")
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                compression_ratio = len(entity_result.denoised_text) / len(original_input)
-                st.metric("Compression Ratio", f"{compression_ratio:.2f}", f"{(1-compression_ratio)*100:.1f}% reduction")
-            with col2:
-                entity_density = len(entity_result.entities) / max(len(entity_result.denoised_text.split()), 1)
-                st.metric("Entity Density", f"{entity_density:.3f}", "entities per word")
-            with col3:
-                st.metric("Processing Quality", "High", "Optimized for KG")
-
-        # Performance metrics section with enhanced details
-        st.markdown("### 📊 Detailed Processing Metrics")
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.markdown("**🔧 API Performance Analysis**")
-            api_metrics = {
-                "model": "GPT-5-mini",
-                "processing_time_ms": f"{entity_result.processing_time * 1000:.1f}",
-                "entities_extracted": len(entity_result.entities),
-                "success_rate": "100%",
-                "api_calls": "2 (extraction + denoising)",
-                "language_support": "Advanced Chinese"
-            }
-            st.json(api_metrics)
-
-        with col2:
-            st.markdown("**📏 Quality & Content Metrics**")
-            unique_entities = len(set(entity_result.entities)) if entity_result.entities else 0
-            metrics = {
-                "unique_entities": unique_entities,
-                "total_entities": len(entity_result.entities),
-                "deduplication_rate": f"{(1 - unique_entities/max(len(entity_result.entities), 1))*100:.1f}%",
-                "text_structure_improved": "Yes",
-                "classical_chinese_optimized": "Yes"
-            }
-            st.json(metrics)
-
-        # Processing timeline visualization
-        st.markdown("**⏱️ Processing Timeline**")
-        timeline_data = [
-            {"Phase": "Input Validation", "Duration": "0.1s", "Status": "✅"},
-            {"Phase": "Entity Extraction", "Duration": f"{entity_result.processing_time/2:.1f}s", "Status": "✅"},
-            {"Phase": "Text Denoising", "Duration": f"{entity_result.processing_time/2:.1f}s", "Status": "✅"},
-            {"Phase": "Quality Validation", "Duration": "0.1s", "Status": "✅"}
-        ]
-        df = pd.DataFrame(timeline_data)
-        st.dataframe(df, use_container_width=True, hide_index=True)
 
     else:
         # Enhanced error display
@@ -397,77 +339,8 @@ def _display_triple_phases_content(triple_result: TripleResult):
     st.markdown("### Phase 2: Triple Validation & Formatting")
     st.info("🔧 **Structure Validation**: Validates generated triples against schema requirements and applies quality filters to ensure proper subject-predicate-object relationships.")
 
-    # Triple quality analysis
-    if triple_result.triples:
-        st.markdown("#### 📈 Triple Quality Analysis")
-
-        # Analyze relation types
-        relation_counts = {}
-        subject_counts = {}
-        for triple in triple_result.triples:
-            pred = triple.predicate
-            subj = triple.subject
-            relation_counts[pred] = relation_counts.get(pred, 0) + 1
-            subject_counts[subj] = subject_counts.get(subj, 0) + 1
-
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown("**🔗 Top Relation Types**")
-            sorted_relations = sorted(relation_counts.items(), key=lambda x: x[1], reverse=True)[:5]
-            for relation, count in sorted_relations:
-                st.text(f"• {relation}: {count} occurrences")
-
-        with col2:
-            st.markdown("**👤 Most Connected Entities**")
-            sorted_subjects = sorted(subject_counts.items(), key=lambda x: x[1], reverse=True)[:5]
-            for subject, count in sorted_subjects:
-                st.text(f"• {subject}: {count} relations")
 
 
-def _display_processing_metrics_content(triple_result: TripleResult):
-    """Helper function to display processing metrics content."""
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("**🔧 API Performance Details**")
-        api_metrics = {
-            "model": "GPT-5-mini",
-            "processing_time_ms": f"{triple_result.processing_time * 1000:.1f}",
-            "triples_generated": len(triple_result.triples),
-            "success_rate": "100%",
-            "output_format": "Structured JSON",
-            "language_optimization": "Chinese Literature"
-        }
-        st.json(api_metrics)
-
-    with col2:
-        st.markdown("**📏 Generation Quality Metrics**")
-        if triple_result.triples:
-            avg_subject_len = sum(len(t.subject) for t in triple_result.triples) / len(triple_result.triples)
-            avg_predicate_len = sum(len(t.predicate) for t in triple_result.triples) / len(triple_result.triples)
-            avg_object_len = sum(len(t.object) for t in triple_result.triples) / len(triple_result.triples)
-
-            quality_metrics = {
-                "avg_subject_length": f"{avg_subject_len:.1f}",
-                "avg_predicate_length": f"{avg_predicate_len:.1f}",
-                "avg_object_length": f"{avg_object_len:.1f}",
-                "relation_diversity": f"{len(set(t.predicate for t in triple_result.triples))}/{len(triple_result.triples)}",
-                "entity_coverage": "High"
-            }
-        else:
-            quality_metrics = {"status": "No triples to analyze"}
-        st.json(quality_metrics)
-
-    # Processing timeline for triple generation
-    st.markdown("**⏱️ Triple Generation Timeline**")
-    timeline_data = [
-        {"Phase": "Text Chunking", "Duration": "0.1s", "Status": "✅"},
-        {"Phase": "Relation Extraction", "Duration": f"{triple_result.processing_time * 0.6:.1f}s", "Status": "✅"},
-        {"Phase": "JSON Validation", "Duration": f"{triple_result.processing_time * 0.3:.1f}s", "Status": "✅"},
-        {"Phase": "Quality Filtering", "Duration": f"{triple_result.processing_time * 0.1:.1f}s", "Status": "✅"}
-    ]
-    df = pd.DataFrame(timeline_data)
-    st.dataframe(df, use_container_width=True, hide_index=True)
 
 
 def _display_triple_error_analysis_content(triple_result: TripleResult):
@@ -489,15 +362,6 @@ def _display_triple_error_analysis_content(triple_result: TripleResult):
         st.code(triple_result.technical_details, language="json")
 
 
-def _display_relationship_visualization_content(triples):
-    """Helper function to display relationship visualization content."""
-    if PLOTLY_AVAILABLE:
-        display_knowledge_graph_viz(triples)
-    else:
-        st.info("📊 Visualization requires Plotly library: `pip install plotly`")
-        st.text("Text-based relationship display:")
-        for i, triple in enumerate(triples[:10], 1):
-            st.text(f"{i}. {triple.subject} → {triple.predicate} → {triple.object}")
 
 
 def _display_judgment_explanations_content(triples, judgment_result):
@@ -574,13 +438,6 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
             st.markdown("### 🔬 Detailed Triple Generation Phases")
             _display_triple_phases_content(triple_result)
 
-        # Performance metrics with enhanced API details
-        if show_expanders:
-            with st.expander("📊 Enhanced Processing Metrics"):
-                _display_processing_metrics_content(triple_result)
-        else:
-            st.markdown("### 📊 Enhanced Processing Metrics")
-            _display_processing_metrics_content(triple_result)
 
     else:
         # Enhanced error display for triple generation
@@ -652,22 +509,7 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
                 )
         
         # Show validation information
-        if show_validation and triple_result.metadata:
-            if show_expanders:
-                with st.expander("🔍 Quality Analysis"):
-                    display_triple_quality_analysis(triple_result)
-            else:
-                st.markdown("### 🔍 Quality Analysis")
-                display_triple_quality_analysis(triple_result)
 
-        # Visualization
-        if len(triple_result.triples) > 1:
-            if show_expanders:
-                with st.expander("📈 Relationship Visualization"):
-                    _display_relationship_visualization_content(triple_result.triples)
-            else:
-                st.markdown("### 📈 Relationship Visualization")
-                _display_relationship_visualization_content(triple_result.triples)
     else:
         st.warning("⚠️ No triples generated. Please check the entity extraction results.")
 

@@ -39,8 +39,8 @@ class TestConstants:
     
     def test_parameter_constants(self):
         """Test parameter constants."""
-        assert OPENAI_TEMPERATURE == 0.0
-        assert OPENAI_MAX_TOKENS == 4000
+        assert OPENAI_TEMPERATURE == 1.0  # GPT-5 models only support temperature=1
+        assert OPENAI_MAX_TOKENS == 8000  # Increased for GPT-5 reasoning models
         assert DEFAULT_TIMEOUT == 60
         assert MAX_RETRIES == 3
 

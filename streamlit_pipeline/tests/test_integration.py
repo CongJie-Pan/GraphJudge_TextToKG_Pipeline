@@ -14,7 +14,7 @@ Key testing areas:
 
 import pytest
 import asyncio
-from unittest.mock import patch, Mock, AsyncMock
+from unittest.mock import patch, Mock, MagicMock, AsyncMock
 from typing import List, Dict, Any
 
 from core.models import (
@@ -600,7 +600,7 @@ class TestLoggingIntegration(BaseIntegrationTest):
         if os.path.exists(self.test_logs_dir):
             shutil.rmtree(self.test_logs_dir)
 
-    @patch('streamlit_pipeline.utils.detailed_logger.DetailedLogger')
+    @patch('core.entity_processor.DetailedLogger')
     def test_entity_processor_logging_integration(self, mock_logger_class):
         """Test that entity processor integrates correctly with logging system."""
         from core.entity_processor import extract_entities

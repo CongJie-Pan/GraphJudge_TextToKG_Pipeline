@@ -742,9 +742,15 @@ class TestReasoningModeScenarios:
     def test_all_reasoning_no_content_scenario(self, mock_completion):
         """Test scenario where model uses all tokens for reasoning, produces no content."""
         mock_response = Mock()
-        mock_response.choices = [Mock()]
-        mock_response.choices[0].message.content = ""
-        mock_response.choices[0].finish_reason = "length"
+        mock_choice = Mock()
+        mock_message = Mock()
+        mock_message.content = ""  # Ensure this is a proper string
+        mock_choice.message = mock_message
+        mock_choice.finish_reason = "length"
+        # Ensure reasoning attributes return empty/None to avoid len() issues
+        mock_choice.reasoning = None
+        mock_choice.delta = None
+        mock_response.choices = [mock_choice]
 
         # Mock usage showing all tokens went to reasoning
         mock_usage = Mock()

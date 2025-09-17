@@ -37,9 +37,9 @@ from streamlit_pipeline.ui.display import display_final_results, display_compari
 from streamlit_pipeline.ui.error_display import (
     PipelineProgressDisplay, display_error_card, ErrorRecoveryHelper
 )
-from streamlit_pipeline.ui.detailed_progress import (
-    DetailedProgressTracker, display_comprehensive_processing_summary,
-    display_ectd_processing, display_triple_generation_processing,
+from streamlit_pipeline.ui.simple_progress import (
+    SimpleProgressTracker, display_simple_processing_summary,
+    display_entity_processing, display_triple_generation_processing,
     display_graph_judgment_processing
 )
 
@@ -376,15 +376,12 @@ class GraphJudgeApp:
         # Store input text in session manager for potential recovery
         self.session_manager.set_ui_state('temp_input', input_text)
 
-        # Initialize detailed progress tracking
-        detailed_tracker = DetailedProgressTracker()
-        progress_container, log_container, metrics_container = detailed_tracker.initialize_display()
-
-        # Traditional progress display for compatibility
-        status_container = st.empty()
+        # Initialize simple progress tracking
+        simple_tracker = SimpleProgressTracker()
+        progress_container, status_container = simple_tracker.initialize_display()
 
         try:
-            # Enhanced progress callback function with detailed tracking
+            # Simple progress callback function
             def progress_callback(stage: int, message: str):
                 # Update session manager progress data
                 self.session_manager.update_progress_data(
@@ -393,59 +390,24 @@ class GraphJudgeApp:
                     input_length=len(input_text)
                 )
 
-                # Update detailed progress tracker based on stage
+                # Update simple progress tracker based on stage
                 if stage == 0:  # Entity Extraction
-                    detailed_tracker.start_phase(
-                        "🔍 Entity Extraction & Text Denoising (ECTD)",
-                        "GPT-5-mini analyzes classical Chinese text to identify key entities and denoise content"
+                    simple_tracker.start_phase(
+                        "🔍 Entity Extraction & Text Denoising",
+                        "Extracting entities from Chinese text"
                     )
-                    detailed_tracker.log_step("Initializing GPT-5-mini API connection...")
-                    detailed_tracker.log_step("Loading enhanced Chinese text processing prompts...")
-                    detailed_tracker.log_step("Starting entity extraction with deduplication emphasis...")
-                    detailed_tracker.update_metrics({
-                        "Model": "GPT-5-mini",
-                        "Language": "Classical Chinese",
-                        "Phase": "Entity Extraction",
-                        "Status": "Processing"
-                    })
-
                 elif stage == 1:  # Triple Generation
-                    detailed_tracker.finish_phase(True, "Entity extraction completed successfully")
-                    detailed_tracker.start_phase(
-                        "🔗 Enhanced Triple Generation",
-                        "GPT-5-mini processes denoised text to generate structured knowledge triples with JSON validation"
+                    simple_tracker.finish_phase(True, "Entity extraction completed")
+                    simple_tracker.start_phase(
+                        "🔗 Triple Generation",
+                        "Generating knowledge graph triples"
                     )
-                    detailed_tracker.log_step("Loading enhanced triple generation pipeline v2.0...")
-                    detailed_tracker.log_step("Setting up structured JSON output prompts...")
-                    detailed_tracker.log_step("Starting relation extraction with schema validation...")
-                    detailed_tracker.update_metrics({
-                        "Model": "GPT-5-mini",
-                        "Output Format": "JSON Schema",
-                        "Phase": "Triple Generation",
-                        "Status": "Processing"
-                    })
-
                 elif stage == 2:  # Graph Judgment
-                    detailed_tracker.finish_phase(True, "Triple generation completed successfully")
-                    detailed_tracker.start_phase(
-                        "⚖️ Perplexity API Graph Judgment",
-                        "Advanced reasoning model validates knowledge graph triples with explainable AI"
+                    simple_tracker.finish_phase(True, "Triple generation completed")
+                    simple_tracker.start_phase(
+                        "⚖️ Graph Judgment",
+                        "Validating triples with Perplexity AI"
                     )
-                    detailed_tracker.log_step("Initializing Perplexity API Graph Judge system...")
-                    detailed_tracker.log_step("Loading sonar-reasoning model with fact-checking capabilities...")
-                    detailed_tracker.log_step("Starting triple validation with confidence scoring...")
-                    detailed_tracker.update_metrics({
-                        "Model": "Perplexity/sonar-reasoning",
-                        "Reasoning": "Advanced",
-                        "Phase": "Graph Judgment",
-                        "Status": "Processing"
-                    })
-
-                # Update traditional status container for compatibility
-                with status_container.container():
-                    stage_names = ["🔍 Entity Extraction", "🔗 Triple Generation", "⚖️ Graph Judgment", "✅ Complete"]
-                    if stage < len(stage_names):
-                        st.info(f"**Current Stage**: {stage_names[stage]} - {message}")
 
             # Run the pipeline with detailed tracking
             start_time = time.time()
@@ -466,18 +428,11 @@ class GraphJudgeApp:
             st.session_state.pipeline_results = self.session_manager.get_pipeline_results()
             st.session_state.run_count = self.session_manager.get_session_metadata().run_count
             
-            # Complete detailed tracking
+            # Complete simple tracking
             if result.success:
-                detailed_tracker.finish_phase(True, "Graph judgment completed successfully")
-                detailed_tracker.log_step("All pipeline phases completed successfully!", "SUCCESS")
-                detailed_tracker.update_metrics({
-                    "Total Time": f"{result.total_time:.2f}s",
-                    "Final Status": "Success",
-                    "Pipeline": "Complete"
-                })
+                simple_tracker.finish_phase(True, "All pipeline phases completed successfully!")
             else:
-                detailed_tracker.finish_phase(False, f"Pipeline failed: {result.error}")
-                detailed_tracker.log_step(f"Pipeline failed at {result.error_stage}: {result.error}", "ERROR")
+                simple_tracker.finish_phase(False, f"Pipeline failed: {result.error}")
 
             # Clear processing state using session manager
             self.session_manager.set_processing_state(False)
@@ -490,21 +445,20 @@ class GraphJudgeApp:
                     {"success": result.success, "stage_reached": result.stage_reached}
                 )
 
-            # Show comprehensive processing summary with detailed tracker
-            progress_container.empty()
-            status_container.empty()
+            # Clear progress displays
+            simple_tracker.clear_display()
 
             if result.success:
                 st.success(f"🎉 Processing Complete! Total time: {result.total_time:.2f} seconds")
                 st.balloons()
 
-                # Display comprehensive processing summary
-                display_comprehensive_processing_summary(detailed_tracker, result)
+                # Display simple processing summary
+                display_simple_processing_summary(simple_tracker, result)
             else:
                 st.error(f"❌ Processing Failed: {result.error}")
 
-                # Still show partial processing summary for debugging
-                display_comprehensive_processing_summary(detailed_tracker, result)
+                # Still show simple processing summary for debugging
+                display_simple_processing_summary(simple_tracker, result)
 
             st.rerun()
             

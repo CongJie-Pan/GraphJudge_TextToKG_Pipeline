@@ -637,20 +637,6 @@ def display_analysis_report(pipeline_result: PipelineResult):
         - **Generation Efficiency**: {triples_count/pipeline_result.triple_result.processing_time:.1f} triples/second
         """)
     
-    # Quality Analysis
-    if pipeline_result.judgment_result:
-        high_quality = sum(1 for c in pipeline_result.judgment_result.confidence if c > 0.8)
-        medium_quality = sum(1 for c in pipeline_result.judgment_result.confidence if 0.5 <= c <= 0.8)
-        low_quality = sum(1 for c in pipeline_result.judgment_result.confidence if c < 0.5)
-        
-        report_sections.append(f"""
-        ### ⚖️ Quality Analysis
-
-        - **High Quality** (>0.8): {high_quality} items
-        - **Medium Quality** (0.5-0.8): {medium_quality} items
-        - **Needs Improvement** (<0.5): {low_quality} items
-        - **Average Confidence**: {sum(pipeline_result.judgment_result.confidence)/len(pipeline_result.judgment_result.confidence):.3f}
-        """)
     
     # Display report
     for section in report_sections:

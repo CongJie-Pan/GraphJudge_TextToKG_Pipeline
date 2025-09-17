@@ -326,7 +326,7 @@ def parse_triples_from_validated_data(validated_data: Dict[str, Any],
     return triples
 
 
-def generate_triples(entities: List[str], text: str) -> TripleResult:
+def generate_triples(entities: List[str], text: str, api_client=None, progress_callback=None) -> TripleResult:
     """
     Generate knowledge graph triples from entities and text.
 
@@ -337,6 +337,8 @@ def generate_triples(entities: List[str], text: str) -> TripleResult:
     Args:
         entities: List of entity names to guide triple extraction
         text: Denoised Chinese text for processing
+        api_client: Optional API client for testing purposes
+        progress_callback: Optional callback function for progress updates
 
     Returns:
         TripleResult containing extracted triples and metadata
@@ -397,6 +399,10 @@ def generate_triples(entities: List[str], text: str) -> TripleResult:
 
         # Process each chunk
         for chunk_idx, chunk in enumerate(text_chunks):
+            # Progress callback for chunk processing
+            if progress_callback:
+                progress_callback(chunk_idx, len(text_chunks), "chunks")
+
             detailed_logger.log_debug("TRIPLE", f"Processing chunk {chunk_idx + 1}/{len(text_chunks)}", {
                 "chunk_index": chunk_idx,
                 "chunk_length": len(chunk),
@@ -422,7 +428,19 @@ def generate_triples(entities: List[str], text: str) -> TripleResult:
                 print(f"DEBUG SYSTEM PROMPT: {system_prompt}")
 
                 detailed_logger.log_info("API", f"Making API call for chunk {chunk_idx + 1} with system prompt")
-                response = call_gpt5_mini(prompt, system_prompt)
+
+                # Use provided API client for testing, or default function for production
+                if api_client:
+                    response = api_client.call_gpt5_mini(prompt, system_prompt)
+                else:
+                    # When no API client is provided, attempt to use standalone function
+                    try:
+                        response = call_gpt5_mini(prompt, system_prompt)
+                    except Exception as e:
+                        detailed_logger.log_warning("API", f"API call failed, continuing without response: {str(e)}")
+                        response = None
+
+                # Always increment chunks_processed when we attempt processing
                 chunk_info['chunks_processed'] += 1
 
                 # Enhanced API response debugging for empty response troubleshooting
@@ -563,6 +581,10 @@ def generate_triples(entities: List[str], text: str) -> TripleResult:
             elif not processing_successful:
                 error_message = f"Low success rate: {success_rate:.1%}"
                 detailed_logger.log_warning("TRIPLE", f"Triple generation had low success rate: {success_rate:.1%}")
+
+        # Progress callback for completion
+        if progress_callback:
+            progress_callback(len(unique_triples), len(unique_triples), "triples")
 
         # Log final results
         if overall_success:
