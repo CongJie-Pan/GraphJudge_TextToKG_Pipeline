@@ -557,7 +557,7 @@ class GraphJudgeApp:
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.markdown("**GraphJudge v2.0**")
+            st.markdown("**GraphJudge v1.0**")
             st.caption("Powered by GPT-5-mini & Perplexity")
         
         with col2:
