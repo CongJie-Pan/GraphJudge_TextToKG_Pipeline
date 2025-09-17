@@ -201,7 +201,7 @@ The extracted entities are not being saved to the project folder as expected, an
 去噪文本："""
 ```
   
-9) ♻️ You pretend as a user, definitely want to see more actual processing in streamlit ui, if can show the process of the every phase processing. e.g. in the entity extract phase  need to show 1/27 entites or in the in the triple phase need to show the 1/27 triples ..., and so on on the graph judge.
+9) [Unnecessary - the process can look at terminal] You pretend as a user, definitely want to see more actual processing in streamlit ui, if can show the process of the every phase processing. e.g. in the entity extract phase  need to show 1/27 entites or in the in the triple phase need to show the 1/27 triples ..., and so on on the graph judge.
 
 10) ok- please read "chat\run_gj.py" and "chat\convert_Judge_To_jsonGraph.py" to parse to the proper graph json file(as the source code demanded format). And  show the graph in streamlit "Relationship Network Graph" (Now, it's only showed : Network graph requires Plotly library: pip install plotly
 
@@ -255,7 +255,7 @@ File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\st
 
 To do :
 
-1) edit the prompt of `streamlit_pipeline\core\triple_generator.py` to the below:
+1) ok edit the prompt of `streamlit_pipeline\core\triple_generator.py` to the below:
 
 ```
 
