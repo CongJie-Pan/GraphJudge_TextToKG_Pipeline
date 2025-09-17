@@ -345,6 +345,68 @@ Return only the JSON in the specified format.
 
 ```
 
-2) - edit the prompt of `streamlit_pipeline\core\graph_judge.py` to fit the ancient chinese, modern chinese, and the english needs, not just ancient chinese.
+2) [Cancel - becuase need to concentrate on the ancient chinese text processing.] edit the prompt of `streamlit_pipeline\core\graph_judge.py` to fit the ancient chinese, modern chinese, and the english needs, not just ancient chinese.
 
 3) the above finished, can fork the original GraphJudge repo again, and upload the streamlit clean code to others people to use. 
+
+---
+
+To do :
+fix the bug below , when the ectd finished:
+
+```
+[INFO] [INFO] [API] Making API call for chunk 1 with system prompt
+23:13:33 - LiteLLM:INFO: utils.py:3119 -
+LiteLLM completion() model= gpt-5-mini; provider = openai
+INFO:LiteLLM:
+LiteLLM completion() model= gpt-5-mini; provider = openai
+INFO:openai._base_client:Retrying request to /chat/completions in 0.454055 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.984037 seconds
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+23:16:35 - LiteLLM:INFO: utils.py:3119 - 
+LiteLLM completion() model= gpt-5-mini; provider = openai
+INFO:LiteLLM:
+LiteLLM completion() model= gpt-5-mini; provider = openai
+INFO:openai._base_client:Retrying request to /chat/completions in 0.455126 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.927726 seconds
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+23:19:38 - LiteLLM:INFO: utils.py:3119 - 
+LiteLLM completion() model= gpt-5-mini; provider = openai
+INFO:LiteLLM:
+LiteLLM completion() model= gpt-5-mini; provider = openai
+INFO:openai._base_client:Retrying request to /chat/completions in 0.395935 seconds
+INFO:openai._base_client:Retrying request to /chat/completions in 0.935379 seconds
+
+Give Feedback / Get Help: https://github.com/BerriAI/litellm/issues/new
+LiteLLM.Info: If you need to debug this error, use `litellm._turn_on_debug()'.
+
+[WARN] [WARNING] [API] API call failed, continuing without response: API call failed after 3 attempts: litellm.Timeout: APITimeoutError - Request timed out. Error_str: Request timed out.
+DEBUG API RESPONSE: Empty or None response received for chunk 1!
+DEBUG: Response type: <class 'NoneType'>
+DEBUG: Response repr: None
+[ERROR] [ERROR] [API] Empty response received from GPT-5-mini
+[DEBUG] [DEBUG] [TRIPLE] Received API response for chunk
+[DEBUG] [DEBUG] [TRIPLE] Validating response schema
+[WARN] [WARNING] [TRIPLE] Schema validation failed for chunk 1
+[DEBUG] [DEBUG] [TRIPLE] Starting triple deduplication
+[INFO] [INFO] [TRIPLE] Triple deduplication completed
+[DEBUG] [DEBUG] [TRIPLE] Prepared extraction metadata
+[INFO] [INFO] [TRIPLE] Triple generation analysis
+[ERROR] [ERROR] [TRIPLE] Triple generation failed: no triples generated
+[ERROR] [ERROR] [TRIPLE] Triple generation failed
+INFO:streamlit_pipeline.utils.session_state:Pipeline result stored. Run #1, Success: False
+INFO:streamlit_pipeline.utils.session_state:Processing completed/stopped
+[INFO] [INFO] Logger initialized for phase: pipeline
+[INFO] [INFO] Log files created in: D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\logs\2025_09_17\pipeline
+INFO:streamlit_pipeline.utils.state_cleanup:Automatic cleanup scheduled every 30 minutes
+```
+streamlit ui :
+Pipeline failed at stage: triple_generation
+
+Error: No triples were generated from the provided entities and text
