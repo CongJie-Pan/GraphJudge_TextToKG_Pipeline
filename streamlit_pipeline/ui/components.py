@@ -368,7 +368,7 @@ def _display_judgment_explanations_content(triples, judgment_result):
     """Helper function to display judgment explanations content."""
     for i, (triple, explanation) in enumerate(zip(triples, judgment_result.explanations)):
         if explanation:
-            judgment_status = "✅ 通过" if judgment_result.judgments[i] else "❌ 拒绝"
+            judgment_status = "✅ Approved" if judgment_result.judgments[i] else "❌ Rejected"
             st.markdown(f"**{i+1}. {triple.subject} - {triple.predicate} - {triple.object}** ({judgment_status})")
             st.markdown(f"> {explanation}")
             st.markdown("---")
@@ -523,7 +523,7 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         triples: The original triples that were judged
         show_expanders: Whether to create expanders for detailed sections
     """
-    st.markdown("## ⚖️ 图判断结果 (Graph Judgment Results)")
+    st.markdown("## ⚖️ Graph Judgment Results")
     
     # Summary metrics
     approved = sum(1 for j in judgment_result.judgments if j)
@@ -532,31 +532,31 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
     
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.metric("判断状态", "✅ 完成" if judgment_result.success else "❌ 失败")
+        st.metric("Judgment Status", "✅ Complete" if judgment_result.success else "❌ Failed")
     with col2:
-        st.metric("处理时间", f"{judgment_result.processing_time:.2f}s")
+        st.metric("Processing Time", f"{judgment_result.processing_time:.2f}s")
     with col3:
-        st.metric("通过数量", approved, delta=f"{approval_rate:.1%}")
+        st.metric("Approved", approved, delta=f"{approval_rate:.1%}")
     with col4:
-        st.metric("拒绝数量", rejected)
+        st.metric("Rejected", rejected)
     with col5:
         avg_confidence = sum(judgment_result.confidence) / len(judgment_result.confidence) if judgment_result.confidence else 0
-        st.metric("平均置信度", f"{avg_confidence:.3f}")
+        st.metric("Average Confidence", f"{avg_confidence:.3f}")
     
     if judgment_result.judgments:
         # Create combined results
         results_data = []
         for i, (triple, judgment, confidence) in enumerate(zip(triples, judgment_result.judgments, judgment_result.confidence or [0] * len(triples))):
             status_emoji = "✅" if judgment else "❌"
-            status_text = "通过" if judgment else "拒绝"
-            
+            status_text = "Approved" if judgment else "Rejected"
+
             results_data.append({
-                "序号": i + 1,
-                "状态": f"{status_emoji} {status_text}",
-                "主语": triple.subject,
-                "谓语": triple.predicate,
-                "宾语": triple.object,
-                "置信度": f"{confidence:.3f}" if confidence > 0 else "N/A"
+                "#": i + 1,
+                "Status": f"{status_emoji} {status_text}",
+                "Subject": triple.subject,
+                "Predicate": triple.predicate,
+                "Object": triple.object,
+                "Confidence": f"{confidence:.3f}" if confidence > 0 else "N/A"
             })
         
         df = pd.DataFrame(results_data)
@@ -565,43 +565,43 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         col1, col2 = st.columns(2)
         with col1:
             filter_option = st.selectbox(
-                "显示筛选",
-                ["全部", "仅通过", "仅拒绝"],
+                "Filter Display",
+                ["All", "Approved Only", "Rejected Only"],
                 key="judgment_filter"
             )
         with col2:
             sort_by = st.selectbox(
-                "排序方式",
-                ["序号", "置信度", "状态"],
+                "Sort By",
+                ["Number", "Confidence", "Status"],
                 key="judgment_sort"
             )
         
         # Apply filters
         filtered_df = df.copy()
-        if filter_option == "仅通过":
-            filtered_df = filtered_df[filtered_df['状态'].str.contains("通过")]
-        elif filter_option == "仅拒绝":
-            filtered_df = filtered_df[filtered_df['状态'].str.contains("拒绝")]
+        if filter_option == "Approved Only":
+            filtered_df = filtered_df[filtered_df['Status'].str.contains("Approved")]
+        elif filter_option == "Rejected Only":
+            filtered_df = filtered_df[filtered_df['Status'].str.contains("Rejected")]
         
         # Apply sorting
-        if sort_by == "置信度":
+        if sort_by == "Confidence":
             # Convert confidence to numeric for sorting
-            filtered_df['置信度_数值'] = filtered_df['置信度'].apply(
+            filtered_df['Confidence_numeric'] = filtered_df['Confidence'].apply(
                 lambda x: float(x) if x != "N/A" else 0
             )
-            filtered_df = filtered_df.sort_values('置信度_数值', ascending=False)
-            filtered_df = filtered_df.drop('置信度_数值', axis=1)
-        
-        st.markdown(f"### 📋 判断结果详情 (共 {len(filtered_df)} 条)")
+            filtered_df = filtered_df.sort_values('Confidence_numeric', ascending=False)
+            filtered_df = filtered_df.drop('Confidence_numeric', axis=1)
+
+        st.markdown(f"### 📋 Judgment Results Details ({len(filtered_df)} items)")
         st.dataframe(filtered_df, use_container_width=True, hide_index=True)
         
         # Explanations if available
         if judgment_result.explanations and any(judgment_result.explanations):
             if show_expanders:
-                with st.expander("💭 判断理由 (Judgment Explanations)"):
+                with st.expander("💭 Judgment Explanations"):
                     _display_judgment_explanations_content(triples, judgment_result)
             else:
-                st.markdown("### 💭 判断理由 (Judgment Explanations)")
+                st.markdown("### 💭 Judgment Explanations")
                 _display_judgment_explanations_content(triples, judgment_result)
         
         # Visualization

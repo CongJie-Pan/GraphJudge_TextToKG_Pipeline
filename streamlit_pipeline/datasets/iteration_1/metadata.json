@@ -1,0 +1,35 @@
+{
+  "iteration_number": 1,
+  "created_at": "2025-09-18T11:48:04.310173",
+  "input_text": "紅樓夢\r\n\r\n第一回　甄士隱夢幻識通靈　賈雨村風塵懷閨秀\r\n\r\n作者自云：因曾歷過一番夢幻之後，故將真事隱去，而借通靈之說，撰此《石頭記》一書也。故曰「甄士隱夢幻識通靈」。但書中所記何事，又因何而撰是書哉？自又云：今風塵碌碌，一事無成，忽念及當日所有之女子，一一細推了去，覺其行止見識，皆出於我之上。何我堂堂之鬚眉，曾不若彼裙釵哉！實愧則有餘，悔又無益之大無可奈何之日也！當此時，則自欲將已往所賴，上...",
+  "input_length": 8120,
+  "phases_completed": [
+    "ectd",
+    "triples",
+    "judgment",
+    "graph_visualization"
+  ],
+  "phase_data": {
+    "ectd": {
+      "entities_count": 34,
+      "completed_at": "2025-09-18T11:48:31.917708"
+    },
+    "triples": {
+      "triples_count": 47,
+      "completed_at": "2025-09-18T11:49:14.091818"
+    },
+    "judgment": {
+      "approved_triples": 36,
+      "total_triples": 47,
+      "approval_rate": 0.7659574468085106,
+      "completed_at": "2025-09-18T11:58:41.164926"
+    },
+    "graph_visualization": {
+      "nodes_count": 41,
+      "edges_count": 36,
+      "entities_count": 41,
+      "has_visualization_data": true,
+      "completed_at": "2025-09-18T11:58:41.328515"
+    }
+  }
+}

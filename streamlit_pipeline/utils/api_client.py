@@ -146,64 +146,87 @@ class APIClient:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
         
-        # Retry logic with reasoning effort progression for GPT-5 models
+        # Enhanced retry logic with progressive timeouts and reasoning effort progression
         last_exception = None
-        current_reasoning_effort = reasoning_effort  # Make a mutable copy
+        current_reasoning_effort = reasoning_effort
+        progressive_timeouts = self.config.get("progressive_timeouts", [self.config["timeout"]])
+        reasoning_efforts = self.config.get("reasoning_efforts", ["minimal", "medium", None])
 
         for attempt in range(self.config["max_retries"]):
             try:
-                # Build completion parameters
+                # Use progressive timeouts: try shorter timeouts first, longer ones for retries
+                current_timeout = progressive_timeouts[min(attempt, len(progressive_timeouts) - 1)]
+
+                # Progressive reasoning effort for GPT-5 models
+                if "gpt-5" in model.lower() and attempt < len(reasoning_efforts):
+                    current_reasoning_effort = reasoning_efforts[attempt]
+
+                # Build completion parameters with progressive timeout
                 completion_params = {
                     "model": model,
                     "messages": messages,
                     "temperature": temperature,
                     "max_completion_tokens": max_tokens,
-                    "timeout": self.config["timeout"]
+                    "timeout": current_timeout
                 }
 
                 # Add reasoning_effort for GPT-5 models to control reasoning behavior
                 if "gpt-5" in model.lower() and current_reasoning_effort:
                     completion_params["reasoning_effort"] = current_reasoning_effort
 
-                response = completion(**completion_params)
-
-                # Debug: Check response structure
-                print(f"DEBUG: API call successful. Model: {model}, Temperature: {temperature}, Max tokens: {max_tokens}")
+                print(f"DEBUG: API call attempt {attempt + 1}/{self.config['max_retries']}")
+                print(f"DEBUG: Timeout: {current_timeout}s, Reasoning effort: {current_reasoning_effort}")
                 print(f"DEBUG: Completion params: {completion_params}")
+
+                response = completion(**completion_params)
 
                 # Enhanced content extraction for GPT-5 reasoning models
                 content = self._extract_content_from_response(response, model, attempt)
 
-                # If content is still empty and this is GPT-5-mini, try retry with different reasoning effort
-                print(f"DEBUG: Retry condition check - content: '{content}', model: {model}, attempt: {attempt}, max_retries: {self.config['max_retries']}")
-                if not content and "gpt-5" in model.lower() and attempt < self.config["max_retries"] - 1:
-                    print(f"DEBUG: Retrying with different reasoning effort for attempt {attempt + 1}")
-                    print(f"DEBUG: Current reasoning_effort: {current_reasoning_effort}")
-                    # Update reasoning_effort for next retry
-                    if current_reasoning_effort == "minimal":
-                        current_reasoning_effort = "medium"
-                        print(f"DEBUG: Updated reasoning_effort to: medium")
-                    elif current_reasoning_effort == "medium":
-                        current_reasoning_effort = None  # Use default
-                        print(f"DEBUG: Updated reasoning_effort to: None (default)")
-                    else:
-                        print(f"DEBUG: No reasoning_effort change needed")
-                    continue  # Retry with different parameters
-                else:
-                    print(f"DEBUG: Retry conditions not met - returning content: '{content}'")
+                # Success criteria: non-empty content
+                if content and content.strip():
+                    print(f"DEBUG: API call successful on attempt {attempt + 1}")
+                    return content
 
-                return content or ""  # Return empty string instead of None
-                
-            except Exception as e:
-                last_exception = e
+                # Handle empty content - continue to retry if attempts remain
                 if attempt < self.config["max_retries"] - 1:
-                    # Wait before retry with exponential backoff
-                    wait_time = (2 ** attempt) * 0.5  # 0.5, 1.0, 2.0 seconds
+                    print(f"DEBUG: Empty content received, will retry with timeout {progressive_timeouts[min(attempt + 1, len(progressive_timeouts) - 1)]}s")
+                    # Create exception for empty content to trigger retry
+                    last_exception = Exception("Empty content received from API")
+                    continue
+                else:
+                    print(f"DEBUG: Empty content on final attempt, returning empty string")
+                    return ""
+
+            except Exception as e:
+                error_type = type(e).__name__
+                error_msg = str(e)
+
+                print(f"DEBUG: API call failed on attempt {attempt + 1}: {error_type} - {error_msg}")
+
+                # Check if it's a timeout error specifically
+                is_timeout = "timeout" in error_msg.lower() or "timed out" in error_msg.lower()
+
+                last_exception = e
+
+                if attempt < self.config["max_retries"] - 1:
+                    # Enhanced exponential backoff with special handling for timeouts
+                    if is_timeout:
+                        wait_time = 2.0  # Fixed wait for timeouts to prevent overwhelming
+                        print(f"DEBUG: Timeout detected, waiting {wait_time}s before retry with longer timeout")
+                    else:
+                        wait_time = (2 ** attempt) * 0.5  # 0.5, 1.0, 2.0 seconds for other errors
+                        print(f"DEBUG: Non-timeout error, waiting {wait_time}s before retry")
+
                     time.sleep(wait_time)
                     continue
 
-        # All retries failed
-        raise Exception(f"API call failed after {self.config['max_retries']} attempts: {last_exception}")
+        # All retries failed - provide detailed error information
+        timeout_info = f"Timeouts used: {progressive_timeouts[:self.config['max_retries']]}"
+        reasoning_info = f"Reasoning efforts tried: {reasoning_efforts[:self.config['max_retries']]}" if "gpt-5" in model.lower() else ""
+
+        detailed_error = f"API call failed after {self.config['max_retries']} attempts. {timeout_info}. {reasoning_info}. Last error: {last_exception}"
+        raise Exception(detailed_error)
 
     def _extract_content_from_response(self, response, model: str, attempt: int) -> str:
         """

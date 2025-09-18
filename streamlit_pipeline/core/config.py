@@ -22,12 +22,16 @@ GPT5_MINI_MODEL = "gpt-5-mini"
 PERPLEXITY_MODEL = "perplexity/sonar-reasoning"
 
 # Essential API parameters
-OPENAI_TEMPERATURE = 1.0  # GPT-5 models only support temperature=1
-OPENAI_MAX_TOKENS = 8000  # Increased for GPT-5 reasoning models to allow both reasoning and content generation
+OPENAI_TEMPERATURE = 0.0  # Deterministic output for structured data generation
+OPENAI_MAX_TOKENS = 12000  # Increased to support reasoning models with complex output generation
 
-# Simplified rate limiting (no complex tracking)
-DEFAULT_TIMEOUT = 60  # Seconds
+# Enhanced timeout configuration for GPT-5-mini reasoning models
+DEFAULT_TIMEOUT = 180  # Base timeout in seconds (increased from 60)
+PROGRESSIVE_TIMEOUTS = [120, 180, 240]  # Progressive timeout strategy for retries
 MAX_RETRIES = 3
+
+# Reasoning effort configuration for GPT-5 models
+REASONING_EFFORTS = ["minimal", "medium", None]  # None means use model default
 
 
 def load_env_file() -> None:
@@ -127,16 +131,18 @@ def get_api_key(load_env: bool = True) -> str:
 def get_model_config() -> dict:
     """
     Get model configuration parameters.
-    
+
     Returns:
-        Dictionary with model configuration
+        Dictionary with enhanced model configuration including progressive timeouts
     """
     return {
         "entity_model": GPT5_MINI_MODEL,
-        "triple_model": GPT5_MINI_MODEL, 
+        "triple_model": GPT5_MINI_MODEL,
         "judgment_model": PERPLEXITY_MODEL,
         "temperature": OPENAI_TEMPERATURE,
         "max_tokens": OPENAI_MAX_TOKENS,
         "timeout": DEFAULT_TIMEOUT,
+        "progressive_timeouts": PROGRESSIVE_TIMEOUTS,
+        "reasoning_efforts": REASONING_EFFORTS,
         "max_retries": MAX_RETRIES
     }

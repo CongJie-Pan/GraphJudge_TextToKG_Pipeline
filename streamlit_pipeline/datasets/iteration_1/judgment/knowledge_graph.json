@@ -1,0 +1,649 @@
+{
+  "nodes": [
+    {
+      "id": "三生石",
+      "label": "三生石",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "下世核定之所",
+      "label": "下世核定之所",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "仁清巷",
+      "label": "仁清巷",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "務農之人",
+      "label": "務農之人",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "十里街",
+      "label": "十里街",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "吳玉峰",
+      "label": "吳玉峰",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "大荒山",
+      "label": "大荒山",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "太虛幻境",
+      "label": "太虛幻境",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "姑蘇",
+      "label": "姑蘇",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "孔梅溪",
+      "label": "孔梅溪",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "宿緣所在",
+      "label": "宿緣所在",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "封氏",
+      "label": "封氏",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "封肅",
+      "label": "封肅",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "無材補天石",
+      "label": "無材補天石",
+      "size": 18,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "無稽崖",
+      "label": "無稽崖",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "甄士隱",
+      "label": "甄士隱",
+      "size": 22,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "甄家丫鬟",
+      "label": "甄家丫鬟",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "甄家僕役",
+      "label": "甄家僕役",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "甄費（甄氏）",
+      "label": "甄費（甄氏）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "石頭記",
+      "label": "石頭記",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "神瑛侍者",
+      "label": "神瑛侍者",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "空空道人",
+      "label": "空空道人",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "紅樓夢",
+      "label": "紅樓夢",
+      "size": 30,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "紅樓夢之主題之一",
+      "label": "紅樓夢之主題之一",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "絳珠仙子",
+      "label": "絳珠仙子",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "胡州",
+      "label": "胡州",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "英蓮",
+      "label": "英蓮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "英蓮失落後逃走",
+      "label": "英蓮失落後逃走",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "葫蘆廟",
+      "label": "葫蘆廟",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "西方靈河",
+      "label": "西方靈河",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "警幻仙子",
+      "label": "警幻仙子",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "警幻仙子宮",
+      "label": "警幻仙子宮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈雨村",
+      "label": "賈雨村",
+      "size": 18,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "赤瑕宮",
+      "label": "赤瑕宮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "通靈寶玉",
+      "label": "通靈寶玉",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "金陵十二釵",
+      "label": "金陵十二釵",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "閶門",
+      "label": "閶門",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "霍啟",
+      "label": "霍啟",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "青埂峰",
+      "label": "青埂峰",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "風塵",
+      "label": "風塵",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "風月寶鑒",
+      "label": "風月寶鑒",
+      "size": 12,
+      "color": "#45B7D1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "紅樓夢",
+      "target": "石頭記",
+      "label": "別名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "金陵十二釵",
+      "label": "別名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "石頭記",
+      "target": "紅樓夢",
+      "label": "別名",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "通靈寶玉",
+      "label": "關聯",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "太虛幻境",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "三生石",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "絳珠仙子",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "神瑛侍者",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "紅樓夢",
+      "target": "警幻仙子",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "通靈寶玉",
+      "target": "無材補天石",
+      "label": "來源",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "無材補天石",
+      "target": "青埂峰",
+      "label": "位於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "無稽崖",
+      "target": "大荒山",
+      "label": "位於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "無材補天石",
+      "target": "通靈寶玉",
+      "label": "被變為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "空空道人",
+      "target": "無材補天石",
+      "label": "見證",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "吳玉峰",
+      "target": "紅樓夢",
+      "label": "題名於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "孔梅溪",
+      "target": "風月寶鑒",
+      "label": "題名於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "警幻仙子宮",
+      "target": "下世核定之所",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "西方靈河",
+      "target": "宿緣所在",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "赤瑕宮",
+      "target": "宿緣所在",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "三生石",
+      "target": "宿緣所在",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "姑蘇",
+      "target": "閶門",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "十里街",
+      "target": "仁清巷",
+      "label": "包含",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "仁清巷",
+      "target": "葫蘆廟",
+      "label": "有",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄費（甄氏）",
+      "target": "甄士隱",
+      "label": "即",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄士隱",
+      "target": "封氏",
+      "label": "妻子",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄士隱",
+      "target": "英蓮",
+      "label": "女兒",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄士隱",
+      "target": "姑蘇",
+      "label": "居地",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "甄士隱",
+      "label": "鄰居",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "胡州",
+      "label": "原籍",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "甄家丫鬟",
+      "label": "與",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "甄士隱",
+      "label": "受助於",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "封氏",
+      "target": "封肅",
+      "label": "父親",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "封肅",
+      "target": "務農之人",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "霍啟",
+      "target": "甄家僕役",
+      "label": "職務",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "霍啟",
+      "target": "英蓮失落後逃走",
+      "label": "事件",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "風塵",
+      "target": "紅樓夢之主題之一",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    }
+  ],
+  "entities": [
+    "三生石",
+    "下世核定之所",
+    "仁清巷",
+    "務農之人",
+    "十里街",
+    "吳玉峰",
+    "大荒山",
+    "太虛幻境",
+    "姑蘇",
+    "孔梅溪",
+    "宿緣所在",
+    "封氏",
+    "封肅",
+    "無材補天石",
+    "無稽崖",
+    "甄士隱",
+    "甄家丫鬟",
+    "甄家僕役",
+    "甄費（甄氏）",
+    "石頭記",
+    "神瑛侍者",
+    "空空道人",
+    "紅樓夢",
+    "紅樓夢之主題之一",
+    "絳珠仙子",
+    "胡州",
+    "英蓮",
+    "英蓮失落後逃走",
+    "葫蘆廟",
+    "西方靈河",
+    "警幻仙子",
+    "警幻仙子宮",
+    "賈雨村",
+    "赤瑕宮",
+    "通靈寶玉",
+    "金陵十二釵",
+    "閶門",
+    "霍啟",
+    "青埂峰",
+    "風塵",
+    "風月寶鑒"
+  ],
+  "relationships": [
+    "紅樓夢 - 別名 - 石頭記",
+    "紅樓夢 - 別名 - 金陵十二釵",
+    "石頭記 - 別名 - 紅樓夢",
+    "紅樓夢 - 關聯 - 通靈寶玉",
+    "紅樓夢 - 包含 - 太虛幻境",
+    "紅樓夢 - 包含 - 三生石",
+    "紅樓夢 - 包含 - 絳珠仙子",
+    "紅樓夢 - 包含 - 神瑛侍者",
+    "紅樓夢 - 包含 - 警幻仙子",
+    "通靈寶玉 - 來源 - 無材補天石",
+    "無材補天石 - 位於 - 青埂峰",
+    "無稽崖 - 位於 - 大荒山",
+    "無材補天石 - 被變為 - 通靈寶玉",
+    "空空道人 - 見證 - 無材補天石",
+    "吳玉峰 - 題名於 - 紅樓夢",
+    "孔梅溪 - 題名於 - 風月寶鑒",
+    "警幻仙子宮 - 為 - 下世核定之所",
+    "西方靈河 - 為 - 宿緣所在",
+    "赤瑕宮 - 為 - 宿緣所在",
+    "三生石 - 為 - 宿緣所在",
+    "姑蘇 - 包含 - 閶門",
+    "十里街 - 包含 - 仁清巷",
+    "仁清巷 - 有 - 葫蘆廟",
+    "甄費（甄氏） - 即 - 甄士隱",
+    "甄士隱 - 妻子 - 封氏",
+    "甄士隱 - 女兒 - 英蓮",
+    "甄士隱 - 居地 - 姑蘇",
+    "賈雨村 - 鄰居 - 甄士隱",
+    "賈雨村 - 原籍 - 胡州",
+    "賈雨村 - 與 - 甄家丫鬟",
+    "賈雨村 - 受助於 - 甄士隱",
+    "封氏 - 父親 - 封肅",
+    "封肅 - 為 - 務農之人",
+    "霍啟 - 職務 - 甄家僕役",
+    "霍啟 - 事件 - 英蓮失落後逃走",
+    "風塵 - 為 - 紅樓夢之主題之一"
+  ],
+  "report": {
+    "summary": {
+      "entities": 41,
+      "relationships": 36,
+      "total_evaluated": 47,
+      "approved_triples": 36,
+      "rejected_triples": 11,
+      "average_confidence": 0.8,
+      "processing_timestamp": "2025-09-18T11:58:41.195518"
+    },
+    "processing_summary": {
+      "total_evaluated": 47,
+      "approved_extracted": 36,
+      "approval_rate": 76.6
+    },
+    "quality_metrics": {
+      "entity_count": 41,
+      "relationship_count": 36,
+      "data_source": "Streamlit GraphJudge pipeline",
+      "filter_criteria": "Only approved relationships included"
+    }
+  },
+  "metadata": {
+    "source_type": "streamlit_pipeline",
+    "conversion_timestamp": "2025-09-18T11:58:41.195518",
+    "converter_version": "1.0.0",
+    "visualization_ready": true
+  }
+}

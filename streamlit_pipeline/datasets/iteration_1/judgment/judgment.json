@@ -1,0 +1,532 @@
+{
+  "judged_triples": [
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "別名",
+        "object": "石頭記",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "別名",
+        "object": "金陵十二釵",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "石頭記",
+        "predicate": "別名",
+        "object": "紅樓夢",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "金陵十二釵",
+        "predicate": "別名",
+        "object": "紅樓夢",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "關聯",
+        "object": "通靈寶玉",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "包含",
+        "object": "太虛幻境",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "包含",
+        "object": "三生石",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "包含",
+        "object": "絳珠仙子",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "包含",
+        "object": "神瑛侍者",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "紅樓夢",
+        "predicate": "包含",
+        "object": "警幻仙子",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "通靈寶玉",
+        "predicate": "來源",
+        "object": "無材補天石",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "無材補天石",
+        "predicate": "位於",
+        "object": "青埂峰",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "青埂峰",
+        "predicate": "位於",
+        "object": "無稽崖",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "無稽崖",
+        "predicate": "位於",
+        "object": "大荒山",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "無材補天石",
+        "predicate": "被變為",
+        "object": "通靈寶玉",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "空空道人",
+        "predicate": "見證",
+        "object": "無材補天石",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "空空道人",
+        "predicate": "改名為",
+        "object": "情僧",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "情僧",
+        "predicate": "著錄",
+        "object": "石頭記",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "曹雪芹",
+        "predicate": "編訂",
+        "object": "金陵十二釵",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "脂硯齋",
+        "predicate": "題名於",
+        "object": "石頭記",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "吳玉峰",
+        "predicate": "題名於",
+        "object": "紅樓夢",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "孔梅溪",
+        "predicate": "題名於",
+        "object": "風月寶鑒",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "太虛幻境",
+        "predicate": "為",
+        "object": "紅樓夢的緣起地",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "警幻仙子",
+        "predicate": "所屬",
+        "object": "警幻仙子宮",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "警幻仙子宮",
+        "predicate": "為",
+        "object": "下世核定之所",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "西方靈河",
+        "predicate": "為",
+        "object": "宿緣所在",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "赤瑕宮",
+        "predicate": "為",
+        "object": "宿緣所在",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "三生石",
+        "predicate": "為",
+        "object": "宿緣所在",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "姑蘇",
+        "predicate": "包含",
+        "object": "閶門",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "閶門",
+        "predicate": "包含",
+        "object": "十里街",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "十里街",
+        "predicate": "包含",
+        "object": "仁清巷",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "仁清巷",
+        "predicate": "有",
+        "object": "葫蘆廟",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "葫蘆廟",
+        "predicate": "住有",
+        "object": "甄費（甄氏）",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "甄費（甄氏）",
+        "predicate": "即",
+        "object": "甄士隱",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "甄士隱",
+        "predicate": "妻子",
+        "object": "封氏",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "甄士隱",
+        "predicate": "女兒",
+        "object": "英蓮",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "英蓮",
+        "predicate": "看護者",
+        "object": "奶母",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "甄士隱",
+        "predicate": "居地",
+        "object": "姑蘇",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "鄰居",
+        "object": "甄士隱",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "原籍",
+        "object": "胡州",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "與",
+        "object": "甄家丫鬟",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "受助於",
+        "object": "甄士隱",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "封氏",
+        "predicate": "父親",
+        "object": "封肅",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "封肅",
+        "predicate": "為",
+        "object": "務農之人",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "霍啟",
+        "predicate": "職務",
+        "object": "甄家僕役",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "霍啟",
+        "predicate": "事件",
+        "object": "英蓮失落後逃走",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "風塵",
+        "predicate": "為",
+        "object": "紅樓夢之主題之一",
+        "source_text": "紅樓夢者，書名也。又有別名石頭記、金陵十二釵。脂硯齋評本仍稱石頭記；吳玉峰題紅樓夢；東魯孔梅溪題風月寶鑒。作者以通靈、夢幻為始，故首回名「甄士隱夢幻識通靈，賈雨村風塵懷閨秀」。\n\n關於起源：\n大荒山之..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    }
+  ],
+  "explanations": null,
+  "success": true,
+  "processing_time": 566.9460160732269,
+  "error": null,
+  "summary": {
+    "total_triples": 47,
+    "approved_triples": 36,
+    "rejected_triples": 11,
+    "approval_rate": 0.7659574468085106
+  },
+  "timestamp": "2025-09-18T11:58:41.152879"
+}

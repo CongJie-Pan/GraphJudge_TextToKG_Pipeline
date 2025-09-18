@@ -39,9 +39,9 @@ class TestConstants:
     
     def test_parameter_constants(self):
         """Test parameter constants."""
-        assert OPENAI_TEMPERATURE == 1.0  # GPT-5 models only support temperature=1
-        assert OPENAI_MAX_TOKENS == 8000  # Increased for GPT-5 reasoning models
-        assert DEFAULT_TIMEOUT == 60
+        assert OPENAI_TEMPERATURE == 0.0  # Updated for deterministic structured output
+        assert OPENAI_MAX_TOKENS == 12000  # Increased for reasoning models with complex output
+        assert DEFAULT_TIMEOUT == 180  # Increased for GPT-5-mini reasoning timeout issues
         assert MAX_RETRIES == 3
 
 
@@ -252,7 +252,8 @@ class TestModelConfiguration:
         # Check all required keys are present
         required_keys = [
             "entity_model", "triple_model", "judgment_model",
-            "temperature", "max_tokens", "timeout", "max_retries"
+            "temperature", "max_tokens", "timeout", "max_retries",
+            "progressive_timeouts", "reasoning_efforts"
         ]
         
         for key in required_keys:
@@ -266,6 +267,10 @@ class TestModelConfiguration:
         assert config["max_tokens"] == OPENAI_MAX_TOKENS
         assert config["timeout"] == DEFAULT_TIMEOUT
         assert config["max_retries"] == MAX_RETRIES
+
+        # Check new progressive timeout configuration
+        assert config["progressive_timeouts"] == [120, 180, 240]
+        assert config["reasoning_efforts"] == ["minimal", "medium", None]
     
     def test_get_model_config_types(self):
         """Test that model configuration values have correct types."""

@@ -351,7 +351,7 @@ Return only the JSON in the specified format.
 
 ---
 
-To do :
+ok - To do :
 fix the bug below , when the ectd finished:
 
 ```
@@ -410,3 +410,11 @@ streamlit ui :
 Pipeline failed at stage: triple_generation
 
 Error: No triples were generated from the provided entities and text
+
+---
+
+### 2025/9/18
+
+- to do 
+1) add the streamlit ui language selection in the streamlit ui : english/繁體中文/簡體中文
+2) ensure the explanination function worked in the streamlit_pipeline.

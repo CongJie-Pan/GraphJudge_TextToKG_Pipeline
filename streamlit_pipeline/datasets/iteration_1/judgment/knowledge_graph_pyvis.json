@@ -1,0 +1,909 @@
+{
+  "nodes": [
+    {
+      "id": "三生石",
+      "label": "三生石",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "三生石\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "下世核定之所",
+      "label": "下世核定之所",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "下世核定之所\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "仁清巷",
+      "label": "仁清巷",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "仁清巷\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "務農之人",
+      "label": "務農之人",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "務農之人\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "十里街",
+      "label": "十里街",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "十里街\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "吳玉峰",
+      "label": "吳玉峰",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "吳玉峰\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "大荒山",
+      "label": "大荒山",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "大荒山\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "太虛幻境",
+      "label": "太虛幻境",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "太虛幻境\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "姑蘇",
+      "label": "姑蘇",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "姑蘇\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "孔梅溪",
+      "label": "孔梅溪",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "孔梅溪\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "宿緣所在",
+      "label": "宿緣所在",
+      "color": "#d62728",
+      "size": 24,
+      "title": "宿緣所在\n类型: 概念\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "封氏",
+      "label": "封氏",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "封氏\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "封肅",
+      "label": "封肅",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "封肅\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "無材補天石",
+      "label": "無材補天石",
+      "color": "#1f77b4",
+      "size": 27,
+      "title": "無材補天石\n类型: 其他\n连接数: 4",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "無稽崖",
+      "label": "無稽崖",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "無稽崖\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "甄士隱",
+      "label": "甄士隱",
+      "color": "#1f77b4",
+      "size": 33,
+      "title": "甄士隱\n类型: 其他\n连接数: 6",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "甄家丫鬟",
+      "label": "甄家丫鬟",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "甄家丫鬟\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "甄家僕役",
+      "label": "甄家僕役",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "甄家僕役\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "甄費（甄氏）",
+      "label": "甄費（甄氏）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "甄費（甄氏）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "石頭記",
+      "label": "石頭記",
+      "color": "#9467bd",
+      "size": 21,
+      "title": "石頭記\n类型: 作品\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "神瑛侍者",
+      "label": "神瑛侍者",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "神瑛侍者\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "空空道人",
+      "label": "空空道人",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "空空道人\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "紅樓夢",
+      "label": "紅樓夢",
+      "color": "#9467bd",
+      "size": 45,
+      "title": "紅樓夢\n类型: 作品\n连接数: 10",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "紅樓夢之主題之一",
+      "label": "紅樓夢之主題之一",
+      "color": "#9467bd",
+      "size": 18,
+      "title": "紅樓夢之主題之一\n类型: 作品\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "絳珠仙子",
+      "label": "絳珠仙子",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "絳珠仙子\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "胡州",
+      "label": "胡州",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "胡州\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "英蓮",
+      "label": "英蓮",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "英蓮\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "英蓮失落後逃走",
+      "label": "英蓮失落後逃走",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "英蓮失落後逃走\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "葫蘆廟",
+      "label": "葫蘆廟",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "葫蘆廟\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "西方靈河",
+      "label": "西方靈河",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "西方靈河\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "警幻仙子",
+      "label": "警幻仙子",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "警幻仙子\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "警幻仙子宮",
+      "label": "警幻仙子宮",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "警幻仙子宮\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈雨村",
+      "label": "賈雨村",
+      "color": "#ff7f0e",
+      "size": 27,
+      "title": "賈雨村\n类型: 人物\n连接数: 4",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "赤瑕宮",
+      "label": "赤瑕宮",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "赤瑕宮\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "通靈寶玉",
+      "label": "通靈寶玉",
+      "color": "#ff7f0e",
+      "size": 24,
+      "title": "通靈寶玉\n类型: 人物\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "金陵十二釵",
+      "label": "金陵十二釵",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "金陵十二釵\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "閶門",
+      "label": "閶門",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "閶門\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "霍啟",
+      "label": "霍啟",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "霍啟\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "青埂峰",
+      "label": "青埂峰",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "青埂峰\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "風塵",
+      "label": "風塵",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "風塵\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "風月寶鑒",
+      "label": "風月寶鑒",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "風月寶鑒\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "紅樓夢",
+      "to": "石頭記",
+      "label": "別名",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 別名 → 石頭記\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "金陵十二釵",
+      "label": "別名",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 別名 → 金陵十二釵\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "石頭記",
+      "to": "紅樓夢",
+      "label": "別名",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "石頭記 → 別名 → 紅樓夢\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "通靈寶玉",
+      "label": "關聯",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 關聯 → 通靈寶玉\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "太虛幻境",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 包含 → 太虛幻境\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "三生石",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 包含 → 三生石\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "絳珠仙子",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 包含 → 絳珠仙子\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "神瑛侍者",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 包含 → 神瑛侍者\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "紅樓夢",
+      "to": "警幻仙子",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "紅樓夢 → 包含 → 警幻仙子\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "通靈寶玉",
+      "to": "無材補天石",
+      "label": "來源",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "通靈寶玉 → 來源 → 無材補天石\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "無材補天石",
+      "to": "青埂峰",
+      "label": "位於",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "無材補天石 → 位於 → 青埂峰\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "無稽崖",
+      "to": "大荒山",
+      "label": "位於",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "無稽崖 → 位於 → 大荒山\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "無材補天石",
+      "to": "通靈寶玉",
+      "label": "被變為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "無材補天石 → 被變為 → 通靈寶玉\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "空空道人",
+      "to": "無材補天石",
+      "label": "見證",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "空空道人 → 見證 → 無材補天石\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "吳玉峰",
+      "to": "紅樓夢",
+      "label": "題名於",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "吳玉峰 → 題名於 → 紅樓夢\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "孔梅溪",
+      "to": "風月寶鑒",
+      "label": "題名於",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "孔梅溪 → 題名於 → 風月寶鑒\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙子宮",
+      "to": "下世核定之所",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "警幻仙子宮 → 為 → 下世核定之所\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "西方靈河",
+      "to": "宿緣所在",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "西方靈河 → 為 → 宿緣所在\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "赤瑕宮",
+      "to": "宿緣所在",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "赤瑕宮 → 為 → 宿緣所在\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "三生石",
+      "to": "宿緣所在",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "三生石 → 為 → 宿緣所在\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "姑蘇",
+      "to": "閶門",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "姑蘇 → 包含 → 閶門\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "十里街",
+      "to": "仁清巷",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "十里街 → 包含 → 仁清巷\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "仁清巷",
+      "to": "葫蘆廟",
+      "label": "有",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "仁清巷 → 有 → 葫蘆廟\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "甄費（甄氏）",
+      "to": "甄士隱",
+      "label": "即",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "甄費（甄氏） → 即 → 甄士隱\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "甄士隱",
+      "to": "封氏",
+      "label": "妻子",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "甄士隱 → 妻子 → 封氏\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "甄士隱",
+      "to": "英蓮",
+      "label": "女兒",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "甄士隱 → 女兒 → 英蓮\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "甄士隱",
+      "to": "姑蘇",
+      "label": "居地",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "甄士隱 → 居地 → 姑蘇\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "甄士隱",
+      "label": "鄰居",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈雨村 → 鄰居 → 甄士隱\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "胡州",
+      "label": "原籍",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈雨村 → 原籍 → 胡州\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "甄家丫鬟",
+      "label": "與",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈雨村 → 與 → 甄家丫鬟\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "甄士隱",
+      "label": "受助於",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈雨村 → 受助於 → 甄士隱\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "封氏",
+      "to": "封肅",
+      "label": "父親",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "封氏 → 父親 → 封肅\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "封肅",
+      "to": "務農之人",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "封肅 → 為 → 務農之人\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "霍啟",
+      "to": "甄家僕役",
+      "label": "職務",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "霍啟 → 職務 → 甄家僕役\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "霍啟",
+      "to": "英蓮失落後逃走",
+      "label": "事件",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "霍啟 → 事件 → 英蓮失落後逃走\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "風塵",
+      "to": "紅樓夢之主題之一",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "風塵 → 為 → 紅樓夢之主題之一\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    }
+  ],
+  "physics": {
+    "enabled": true,
+    "stabilization": {
+      "iterations": 100
+    },
+    "barnesHut": {
+      "gravitationalConstant": -2000,
+      "centralGravity": 0.3,
+      "springLength": 95,
+      "springConstant": 0.04,
+      "damping": 0.09
+    }
+  },
+  "metadata": {
+    "format": "pyvis",
+    "nodes_count": 41,
+    "edges_count": 36,
+    "conversion_timestamp": "2025-09-18T11:58:41.195518",
+    "physics_enabled": true
+  }
+}
