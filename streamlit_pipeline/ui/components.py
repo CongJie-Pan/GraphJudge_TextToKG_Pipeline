@@ -372,15 +372,15 @@ def _display_triple_error_analysis_content(triple_result: TripleResult):
 
 
 def _display_judgment_explanations_content(triples, judgment_result):
-    """Helper function to display judgment explanations content optimized for Traditional Chinese."""
+    """Helper function to display judgment explanations content with English labels."""
     for i, (triple, explanation) in enumerate(zip(triples, judgment_result.explanations)):
         if explanation:
-            judgment_status = "✅ 通過" if judgment_result.judgments[i] else "❌ 拒絕"
+            judgment_status = "✅ Approved" if judgment_result.judgments[i] else "❌ Rejected"
             status_icon = "✅" if judgment_result.judgments[i] else "❌"
 
-            # Create a concise header for the expander with better Traditional Chinese support
+            # Create a concise header for the expander
             triple_summary = f"{triple.subject} - {triple.predicate} - {triple.object}"
-            if len(triple_summary) > 45:  # Shorter limit for Chinese characters
+            if len(triple_summary) > 45:
                 triple_summary = triple_summary[:42] + "..."
 
             expander_header = f"{status_icon} {i+1}. {triple_summary}"
@@ -390,15 +390,15 @@ def _display_judgment_explanations_content(triples, judgment_result):
                 # Display full triple information with enhanced formatting
                 col1, col2 = st.columns([3, 1])
                 with col1:
-                    st.markdown(f"**完整三元組：** {triple.subject} - {triple.predicate} - {triple.object}")
+                    st.markdown(f"**Complete Triple:** {triple.subject} - {triple.predicate} - {triple.object}")
                 with col2:
-                    st.markdown(f"**狀態：** {judgment_status}")
+                    st.markdown(f"**Status:** {judgment_status}")
 
-                # Display confidence with Chinese-friendly formatting
+                # Display confidence with formatting
                 if judgment_result.confidence and i < len(judgment_result.confidence):
                     confidence = judgment_result.confidence[i]
                     confidence_percent = confidence * 100
-                    st.markdown(f"**置信度：** {confidence:.3f} ({confidence_percent:.1f}%)")
+                    st.markdown(f"**Confidence:** {confidence:.3f} ({confidence_percent:.1f}%)")
 
                 # Display evidence sources if available
                 if hasattr(judgment_result, 'metadata') and judgment_result.metadata:
@@ -409,17 +409,17 @@ def _display_judgment_explanations_content(triples, judgment_result):
                             evidence_sources = explanation_obj['evidence_sources']
 
                     if evidence_sources:
-                        # Translate evidence sources to Traditional Chinese
+                        # Translate evidence sources to English
                         source_translations = {
-                            'historical_records': '歷史記錄',
-                            'literary_works': '文學作品',
-                            'general_knowledge': '一般常識',
-                            'domain_expertise': '專業領域'
+                            'historical_records': 'Historical Records',
+                            'literary_works': 'Literary Works',
+                            'general_knowledge': 'General Knowledge',
+                            'domain_expertise': 'Domain Expertise'
                         }
                         translated_sources = [source_translations.get(src, src) for src in evidence_sources]
-                        st.markdown(f"**參考來源：** {', '.join(translated_sources)}")
+                        st.markdown(f"**Reference Sources:** {', '.join(translated_sources)}")
 
-                st.markdown("**AI判斷說明：**")
+                st.markdown("**AI Judgment Explanation:**")
 
                 # Extract and format Traditional Chinese reasoning
                 reasoning_text = ""
@@ -435,11 +435,11 @@ def _display_judgment_explanations_content(triples, judgment_result):
                     # Remove any structural formatting from the response parsing
                     cleaned_reasoning = reasoning_text.strip()
 
-                    # Remove common English prefixes that might remain
+                    # Remove common prefixes that might remain
                     prefixes_to_remove = [
                         'Detailed Reasoning:',
                         'reasoning:',
-                        '詳細說明：',
+                        '詳細說明：',  # Keep for backward compatibility with existing data
                         'Error during processing:',
                         'Error parsing response:'
                     ]
@@ -476,7 +476,7 @@ def _display_judgment_explanations_content(triples, judgment_result):
                         # Fallback to display original text if parsing fails
                         st.markdown(cleaned_reasoning)
                 else:
-                    st.markdown("*無詳細說明*")
+                    st.markdown("*No detailed explanation*")
 
 
 def _display_pipeline_stage_details_content(pipeline_result):
@@ -653,15 +653,15 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         results_data = []
         for i, (triple, judgment, confidence) in enumerate(zip(triples, judgment_result.judgments, judgment_result.confidence or [0] * len(triples))):
             status_emoji = "✅" if judgment else "❌"
-            status_text = "通過" if judgment else "拒絕"
+            status_text = "Approved" if judgment else "Rejected"
 
             results_data.append({
                 "#": i + 1,
-                "狀態": f"{status_emoji} {status_text}",
-                "主語": triple.subject,
-                "關係": triple.predicate,
-                "賓語": triple.object,
-                "置信度": f"{confidence:.3f}" if confidence > 0 else "N/A"
+                "Status": f"{status_emoji} {status_text}",
+                "Subject": triple.subject,
+                "Relation": triple.predicate,
+                "Object": triple.object,
+                "Confidence": f"{confidence:.3f}" if confidence > 0 else "N/A"
             })
         
         df = pd.DataFrame(results_data)
@@ -670,45 +670,45 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         col1, col2 = st.columns(2)
         with col1:
             filter_option = st.selectbox(
-                "篩選顯示",
-                ["全部", "僅通過", "僅拒絕"],
+                "Filter Display",
+                ["All", "Approved Only", "Rejected Only"],
                 key="judgment_filter"
             )
         with col2:
             sort_by = st.selectbox(
-                "排序方式",
-                ["編號", "置信度", "狀態"],
+                "Sort By",
+                ["#", "Confidence", "Status"],
                 key="judgment_sort"
             )
         
         # Apply filters
         filtered_df = df.copy()
-        if filter_option == "僅通過":
-            filtered_df = filtered_df[filtered_df['狀態'].str.contains("通過")]
-        elif filter_option == "僅拒絕":
-            filtered_df = filtered_df[filtered_df['狀態'].str.contains("拒絕")]
+        if filter_option == "Approved Only":
+            filtered_df = filtered_df[filtered_df['Status'].str.contains("Approved")]
+        elif filter_option == "Rejected Only":
+            filtered_df = filtered_df[filtered_df['Status'].str.contains("Rejected")]
 
         # Apply sorting
-        if sort_by == "置信度":
+        if sort_by == "Confidence":
             # Convert confidence to numeric for sorting
-            filtered_df['Confidence_numeric'] = filtered_df['置信度'].apply(
+            filtered_df['Confidence_numeric'] = filtered_df['Confidence'].apply(
                 lambda x: float(x) if x != "N/A" else 0
             )
             filtered_df = filtered_df.sort_values('Confidence_numeric', ascending=False)
             filtered_df = filtered_df.drop('Confidence_numeric', axis=1)
-        elif sort_by == "狀態":
-            filtered_df = filtered_df.sort_values('狀態', ascending=True)
+        elif sort_by == "Status":
+            filtered_df = filtered_df.sort_values('Status', ascending=True)
 
-        st.markdown(f"### 📋 判斷結果詳情 ({len(filtered_df)} 項目)")
+        st.markdown(f"### 📋 Judgment Results Details ({len(filtered_df)} items)")
         st.dataframe(filtered_df, use_container_width=True, hide_index=True)
-        
+
         # Explanations if available
         if judgment_result.explanations and any(judgment_result.explanations):
             if show_expanders:
-                with st.expander("💭 判斷說明"):
+                with st.expander("💭 Judgment Explanations"):
                     _display_judgment_explanations_content(triples, judgment_result)
             else:
-                st.markdown("### 💭 判斷說明")
+                st.markdown("### 💭 Judgment Explanations")
                 _display_judgment_explanations_content(triples, judgment_result)
         
         # Visualization
