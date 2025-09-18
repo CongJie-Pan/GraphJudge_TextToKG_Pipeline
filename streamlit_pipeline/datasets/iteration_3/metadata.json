@@ -1,0 +1,35 @@
+{
+  "iteration_number": 3,
+  "created_at": "2025-09-18T16:43:53.930146",
+  "input_text": "第二回　賈夫人仙逝揚州城　冷子興演說榮國府\r\n\r\n詩云：\r\n\r\n一局輸贏料不真，香銷茶盡尚逡巡。\r\n欲知目下興衰兆，須問傍觀冷眼人。\r\n\r\n卻說封肅因聽見公差傳喚，忙出來陪笑啟問。那些人只嚷：「快請出甄爺來！」封肅忙陪笑道：「小人姓封，並不姓甄。只有當日小婿姓甄，今已出家一二年了，不知可是問他？」那些公人道：「我們也不知什麼『真』『假』，因奉太爺之命來問，他既是你女婿，便帶了你去親見太爺面稟，省得...",
+  "input_length": 6098,
+  "phases_completed": [
+    "ectd",
+    "triples",
+    "judgment",
+    "graph_visualization"
+  ],
+  "phase_data": {
+    "ectd": {
+      "entities_count": 44,
+      "completed_at": "2025-09-18T16:44:20.496716"
+    },
+    "triples": {
+      "triples_count": 75,
+      "completed_at": "2025-09-18T16:44:43.622821"
+    },
+    "judgment": {
+      "approved_triples": 61,
+      "total_triples": 75,
+      "approval_rate": 0.8133333333333334,
+      "completed_at": "2025-09-18T17:04:04.254293"
+    },
+    "graph_visualization": {
+      "nodes_count": 64,
+      "edges_count": 61,
+      "entities_count": 64,
+      "has_visualization_data": true,
+      "completed_at": "2025-09-18T17:04:04.335724"
+    }
+  }
+}

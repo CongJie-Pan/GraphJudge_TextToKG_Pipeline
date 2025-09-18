@@ -1,0 +1,1035 @@
+{
+  "nodes": [
+    {
+      "id": "世交",
+      "label": "世交",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "乖覺異常",
+      "label": "乖覺異常",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "五歲",
+      "label": "五歲",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "元春",
+      "label": "元春",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "冷子興",
+      "label": "冷子興",
+      "size": 24,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "古董行",
+      "label": "古董行",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "史侯之女",
+      "label": "史侯之女",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "史老太君",
+      "label": "史老太君",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "四十",
+      "label": "四十",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "外班",
+      "label": "外班",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "女（黛玉）",
+      "label": "女（黛玉）",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "如海",
+      "label": "如海",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "姑蘇",
+      "label": "姑蘇",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "嬌杏",
+      "label": "嬌杏",
+      "size": 20,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "富而好禮",
+      "label": "富而好禮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "寧國府",
+      "label": "寧國府",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "寶玉",
+      "label": "寶玉",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "封肅",
+      "label": "封肅",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "尋訪",
+      "label": "尋訪",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "府中新升太爺姓賈名化",
+      "label": "府中新升太爺姓賈名化",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "得主事銜而入部",
+      "label": "得主事銜而入部",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "惜春",
+      "label": "惜春",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "探春",
+      "label": "探春",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "探花",
+      "label": "探花",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "揚州城",
+      "label": "揚州城",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "文本所述地（含場景）",
+      "label": "文本所述地（含場景）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "文本記載",
+      "label": "文本記載",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "智通寺",
+      "label": "智通寺",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "曾襲列侯",
+      "label": "曾襲列侯",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "本府知府",
+      "label": "本府知府",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "林",
+      "label": "林",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "林如海",
+      "label": "林如海",
+      "size": 30,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "榮國府",
+      "label": "榮國府",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "海",
+      "label": "海",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "無子之憾",
+      "label": "無子之憾",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "爵門",
+      "label": "爵門",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "王氏",
+      "label": "王氏",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "甄家",
+      "label": "甄家",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "甄家娘子",
+      "label": "甄家娘子",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "維揚地面",
+      "label": "維揚地面",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "老僧",
+      "label": "老僧",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "該小學生之母",
+      "label": "該小學生之母",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈代化",
+      "label": "賈代化",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "賈代善",
+      "label": "賈代善",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "賈夫人",
+      "label": "賈夫人",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈府",
+      "label": "賈府",
+      "size": 18,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "賈政",
+      "label": "賈政",
+      "size": 18,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "賈敬",
+      "label": "賈敬",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈敷",
+      "label": "賈敷",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈氏",
+      "label": "賈氏",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈珍",
+      "label": "賈珍",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈珠",
+      "label": "賈珠",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈蓉",
+      "label": "賈蓉",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "迎春",
+      "label": "迎春",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "郭外山水",
+      "label": "郭外山水",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "都中",
+      "label": "都中",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "金陵世家",
+      "label": "金陵世家",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "金陵省體仁院",
+      "label": "金陵省體仁院",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "銀二封、四疋錦緞",
+      "label": "銀二封、四疋錦緞",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "雨村",
+      "label": "雨村",
+      "size": 30,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "雨村家",
+      "label": "雨村家",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "館中",
+      "label": "館中",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "鹽政點為林如海",
+      "label": "鹽政點為林如海",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "黛玉",
+      "label": "黛玉",
+      "size": 16,
+      "color": "#4ECDC4"
+    }
+  ],
+  "edges": [
+    {
+      "source": "賈夫人",
+      "target": "揚州城",
+      "label": "逝世地點",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "冷子興",
+      "target": "都中",
+      "label": "所在",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "冷子興",
+      "target": "古董行",
+      "label": "職業",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "冷子興",
+      "target": "雨村",
+      "label": "相識",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "榮國府",
+      "target": "文本所述地（含場景）",
+      "label": "有事於",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "封肅",
+      "target": "府中新升太爺姓賈名化",
+      "label": "報告",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "封肅",
+      "target": "尋訪",
+      "label": "遣人行為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "封肅",
+      "target": "嬌杏",
+      "label": "送人",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄家娘子",
+      "target": "銀二封、四疋錦緞",
+      "label": "受贈",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "嬌杏",
+      "target": "爵門",
+      "label": "被夜送入",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "嬌杏",
+      "target": "雨村",
+      "label": "曾為所寵",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "嬌杏",
+      "target": "雨村",
+      "label": "生子於",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "嬌杏",
+      "target": "雨村家",
+      "label": "成為正室於",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "雨村",
+      "target": "外班",
+      "label": "選入",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "本府知府",
+      "label": "歷任",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "維揚地面",
+      "label": "遊至",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "雨村",
+      "target": "鹽政點為林如海",
+      "label": "聞訊",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "林如海",
+      "target": "林",
+      "label": "姓氏",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "林如海",
+      "target": "海",
+      "label": "名字",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林如海",
+      "target": "如海",
+      "label": "表字",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "林如海",
+      "target": "探花",
+      "label": "前科",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "林如海",
+      "target": "姑蘇",
+      "label": "籍貫",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林如海",
+      "target": "曾襲列侯",
+      "label": "先世",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "林如海",
+      "target": "四十",
+      "label": "年齡",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林如海",
+      "target": "黛玉",
+      "label": "有一女",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "黛玉",
+      "target": "賈氏",
+      "label": "母親",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "黛玉",
+      "target": "五歲",
+      "label": "年齡",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林如海",
+      "target": "女（黛玉）",
+      "label": "愛護對象",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林如海",
+      "target": "女（黛玉）",
+      "label": "欲教導",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "林如海",
+      "target": "無子之憾",
+      "label": "欲擬養子以解",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "館中",
+      "label": "宿於",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "該小學生之母",
+      "target": "文本記載",
+      "label": "病卒",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "郭外山水",
+      "label": "遊賞地",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "智通寺",
+      "label": "入寺",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "老僧",
+      "label": "遇到",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "雨村",
+      "target": "冷子興",
+      "label": "偶遇",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "冷子興",
+      "target": "金陵世家",
+      "label": "談及",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "冷子興",
+      "target": "榮國府",
+      "label": "述說",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "冷子興",
+      "target": "寧國府",
+      "label": "述說",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "寧國府",
+      "target": "賈代化",
+      "label": "曾有",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈代化",
+      "target": "賈敷",
+      "label": "子",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈代化",
+      "target": "賈敬",
+      "label": "子",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "寧國府",
+      "target": "賈珍",
+      "label": "另有",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈珍",
+      "target": "賈蓉",
+      "label": "子",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "榮國府",
+      "target": "賈代善",
+      "label": "自榮公後長子",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈代善",
+      "target": "史侯之女",
+      "label": "娶",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈代善",
+      "target": "賈政",
+      "label": "子",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "賈政",
+      "target": "得主事銜而入部",
+      "label": "受恩遇",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈政",
+      "target": "王氏",
+      "label": "妻子",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "王氏",
+      "target": "賈珠",
+      "label": "子",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈珠",
+      "target": "文本記載",
+      "label": "夭折",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈政",
+      "target": "寶玉",
+      "label": "子",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "史老太君",
+      "target": "寶玉",
+      "label": "偏愛",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "寶玉",
+      "target": "乖覺異常",
+      "label": "性情",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈府",
+      "target": "元春",
+      "label": "有女",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "賈府",
+      "target": "迎春",
+      "label": "有女",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈府",
+      "target": "探春",
+      "label": "有女",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈府",
+      "target": "惜春",
+      "label": "有女",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "甄家",
+      "target": "世交",
+      "label": "關係",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "甄家",
+      "target": "富而好禮",
+      "label": "性質",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "金陵省體仁院",
+      "target": "甄家",
+      "label": "與",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    }
+  ],
+  "entities": [
+    "世交",
+    "乖覺異常",
+    "五歲",
+    "元春",
+    "冷子興",
+    "古董行",
+    "史侯之女",
+    "史老太君",
+    "四十",
+    "外班",
+    "女（黛玉）",
+    "如海",
+    "姑蘇",
+    "嬌杏",
+    "富而好禮",
+    "寧國府",
+    "寶玉",
+    "封肅",
+    "尋訪",
+    "府中新升太爺姓賈名化",
+    "得主事銜而入部",
+    "惜春",
+    "探春",
+    "探花",
+    "揚州城",
+    "文本所述地（含場景）",
+    "文本記載",
+    "智通寺",
+    "曾襲列侯",
+    "本府知府",
+    "林",
+    "林如海",
+    "榮國府",
+    "海",
+    "無子之憾",
+    "爵門",
+    "王氏",
+    "甄家",
+    "甄家娘子",
+    "維揚地面",
+    "老僧",
+    "該小學生之母",
+    "賈代化",
+    "賈代善",
+    "賈夫人",
+    "賈府",
+    "賈政",
+    "賈敬",
+    "賈敷",
+    "賈氏",
+    "賈珍",
+    "賈珠",
+    "賈蓉",
+    "迎春",
+    "郭外山水",
+    "都中",
+    "金陵世家",
+    "金陵省體仁院",
+    "銀二封、四疋錦緞",
+    "雨村",
+    "雨村家",
+    "館中",
+    "鹽政點為林如海",
+    "黛玉"
+  ],
+  "relationships": [
+    "賈夫人 - 逝世地點 - 揚州城",
+    "冷子興 - 所在 - 都中",
+    "冷子興 - 職業 - 古董行",
+    "冷子興 - 相識 - 雨村",
+    "榮國府 - 有事於 - 文本所述地（含場景）",
+    "封肅 - 報告 - 府中新升太爺姓賈名化",
+    "封肅 - 遣人行為 - 尋訪",
+    "封肅 - 送人 - 嬌杏",
+    "甄家娘子 - 受贈 - 銀二封、四疋錦緞",
+    "嬌杏 - 被夜送入 - 爵門",
+    "嬌杏 - 曾為所寵 - 雨村",
+    "嬌杏 - 生子於 - 雨村",
+    "嬌杏 - 成為正室於 - 雨村家",
+    "雨村 - 選入 - 外班",
+    "雨村 - 歷任 - 本府知府",
+    "雨村 - 遊至 - 維揚地面",
+    "雨村 - 聞訊 - 鹽政點為林如海",
+    "林如海 - 姓氏 - 林",
+    "林如海 - 名字 - 海",
+    "林如海 - 表字 - 如海",
+    "林如海 - 前科 - 探花",
+    "林如海 - 籍貫 - 姑蘇",
+    "林如海 - 先世 - 曾襲列侯",
+    "林如海 - 年齡 - 四十",
+    "林如海 - 有一女 - 黛玉",
+    "黛玉 - 母親 - 賈氏",
+    "黛玉 - 年齡 - 五歲",
+    "林如海 - 愛護對象 - 女（黛玉）",
+    "林如海 - 欲教導 - 女（黛玉）",
+    "林如海 - 欲擬養子以解 - 無子之憾",
+    "雨村 - 宿於 - 館中",
+    "該小學生之母 - 病卒 - 文本記載",
+    "雨村 - 遊賞地 - 郭外山水",
+    "雨村 - 入寺 - 智通寺",
+    "雨村 - 遇到 - 老僧",
+    "雨村 - 偶遇 - 冷子興",
+    "冷子興 - 談及 - 金陵世家",
+    "冷子興 - 述說 - 榮國府",
+    "冷子興 - 述說 - 寧國府",
+    "寧國府 - 曾有 - 賈代化",
+    "賈代化 - 子 - 賈敷",
+    "賈代化 - 子 - 賈敬",
+    "寧國府 - 另有 - 賈珍",
+    "賈珍 - 子 - 賈蓉",
+    "榮國府 - 自榮公後長子 - 賈代善",
+    "賈代善 - 娶 - 史侯之女",
+    "賈代善 - 子 - 賈政",
+    "賈政 - 受恩遇 - 得主事銜而入部",
+    "賈政 - 妻子 - 王氏",
+    "王氏 - 子 - 賈珠",
+    "賈珠 - 夭折 - 文本記載",
+    "賈政 - 子 - 寶玉",
+    "史老太君 - 偏愛 - 寶玉",
+    "寶玉 - 性情 - 乖覺異常",
+    "賈府 - 有女 - 元春",
+    "賈府 - 有女 - 迎春",
+    "賈府 - 有女 - 探春",
+    "賈府 - 有女 - 惜春",
+    "甄家 - 關係 - 世交",
+    "甄家 - 性質 - 富而好禮",
+    "金陵省體仁院 - 與 - 甄家"
+  ],
+  "report": {
+    "summary": {
+      "entities": 64,
+      "relationships": 61,
+      "total_evaluated": 75,
+      "approved_triples": 61,
+      "rejected_triples": 14,
+      "average_confidence": 0.887,
+      "processing_timestamp": "2025-09-18T17:04:04.299843"
+    },
+    "processing_summary": {
+      "total_evaluated": 75,
+      "approved_extracted": 61,
+      "approval_rate": 81.33
+    },
+    "quality_metrics": {
+      "entity_count": 64,
+      "relationship_count": 61,
+      "data_source": "Streamlit GraphJudge pipeline",
+      "filter_criteria": "Only approved relationships included"
+    }
+  },
+  "metadata": {
+    "source_type": "streamlit_pipeline",
+    "conversion_timestamp": "2025-09-18T17:04:04.299843",
+    "converter_version": "1.0.0",
+    "visualization_ready": true
+  }
+}

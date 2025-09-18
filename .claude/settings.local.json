@@ -14,7 +14,8 @@
       "Bash(claude mcp)",
       "Bash(claude mcp:*)",
       "Bash(uvx:*)",
-      "mcp__serena"   
+      "mcp__serena",
+      "Bash(PYTHONPATH=. python -c \"\nfrom ui.components import _display_judgment_explanations_content\nprint(''✅ UI components import successful'')\n\")"
     ]
   },
   "outputStyle": "default"

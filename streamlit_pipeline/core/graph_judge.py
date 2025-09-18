@@ -520,40 +520,38 @@ Please answer only "Yes" or "No":"""
     
     def _create_explainable_prompt(self, instruction: str) -> str:
         """
-        Create specialized prompt for explainable graph judgment.
-        Based on the original _create_explainable_judgment_prompt method.
-        
+        Create specialized prompt for explainable graph judgment with Traditional Chinese output.
+        Modified to request exactly 2 sentences in Traditional Chinese with embedded references.
+
         Args:
             instruction: The judgment instruction
-            
+
         Returns:
-            Enhanced prompt for detailed reasoning
+            Enhanced prompt for Traditional Chinese detailed reasoning
         """
         # Extract triple from instruction format
         triple_part = instruction.replace("Is this true: ", "").replace(" ?", "")
-        
-        prompt = f"""You are a knowledge graph validation expert. Please analyze the following triple statement and provide a structured judgment result.
 
-Triple to evaluate: {triple_part}
+        prompt = f"""您是知識圖譜驗證專家，請分析以下三元組陳述並提供結構化判斷結果。
 
-Please provide a complete analysis in the following format:
+待評估三元組：{triple_part}
 
-1. Judgment: [Answer only "Yes" or "No"]
+請嚴格按照以下格式提供分析：
 
-2. Confidence: [A number between 0.0 and 1.0 indicating your certainty level]
+1. Judgment: [只回答 "Yes" 或 "No"]
 
-3. Detailed Reasoning: [Explain your judgment, including:
-   - Syntactic correctness analysis
-   - Factual accuracy assessment  
-   - Relevant background knowledge or evidence
-   - For 《紅樓夢》(Dream of the Red Chamber) content, refer to original text]
+2. Confidence: [0.0到1.0之間的數字，表示您的確定程度]
 
-4. Evidence Sources: [List the types of knowledge used, such as: historical_records, literary_works, general_knowledge, domain_expertise]
+3. Detailed Reasoning: [用繁體中文寫出恰好兩句話的詳細說明，每句話中必須包含具體的參考來源。對於《紅樓夢》相關內容，請引用原文。格式要求：
+   - 第一句：分析三元組的正確性並說明主要依據來源
+   - 第二句：提供更深入的解釋或相關背景知識及其來源]
 
-5. Error Type (if judgment is "No"): [Specify error type: factual_error, syntactic_error, relationship_error, or other]
+4. Evidence Sources: [列出使用的知識類型，例如：historical_records, literary_works, general_knowledge, domain_expertise]
 
-Please format your response clearly with numbered sections."""
-        
+5. Error Type (如果判斷為 "No"): [指定錯誤類型：factual_error, syntactic_error, relationship_error, 或 other]
+
+請清楚地按編號格式回應，Detailed Reasoning部分必須嚴格遵守兩句話的限制。"""
+
         return prompt
     
     def _parse_binary_response(self, response: str) -> str:
@@ -616,65 +614,108 @@ Please format your response clearly with numbered sections."""
     
     def _parse_explainable_response(self, response: str, start_time: float) -> ExplainableJudgment:
         """
-        Parse API response to extract detailed explainable judgment.
-        Simplified version of the original _parse_explainable_response method.
-        
+        Parse API response to extract detailed explainable judgment with Traditional Chinese support.
+        Enhanced to handle Traditional Chinese text and extract references from explanations.
+
         Args:
             response: Raw response from Perplexity API
             start_time: Start time for processing time calculation
-            
+
         Returns:
-            ExplainableJudgment with detailed analysis
+            ExplainableJudgment with detailed Traditional Chinese analysis
         """
         processing_time = time.time() - start_time
-        
+
         if not response:
             return ExplainableJudgment(
                 judgment="No",
                 confidence=0.0,
-                reasoning="Empty response from API",
+                reasoning="API回應為空",
                 evidence_sources=[],
                 alternative_suggestions=[],
                 error_type="empty_response",
                 processing_time=processing_time
             )
-        
+
         response_text = str(response).strip()
-        
+
         try:
-            # Extract judgment (simplified parsing)
+            # Extract judgment (works for both English and Chinese responses)
             judgment = self._parse_binary_response(response_text)
-            
-            # Extract confidence (look for decimal numbers)
+
+            # Extract confidence (look for decimal numbers, handle Chinese context)
             confidence_match = re.search(r'confidence[:\s]*([0-9]*\.?[0-9]+)', response_text, re.IGNORECASE)
+            if not confidence_match:
+                # Also check for Chinese format
+                confidence_match = re.search(r'確定程度[：:]\s*([0-9]*\.?[0-9]+)', response_text)
             confidence = float(confidence_match.group(1)) if confidence_match else 0.75
             confidence = max(0.0, min(1.0, confidence))  # Clamp to [0,1]
-            
-            # Extract reasoning (look for reasoning section or use full response)
-            reasoning_match = re.search(r'reasoning[:\s]*(.+?)(?=\d\.|evidence|$)', response_text, re.IGNORECASE | re.DOTALL)
-            reasoning = reasoning_match.group(1).strip() if reasoning_match else response_text[:500]
-            
-            # Extract evidence sources (simplified)
+
+            # Extract reasoning with better Traditional Chinese support
+            reasoning = ""
+            # Try to extract the Detailed Reasoning section
+            reasoning_patterns = [
+                r'Detailed Reasoning[:\s]*\[([^\]]+)\]',  # English format with brackets
+                r'Detailed Reasoning[:\s]*(.+?)(?=\d\.|Evidence|Error|$)',  # English format
+                r'詳細說明[：:]\s*\[([^\]]+)\]',  # Chinese format with brackets
+                r'詳細說明[：:]\s*(.+?)(?=\d\.|Evidence|Error|$)',  # Chinese format
+                r'3\.\s*Detailed Reasoning[:\s]*\[([^\]]+)\]',  # Numbered English with brackets
+                r'3\.\s*Detailed Reasoning[:\s]*(.+?)(?=\d\.|Evidence|Error|$)',  # Numbered English
+                r'3\.\s*詳細說明[：:]\s*\[([^\]]+)\]',  # Numbered Chinese with brackets
+                r'3\.\s*詳細說明[：:]\s*(.+?)(?=\d\.|Evidence|Error|$)'  # Numbered Chinese
+            ]
+
+            for pattern in reasoning_patterns:
+                reasoning_match = re.search(pattern, response_text, re.IGNORECASE | re.DOTALL)
+                if reasoning_match:
+                    reasoning = reasoning_match.group(1).strip()
+                    break
+
+            # If no reasoning found, try to extract any Chinese text as fallback
+            if not reasoning:
+                chinese_text = re.findall(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]+[^\n]*', response_text)
+                if chinese_text:
+                    # Take the longest Chinese text snippet, likely the explanation
+                    reasoning = max(chinese_text, key=len, default="")
+                else:
+                    reasoning = response_text[:300]  # Fallback to first 300 chars
+
+            # Clean up reasoning text
+            reasoning = reasoning.strip()
+            # Remove formatting markers and extra whitespace
+            reasoning = re.sub(r'\s*-\s*', ' ', reasoning)
+            reasoning = re.sub(r'\s+', ' ', reasoning)
+
+            # Extract evidence sources with Traditional Chinese support
             evidence_sources = []
-            if 'historical' in response_text.lower():
+            response_lower = response_text.lower()
+
+            # Check for various evidence types in both languages
+            if 'historical' in response_lower or '歷史' in response_text or '史料' in response_text:
                 evidence_sources.append('historical_records')
-            if 'literary' in response_text.lower() or '紅樓夢' in response_text:
+            if 'literary' in response_lower or '文學' in response_text or '小說' in response_text or '紅樓夢' in response_text or '原文' in response_text:
                 evidence_sources.append('literary_works')
-            if 'domain' in response_text.lower():
+            if 'domain' in response_lower or '專業' in response_text or '領域' in response_text:
                 evidence_sources.append('domain_expertise')
+            if 'general' in response_lower or '常識' in response_text or '一般' in response_text:
+                evidence_sources.append('general_knowledge')
+
+            # If no specific evidence found, default to general knowledge
             if not evidence_sources:
                 evidence_sources.append('general_knowledge')
-            
-            # Determine error type
+
+            # Determine error type with Traditional Chinese support
             error_type = None
             if judgment == "No":
-                if 'factual' in response_text.lower():
+                if 'factual' in response_lower or '事實錯誤' in response_text or '內容錯誤' in response_text:
                     error_type = "factual_error"
-                elif 'syntax' in response_text.lower():
+                elif 'syntax' in response_lower or '語法錯誤' in response_text or '結構錯誤' in response_text:
                     error_type = "syntactic_error"
+                elif 'relationship' in response_lower or '關係錯誤' in response_text:
+                    error_type = "relationship_error"
                 else:
                     error_type = "validation_error"
-            
+
             return ExplainableJudgment(
                 judgment=judgment,
                 confidence=confidence,
@@ -684,14 +725,14 @@ Please format your response clearly with numbered sections."""
                 error_type=error_type,
                 processing_time=processing_time
             )
-            
+
         except Exception as e:
             print(f"Error parsing explainable response: {e}")
-            
+
             return ExplainableJudgment(
                 judgment="No",
                 confidence=0.0,
-                reasoning=f"Error parsing response: {str(e)}",
+                reasoning=f"解析回應時發生錯誤: {str(e)}",
                 evidence_sources=[],
                 alternative_suggestions=[],
                 error_type="parsing_error",

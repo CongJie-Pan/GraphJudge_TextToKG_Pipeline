@@ -31,8 +31,14 @@ except ImportError:
     Network = None
     components = None
 
-from ..core.models import EntityResult, TripleResult, JudgmentResult, Triple
-from ..core.pipeline import PipelineResult
+try:
+    # Try absolute import first (for package installation)
+    from streamlit_pipeline.core.models import EntityResult, TripleResult, JudgmentResult, Triple
+    from streamlit_pipeline.core.pipeline import PipelineResult
+except ImportError:
+    # Fallback to relative imports (for direct execution)
+    from ..core.models import EntityResult, TripleResult, JudgmentResult, Triple
+    from ..core.pipeline import PipelineResult
 
 
 def display_final_results(pipeline_result: PipelineResult):

@@ -71,31 +71,32 @@ Please answer only "Yes" or "No":
         # Extract the triple from instruction format
         triple_part = instruction.replace("Is this true: ", "").replace(" ?", "")
         
-        # Create comprehensive prompt for explainable reasoning with Chinese elements
+        # Create comprehensive prompt for explainable reasoning with enhanced Traditional Chinese
         prompt = f"""
-你是知識圖譜驗證專家。請對以下三元組語句進行詳細分析並提供結構化的判斷結果。
+您是專業的知識圖譜驗證專家。請針對以下三元組語句進行深入分析，並以繁體中文提供結構化的詳細判斷結果。
 
 待評估三元組：{triple_part}
 
-請按以下格式提供完整分析：
+請按照以下格式提供完整的分析報告：
 
 1. 判斷結果：[僅回答"Yes"或"No"]
 
-2. 置信度：[0.0到1.0之間的數值，表示你的確定程度]
+2. 置信度：[0.0至1.0之間的數值，表示您對此判斷的確定程度]
 
-3. 詳細推理：[解釋你的判斷理由，包括：
-   - 三元組語法正確性分析
-   - 事實準確性評估
-   - 相關背景知識或證據
-   - 對於《紅樓夢》內容，請參考原文]
+3. 詳細推理：[請詳細說明您的判斷依據，包含以下面向：
+   - 三元組結構與語法的正確性分析
+   - 事實內容的準確性驗證
+   - 相關領域知識或歷史背景資料
+   - 若涉及《紅樓夢》等古典文學作品，請引用原文或學術研究
+   - 邏輯關係的合理性評估]
 
-4. 證據來源：[列出支持判斷的證據類型：source_text, domain_knowledge, literary_history等]
+4. 證據來源：[請列舉支持您判斷的證據類型，例如：原文引用(source_text)、領域專業知識(domain_knowledge)、文學史研究(literary_history)、學術資料庫(academic_database)等]
 
-5. 錯誤類型：[如果判斷為"No"，請指定錯誤類型：entity_mismatch, factual_error, structural_error, temporal_inconsistency, source_unsupported。如果為"Yes"，回答"None"]
+5. 錯誤類型：[若判斷為"No"，請具體指出錯誤性質：實體不符(entity_mismatch)、事實錯誤(factual_error)、結構問題(structural_error)、時序矛盾(temporal_inconsistency)、缺乏文獻支持(source_unsupported)。若判斷為"Yes"，請回答"None"]
 
-6. 替代建議：[如果判斷為"No"，請提供正確的三元組建議，格式為：subject-relation-object]
+6. 替代建議：[若判斷為"No"，請提供修正後的正確三元組建議，格式為：主語-關係-賓語]
 
-請確保你的回應結構化、邏輯清晰，並基於可靠來源。
+請確保您的回應內容詳實、邏輯嚴謹，並以繁體中文呈現，基於權威可靠的資料來源進行分析。
 """.strip()
         
         return prompt

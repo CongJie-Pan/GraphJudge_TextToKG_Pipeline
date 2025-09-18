@@ -11,7 +11,12 @@ Following spec.md Section 10 and Section 3 (FR-I2) requirements.
 import streamlit as st
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timedelta
-from ..utils.error_handling import ErrorInfo, ErrorType, ErrorSeverity, ProgressTracker
+try:
+    # Try absolute import first (for package installation)
+    from streamlit_pipeline.utils.error_handling import ErrorInfo, ErrorType, ErrorSeverity, ProgressTracker
+except ImportError:
+    # Fallback to relative imports (for direct execution)
+    from ..utils.error_handling import ErrorInfo, ErrorType, ErrorSeverity, ProgressTracker
 
 
 def display_error_card(error_info: ErrorInfo, show_details: bool = False):
