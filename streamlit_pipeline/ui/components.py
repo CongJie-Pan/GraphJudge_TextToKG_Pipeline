@@ -34,6 +34,12 @@ except ImportError:
     from ..core.pipeline import PipelineResult
 from .error_display import display_success_message, display_processing_stats
 
+# Import i18n functionality
+try:
+    from streamlit_pipeline.utils.i18n import get_text, get_supported_languages, get_current_language, set_language
+except ImportError:
+    from ..utils.i18n import get_text, get_supported_languages, get_current_language, set_language
+
 
 def validate_text_file(uploaded_file) -> tuple[str, str, bool]:
     """
@@ -94,20 +100,20 @@ def display_input_section() -> str:
     Returns:
         The input text from the user (either uploaded or typed)
     """
-    st.markdown("## 📝 Input Text")
-    st.markdown("Please upload a Chinese text file (.txt) or enter text directly:")
+    st.markdown(f"## {get_text('input.title')}")
+    st.markdown(get_text('input.description'))
 
     # Create tabs for different input methods
-    tab1, tab2 = st.tabs(["📁 Upload File", "✏️ Type Text"])
+    tab1, tab2 = st.tabs([get_text('input.tab_file'), get_text('input.tab_text')])
 
     input_text = ""
 
     with tab1:
         # File upload section
         uploaded_file = st.file_uploader(
-            "Choose a text file",
+            get_text('input.choose_file'),
             type=['txt'],
-            help="Upload a .txt file containing Chinese text for analysis",
+            help=get_text('input.upload_help'),
             label_visibility="collapsed"
         )
 
@@ -148,15 +154,15 @@ def display_input_section() -> str:
                         st.info(f"📄 Showing first 500 characters of {len(input_text):,} total characters")
 
             else:
-                st.error("❌ Failed to read the file. Please ensure it's a valid Chinese text file with proper encoding.")
+                st.error(get_text('input.file_error'))
 
     with tab2:
         # Text area for manual input
         manual_text = st.text_area(
-            "Text Input",
+            get_text('input.tab_text'),
             height=200,
-            placeholder="Please enter your Chinese text here. Example: 红楼梦是清代作家曹雪芹创作的章回体长篇小说...",
-            help="Supports Chinese classical literature texts, model is optimized for Chinese",
+            placeholder=get_text('input.text_placeholder'),
+            help=get_text('input.text_help'),
             label_visibility="collapsed"
         )
 
@@ -165,18 +171,18 @@ def display_input_section() -> str:
 
     # Input statistics (show for both file upload and manual input)
     if input_text:
-        st.markdown("### 📊 Text Statistics")
+        st.markdown(f"### {get_text('input.text_stats')}")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Character Count", len(input_text))
+            st.metric(get_text('input.character_count'), len(input_text))
         with col2:
-            st.metric("Line Count", len(input_text.split('\n')))
+            st.metric(get_text('input.word_count'), len(input_text.split('\n')))
         with col3:
-            st.metric("Paragraph Count", len([p for p in input_text.split('\n\n') if p.strip()]))
+            st.metric(get_text('input.paragraph_count'), len([p for p in input_text.split('\n\n') if p.strip()]))
         with col4:
             # Estimate reading time (assuming 300 characters per minute for Chinese)
             reading_time = len(input_text) / 300
-            st.metric("Est. Reading Time", f"{reading_time:.1f} min")
+            st.metric(get_text('input.reading_time'), f"{reading_time:.1f} {get_text('input.reading_time_unit')}")
 
     return input_text
 
@@ -189,7 +195,7 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
         entity_result: The EntityResult to display
         show_expanders: Whether to create expanders for detailed sections
     """
-    st.markdown("## 🔍 Entity Extraction Results")
+    st.markdown(f"## {get_text('entity.title')}")
 
     if entity_result.success:
         # Simple success indicator
@@ -1010,28 +1016,62 @@ def create_sidebar_controls() -> Dict[str, Any]:
     Returns:
         Dictionary of configuration options
     """
-    st.sidebar.markdown("## ⚙️ Configuration Options")
+    # Language selection at the top
+    st.sidebar.markdown(f"### {get_text('sidebar.language_selection')}")
+
+    # Get supported languages and current selection
+    supported_langs = get_supported_languages()
+    current_lang = get_current_language()
+
+    # Create language options for display
+    lang_options = list(supported_langs.keys())
+    lang_labels = [f"{code} - {name}" for code, name in supported_langs.items()]
+
+    # Get current index
+    try:
+        current_index = lang_options.index(current_lang)
+    except ValueError:
+        current_index = 0  # Default to first option if current not found
+
+    # Language selector
+    selected_lang_index = st.sidebar.selectbox(
+        "Select Language",
+        range(len(lang_options)),
+        index=current_index,
+        format_func=lambda x: lang_labels[x],
+        key="language_selector",
+        label_visibility="collapsed"
+    )
+
+    # Update language if changed
+    selected_lang = lang_options[selected_lang_index]
+    if selected_lang != current_lang:
+        set_language(selected_lang)
+        st.rerun()
+
+    st.sidebar.markdown("---")
+    st.sidebar.markdown(f"## {get_text('sidebar.configuration')}")
     
     # API configuration
-    st.sidebar.markdown("### 🔌 API Settings")
-    api_timeout = st.sidebar.slider("API Timeout (seconds)", 30, 300, 60)
-    max_retries = st.sidebar.slider("Max Retries", 1, 5, 3)
-    
+    st.sidebar.markdown(f"### {get_text('sidebar.api_settings')}")
+    api_timeout = st.sidebar.slider(get_text('sidebar.api_timeout'), 30, 300, 60)
+    max_retries = st.sidebar.slider(get_text('sidebar.max_retries'), 1, 5, 3)
+
     # Processing options
-    st.sidebar.markdown("### 🔄 Processing Options")
-    enable_explanations = st.sidebar.checkbox("Enable Judgment Explanations", value=True)
-    batch_size = st.sidebar.slider("Batch Size", 1, 20, 10)
-    
+    st.sidebar.markdown(f"### {get_text('sidebar.processing_options')}")
+    enable_explanations = st.sidebar.checkbox(get_text('sidebar.enable_explanations'), value=True)
+    batch_size = st.sidebar.slider(get_text('sidebar.batch_size'), 1, 20, 10)
+
     # Display options
-    st.sidebar.markdown("### 🎨 Display Options")
-    show_technical_details = st.sidebar.checkbox("Show Technical Details", value=False)
-    auto_scroll = st.sidebar.checkbox("Auto-scroll to Results", value=True)
-    
+    st.sidebar.markdown(f"### {get_text('sidebar.display_options')}")
+    show_technical_details = st.sidebar.checkbox(get_text('sidebar.show_technical_details'), value=False)
+    auto_scroll = st.sidebar.checkbox(get_text('sidebar.auto_scroll'), value=True)
+
     # Debug options
-    if st.sidebar.checkbox("Debug Mode"):
-        st.sidebar.markdown("### 🐛 Debug Options")
-        log_level = st.sidebar.selectbox("Log Level", ["INFO", "DEBUG", "WARNING", "ERROR"])
-        show_timing = st.sidebar.checkbox("Show Detailed Timing", value=True)
+    if st.sidebar.checkbox(get_text('sidebar.debug_mode')):
+        st.sidebar.markdown(f"### {get_text('sidebar.debug_options')}")
+        log_level = st.sidebar.selectbox(get_text('sidebar.log_level'), ["INFO", "DEBUG", "WARNING", "ERROR"])
+        show_timing = st.sidebar.checkbox(get_text('sidebar.show_timing'), value=True)
     else:
         log_level = "INFO"
         show_timing = False

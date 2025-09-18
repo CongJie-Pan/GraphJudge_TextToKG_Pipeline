@@ -358,7 +358,7 @@ class TestConfigurationIntegration:
             assert api_key_full == 'integration-test-key'
             assert api_base_full == 'https://integration.test.com/v1'
             assert isinstance(model_config, dict)
-            assert len(model_config) == 7  # Expected number of config keys
+            assert len(model_config) == 9  # Expected number of config keys (updated)
 
 
 class TestErrorMessages:

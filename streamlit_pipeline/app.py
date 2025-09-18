@@ -49,6 +49,7 @@ from streamlit_pipeline.utils.api_client import get_api_client
 from streamlit_pipeline.utils.session_state import get_session_manager, store_pipeline_result
 from streamlit_pipeline.utils.state_persistence import persist_pipeline_result, get_persistence_manager
 from streamlit_pipeline.utils.state_cleanup import get_cleanup_manager, check_and_run_cleanup
+from streamlit_pipeline.utils.i18n import get_text
 
 
 # Configure Streamlit page
@@ -186,13 +187,11 @@ class GraphJudgeApp:
     
     def _render_header(self):
         """Render the application header."""
-        st.title("🧠 GraphJudge - Intelligent Knowledge Graph Construction System")
-        st.markdown("""
-        **GraphJudge** is an intelligent knowledge graph construction system based on large language models.
-        Through a three-stage processing pipeline, it extracts entities from Chinese text, generates knowledge triples,
-        and uses AI for quality assessment.
+        st.title(get_text('app.title'))
+        st.markdown(f"""
+        {get_text('app.description')}
 
-        💡 **Getting Started**: Upload a Chinese text file (.txt) or paste text directly to begin analysis.
+        {get_text('app.getting_started')}
         """)
         
         # Quick stats if we have results
@@ -232,51 +231,51 @@ class GraphJudgeApp:
         """Render the sidebar with configuration options."""
         # Get configuration options
         st.session_state.config_options = create_sidebar_controls()
-        
+
         # API Status
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### 🔌 API Status Check")
+        st.sidebar.markdown(f"### {get_text('sidebar.api_status')}")
 
-        if st.sidebar.button("Test API Connection", key="test_apis"):
-            with st.spinner("Testing API connections..."):
+        if st.sidebar.button(get_text('sidebar.test_connection'), key="test_apis"):
+            with st.spinner(get_text('sidebar.testing_apis')):
                 self._test_api_connections()
-        
+
         # Application info
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### ℹ️ About")
-        st.sidebar.info("""
-        **Version**: 2.0
-        **Models**: GPT-5-mini + Perplexity
-        **Best for**: Chinese classical literature texts
-        **Developed by**: GraphJudge Research Team
+        st.sidebar.markdown(f"### {get_text('sidebar.about')}")
+        st.sidebar.info(f"""
+        {get_text('app.version')}
+        {get_text('app.models')}
+        {get_text('app.best_for')}
+        {get_text('app.developed_by')}
         """)
-        
+
         # Clear results option with enhanced cleanup
         if st.session_state.pipeline_results:
             st.sidebar.markdown("---")
             col1, col2 = st.sidebar.columns(2)
-            
+
             with col1:
-                if st.button("🗑️ Clear Results", key="clear_results"):
+                if st.button(get_text('sidebar.clear_results'), key="clear_results"):
                     self.session_manager.reset_pipeline_data()
                     st.rerun()
 
             with col2:
-                if st.button("🧹 Full Cleanup", key="full_cleanup"):
+                if st.button(get_text('sidebar.full_cleanup'), key="full_cleanup"):
                     self.cleanup_manager.force_complete_cleanup()
                     st.rerun()
-        
+
         # Session statistics in sidebar
         st.sidebar.markdown("---")
-        st.sidebar.markdown("### 📊 Session Statistics")
+        st.sidebar.markdown(f"### {get_text('sidebar.session_stats')}")
         metadata = self.session_manager.get_session_metadata()
         cache_stats = self.session_manager.get_cache_stats()
 
-        st.sidebar.text(f"Run Count: {metadata.run_count}")
-        st.sidebar.text(f"Successful Runs: {metadata.successful_runs}")
+        st.sidebar.text(get_text('sidebar.run_count', count=metadata.run_count))
+        st.sidebar.text(get_text('sidebar.successful_runs', count=metadata.successful_runs))
         if metadata.run_count > 0:
             success_rate = metadata.successful_runs / metadata.run_count
-            st.sidebar.text(f"Success Rate: {success_rate:.1%}")
+            st.sidebar.text(get_text('sidebar.success_rate', rate=f"{success_rate:.1%}"))
 
         st.sidebar.text(f"Cache Hit Rate: {cache_stats.hit_rate:.1%}")
         st.sidebar.text(f"Cache Size: {cache_stats.total_size_bytes / 1024 / 1024:.1f} MB")
@@ -326,7 +325,7 @@ class GraphJudgeApp:
         
         with col1:
             process_button = st.button(
-                "🚀 Start Processing",
+                f"🚀 {get_text('buttons.start_processing')}",
                 disabled=not input_text.strip(),
                 type="primary",
                 help="Click to start the three-stage knowledge graph construction pipeline"
@@ -334,11 +333,11 @@ class GraphJudgeApp:
         
         with col2:
             if st.session_state.current_result:
-                st.button("📊 View Detailed Results", key="view_details", on_click=self._show_detailed_results)
+                st.button(f"📊 {get_text('buttons.view_details')}", key="view_details", on_click=self._show_detailed_results)
 
         with col3:
             if st.session_state.pipeline_results:
-                st.button("📈 Historical Comparison", key="show_comparison", on_click=self._show_comparison)
+                st.button(f"📈 {get_text('buttons.historical_comparison')}", key="show_comparison", on_click=self._show_comparison)
         
         # Process the input if button clicked
         if process_button and input_text.strip():
@@ -350,7 +349,7 @@ class GraphJudgeApp:
     
     def _render_processing_view(self):
         """Render the processing view with progress indicators."""
-        st.markdown("## 🔄 Processing...")
+        st.markdown(f"## {get_text('processing.title')}")
 
         # This would typically be handled by the progress callback
         # For now, show a static processing message
@@ -538,13 +537,13 @@ class GraphJudgeApp:
     def _show_detailed_results(self):
         """Show detailed results in a dedicated section."""
         if st.session_state.current_result:
-            st.markdown("## 📋 Detailed Results Analysis")
+            st.markdown(f"## {get_text('results.detailed_analysis')}")
             self._render_results_section(st.session_state.current_result)
-    
+
     def _show_comparison(self):
         """Show comparison with historical results."""
         if st.session_state.current_result and st.session_state.pipeline_results:
-            st.markdown("## 📈 Historical Comparison Analysis")
+            st.markdown(f"## {get_text('results.historical_comparison')}")
             display_comparison_view(
                 st.session_state.current_result,
                 st.session_state.pipeline_results[:-1]  # Exclude current result
