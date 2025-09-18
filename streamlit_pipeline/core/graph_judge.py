@@ -52,6 +52,12 @@ class ExplainableJudgment:
     alternative_suggestions: List[Dict[str, Any]]  # Alternative correct triples
     error_type: Optional[str]  # Type of error if judgment is "No"
     processing_time: float  # Time taken for judgment
+    actual_citations: List[str] = None  # Actual citation URLs from Perplexity API
+
+    def __post_init__(self):
+        """Initialize actual_citations to empty list if None for backward compatibility."""
+        if self.actual_citations is None:
+            self.actual_citations = []
 
 
 class GraphJudge:
@@ -272,6 +278,7 @@ class GraphJudge:
                         explanations.append({
                             "reasoning": explanation_result.reasoning,
                             "evidence_sources": explanation_result.evidence_sources,
+                            "actual_citations": explanation_result.actual_citations,
                             "error_type": explanation_result.error_type
                         })
 
@@ -291,7 +298,12 @@ class GraphJudge:
                         judgments.append(binary_judgment)
                         confidence = self._estimate_confidence(judgment)
                         confidence_scores.append(confidence)
-                        explanations.append({"reasoning": f"Binary judgment: {judgment}"})
+                        explanations.append({
+                            "reasoning": f"Binary judgment: {judgment}",
+                            "evidence_sources": [],
+                            "actual_citations": [],
+                            "error_type": None
+                        })
 
                         self.detailed_logger.log_debug("JUDGMENT", f"Simple judgment completed for triple {idx + 1}", {
                             "triple_index": idx,
@@ -308,6 +320,8 @@ class GraphJudge:
                     confidence_scores.append(0.0)
                     explanations.append({
                         "reasoning": f"Error during processing: {str(e)}",
+                        "evidence_sources": [],
+                        "actual_citations": [],
                         "error_type": "processing_error"
                     })
                     self.detailed_logger.log_error("JUDGMENT", f"Error judging triple {idx + 1} with explanation", {
@@ -461,29 +475,46 @@ class GraphJudge:
         prompt = self._create_explainable_prompt(instruction)
         
         try:
-            # Call Perplexity API through unified client
-            response = self.api_client.call_perplexity(
+            # Call Perplexity API with citations support through unified client
+            response_with_citations = self.api_client.call_perplexity_with_citations(
                 prompt=prompt,
                 temperature=self.temperature,
                 max_tokens=self.max_tokens
             )
-            
-            # Parse response to extract detailed judgment
-            return self._parse_explainable_response(response, start_time)
-            
+
+            # Parse response to extract detailed judgment with citations
+            return self._parse_explainable_response_with_citations(response_with_citations, start_time)
+
         except Exception as e:
-            processing_time = time.time() - start_time
-            print(f"Error in explainable judgment for instruction '{instruction}': {e}")
-            
-            return ExplainableJudgment(
-                judgment="No",
-                confidence=0.0,
-                reasoning=f"Error during processing: {str(e)}",
-                evidence_sources=[],
-                alternative_suggestions=[],
-                error_type="processing_error",
-                processing_time=processing_time
-            )
+            print(f"Error in citation-enabled judgment for instruction '{instruction}': {e}")
+            print(f"Attempting fallback to regular API call...")
+
+            try:
+                # Fallback to regular API call without citations
+                response = self.api_client.call_perplexity(
+                    prompt=prompt,
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens
+                )
+
+                # Parse response with legacy method (no citations)
+                result = self._parse_explainable_response(response, start_time)
+                print(f"Fallback API call successful for instruction")
+                return result
+
+            except Exception as fallback_error:
+                processing_time = time.time() - start_time
+                print(f"Fallback API call also failed for instruction '{instruction}': {fallback_error}")
+
+                return ExplainableJudgment(
+                    judgment="No",
+                    confidence=0.0,
+                    reasoning=f"Error during processing (both citation and fallback failed): {str(e)}",
+                    evidence_sources=[],
+                    alternative_suggestions=[],
+                    error_type="processing_error",
+                    processing_time=processing_time
+                )
     
     def _create_judgment_prompt(self, instruction: str) -> str:
         """
@@ -737,6 +768,144 @@ Please answer only "Yes" or "No":"""
                 alternative_suggestions=[],
                 error_type="parsing_error",
                 processing_time=processing_time
+            )
+
+    def _parse_explainable_response_with_citations(self, response_data: dict, start_time: float) -> ExplainableJudgment:
+        """
+        Parse API response with citations to extract detailed explainable judgment.
+        Enhanced version that handles both content and actual citation URLs from Perplexity API.
+
+        Args:
+            response_data: Dictionary containing 'content' (str) and 'citations' (List[str])
+            start_time: Start time for processing time calculation
+
+        Returns:
+            ExplainableJudgment with detailed Traditional Chinese analysis and actual citations
+        """
+        processing_time = time.time() - start_time
+
+        # Extract content and citations from response
+        content = response_data.get("content", "")
+        citations = response_data.get("citations", [])
+
+        print(f"DEBUG: Parsing explainable response with {len(citations)} citations")
+
+        if not content:
+            return ExplainableJudgment(
+                judgment="No",
+                confidence=0.0,
+                reasoning="API回應為空",
+                evidence_sources=[],
+                alternative_suggestions=[],
+                error_type="empty_response",
+                processing_time=processing_time,
+                actual_citations=citations  # Include citations even for empty response
+            )
+
+        response_text = str(content).strip()
+
+        try:
+            # Extract judgment (works for both English and Chinese responses)
+            judgment = self._parse_binary_response(response_text)
+
+            # Extract confidence (look for decimal numbers, handle Chinese context)
+            confidence_match = re.search(r'confidence[:\s]*([0-9]*\.?[0-9]+)', response_text, re.IGNORECASE)
+            if not confidence_match:
+                # Also check for Chinese format
+                confidence_match = re.search(r'確定程度[：:]\s*([0-9]*\.?[0-9]+)', response_text)
+            confidence = float(confidence_match.group(1)) if confidence_match else 0.75
+            confidence = max(0.0, min(1.0, confidence))  # Clamp to [0,1]
+
+            # Extract reasoning with better Traditional Chinese support
+            reasoning = ""
+            # Try to extract the Detailed Reasoning section
+            reasoning_patterns = [
+                r'Detailed Reasoning[:\s]*\[([^\]]+)\]',  # English format with brackets
+                r'Detailed Reasoning[:\s]*(.+?)(?=\d\.|Evidence|Error|$)',  # English format
+                r'詳細說明[：:]\s*\[([^\]]+)\]',  # Chinese format with brackets
+                r'詳細說明[：:]\s*(.+?)(?=\d\.|Evidence|Error|$)',  # Chinese format
+                r'3\.\s*Detailed Reasoning[:\s]*\[([^\]]+)\]',  # Numbered English with brackets
+                r'3\.\s*Detailed Reasoning[:\s]*(.+?)(?=\d\.|Evidence|Error|$)',  # Numbered English
+                r'3\.\s*詳細說明[：:]\s*\[([^\]]+)\]',  # Numbered Chinese with brackets
+                r'3\.\s*詳細說明[：:]\s*(.+?)(?=\d\.|Evidence|Error|$)'  # Numbered Chinese
+            ]
+
+            for pattern in reasoning_patterns:
+                reasoning_match = re.search(pattern, response_text, re.IGNORECASE | re.DOTALL)
+                if reasoning_match:
+                    reasoning = reasoning_match.group(1).strip()
+                    break
+
+            # If no reasoning found, try to extract any Chinese text as fallback
+            if not reasoning:
+                chinese_text = re.findall(r'[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]+[^\n]*', response_text)
+                if chinese_text:
+                    # Take the longest Chinese text snippet, likely the explanation
+                    reasoning = max(chinese_text, key=len, default="")
+                else:
+                    reasoning = response_text[:300]  # Fallback to first 300 chars
+
+            # Clean up reasoning text
+            reasoning = reasoning.strip()
+            # Remove formatting markers and extra whitespace
+            reasoning = re.sub(r'\s*-\s*', ' ', reasoning)
+            reasoning = re.sub(r'\s+', ' ', reasoning)
+
+            # Extract evidence sources with Traditional Chinese support
+            evidence_sources = []
+            response_lower = response_text.lower()
+
+            # Check for various evidence types in both languages
+            if 'historical' in response_lower or '歷史' in response_text or '史料' in response_text:
+                evidence_sources.append('historical_records')
+            if 'literary' in response_lower or '文學' in response_text or '小說' in response_text or '紅樓夢' in response_text or '原文' in response_text:
+                evidence_sources.append('literary_works')
+            if 'domain' in response_lower or '專業' in response_text or '領域' in response_text:
+                evidence_sources.append('domain_expertise')
+            if 'general' in response_lower or '常識' in response_text or '一般' in response_text:
+                evidence_sources.append('general_knowledge')
+
+            # If no specific evidence found, default to general knowledge
+            if not evidence_sources:
+                evidence_sources.append('general_knowledge')
+
+            # Determine error type with Traditional Chinese support
+            error_type = None
+            if judgment == "No":
+                if 'factual' in response_lower or '事實錯誤' in response_text or '內容錯誤' in response_text:
+                    error_type = "factual_error"
+                elif 'syntax' in response_lower or '語法錯誤' in response_text or '結構錯誤' in response_text:
+                    error_type = "syntactic_error"
+                elif 'relationship' in response_lower or '關係錯誤' in response_text:
+                    error_type = "relationship_error"
+                else:
+                    error_type = "validation_error"
+
+            print(f"DEBUG: Parsed judgment={judgment}, confidence={confidence}, citations={len(citations)}")
+
+            return ExplainableJudgment(
+                judgment=judgment,
+                confidence=confidence,
+                reasoning=reasoning,
+                evidence_sources=evidence_sources,
+                alternative_suggestions=[],  # Simplified - no alternative extraction
+                error_type=error_type,
+                processing_time=processing_time,
+                actual_citations=citations  # Include actual citation URLs from Perplexity
+            )
+
+        except Exception as e:
+            print(f"Error parsing explainable response with citations: {e}")
+
+            return ExplainableJudgment(
+                judgment="No",
+                confidence=0.0,
+                reasoning=f"解析回應時發生錯誤: {str(e)}",
+                evidence_sources=[],
+                alternative_suggestions=[],
+                error_type="parsing_error",
+                processing_time=processing_time,
+                actual_citations=citations  # Include citations even on parsing error
             )
     
     def _estimate_confidence(self, judgment: str) -> float:

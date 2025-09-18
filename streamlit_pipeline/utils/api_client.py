@@ -91,20 +91,50 @@ class APIClient:
     ) -> str:
         """
         Call Perplexity model for graph judgment.
-        
+
         Args:
             prompt: The user prompt/question
             system_prompt: Optional system message to guide behavior
             temperature: Temperature setting (defaults to config value)
             max_tokens: Maximum tokens (defaults to config value)
-            
+
         Returns:
             Generated response text
-            
+
         Raises:
             Exception: If API call fails after retries
         """
         return self._make_api_call(
+            model=PERPLEXITY_MODEL,
+            prompt=prompt,
+            system_prompt=system_prompt,
+            temperature=temperature or self.config["temperature"],
+            max_tokens=max_tokens or self.config["max_tokens"]
+        )
+
+    def call_perplexity_with_citations(
+        self,
+        prompt: str,
+        system_prompt: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None
+    ) -> dict:
+        """
+        Call Perplexity model for graph judgment with citations support.
+
+        Args:
+            prompt: The user prompt/question
+            system_prompt: Optional system message to guide behavior
+            temperature: Temperature setting (defaults to config value)
+            max_tokens: Maximum tokens (defaults to config value)
+
+        Returns:
+            Dictionary with 'content' (str) and 'citations' (List[str]) fields
+
+        Raises:
+            Exception: If API call fails after retries
+        """
+        return self._make_api_call_with_citations(
             model=PERPLEXITY_MODEL,
             prompt=prompt,
             system_prompt=system_prompt,
@@ -227,6 +257,158 @@ class APIClient:
 
         detailed_error = f"API call failed after {self.config['max_retries']} attempts. {timeout_info}. {reasoning_info}. Last error: {last_exception}"
         raise Exception(detailed_error)
+
+    def _make_api_call_with_citations(
+        self,
+        model: str,
+        prompt: str,
+        system_prompt: Optional[str] = None,
+        temperature: float = 1.0,
+        max_tokens: int = 4000
+    ) -> dict:
+        """
+        Internal method to make API calls with citations support.
+
+        Args:
+            model: Model identifier
+            prompt: User prompt
+            system_prompt: Optional system prompt
+            temperature: Temperature setting
+            max_tokens: Maximum tokens
+
+        Returns:
+            Dictionary with 'content' (str) and 'citations' (List[str]) fields
+
+        Raises:
+            Exception: If all retry attempts fail
+        """
+        # Apply rate limiting
+        self._rate_limit()
+
+        # Build messages
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
+        # Retry logic similar to _make_api_call but with citations
+        last_exception = None
+        progressive_timeouts = self.config.get("progressive_timeouts", [self.config["timeout"]])
+
+        for attempt in range(self.config["max_retries"]):
+            try:
+                # Use progressive timeouts
+                current_timeout = progressive_timeouts[min(attempt, len(progressive_timeouts) - 1)]
+
+                # Build completion parameters with citations support
+                completion_params = {
+                    "model": model,
+                    "messages": messages,
+                    "temperature": temperature,
+                    "max_completion_tokens": max_tokens,
+                    "timeout": current_timeout,
+                    "return_citations": True  # Enable citations for Perplexity
+                }
+
+                print(f"DEBUG: Citations API call attempt {attempt + 1}/{self.config['max_retries']}")
+                print(f"DEBUG: Timeout: {current_timeout}s, Citations enabled: True")
+
+                response = completion(**completion_params)
+
+                # Extract content and citations from response
+                content = self._extract_content_from_response(response, model, attempt)
+                citations = self._extract_citations_from_response(response, model)
+
+                # Success criteria: non-empty content
+                if content and content.strip():
+                    print(f"DEBUG: Citations API call successful on attempt {attempt + 1}")
+                    print(f"DEBUG: Citations found: {len(citations)} items")
+                    return {
+                        "content": content,
+                        "citations": citations
+                    }
+
+                # Handle empty content - continue to retry if attempts remain
+                if attempt < self.config["max_retries"] - 1:
+                    print(f"DEBUG: Empty content received, will retry with timeout {progressive_timeouts[min(attempt + 1, len(progressive_timeouts) - 1)]}s")
+                    last_exception = Exception("Empty content received from API")
+                    continue
+                else:
+                    print(f"DEBUG: Empty content on final attempt, returning empty result")
+                    return {"content": "", "citations": []}
+
+            except Exception as e:
+                error_type = type(e).__name__
+                error_msg = str(e)
+
+                print(f"DEBUG: Citations API call failed on attempt {attempt + 1}: {error_type} - {error_msg}")
+
+                # Check if it's a timeout error specifically
+                is_timeout = "timeout" in error_msg.lower() or "timed out" in error_msg.lower()
+
+                last_exception = e
+
+                if attempt < self.config["max_retries"] - 1:
+                    # Enhanced exponential backoff with special handling for timeouts
+                    if is_timeout:
+                        wait_time = 2.0  # Fixed wait for timeouts
+                        print(f"DEBUG: Timeout detected, waiting {wait_time}s before retry with longer timeout")
+                    else:
+                        wait_time = (2 ** attempt) * 0.5  # 0.5, 1.0, 2.0 seconds for other errors
+                        print(f"DEBUG: Non-timeout error, waiting {wait_time}s before retry")
+
+                    time.sleep(wait_time)
+                    continue
+
+        # All retries failed - provide detailed error information
+        timeout_info = f"Timeouts used: {progressive_timeouts[:self.config['max_retries']]}"
+        detailed_error = f"Citations API call failed after {self.config['max_retries']} attempts. {timeout_info}. Last error: {last_exception}"
+        raise Exception(detailed_error)
+
+    def _extract_citations_from_response(self, response, model: str) -> list:
+        """
+        Extract citations from API response.
+
+        Args:
+            response: API response object
+            model: Model name for debugging
+
+        Returns:
+            List of citation URLs/sources
+        """
+        citations = []
+
+        try:
+            # For Perplexity models with citation support
+            if hasattr(response, 'citations') and response.citations:
+                citations = response.citations
+                print(f"DEBUG: Extracted {len(citations)} citations from response.citations")
+
+            # Alternative: Check if citations are in choices
+            elif hasattr(response, 'choices') and len(response.choices) > 0:
+                choice = response.choices[0]
+                if hasattr(choice, 'citations') and choice.citations:
+                    citations = choice.citations
+                    print(f"DEBUG: Extracted {len(citations)} citations from choice.citations")
+
+                # Check message-level citations
+                elif hasattr(choice, 'message') and hasattr(choice.message, 'citations'):
+                    citations = choice.message.citations or []
+                    print(f"DEBUG: Extracted {len(citations)} citations from message.citations")
+
+            # Ensure citations is a list of strings
+            if citations and isinstance(citations, list):
+                # Filter out empty or invalid citations
+                citations = [str(cite) for cite in citations if cite and str(cite).strip()]
+                print(f"DEBUG: Final citations count after filtering: {len(citations)}")
+            else:
+                citations = []
+
+        except Exception as e:
+            print(f"DEBUG: Error extracting citations: {e}")
+            citations = []
+
+        return citations
 
     def _extract_content_from_response(self, response, model: str, attempt: int) -> str:
         """

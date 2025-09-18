@@ -419,6 +419,50 @@ def _display_judgment_explanations_content(triples, judgment_result):
                         translated_sources = [source_translations.get(src, src) for src in evidence_sources]
                         st.markdown(f"**Reference Sources:** {', '.join(translated_sources)}")
 
+                # Display actual citations if available
+                actual_citations = []
+                if i < len(judgment_result.explanations):
+                    explanation_obj = judgment_result.explanations[i]
+                    if isinstance(explanation_obj, dict) and 'actual_citations' in explanation_obj:
+                        actual_citations = explanation_obj['actual_citations']
+
+                if actual_citations:
+                    st.markdown("**Source Citations:**")
+                    for idx, citation in enumerate(actual_citations, 1):
+                        # Display each citation as a clickable link
+                        if citation and citation.strip():
+                            citation_text = citation.strip()
+
+                            # Validate and format URL properly
+                            try:
+                                # Check if it's already a valid URL
+                                if citation_text.startswith(('http://', 'https://')):
+                                    formatted_citation = citation_text
+                                elif citation_text.startswith('www.'):
+                                    formatted_citation = f"https://{citation_text}"
+                                elif '.' in citation_text and not citation_text.startswith('file://'):
+                                    # Looks like a domain, add https
+                                    formatted_citation = f"https://{citation_text}"
+                                else:
+                                    # Not a URL, display as text only
+                                    formatted_citation = None
+
+                                # Escape special markdown characters in citation text
+                                safe_citation = citation_text.replace('[', '\\[').replace(']', '\\]').replace('(', '\\(').replace(')', '\\)')
+
+                                if formatted_citation:
+                                    # Create clickable link with citation number
+                                    st.markdown(f"[{idx}. {safe_citation}]({formatted_citation})")
+                                else:
+                                    # Display as non-clickable text
+                                    st.markdown(f"{idx}. {safe_citation}")
+
+                            except Exception as url_error:
+                                # If URL processing fails, display as text
+                                safe_citation = citation_text.replace('[', '\\[').replace(']', '\\]').replace('(', '\\(').replace(')', '\\)')
+                                st.markdown(f"{idx}. {safe_citation}")
+                                print(f"DEBUG: URL validation error for citation '{citation_text}': {url_error}")
+
                 st.markdown("**AI Judgment Explanation:**")
 
                 # Extract and format Traditional Chinese reasoning

@@ -416,5 +416,6 @@ Error: No triples were generated from the provided entities and text
 ### 2025/9/18
 
 - to do 
-1) add the streamlit ui language selection in the streamlit ui : english/繁體中文/簡體中文
-2) ensure the explanination function worked in the streamlit_pipeline.
+1) Add the streamlit ui language selection in the streamlit ui : English/繁體中文/簡體中文. And set the default language in English. Remeber, this system is focus on the ancient chinese text processing.
+2) ok - ensure the explanination function worked in the streamlit_pipeline.
+3) Acutal smoke test the latest edit.

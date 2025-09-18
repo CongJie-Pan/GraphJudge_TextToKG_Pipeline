@@ -59,11 +59,13 @@ def mock_judge_triples_with_explanations():
                 {
                     "reasoning": "This triple is correct based on the classical text context",
                     "evidence_sources": ["原文描述"],
+                    "actual_citations": ["https://example.com/source1"],
                     "error_type": None
                 },
                 {
                     "reasoning": "The relationship is well-supported by textual evidence",
                     "evidence_sources": ["文本證據"],
+                    "actual_citations": ["https://example.com/source2"],
                     "error_type": None
                 }
             ],
