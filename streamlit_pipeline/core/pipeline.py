@@ -17,7 +17,7 @@ from dataclasses import dataclass, asdict
 try:
     from .entity_processor import extract_entities
     from .triple_generator import generate_triples
-    from .graph_judge import judge_triples
+    from .graph_judge import judge_triples, judge_triples_with_explanations
     from .models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
     from .graph_converter import (
         create_graph_from_judgment_result,
@@ -103,13 +103,14 @@ class PipelineOrchestrator:
         self.pipeline_state = PipelineState()
         self.storage_manager = get_storage_manager()
         
-    def run_pipeline(self, input_text: str, progress_callback=None) -> PipelineResult:
+    def run_pipeline(self, input_text: str, progress_callback=None, config_options=None) -> PipelineResult:
         """
         Execute the complete three-stage GraphJudge pipeline.
 
         Args:
             input_text: The raw Chinese text to process
             progress_callback: Optional callback function for progress updates
+            config_options: Optional configuration options from UI
 
         Returns:
             PipelineResult containing all stage outputs and metadata
@@ -264,7 +265,7 @@ class PipelineOrchestrator:
                 "input_triples_count": len(triple_result.triples)
             })
 
-            judgment_result = self._execute_judgment_stage(triple_result.triples)
+            judgment_result = self._execute_judgment_stage(triple_result.triples, config_options)
             result.judgment_result = judgment_result
 
             if not judgment_result.success:
@@ -474,25 +475,43 @@ class PipelineOrchestrator:
         
         return triple_result
     
-    def _execute_judgment_stage(self, triples: List[Triple]) -> JudgmentResult:
+    def _execute_judgment_stage(self, triples: List[Triple], config_options=None) -> JudgmentResult:
         """
         Execute the graph judgment stage.
-        
+
         Args:
             triples: List of triples to judge
-            
+            config_options: Optional configuration options from UI
+
         Returns:
             JudgmentResult containing judgment outcomes
         """
+        # Check if explanations are enabled in config
+        enable_explanations = False
+        if config_options and isinstance(config_options, dict):
+            enable_explanations = config_options.get('enable_explanations', False)
+
         def judgment_execution():
-            return judge_triples(triples)
-        
+            if enable_explanations:
+                # Get detailed explanations and convert to JudgmentResult
+                dict_result = judge_triples_with_explanations(triples, include_reasoning=True)
+                return JudgmentResult(
+                    judgments=dict_result["judgments"],
+                    confidence=dict_result["confidence"],
+                    explanations=dict_result["explanations"],
+                    success=dict_result["success"],
+                    processing_time=dict_result["processing_time"],
+                    error=dict_result.get("error")
+                )
+            else:
+                return judge_triples(triples)
+
         judgment_result, error_info = safe_execute(
             judgment_execution,
             logger=self.logger,
             stage="graph_judgment"
         )
-        
+
         # If safe_execute returned an error, convert to JudgmentResult
         if error_info is not None:
             return JudgmentResult(
@@ -503,7 +522,7 @@ class PipelineOrchestrator:
                 processing_time=0.0,
                 error=error_info.message
             )
-        
+
         return judgment_result
     
     def _generate_stats(self, result: PipelineResult) -> Dict[str, Any]:

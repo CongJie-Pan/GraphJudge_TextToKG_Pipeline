@@ -1,0 +1,683 @@
+{
+  "nodes": [
+    {
+      "id": "二仙（僧與道士）",
+      "label": "二仙（僧與道士）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "仁清巷",
+      "label": "仁清巷",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "十里街",
+      "label": "十里街",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "大如州",
+      "label": "大如州",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "太虛幻境",
+      "label": "太虛幻境",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "太虛幻境石牌坊",
+      "label": "太虛幻境石牌坊",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "女媧",
+      "label": "女媧",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "姑蘇",
+      "label": "姑蘇",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "媧皇氏",
+      "label": "媧皇氏",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "孔梅溪",
+      "label": "孔梅溪",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "家僮之一",
+      "label": "家僮之一",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "封氏",
+      "label": "封氏",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "封肅",
+      "label": "封肅",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "時飛（賈雨村表字）",
+      "label": "時飛（賈雨村表字）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "書中事",
+      "label": "書中事",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "曹雪芹",
+      "label": "曹雪芹",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "無材補天石",
+      "label": "無材補天石",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "無稽崖",
+      "label": "無稽崖",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "甄士隱",
+      "label": "甄士隱",
+      "size": 22,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "石頭",
+      "label": "石頭",
+      "size": 22,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "石頭記",
+      "label": "石頭記",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "神瑛侍者",
+      "label": "神瑛侍者",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "空空道人（情僧）",
+      "label": "空空道人（情僧）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "紅樓夢",
+      "label": "紅樓夢",
+      "size": 20,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "絳珠仙子",
+      "label": "絳珠仙子",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "絳珠草",
+      "label": "絳珠草",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "胡州",
+      "label": "胡州",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "脂硯齋",
+      "label": "脂硯齋",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "英蓮",
+      "label": "英蓮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "英蓮失蹤",
+      "label": "英蓮失蹤",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "葫蘆廟",
+      "label": "葫蘆廟",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "警幻仙子",
+      "label": "警幻仙子",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "警幻仙子宮",
+      "label": "警幻仙子宮",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈化（賈化／賈雨村別名）",
+      "label": "賈化（賈化／賈雨村別名）",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈雨村",
+      "label": "賈雨村",
+      "size": 20,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "通靈寶玉",
+      "label": "通靈寶玉",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "金陵十二釵",
+      "label": "金陵十二釵",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "閶門外",
+      "label": "閶門外",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "雨村",
+      "label": "雨村",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "霍啟",
+      "label": "霍啟",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "青埂峰",
+      "label": "青埂峰",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "風月寶鑒",
+      "label": "風月寶鑒",
+      "size": 16,
+      "color": "#4ECDC4"
+    }
+  ],
+  "edges": [
+    {
+      "source": "紅樓夢",
+      "target": "石頭記",
+      "label": "別名",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "紅樓夢",
+      "target": "金陵十二釵",
+      "label": "別名",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "紅樓夢",
+      "target": "風月寶鑒",
+      "label": "別名",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "脂硯齋",
+      "target": "石頭記",
+      "label": "用名",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "曹雪芹",
+      "target": "紅樓夢",
+      "label": "輯纂",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "孔梅溪",
+      "target": "風月寶鑒",
+      "label": "題作",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "石頭",
+      "target": "無稽崖",
+      "label": "來源地點",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "石頭",
+      "target": "青埂峰",
+      "label": "來源地點",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "石頭",
+      "target": "媧皇氏",
+      "label": "來歷",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "女媧",
+      "target": "媧皇氏",
+      "label": "同一人",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "女媧",
+      "target": "石頭",
+      "label": "煉石補天",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "無材補天石",
+      "target": "石頭",
+      "label": "即",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "通靈寶玉",
+      "target": "石頭",
+      "label": "由來",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "太虛幻境",
+      "target": "太虛幻境石牌坊",
+      "label": "包含",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "太虛幻境",
+      "target": "警幻仙子宮",
+      "label": "有",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "警幻仙子",
+      "target": "絳珠草",
+      "label": "牽引",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "絳珠草",
+      "target": "絳珠仙子",
+      "label": "化人",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "神瑛侍者",
+      "target": "絳珠草",
+      "label": "灌養",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "神瑛侍者",
+      "target": "絳珠仙子",
+      "label": "相關",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "甄士隱",
+      "target": "封氏",
+      "label": "妻子",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "甄士隱",
+      "target": "英蓮",
+      "label": "女兒",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "甄士隱",
+      "target": "通靈寶玉",
+      "label": "得",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "甄士隱",
+      "target": "二仙（僧與道士）",
+      "label": "夢中見",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "甄士隱",
+      "target": "姑蘇",
+      "label": "地點",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "封氏",
+      "target": "封肅",
+      "label": "父親",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "封肅",
+      "target": "大如州",
+      "label": "籍貫",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "封肅",
+      "target": "甄士隱",
+      "label": "與",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "霍啟",
+      "target": "家僮之一",
+      "label": "為",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "霍啟",
+      "target": "英蓮失蹤",
+      "label": "致使",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "葫蘆廟",
+      "target": "仁清巷",
+      "label": "位置",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "仁清巷",
+      "target": "十里街",
+      "label": "在",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "十里街",
+      "target": "閶門外",
+      "label": "在",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈雨村",
+      "target": "賈化（賈化／賈雨村別名）",
+      "label": "別名",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈雨村",
+      "target": "時飛（賈雨村表字）",
+      "label": "表字",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈雨村",
+      "target": "雨村",
+      "label": "別號",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈雨村",
+      "target": "胡州",
+      "label": "籍貫",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈雨村",
+      "target": "葫蘆廟",
+      "label": "暫寄",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "空空道人（情僧）",
+      "target": "書中事",
+      "label": "傳述",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "風月寶鑒",
+      "target": "紅樓夢",
+      "label": "為別名",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    }
+  ],
+  "entities": [
+    "二仙（僧與道士）",
+    "仁清巷",
+    "十里街",
+    "大如州",
+    "太虛幻境",
+    "太虛幻境石牌坊",
+    "女媧",
+    "姑蘇",
+    "媧皇氏",
+    "孔梅溪",
+    "家僮之一",
+    "封氏",
+    "封肅",
+    "時飛（賈雨村表字）",
+    "書中事",
+    "曹雪芹",
+    "無材補天石",
+    "無稽崖",
+    "甄士隱",
+    "石頭",
+    "石頭記",
+    "神瑛侍者",
+    "空空道人（情僧）",
+    "紅樓夢",
+    "絳珠仙子",
+    "絳珠草",
+    "胡州",
+    "脂硯齋",
+    "英蓮",
+    "英蓮失蹤",
+    "葫蘆廟",
+    "警幻仙子",
+    "警幻仙子宮",
+    "賈化（賈化／賈雨村別名）",
+    "賈雨村",
+    "通靈寶玉",
+    "金陵十二釵",
+    "閶門外",
+    "雨村",
+    "霍啟",
+    "青埂峰",
+    "風月寶鑒"
+  ],
+  "relationships": [
+    "紅樓夢 - 別名 - 石頭記",
+    "紅樓夢 - 別名 - 金陵十二釵",
+    "紅樓夢 - 別名 - 風月寶鑒",
+    "脂硯齋 - 用名 - 石頭記",
+    "曹雪芹 - 輯纂 - 紅樓夢",
+    "孔梅溪 - 題作 - 風月寶鑒",
+    "石頭 - 來源地點 - 無稽崖",
+    "石頭 - 來源地點 - 青埂峰",
+    "石頭 - 來歷 - 媧皇氏",
+    "女媧 - 同一人 - 媧皇氏",
+    "女媧 - 煉石補天 - 石頭",
+    "無材補天石 - 即 - 石頭",
+    "通靈寶玉 - 由來 - 石頭",
+    "太虛幻境 - 包含 - 太虛幻境石牌坊",
+    "太虛幻境 - 有 - 警幻仙子宮",
+    "警幻仙子 - 牽引 - 絳珠草",
+    "絳珠草 - 化人 - 絳珠仙子",
+    "神瑛侍者 - 灌養 - 絳珠草",
+    "神瑛侍者 - 相關 - 絳珠仙子",
+    "甄士隱 - 妻子 - 封氏",
+    "甄士隱 - 女兒 - 英蓮",
+    "甄士隱 - 得 - 通靈寶玉",
+    "甄士隱 - 夢中見 - 二仙（僧與道士）",
+    "甄士隱 - 地點 - 姑蘇",
+    "封氏 - 父親 - 封肅",
+    "封肅 - 籍貫 - 大如州",
+    "封肅 - 與 - 甄士隱",
+    "霍啟 - 為 - 家僮之一",
+    "霍啟 - 致使 - 英蓮失蹤",
+    "葫蘆廟 - 位置 - 仁清巷",
+    "仁清巷 - 在 - 十里街",
+    "十里街 - 在 - 閶門外",
+    "賈雨村 - 別名 - 賈化（賈化／賈雨村別名）",
+    "賈雨村 - 表字 - 時飛（賈雨村表字）",
+    "賈雨村 - 別號 - 雨村",
+    "賈雨村 - 籍貫 - 胡州",
+    "賈雨村 - 暫寄 - 葫蘆廟",
+    "空空道人（情僧） - 傳述 - 書中事",
+    "風月寶鑒 - 為別名 - 紅樓夢"
+  ],
+  "report": {
+    "summary": {
+      "entities": 42,
+      "relationships": 39,
+      "total_evaluated": 53,
+      "approved_triples": 39,
+      "rejected_triples": 14,
+      "average_confidence": 0.76,
+      "processing_timestamp": "2025-09-18T13:57:18.014506"
+    },
+    "processing_summary": {
+      "total_evaluated": 53,
+      "approved_extracted": 39,
+      "approval_rate": 73.58
+    },
+    "quality_metrics": {
+      "entity_count": 42,
+      "relationship_count": 39,
+      "data_source": "Streamlit GraphJudge pipeline",
+      "filter_criteria": "Only approved relationships included"
+    }
+  },
+  "metadata": {
+    "source_type": "streamlit_pipeline",
+    "conversion_timestamp": "2025-09-18T13:57:18.014506",
+    "converter_version": "1.0.0",
+    "visualization_ready": true
+  }
+}

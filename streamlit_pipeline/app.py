@@ -411,7 +411,7 @@ class GraphJudgeApp:
 
             # Run the pipeline with detailed tracking
             start_time = time.time()
-            result = self.orchestrator.run_pipeline(input_text, progress_callback)
+            result = self.orchestrator.run_pipeline(input_text, progress_callback, st.session_state.config_options)
             end_time = time.time()
             
             # Store results using enhanced session management
