@@ -1,0 +1,451 @@
+{
+  "nodes": [
+    {
+      "id": "宗侄名帖",
+      "label": "宗侄名帖",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "寶玉(賈寶玉)",
+      "label": "寶玉(賈寶玉)",
+      "size": 20,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "張如圭",
+      "label": "張如圭",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "本地人",
+      "label": "本地人",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "李嬤嬤(寶玉乳母)",
+      "label": "李嬤嬤(寶玉乳母)",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "林如海",
+      "label": "林如海",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "林如海之女(黛玉)",
+      "label": "林如海之女(黛玉)",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "林黛玉",
+      "label": "林黛玉",
+      "size": 30,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "榮國府",
+      "label": "榮國府",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "玉(寶玉佩玉)",
+      "label": "玉(寶玉佩玉)",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "王夫人",
+      "label": "王夫人",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "王嬤嬤(黛玉奶娘)",
+      "label": "王嬤嬤(黛玉奶娘)",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "薛蟠",
+      "label": "薛蟠",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "襲人(珍珠)",
+      "label": "襲人(珍珠)",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈政",
+      "label": "賈政",
+      "size": 14,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈母(史氏太君)",
+      "label": "賈母(史氏太君)",
+      "size": 20,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "賈母(史氏太君)外祖母",
+      "label": "賈母(史氏太君)外祖母",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈赦",
+      "label": "賈赦",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "賈雨村",
+      "label": "賈雨村",
+      "size": 22,
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "都中/神京之一",
+      "label": "都中/神京之一",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "金陵(應天府)",
+      "label": "金陵(應天府)",
+      "size": 16,
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "雪雁(黛玉丫頭)",
+      "label": "雪雁(黛玉丫頭)",
+      "size": 12,
+      "color": "#45B7D1"
+    },
+    {
+      "id": "鸚哥(丫頭)",
+      "label": "鸚哥(丫頭)",
+      "size": 12,
+      "color": "#45B7D1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "賈雨村",
+      "target": "張如圭",
+      "label": "同為",
+      "weight": 0.85,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "張如圭",
+      "target": "本地人",
+      "label": "地點",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "張如圭",
+      "target": "賈雨村",
+      "label": "通知",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林如海",
+      "target": "賈政",
+      "label": "轉託",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈政",
+      "target": "賈雨村",
+      "label": "助復職",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈雨村",
+      "target": "宗侄名帖",
+      "label": "持",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "賈雨村",
+      "target": "榮國府",
+      "label": "投門於",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈雨村",
+      "target": "金陵(應天府)",
+      "label": "復職於",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "林如海",
+      "target": "林黛玉",
+      "label": "有女",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "林黛玉",
+      "target": "林如海之女(黛玉)",
+      "label": "同義",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "林黛玉",
+      "target": "賈母(史氏太君)外祖母",
+      "label": "隨",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林黛玉",
+      "target": "榮國府",
+      "label": "寄居於",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈母(史氏太君)",
+      "target": "林黛玉",
+      "label": "迎接",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "王夫人",
+      "target": "林黛玉",
+      "label": "招待",
+      "weight": 0.9,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "賈赦",
+      "target": "林黛玉",
+      "label": "未出面接見",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "寶玉(賈寶玉)",
+      "target": "林黛玉",
+      "label": "見面",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "寶玉(賈寶玉)",
+      "target": "玉(寶玉佩玉)",
+      "label": "摔",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈母(史氏太君)",
+      "target": "玉(寶玉佩玉)",
+      "label": "命寶玉復帶",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "寶玉(賈寶玉)",
+      "target": "李嬤嬤(寶玉乳母)",
+      "label": "有乳母",
+      "weight": 1.0,
+      "color": "#2ECC40",
+      "width": 5
+    },
+    {
+      "source": "寶玉(賈寶玉)",
+      "target": "襲人(珍珠)",
+      "label": "有大丫頭",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "襲人(珍珠)",
+      "target": "寶玉(賈寶玉)",
+      "label": "侍奉",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林黛玉",
+      "target": "王嬤嬤(黛玉奶娘)",
+      "label": "帶",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "林黛玉",
+      "target": "雪雁(黛玉丫頭)",
+      "label": "帶",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈母(史氏太君)",
+      "target": "鸚哥(丫頭)",
+      "label": "配",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "林黛玉",
+      "target": "賈母(史氏太君)",
+      "label": "稱病於",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "賈母(史氏太君)",
+      "target": "林黛玉",
+      "label": "命配丸藥給",
+      "weight": 0.75,
+      "color": "#FF851B",
+      "width": 3
+    },
+    {
+      "source": "薛蟠",
+      "target": "金陵(應天府)",
+      "label": "涉案於",
+      "weight": 0.95,
+      "color": "#2ECC40",
+      "width": 4
+    },
+    {
+      "source": "金陵(應天府)",
+      "target": "都中/神京之一",
+      "label": "為",
+      "weight": 0.8,
+      "color": "#2ECC40",
+      "width": 4
+    }
+  ],
+  "entities": [
+    "宗侄名帖",
+    "寶玉(賈寶玉)",
+    "張如圭",
+    "本地人",
+    "李嬤嬤(寶玉乳母)",
+    "林如海",
+    "林如海之女(黛玉)",
+    "林黛玉",
+    "榮國府",
+    "玉(寶玉佩玉)",
+    "王夫人",
+    "王嬤嬤(黛玉奶娘)",
+    "薛蟠",
+    "襲人(珍珠)",
+    "賈政",
+    "賈母(史氏太君)",
+    "賈母(史氏太君)外祖母",
+    "賈赦",
+    "賈雨村",
+    "都中/神京之一",
+    "金陵(應天府)",
+    "雪雁(黛玉丫頭)",
+    "鸚哥(丫頭)"
+  ],
+  "relationships": [
+    "賈雨村 - 同為 - 張如圭",
+    "張如圭 - 地點 - 本地人",
+    "張如圭 - 通知 - 賈雨村",
+    "林如海 - 轉託 - 賈政",
+    "賈政 - 助復職 - 賈雨村",
+    "賈雨村 - 持 - 宗侄名帖",
+    "賈雨村 - 投門於 - 榮國府",
+    "賈雨村 - 復職於 - 金陵(應天府)",
+    "林如海 - 有女 - 林黛玉",
+    "林黛玉 - 同義 - 林如海之女(黛玉)",
+    "林黛玉 - 隨 - 賈母(史氏太君)外祖母",
+    "林黛玉 - 寄居於 - 榮國府",
+    "賈母(史氏太君) - 迎接 - 林黛玉",
+    "王夫人 - 招待 - 林黛玉",
+    "賈赦 - 未出面接見 - 林黛玉",
+    "寶玉(賈寶玉) - 見面 - 林黛玉",
+    "寶玉(賈寶玉) - 摔 - 玉(寶玉佩玉)",
+    "賈母(史氏太君) - 命寶玉復帶 - 玉(寶玉佩玉)",
+    "寶玉(賈寶玉) - 有乳母 - 李嬤嬤(寶玉乳母)",
+    "寶玉(賈寶玉) - 有大丫頭 - 襲人(珍珠)",
+    "襲人(珍珠) - 侍奉 - 寶玉(賈寶玉)",
+    "林黛玉 - 帶 - 王嬤嬤(黛玉奶娘)",
+    "林黛玉 - 帶 - 雪雁(黛玉丫頭)",
+    "賈母(史氏太君) - 配 - 鸚哥(丫頭)",
+    "林黛玉 - 稱病於 - 賈母(史氏太君)",
+    "賈母(史氏太君) - 命配丸藥給 - 林黛玉",
+    "薛蟠 - 涉案於 - 金陵(應天府)",
+    "金陵(應天府) - 為 - 都中/神京之一"
+  ],
+  "report": {
+    "summary": {
+      "entities": 23,
+      "relationships": 28,
+      "total_evaluated": 45,
+      "approved_triples": 28,
+      "rejected_triples": 17,
+      "average_confidence": 0.85,
+      "processing_timestamp": "2025-09-18T22:28:15.318504"
+    },
+    "processing_summary": {
+      "total_evaluated": 45,
+      "approved_extracted": 28,
+      "approval_rate": 62.22
+    },
+    "quality_metrics": {
+      "entity_count": 23,
+      "relationship_count": 28,
+      "data_source": "Streamlit GraphJudge pipeline",
+      "filter_criteria": "Only approved relationships included"
+    }
+  },
+  "metadata": {
+    "source_type": "streamlit_pipeline",
+    "conversion_timestamp": "2025-09-18T22:28:15.318504",
+    "converter_version": "1.0.0",
+    "visualization_ready": true
+  }
+}

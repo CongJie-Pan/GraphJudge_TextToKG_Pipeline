@@ -1,0 +1,1205 @@
+{
+  "judged_triples": [
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "同為",
+        "object": "張如圭",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.85,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "張如圭",
+        "predicate": "地點",
+        "object": "本地人",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "張如圭",
+        "predicate": "通知",
+        "object": "賈雨村",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "冷子興",
+        "predicate": "薦策對象",
+        "object": "賈雨村",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "林如海",
+        "predicate": "轉託",
+        "object": "賈政",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈政",
+        "predicate": "受託自",
+        "object": "林如海",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.8,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈政",
+        "predicate": "助復職",
+        "object": "賈雨村",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "持",
+        "object": "宗侄名帖",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "投門於",
+        "object": "榮國府",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "復職於",
+        "object": "金陵(應天府)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林如海",
+        "predicate": "有女",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林黛玉",
+        "predicate": "同義",
+        "object": "林如海之女(黛玉)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林黛玉",
+        "predicate": "隨",
+        "object": "賈母(史氏太君)外祖母",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林黛玉",
+        "predicate": "寄居於",
+        "object": "榮國府",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "迎接",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "安置於",
+        "object": "碧紗櫥",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 1.0,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "王夫人",
+        "predicate": "招待",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "王夫人",
+        "predicate": "提醒",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.8,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈璉/王熙鳳",
+        "predicate": "為妻子",
+        "object": "賈璉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 1.0,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈璉/王熙鳳",
+        "predicate": "迎接",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈璉/王熙鳳",
+        "predicate": "安排衣物與房舍給",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "邢夫人(賈赦之妻)",
+        "predicate": "送至",
+        "object": "賈赦處",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.95,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈赦",
+        "predicate": "未出面接見",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "與眾姊妹同堂",
+        "object": "迎春",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.75,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "與眾姊妹同堂",
+        "object": "探春",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "與眾姊妹同堂",
+        "object": "惜春",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "寶玉(賈寶玉)",
+        "predicate": "見面",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "寶玉(賈寶玉)",
+        "predicate": "擬表字為",
+        "object": "顰顰",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 1.0,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "寶玉(賈寶玉)",
+        "predicate": "摔",
+        "object": "玉(寶玉佩玉)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "命寶玉復帶",
+        "object": "玉(寶玉佩玉)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "寶玉(賈寶玉)",
+        "predicate": "有乳母",
+        "object": "李嬤嬤(寶玉乳母)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "寶玉(賈寶玉)",
+        "predicate": "有大丫頭",
+        "object": "襲人(珍珠)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "襲人(珍珠)",
+        "predicate": "侍奉",
+        "object": "寶玉(賈寶玉)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林黛玉",
+        "predicate": "帶",
+        "object": "王嬤嬤(黛玉奶娘)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林黛玉",
+        "predicate": "帶",
+        "object": "雪雁(黛玉丫頭)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "配",
+        "object": "鸚哥(丫頭)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "林黛玉",
+        "predicate": "稱病於",
+        "object": "賈母(史氏太君)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈母(史氏太君)",
+        "predicate": "命配丸藥給",
+        "object": "林黛玉",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "府中女子",
+        "predicate": "議論",
+        "object": "金陵(應天府)案事",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "涉案於",
+        "object": "金陵(應天府)",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "王家有人",
+        "predicate": "向",
+        "object": "京中傳話",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.7,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "榮國府",
+        "predicate": "與",
+        "object": "寧國府",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.75,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "榮國府",
+        "predicate": "門額並立於",
+        "object": "寧國府",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.75,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "榮國府",
+        "predicate": "所在地",
+        "object": "都中/神京",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": false,
+      "confidence": 0.95,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "金陵(應天府)",
+        "predicate": "為",
+        "object": "都中/神京之一",
+        "source_text": "賈雨村與張如圭同為曾遇革職者。張如圭為本地人，獲都中起復舊員之信，遇賈雨村即告之。冷子興薦策，令雨村由林如海轉託賈政以求復職。雨村依計入都，持宗侄名帖，於榮國府投門；賈政見其人品，乃力為題奏，月餘補金..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    }
+  ],
+  "explanations": [
+    {
+      "reasoning": "根據《紅樓夢》第三回原文「不是別人，乃是當日同僚一案參革的號張如圭者」，可知賈雨村和張如圭確實同為被革職的官員[1][2]。文中進一步說明「賈雨村在等著重新做官，張如圭也一樣」，證實兩人同樣具有相同的處境和身分地位[1][4]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://rueylin0119.pixnet.net/blog/post/327625971",
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://podcasts.apple.com/us/podcast/0031%E7%AC%AC%E4%B8%89%E5%9B%9E-%E4%B8%8A-%E8%A8%97%E5%85%A7%E5%85%84%E5%A6%82%E6%B5%B7%E8%96%A6%E8%A5%BF%E8%B3%93-%E6%8E%A5%E5%A4%96%E5%AD%AB%E8%B3%88%E6%AF%8D%E6%83%9C%E5%AD%A4%E5%A5%B3/id1723668878?i=1000682025547&l=ar",
+        "https://aipiaxi.com/article-detail/571747",
+        "https://www.163.com/dy/article/IRBDBA250556564D.html",
+        "http://www.360doc.com/content/23/0806/16/117837_1091425934.shtml",
+        "https://www.kuaikanmanhua.com/qa1/103919"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文「他本系此地人，革後家居」，明確表明張如圭是本地人，因此三元組「張如圭 地點 本地人」的陳述是正確的[1][3]。在小說的背景設定中，張如圭是揚州本地人，與賈雨村同為被革職的官員，這一設定在原文「張如圭是本地（揚州）人，革職以後就住在家裡」中得到進一步確認[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://rueylin0119.pixnet.net/blog/post/327625971",
+        "http://m.zimplifyit.com/vip/chapter/niubaoshan/91098_653441.html",
+        "https://aipiaxi.com/article-detail/571747",
+        "https://www.yunzhaji.com/web/readPage/16/174875455778488003/1",
+        "http://www.360doc.com/content/23/0806/16/117837_1091425934.shtml",
+        "https://podcasts.apple.com/cn/podcast/5-%E7%AC%AC%E4%B8%89%E5%9B%9E-%E8%B4%BE%E9%9B%A8%E6%9D%91%E5%A4%A4%E7%BC%98%E5%A4%8D%E6%97%A7%E8%81%8C-%E6%9E%97%E9%BB%9B%E7%8E%89%E6%8A%9B%E7%88%B6%E8%BF%9B%E4%BA%AC%E9%83%BD-%E4%B8%8A/id1765096971?i=1000668548380"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文「張如圭便將此信告訴雨村」，張如圭確實主動向賈雨村通報了朝廷起復舊員的消息，這構成了明確的通知行為[1]。原文進一步描述「他便四下裡尋情找門路，忽遇見雨村，故忙道喜」，說明張如圭是有意將這個重要消息告知賈雨村，符合通知的語義關係[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "https://angelibrary.com/oldies/RedChamber.txt",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6_(1987%E5%B9%B4%E7%94%B5%E8%A7%86%E5%89%A7)",
+        "https://blog.sina.com.cn/s/blog_5e93fc720102yx24.html",
+        "https://share.hawken.edu/DigiDIY/mc-web/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87/books/hong-lou-meng.txt",
+        "https://podcasts.apple.com/cn/podcast/%E7%BA%A2%E6%A5%BC%E6%A2%A6-%E7%AC%AC1%E5%AD%A3/id1829638812",
+        "http://www.hnwomen.com.cn/_upload/article/files/fd/ac/75777b2d4097990b4e2bb5d01db1/5db2e8de-de31-412e-9245-8da5c8d121b1.pdf",
+        "http://www.360doc.com/content/16/0127/22/21574872_531115316.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第二回的描述，冷子興是「都中在古董行中貿易的號冷子興者」，與賈雨村是舊日相識的朋友關係，並非賈雨村的推薦策略對象[1][2]。從文本中可見冷子興主要是向賈雨村「演說榮國府」，介紹賈府情況的信息提供者，而賈雨村則「最贊這冷子興是個有作為大本領的人」，顯示兩人是相互欣賞的朋友關係而非上下級的推薦關係[1][3]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://blog.sina.com.cn/s/blog_5e93fc720102yxdd.html",
+        "https://vocus.cc/article/5c541e1cfd89780001c63029",
+        "https://news.qq.com/rain/a/20220319A03G6L00",
+        "http://www.360doc.com/content/19/0215/15/59252224_815129845.shtml",
+        "https://podcasts.apple.com/us/podcast/0022%E7%AC%AC%E4%BA%8C%E5%9B%9E-%E4%B8%AD-%E8%B3%88%E5%A4%AB%E4%BA%BA%E4%BB%99%E9%80%9D%E6%8F%9A%E5%B7%9E%E5%9F%8E-%E5%86%B7%E5%AD%90%E8%88%88%E6%BC%94%E8%AA%AA%E6%A6%AE%E5%9C%8B%E5%BA%9C/id1723668878?i=1000679649515&l=ar",
+        "https://podcasts.apple.com/us/podcast/0023%E7%AC%AC%E4%BA%8C%E5%9B%9E-%E4%B8%8B-%E8%B3%88%E5%A4%AB%E4%BA%BA%E4%BB%99%E9%80%9D%E6%8F%9A%E5%B7%9E%E5%9F%8E-%E5%86%B7%E5%AD%90%E8%88%88%E6%BC%94%E8%AA%AA%E6%A6%AE%E5%9C%8B%E5%BA%9C/id1723668878?i=1000681284419"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》第三回的原文記載，林如海確實通過轉託的方式請求賈政協助，原文明確提到「弟已預為籌畫至此，已修下薦書一封，轉託內兄務為周全協佐」[1][4]。此處的「轉託內兄」直接證實了林如海轉託賈政處理貢雨村復職一事，其中「內兄」即指賈政，因為賈政是林如海妻子賈敏的兄弟[2][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "http://www.360doc.com/content/21/1202/07/76637984_1006785405.shtml",
+        "https://news.qq.com/rain/a/20240329A0146600",
+        "http://www.360doc.com/content/23/0806/16/117837_1091425948.shtml",
+        "https://m.qulishi.com/article/202204/602283.html",
+        "https://www.163.com/dy/article/GQNAVR2R0541IODP.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓梦》文本分析，實際情況是貴政委託林如海尋找潛力股，如「貴政肯定早有書信讓他幫忙尋找潛力股，而貴雨村符合標準」所示，他們是「職場的合作人，一個找人，一個安排」的關係[1]。雖然林如海與貴政關係密切，「貴政和林如海關係很好」且「林如海與貴政關係非常好」[4]，但委託的方向是貴政委託林如海，而非林如海委託貴政，因此三元組的關係方向錯誤。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://guoxue.ifeng.com/c/8SnHYxBbBVj",
+        "http://www.360doc.com/content/23/0806/16/117837_1091425948.shtml",
+        "https://m.qulishi.com/article/202202/588619.html",
+        "https://m.qulishi.com/article/202112/568185.html",
+        "http://www.360doc.com/content/17/0418/17/18314967_646608472.shtml",
+        "https://www.163.com/dy/article/I5LFL5PM0552MLK7.html"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文記載「彼時賈政已看了妹丈之書，即忙請入相會」以及「到了奏請復職的日子，賈政盡力協助，輕易就幫雨村謀到了一個復職候制」[1][2]，可確認賈政確實幫助賈雨村復職。此事發生的背景是林如海寫信推薦賈雨村給賈政，而賈政因「最喜讀書人，禮賢下士，濟弱扶危」的性格特點，加上妹丈林如海的推薦，因此優待雨村並全力協助其復職[2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/HVO40STF0541IODP.html",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC120%E5%9B%9E",
+        "https://news.qq.com/rain/a/20241114A01KVG00"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文「有日到了都中，進入神京，雨村先整了衣冠，帶了小童，拿著宗侄的名帖，至榮府的門前投了」，明確記載賈雨村確實持有宗侄的名帖前往榮國府[1][2]。這個情節發生在賈雨村通過林如海的關係，準備拜訪賈政以求復職的過程中，宗侄名帖是他用來引薦自己身份的重要憑證[1][2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm3.HTM",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC120%E5%9B%9E",
+        "https://ctext.org/wiki.pl?if=en&chapter=51452&remap=gb",
+        "https://china-studies.com/hlm/",
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2%EF%BC%88%E7%A8%8B%E7%94%B2%E6%9C%AC%EF%BC%89/%E4%B8%89",
+        "https://upload.wikimedia.org/wikipedia/commons/0/0c/NLC892-411999018797-305954_%E7%B4%85%E6%A8%93%E5%A4%A2_%E7%AC%AC2%E5%86%8A.pdf"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第三回的描述，賈雨村確實有到榮國府拜訪的行為，原文記載「賈雨村打扮整齊，帶了僕人去賈府拜訪。拜訪的程序是：先在榮國府大門口投遞名片，上面寫自己的姓名和身份，然後等待主人看要不要見他」[1]。此次拜訪是因為林如海的推薦，「之前林如海早就寫信給賈政說賈雨村的事了，所以賈政看到賈雨村的名片就馬上請他進來相見」，賈政對賈雨村「盡力幫助」，這證實了「投門」關係的建立[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "http://freereddream.blogspot.com/2013/05/3.html",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC053%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/002.htm",
+        "https://flamerecca.gitbooks.io/-redchamber/poetry.html",
+        "https://ctext.org/hongloumeng/ch17/zh",
+        "https://ctext.org/hongloumeng/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》第三回原文記載，賈雨村透過林如海和賈政的協助成功復職，「題奏之日，輕輕謀了一個復職候缺，不上兩個月，金陵應天府缺出，便謀補了此缺，拜辭了賈政，擇日上任去了」[4]。此三元組完全準確，因為原著明確描述賈雨村最終獲補金陵應天府的職缺並赴任，這是他復職過程的具體結果[4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC120%E5%9B%9E",
+        "https://m.gushiwen.cn/guwen/bookv_50356fa088f5.aspx",
+        "http://freereddream.blogspot.com/2013/05/3.html",
+        "https://m.zhangyue.com/readbook/10901771/4.html?p2=116187",
+        "https://m.gushiwen.cn/guwen/bookv_690cc5f09ff4.aspx",
+        "https://ctext.org/hongloumeng/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原著記載以及維基百科資料，林如海確實是中國古典名著《紅樓夢》人物林黛玉之父，此三元組關係完全正確[1]。林如海與妻子賈敏育有一子一女，兒子三歲時早夭，女兒林黛玉在母親賈敏病逝後成為林如海唯一的親人，後來被外祖母賈母接到賈府教養[1][2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E6%9E%97%E5%A6%82%E6%B5%B7",
+        "http://www.360doc.com/content/22/1024/18/39942325_1053121582.shtml",
+        "https://news.qq.com/rain/a/20250325A01XG000"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原著描述，林黛玉確實是林如海的女兒，維基百科明確記載「父林如海乃前科之探花，官至揚州巡鹽御史」[2]。此三元組中「林如海之女(黛玉)」與「林黛玉」指向同一人物，搜索結果中多處提及「寶貝女兒林黛玉」等表述，證實了這種父女關係的準確性[1]。",
+      "evidence_sources": [
+        "literary_works",
+        "general_knowledge"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/GILPHE1G05527L16.html",
+        "https://zh.wikipedia.org/zh-hant/%E6%9E%97%E9%BB%9B%E7%8E%89",
+        "https://m.qulishi.com/article/202210/659687.html",
+        "http://www.360doc.com/content/23/0729/11/36319167_1090449776.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原著描述，賈母（史太君）確實是林黛玉的外祖母，因為賈母是賈敏的母親，而林黛玉是賈敏與林如海的女兒[1]。賈母因為疼愛這個「年幼父母雙亡的外孫女林黛玉」，將其接到賈府「包攬教養」，所以林黛玉確實跟隨外祖母賈母生活在榮國府中[1]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-tw/%E8%B3%88%E6%AF%8D",
+        "https://life.fhl.net/Literature/culture/hongloumeng/hlm11.htm",
+        "https://theme.npm.edu.tw/NPMdreamredchamber/page-4",
+        "https://boardmix.cn/article/hlmcharacterrelations/",
+        "http://www.360doc.com/content/18/0415/07/18841360_745747550.shtml",
+        "https://iguoxue.ifeng.com/60024349/news.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載「林黛玉聽從外祖賈母的安排，投居於榮國府」以及「且說黛玉自那日棄舟登岸時，便有榮國府打發了轎子並拉行李的車輛久候了」，可確認林黛玉確實寄居於榮國府[1][2]。從文中「如今且說林黛玉自在榮府以來，賈母萬般憐愛，寢食起居，一如寶玉」的描述可知，林黛玉作為賈母的外孫女，在母親賈敏病逝後便長期居住在榮國府中，這正是典型的寄居關係[4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://m.gushiwen.cn/shiwenv_a52d7364c488.aspx",
+        "https://zh.wikipedia.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2%E7%AB%A0%E5%9B%9E%E5%88%97%E8%A1%A8",
+        "http://cls.lib.ntu.edu.tw/hlm/BIN/s_full.asp",
+        "http://freereddream.blogspot.com/2013/05/5.html",
+        "http://freereddream.blogspot.com",
+        "https://ctext.org/hongloumeng/zh",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文記載，「黛玉方進入房時，只見兩個人攙著一位鬢髮如銀的老母迎上來，黛玉知是外祖母了」，並明確註明「此即冷子興所云之史氏太君，賈赦賈政之母也」[1][2]。原文詳細描述了賈母迎接林黛玉的具體過程：「正欲下拜，早被外祖母一把摟入懷中，心肝兒肉叫著大哭起來」，充分證實了賈母（史氏太君）確實迎接了林黛玉這一事實[1][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/003.htm",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm3.HTM",
+        "http://www.skyedpress.com.hk/lite_new/asp_t2/03_essay/download/essay/html/1454.htm",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC029%E5%9B%9E",
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC018%E5%9B%9E",
+        "https://ctext.org/hongloumeng/ch3/zhs",
+        "https://m.gushiwen.cn/guwen/bookv_661dbe9f6b5d.aspx",
+        "https://m.gushiwen.cn/guwen/bookv_3c570c139d23.aspx",
+        "https://www.classicalchineseliterature.org/article.php?article=%E7%B4%85%E6%A8%93%E5%A4%A2%E3%83%BB%E6%8E%A5%E5%A4%96%E5%AD%AB%E8%B3%88%E6%AF%8D%E6%83%9C%E5%AD%A4%E5%A5%B3"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文「賈母說：『今將寶玉挪出來，同我在套間暖閣兒裏，把你林姑娘暫安置碧紗櫥裏』」可知，是賈母安排林黛玉住在碧紗櫥內，而非賈母自己安置於碧紗櫥[1][3]。原文進一步記載「王嬷嬷與鹦哥陪侍黛玉在碧纱橱内，宝玉之乳母李嬷嬷，並大丫鬟名唤袭人者，陪侍在外面大床上」，明確顯示碧紗櫥是林黛玉的臨時住所，賈母則住在套間暖閣[3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/003.htm",
+        "http://www.360doc.com/content/19/0523/10/32335138_837654684.shtml",
+        "https://m.gushiwen.cn/shiwenv_a52d7364c488.aspx",
+        "https://www.163.com/dy/article/G6EIBUPI053781MN.html",
+        "https://ctext.org/wiki.pl?if=gb&res=731000"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，王夫人確實招待了林黛玉，如「王夫人忙攜黛玉從後房門由後廊往西」以及「王夫人見了林黛玉，因問道：『大姑娘，你吃那鮑太醫的藥可好些？』」等描述顯示了王夫人對黛玉的照顧和招待[1][2]。從更深層的關係來看，王夫人作為賈府的主要女主人之一，對初來賈府的林黛玉承擔了招待責任，這在原文中通過「於是，進入後房門，已有多人在此伺候，見王夫人來了，方安設桌椅」等用餐安排細節得到體現[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikibooks.org/zh-hant/%E9%AB%98%E4%B8%AD%E8%AF%AD%E6%96%87/%E5%BF%85%E4%BF%AE%E4%B8%89/%E6%9E%97%E9%BB%9B%E7%8E%89%E8%BF%9B%E8%B4%BE%E5%BA%9C",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC028%E5%9B%9E",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC025%E5%9B%9E",
+        "https://zh.wikipedia.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2%E7%AB%A0%E5%9B%9E%E5%88%97%E8%A1%A8",
+        "https://zh.wikipedia.org/zh-hant/%E7%BA%A2%E6%A5%BC%E6%A2%A6%E5%B9%B4%E8%B0%B1"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據搜索結果中的《紅樓夢》原文，我發現的是「一句話提醒了王夫人，遂叫過趙姨娘來，罵道：『養出這樣黑心種子來，也不教訓教訓！』」，這裡顯示的是別人提醒王夫人，而非王夫人提醒林黛玉[1][3]。在提供的文本片段中，王夫人主要與寶玉討論藥物問題（「前兒的丸藥都吃完了？」），而林黛玉的互動主要是與寶釵、鳳姐等人，並未出現王夫人直接提醒林黛玉的情節[4][5]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/025.htm",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC025%E5%9B%9E",
+        "https://m.gushiwen.cn/guwen/bookv_f4d33b666866.aspx",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC023%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/023.htm",
+        "http://www.sidneyluo.net/e/e1/076.htm",
+        "https://ctext.org/hongloumeng/ch97/zhs",
+        "https://m.gushiwen.cn/guwen/bookv_ea835ba97001.aspx",
+        "https://ctext.org/wiki.pl?if=gb&chapter=519616"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》文本記載，王熙鳳是賈璉的妻子，而三元組中「賈璉/王熙鳳 為妻子 賈璉」的表述存在明顯的語法和邏輯錯誤，因為賈璉不可能是自己的妻子[2][3]。正確的關係應該是「王熙鳳 為妻子 賈璉」，如搜尋結果所示「凤姐嫁入贾府不过二年光景，与贾琏是青年夫妇」以及「贾琏、王熙凤这对夫妇」的描述[2][3]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://hongloumeng.shahaizi.com/hongloumeng/82/13425.html",
+        "https://guoxue.ifeng.com/c/7oy5sSRDMst",
+        "http://www.guoxue123.com/hongxue/0001/hlwy/071.htm"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "根據搜索結果中引用的《紅樓夢》原文，林黛玉初進榮國府時主要描述了與王熙鳳的見面場景「一雙丹鳳三角眼，兩彎柳葉吊梢眉」[2]，但並未明確提及賈璉與王熙鳳共同迎接林黛玉的具體情節。雖然搜索結果顯示賈璉對林黛玉「客客氣氣」且「從沒有其他不好的心思」[4]，但這描述的是日常相處態度而非特定的迎接行為，缺乏支持該三元組的直接文本證據。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E7%8E%8B%E7%86%99%E9%B3%B3",
+        "https://hongloumeng.shahaizi.com/hongloumeng/82/13425.html",
+        "http://www.360doc.com/content/25/0426/10/55894162_1152142077.shtml",
+        "https://www.qulishi.com/article/202206/630142.html",
+        "https://boardmix.cn/article/hlmcharacterrelations/"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "搜索結果顯示王熙鳳是「榮國府的實際當家人」[1]，賈璉和王熙鳳「親眼看見柔弱的林黛玉丧母、又丧父」且「都心疼林黛玉」[3]，但並未提及具體安排衣物與房舍的行為。雖然從王熙鳳作為當家人的職責來看安排家中成員起居是合理的，但搜索結果中缺乏直接證據支持「安排衣物與房舍給林黛玉」這一具體關係陳述[1][3]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E7%8E%8B%E7%86%99%E9%B3%B3",
+        "https://hongloumeng.shahaizi.com/hongloumeng/82/13425.html",
+        "https://m.qulishi.com/article/202207/631669.html",
+        "http://www.360doc.com/content/25/0426/10/55894162_1152142077.shtml",
+        "https://boardmix.cn/article/hlmcharacterrelations/"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，邢夫人是賈赦的繼室夫人，「賈赦嫡妻早亡後，娶了邢夫人為繼室」，她是通過正式婚姻嫁給賈赦，而非被「送至」賈赦處。三元組中「送至」一詞不當地描述了邢夫人與賈赦的夫妻關係，因為邢夫人作為「明媒正娶的長房太太」，其身份地位並非物品或奴僕可以被送達，而是具有正妻地位的夫人。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://news.qq.com/rain/a/20200602A0HYF400",
+        "https://m.qulishi.com/article/202505/688453.html",
+        "https://known.ifeng.com/a/20190924/45658597_0.shtml",
+        "https://www.thepaper.cn/newsDetail_forward_15047279?from="
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載，林黛玉初進榮國府時要去見兩個母舅賈赦和賈政，但兩個舅舅她一個也沒見著，其中賈政是因為「齋戒去了」，而賈赦則是因為「暫時不願相見」[1]。此外，文本分析顯示在前八十回中林黛玉與大舅舅賈赦幾乎沒有任何交集，這種疏遠關係可能源於賈赦與林如海（黛玉父親）關係並不親厚，以及賈赦本身的性格特點[1][4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.thepaper.cn/newsDetail_forward_16024699?from=",
+        "https://zh.wikipedia.org/zh-hant/%E6%9E%97%E9%BB%9B%E7%8E%89",
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://www.163.com/dy/article/GTHOI17P05529766.html",
+        "http://www.360doc.com/content/23/0806/16/117837_1091426026.shtml",
+        "https://m.qulishi.com/article/202303/676005.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據搜索結果中《紅樓夢》第三回的原文描述，賈母確實是\"史氏太君，賈赦賈政之母\"，但迎春是賈赦的女兒，即賈母的孫女而非姊妹[1]。從原文\"賈母又說：「請姑娘們來。今日遠客纔來，可以不必上學去了。」\"可知，迎春等人是作為\"姑娘們\"被稱呼，她們是賈母的孫女輩，與賈母存在祖孫關係而非姊妹關係[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/018.htm",
+        "https://m.gushiwen.cn/shiwenv_a52d7364c488.aspx",
+        "https://m.gushiwen.cn/guwen/bookv_ca3ee0e7ebd7.aspx"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原著及搜索結果所示，賈母是賈府的老太太，探春是「賈府三小姐，是紅樓夢主角賈寶玉庶出的妹妹」[2]，兩人實為祖孫關係而非同輩的「同堂」關係。從搜索結果中的「紅樓夢主要人物關係簡圖」可見「榮國府 賈代善 賈母(妻)」[2]的家族結構，賈母作為祖母輩與孫女輩的探春應為「祖孫同居」而非「姊妹同堂」的關係。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://rueylin0119.pixnet.net/blog/post/332560099",
+        "https://www.pmai.tn.edu.tw/wp-content/uploads/sites/25/2022/09/9%E8%B3%88%E6%8E%A2%E6%98%A5%E6%95%8F%E6%85%A7%E8%88%88%E5%88%A9.pdf",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC005%E5%9B%9E",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC056%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/005.htm",
+        "http://cls.lib.ntu.edu.tw/HLM/body/hlm084.htm",
+        "https://m.gushiwen.cn/guwen/bookv_9786fe133d81.aspx",
+        "http://cls.lib.ntu.edu.tw/hlm/read/text/body.ASP?CHNO=100",
+        "https://ctext.org/hongloumeng/zhs"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文「賈母又說：『請姑娘們來。今日遠客纔來，可以不必上學去了。』」可知賈母確實與眾姊妹相聚，但三元組表述「與眾姊妹同堂惜春」在語法上有誤[1][3]。正確的表達應為「賈母與包括惜春在內的眾姊妹同堂」，因為惜春作為賈家四小姐確實會與其他姊妹一起在賈母處聚會，但此處「惜春」被誤用為動詞而非名詞[1]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/018.htm",
+        "https://m.gushiwen.cn/shiwenv_a52d7364c488.aspx",
+        "https://m.gushiwen.cn/guwen/bookv_ca3ee0e7ebd7.aspx"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載，寶玉與林黛玉確實有過見面，原文中明確描述「寶玉早已看見了一個嬝嬝婷婷的女兒，便料定是林姑媽之女，忙來見禮」以及「寶玉便走近黛玉身邊坐下，又細細打量一番」[1]。這次見面發生在林黛玉初入榮府時，是《紅樓夢》中的經典情節，標誌著兩位主角命運的正式交織，後續章回中也多次描述他們的互動與情感糾葛[3][4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.skyedpress.com.hk/lite_new/asp_t2/03_essay/download/essay/html/1454.htm",
+        "https://zh.wikipedia.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2%E7%AB%A0%E5%9B%9E%E5%88%97%E8%A1%A8",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC018%E5%9B%9E",
+        "https://m.gushiwen.cn/guwen/bookv_f922338c4144.aspx",
+        "https://www.8bei8.com/book/hongloumeng.html",
+        "https://m.gushiwen.cn/shiwenv_50f5ed45a86a.aspx",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2",
+        "https://ctext.org/hongloumeng/zhs"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文記載，寶玉對黛玉說「我送妹妹一妙字，莫若『顰顰』二字極妙」，明確顯示寶玉是為林黛玉擬定表字「顰顰」，而非為自己擬定[2]。該三元組錯誤地將顰顰歸屬為寶玉的表字，但實際上顰顰是寶玉贈予黛玉的表字，其典故來源於《古今人物通考》中「西方有石名黛，可代畫眉之墨」，且因黛玉「眉尖若蹙」的神態而得名[1][2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E6%9E%97%E9%BB%9B%E7%8E%89",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "https://news.qq.com/rain/a/20240903A014L200",
+        "https://zh.wikipedia.org/zh-cn/%E7%BB%9B%E7%8F%A0%E4%BB%99%E5%AD%90?oldformat=true",
+        "https://www.163.com/dy/article/EUGUOQR9054130WZ.html"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》第三回原文記載，寶玉與黛玉初相見時「登時發作起痴狂病來，摘下那玉，就狠命摔去」，明確顯示賈寶玉確實有摔玉的行為[4]。此外，在第二十九回中，寶玉因張道士提親一事「再振平生氣力，不僅摔玉，而且砸玉」，進一步證實了賈寶玉摔玉這一行為的真實性[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.merit-times.com.tw/NewsPage.aspx?unid=253264",
+        "https://zh.wikipedia.org/zh-tw/%E8%B3%88%E5%AF%B6%E7%8E%89",
+        "https://www.163.com/dy/article/HUOR6M560521DQ9P.html",
+        "https://www.aisixiang.com/data/126458.html",
+        "https://topics.gmw.cn/2019-12/25/content_33657683.htm",
+        "https://www.chinanews.com.cn/cul/2011/02-12/2837618.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第三回原文記載，當寶玉因黛玉沒有玉而發脾氣摔掉自己的通靈寶玉後，賈母最終「說著，便向丫鬟手中接來，親與他帶上」，明確顯示了賈母命令寶玉重新佩戴玉的情節[2]。這一情節發生在林黛玉初進賈府時，體現了賈母作為家族長輩的權威地位，以及通靈寶玉在《紅樓夢》中作為寶玉「命根子」的重要象徵意義[2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC098%E5%9B%9E",
+        "https://zh.wikibooks.org/zh-hant/%E9%AB%98%E4%B8%AD%E8%AF%AD%E6%96%87/%E5%BF%85%E4%BF%AE%E4%B8%89/%E6%9E%97%E9%BB%9B%E7%8E%89%E8%BF%9B%E8%B4%BE%E5%BA%9C",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC040%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/003.htm",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/041.htm",
+        "http://cls.lib.ntu.edu.tw/hlm/body/hlm021.htm",
+        "https://m.gushiwen.cn/guwen/bookv_5323ee13c711.aspx",
+        "https://ctext.org/hongloumeng/ch41/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回原文「寶玉之乳母李嬤嬤，並大丫環名喚襲人者，陪侍在外面大床上」，明確記載李嬤嬤是賈寶玉的乳母[1][2]。此外，文本中多處提及「從李奶媽委屈中可知，她從小用奶水餵養賈寶玉」，進一步確認了李嬤嬤作為寶玉乳母的身份和職責[1][4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/HR0628SB0521S69N.html",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC008%E5%9B%9E",
+        "https://podcasts.apple.com/mo/podcast/hazel%E7%9A%84%E7%B4%85%E6%A8%93%E5%A4%A2%E8%A9%B1/id1723668878",
+        "https://blog.sina.com.cn/s/blog_151d3c6700102ymtc.html",
+        "http://www.360doc.com/content/20/0309/17/68956143_897981372.shtml",
+        "http://www.360doc.com/content/24/0517/16/129428_1123573168.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第三回的記載，袭人原本是貴母的婢女，本名珍珠，「貴母因溺愛寶玉，生恐寶玉之婢無竭力盡忠之人，素喜珍珠心地純良，克盡職任，遂與了寶玉」[1][2]。書中明確描述袭人是貴寶玉最貼身的丫環，「可以說就是『通房大丫頭』」，在第五回中袭人一登場便與貴寶玉建立了親密關係[3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.360doc.com/content/20/0305/22/16123909_897100325.shtml",
+        "https://www.163.com/dy/article/IK19VQ3F0552MLK7.html",
+        "https://www.163.com/dy/article/G5P3SOV805521YX9.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，襲人確實是賈寶玉的貼身丫鬟，搜索結果中明確提到「她在服侍寶玉起床之時，發現了他的秘密」以及王夫人對她說「你好生服侍寶玉，將來自然不會虧待你」[1]。此外，賈寶玉每次回到怡紅院「第一句話就是問：你袭人姐姐呢？」，這充分說明襲人作為貼身丫鬟長期侍奉寶玉的事實[2]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://hongloumeng.shahaizi.com/hongloumeng/81/12789.html",
+        "http://www.360doc.com/content/20/1209/15/72835031_950405297.shtml",
+        "http://news.cctv.com/special/C16652/20070803/105715.shtml",
+        "https://ctext.org/hongloumeng/ch6/zh",
+        "https://www.163.com/dy/article/HD9STHE00543VDO7.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》第三回原文記載「黛玉只帶了兩個人來：一個是自幼奶娘王嬤嬤，一個是十歲的小丫頭，亦是自幼隨身的，名喚作雪雁」[1]，林黛玉進賈府時確實帶著奶娘王嬤嬤。賈母見王嬤嬤年紀極老，認為她照顧黛玉不夠得力，因此安排了自己身邊的二等丫頭鸚哥來協助[1][2]，這進一步證實了王嬤嬤作為黛玉奶娘跟隨黛玉進府的事實。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikibooks.org/wiki/%E9%AB%98%E4%B8%AD%E8%AF%AD%E6%96%87/%E5%BF%85%E4%BF%AE%E4%B8%89/%E6%9E%97%E9%BB%9B%E7%8E%89%E8%BF%9B%E8%B4%BE%E5%BA%9C",
+        "http://inews.ifeng.com/yidian/60078613/news.shtml?ch=ref_zbs_ydzx_news",
+        "http://www.360doc.com/content/22/1017/13/80817707_1052052131.shtml",
+        "https://teric.naer.edu.tw/wSite/PDFReader?xmlId=1645233&fileName=1400771906535&format=PDF"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》原文記載，黛玉進賈府時確實帶了雪雁作為貼身丫鬟，原文明確提到「雪雁則是黛玉從家裡帶過來的丫鬟」和「黛玉只帶了兩個人來：一個是自幼奶娘王嬷嬷，一個是十歲的小丫頭」[1]。在小說的多個章回中都可見雪雁陪伴在黛玉身邊，如第二十七回「紫鵑雪雁素日知道林黛玉的情性」，證實了雪雁確為黛玉的丫鬟並長期服侍於她[2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.360doc.com/content/20/0211/16/129428_891286449.shtml",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC027%E5%9B%9E",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2%E8%A3%9C/44",
+        "https://news.qq.com/rain/a/20210609A0BHHV00",
+        "https://m.gushiwen.cn/guwen/bookv_3c570c139d23.aspx",
+        "http://cls.lib.ntu.edu.tw/hlm/body/HLM057.HTM"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原著記載，鸚哥確實是賈母身邊的二等丫環，正如文中所述「紫鵑原名鸚哥，是賈母親自調教出來的二等丫環」，這明確證實了賈母配有鸚哥這個丫頭的關係。此外，《紅樓夢》中還特別提到「黛玉來賈家後，賈母將紫鵑派去服侍黛玉」，進一步證明鸚哥原本就是賈母的丫鬟，後來才被賈母重新安排去服侍林黛玉並改名為紫鵑。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://rueylin0119.pixnet.net/blog/post/334655293",
+        "https://zh.wikipedia.org/zh-tw/%E8%B3%88%E6%AF%8D",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://blog.udn.com/amlink/6324402",
+        "https://hongloumeng.shahaizi.com/hongloumeng/80/14341.html",
+        "https://www.scribd.com/document/585465279/2022-07-25-%E7%B4%85%E6%A8%93%E5%A4%A2%E4%BA%BA%E7%89%A9%E9%97%9C%E4%BF%82%E8%A1%A8"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載，林黛玉進賈府時向眾人包括賈母說明自己的病情，原文中載「眾人見黛玉年貌雖小，其舉止言談不俗，身體面庞雖怯弱不勝，却有一段自然的風流態度，便知他有不足之症」，黛玉隨即詳述病史並提及「如今還是吃人參養榮丸」[2]。賈母聽後立即回應「正好，我這裡正配丸藥呢，叫他們多配一料就是了」，而原文也確認「此即冷子興所云之史氏太君，賈赦賈政之母也」[4]，證實賈母即為史氏太君。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC098%E5%9B%9E",
+        "https://zh.wikibooks.org/zh-hant/%E9%AB%98%E4%B8%AD%E8%AF%AD%E6%96%87/%E5%BF%85%E4%BF%AE%E4%B8%89/%E6%9E%97%E9%BB%9B%E7%8E%89%E8%BF%9B%E8%B4%BE%E5%BA%9C",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC029%E5%9B%9E",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm3.HTM",
+        "https://m.gushiwen.cn/shiwenv_a52d7364c488.aspx",
+        "https://zh.wikipedia.org/zh-tw/%E8%B3%88%E6%AF%8D",
+        "http://www.skyedpress.com.hk/lite_new/asp_t2/03_essay/download/essay/html/1454.htm"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第三回的原文記載，當林黛玉提到「如今還是吃人參養榮丸」時，賈母立即回應道「正好，我這裡正配丸藥呢。叫他們多配一料就是了」[1][3]，這明確顯示賈母確實命配丸藥給林黛玉。此外，在第二十八回中也有「老太太還叫我吃王大夫的藥呢」的描述[5]，進一步證實了賈母對林黛玉用藥的關心和安排，體現了她對外孫女的疼愛之情。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC003%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/097.htm",
+        "https://m.gushiwen.cn/guwen/bookv_50356fa088f5.aspx",
+        "http://www.skyedpress.com.hk/lite_new/asp_t2/03_essay/download/essay/html/1454.htm",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC028%E5%9B%9E",
+        "https://ctext.org/hongloumeng/ch94/zh",
+        "https://m.gushiwen.cn/guwen/bookv_661dbe9f6b5d.aspx"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據搜索結果[1]中《紅樓夢》第四回的原文描述，主要記載了賈雨村在應天府審理「兩家爭買一婢，各不相讓，以致毆傷人命」的案件經過，但並無府中女子對此案進行議論的具體情節。搜索結果中的其他內容[2][3][4]主要涉及秦可卿病死、金陵十二釵判詞等其他《紅樓夢》情節，同樣未提及府中女子議論金陵案事的相關描述。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/004.htm",
+        "https://rueylin0119.pixnet.net/blog/post/324657579",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC005%E5%9B%9E",
+        "https://rueylin0119.pixnet.net/blog/post/291688332",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/005.htm",
+        "http://www.purepen.com/hlm/005.htm",
+        "https://ctext.org/hongloumeng/ch4/zhs",
+        "https://m.qulishi.com/article/202201/577516.html"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載「薛家原係金陵一霸，倚財仗勢，眾豪奴將我小主人竟打死了」以及「薛蟠籍隸金陵」，明確顯示薛蟠在金陵地區涉及殺人案件[1][2][6]。此外，從「薛蟠毆傷張三身死，串嘱屍証捏供誤殺一案」的描述可知，薛蟠不僅在金陵有殺人案件，還涉及串供等法律問題，而金陵即為應天府的古稱，證實了此三元組的準確性[2]。",
+      "evidence_sources": [
+        "historical_records",
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://zh.wikisource.org/wiki/Page:NLC892-003290079-42940_%E7%B4%85%E6%A8%93%E5%A4%A2_%E7%AC%AC20%E5%86%8A.pdf/53",
+        "https://ctext.org/wiki.pl?if=gb&chapter=388171",
+        "https://zh.wikipedia.org/zh-cn/%E7%BA%A2%E6%A5%BC%E6%A2%A6_(2010%E5%B9%B4%E7%94%B5%E8%A7%86%E5%89%A7)",
+        "https://upload.wikimedia.org/wikipedia/commons/a/a7/NLC892-411999026227-222543_%E7%B4%85%E6%A8%93%E5%A4%A2_%E7%AC%AC2%E5%86%8A.pdf",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM",
+        "https://ctext.org/hongloumeng/ch99/zh",
+        "https://www.163.com/dy/article/J32JLSJD0521UUI4.html",
+        "https://www.163.com/dy/article/J04P95J40521UUI4.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據搜索結果中《紅樓夢》第四回的內容，雖然提到「東海缺少白玉床，龍王來請金陵王」及王氏「都中二房，餘在籍」的描述，但並無明確記載王家有人向京中傳話的具體情節[1]。搜索結果中關於四大家族的描述僅提及「這四家皆連絡有親，一損皆損，一榮皆榮，扶持遮飾，俱有照應的」，這表明家族間有聯繫，但未具體說明王家向京中傳話的行為[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5eb5c8f6fd89780001477da5",
+        "https://news.qq.com/rain/a/20220712A00WV600",
+        "https://speak.tatar/lit/zho/text/hong-lou-meng-06/",
+        "https://groups.google.com/g/gdzh/c/l3hILPIaWfQ",
+        "https://www.watermelonwater.tech/upload/imgs/%E7%99%B8%E9%85%89%E6%9C%AC%E5%90%B4%E6%B0%8F%E7%9F%B3%E5%A4%B4%E8%AE%B0%EF%BC%88%E5%85%A8108%E5%9B%9E%EF%BC%89%20(%E9%AC%BC%E6%9C%AC%E7%9F%B3%E5%A4%B4%E8%AE%B0)%20.pdf",
+        "https://www.haodoo.net/?M=d&P=J080401C.epub",
+        "http://www.360doc.com/content/21/1114/04/117837_1004066552.shtml"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "**: 此三元組缺少明確的關係謂詞，僅用「與」連接兩個實體，不符合知識圖譜中(主體, 關係, 客體)的標準三元組格式，根據知識圖譜的語法規範，這是不完整的表述。雖然根據《紅樓夢》原著，「寧國府，又稱東府，是小説《紅樓夢》中寧國公賈演家族的府邸，與榮國公之榮國府合稱賈府」[5]，兩府確實存在兄弟關係，但此陳述未明確指出具體的語義關係類型。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://news.qq.com/rain/a/20221027A08RRY00",
+        "https://www.163.com/dy/article/I48H68UP0521FDQV.html",
+        "http://www.360doc.com/content/20/0212/15/37581541_891502464.shtml",
+        "https://zh.wikipedia.org/zh-hant/%E5%AF%A7%E5%9C%8B%E5%BA%9C_(%E7%B4%85%E6%A8%93%E5%A4%A2)",
+        "https://www.books.com.tw/products/CN12004130?loc=M_0007_071"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓梦》原著設定，寧國府作為嫡長房地位明顯高於榮國府，因為「寧國公是兄，榮國公是弟」且「寧國府為首，府中建立了宗祠，族長也由寧國府的當家人擔任」[1]，因此兩府門第並非平等並立關係。封建社會等級制度下，長房寧國府擁有宗族主導地位，「弟大不過兄」的原則使得榮國府「再位高權重，終究」需要承認寧國府的首要地位[1]，故門額地位不可能平等並立。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://news.qq.com/rain/a/20221027A08RRY00",
+        "https://blog.udn.com/ts88lai/152312253",
+        "http://www.szlilun.com/content/2021-07/13/content_24387331.htm",
+        "https://www.processon.com/view/63a572d1e180141a449ebad4",
+        "https://boardmix.cn/article/hlmcharacterrelations/",
+        "http://www.360doc.com/content/22/1017/13/80817707_1052052120.shtml"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "根據搜索結果，現實中的榮國府位於河北省石家庄市正定县兴荣路51号，是為拍攝87版電視劇《紅樓夢》而建造的影視拍攝基地[1][2]。而「都中/神京」是《紅樓夢》小說中的虛構地名，指小說中賈府所在的京城，與現實中正定縣的榮國府景區地理位置完全不同[1]。",
+      "evidence_sources": [
+        "historical_records",
+        "literary_works",
+        "general_knowledge"
+      ],
+      "actual_citations": [
+        "http://xn--xmqq3rirg6uikmn4ruwkh.xn--ses554g",
+        "https://www.rongguofu.com/index/index/article/id/14.html",
+        "https://cn.tripadvisor.com/Attraction_Review-g1726792-d1805868-Reviews-Rongguo_House-Zhengding_County_Hebei.html",
+        "https://www.rongguofu.com"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據搜索結果顯示，應天府是明朝前期的首都，洪武十一年（1378年）正式以南京為京師，永樂十九年（1421年）遷都北京後應天府仍作為留都[3][4]。應天府作為明朝的都城和京師，符合「都中/神京」這一對首都的稱謂概念，因此該三元組表述正確[2][3]。",
+      "evidence_sources": [
+        "historical_records"
+      ],
+      "actual_citations": [
+        "http://economy.guoxue.com/?p=3925",
+        "https://zh.wikipedia.org/zh-hant/%E6%B0%B8%E4%B9%90%E8%BF%81%E9%83%BD",
+        "https://m.qulishi.com/huati/yingtianfu",
+        "https://www11.ihp.sinica.edu.tw/storage/w2_file/3265xbADVpn.pdf",
+        "https://zh.wikipedia.org/zh-tw/%E5%8D%97%E4%BA%AC%E5%B8%82",
+        "https://www.yuanzaiyu.com/mcrw/6271.html"
+      ],
+      "error_type": null
+    }
+  ],
+  "success": true,
+  "processing_time": 744.468080997467,
+  "error": null,
+  "summary": {
+    "total_triples": 45,
+    "approved_triples": 28,
+    "rejected_triples": 17,
+    "approval_rate": 0.6222222222222222
+  },
+  "timestamp": "2025-09-18T22:28:15.271468"
+}

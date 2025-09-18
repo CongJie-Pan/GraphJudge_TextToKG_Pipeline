@@ -417,5 +417,8 @@ Error: No triples were generated from the provided entities and text
 
 - to do 
 1) Add the streamlit ui language selection in the streamlit ui : English/繁體中文/簡體中文. And set the default language in English. Remeber, this system is focus on the ancient chinese text processing.
+   --> the remaining texts that after the "Final Results" in the streamlit ui doesn't match the language setting. As you are a professional engineer, please overview the streamlit_pipeline project, and edit all the language showing in the streamlit ui need to set in the language setting. 
 2) ok - ensure the explanination function worked in the streamlit_pipeline.
-3) Acutal smoke test the latest edit.
+3) ok - Acutal smoke test the latest edit.
+4) figure out how the confidence calculated.
+5) And it seemed that the perplexity judgement explaniations are not saved in the folder as the actual file.
