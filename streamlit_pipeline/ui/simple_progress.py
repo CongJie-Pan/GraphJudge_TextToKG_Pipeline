@@ -10,6 +10,11 @@ from datetime import datetime
 from typing import Optional, Callable, Dict, Any, List
 import streamlit as st
 
+try:
+    from streamlit_pipeline.utils.i18n import get_text
+except ImportError:
+    from ..utils.i18n import get_text
+
 
 class SimpleProgressTracker:
     """
@@ -203,7 +208,7 @@ def display_simple_processing_summary(tracker: SimpleProgressTracker, pipeline_r
     if not pipeline_result:
         return
 
-    st.markdown("## ✅ Processing Complete")
+    st.markdown(f"## {get_text('processing.processing_complete')}")
 
     # Simple summary metrics
     col1, col2, col3, col4 = st.columns(4)

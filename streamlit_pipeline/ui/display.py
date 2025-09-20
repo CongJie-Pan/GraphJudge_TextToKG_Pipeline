@@ -35,10 +35,12 @@ try:
     # Try absolute import first (for package installation)
     from streamlit_pipeline.core.models import EntityResult, TripleResult, JudgmentResult, Triple
     from streamlit_pipeline.core.pipeline import PipelineResult
+    from streamlit_pipeline.utils.i18n import get_text
 except ImportError:
     # Fallback to relative imports (for direct execution)
     from ..core.models import EntityResult, TripleResult, JudgmentResult, Triple
     from ..core.pipeline import PipelineResult
+    from ..utils.i18n import get_text
 
 
 def display_final_results(pipeline_result: PipelineResult):
@@ -48,10 +50,10 @@ def display_final_results(pipeline_result: PipelineResult):
     Args:
         pipeline_result: Complete pipeline execution results
     """
-    st.markdown("# 🏆 Final Results")
+    st.markdown(f"# {get_text('results.final_title')}")
     
     if not pipeline_result.success:
-        st.error(f"Pipeline failed at {pipeline_result.error_stage}: {pipeline_result.error}")
+        st.error(f"{get_text('errors.pipeline_failed_stage')} {pipeline_result.error_stage}: {pipeline_result.error}")
         return
     
     # Get the approved triples
@@ -113,31 +115,31 @@ def display_final_results(pipeline_result: PipelineResult):
         
         # Display approved triples as the final knowledge graph
         if approved_triples:
-            st.markdown("## 🧠 Final Knowledge Graph")
+            st.markdown(f"## {get_text('results.final_kg')}")
             st.markdown(f"After AI judgment, the following **{len(approved_triples)}** knowledge triples were deemed accurate:")
-            
+
             # Store pipeline result in session state for graph visualization
             st.session_state.pipeline_result = pipeline_result
             display_final_knowledge_graph(approved_triples, pipeline_result.judgment_result, pipeline_result.graph_data)
-            
+
             # Export options
-            st.markdown("### 📤 Export Options")
+            st.markdown(f"### {get_text('results.export_options')}")
             col1, col2, col3 = st.columns(3)
 
             with col1:
-                if st.button("📄 Export as JSON", key="export_final_json"):
+                if st.button(get_text('buttons.export_json'), key="export_final_json"):
                     export_final_results_json(approved_triples, pipeline_result)
 
             with col2:
-                if st.button("📊 Export as CSV", key="export_final_csv"):
+                if st.button(get_text('buttons.export_csv'), key="export_final_csv"):
                     export_final_results_csv(approved_triples, pipeline_result)
 
             with col3:
-                if st.button("📋 Generate Report", key="generate_report"):
+                if st.button(get_text('buttons.generate_report'), key="generate_report"):
                     display_analysis_report(pipeline_result)
-        
+
         else:
-            st.warning("⚠️ No triples passed AI judgment. You may need to adjust the input text or check the processing logic.")
+            st.warning(get_text('results.no_triples_warning'))
 
             # Show rejected triples for reference
             if rejected_triples:
@@ -180,7 +182,7 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
     df = pd.DataFrame(final_data)
     
     # Display with custom styling
-    st.markdown("### 📋 Knowledge Triple Details")
+    st.markdown(f"### {get_text('results.kg_details')}")
     
     # Interactive data table with selection
     selected_indices = st.dataframe(
@@ -210,7 +212,7 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
     
     # Show knowledge graph visualization
     if len(triples) > 0:
-        st.markdown("### 🕸️ Interactive Knowledge Graph")
+        st.markdown(f"### {get_text('results.interactive_graph')}")
 
         # Check if we have pipeline result with pyvis data
         if hasattr(st.session_state, 'pipeline_result') and hasattr(st.session_state.pipeline_result, 'pyvis_data'):
@@ -223,7 +225,7 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
             display_pyvis_knowledge_graph(pyvis_data, triples)
         else:
             # Fallback to Plotly or text display
-            st.info("💡 Using fallback visualization (Pyvis data not available)")
+            st.info(get_text('results.fallback_visualization'))
             create_enhanced_knowledge_graph(triples, graph_data)
 
 
@@ -235,7 +237,7 @@ def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_r
         rejected_triples: List of rejected triples
         judgment_result: Judgment results with explanations
     """
-    st.markdown("#### Rejected Triples Analysis")
+    st.markdown(f"#### {get_text('results.rejected_analysis')}")
     
     rejection_data = []
     explanation_idx = 0
@@ -267,8 +269,8 @@ def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[
         graph_data: Pre-processed graph data from pipeline with nodes and edges
     """
     if not PLOTLY_AVAILABLE:
-        st.error("📊 Interactive graph visualization requires Plotly library")
-        st.info("💡 Install with: `pip install plotly>=5.0.0`")
+        st.error(get_text('errors.plotly_required'))
+        st.info(get_text('errors.plotly_install'))
         _display_text_based_graph(triples)
         return
 
@@ -301,7 +303,7 @@ def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[
 
         else:
             # Fallback: create graph data from triples
-            st.info("🔄 Creating graph from triples (graph data not available)")
+            st.info(get_text('results.creating_graph_fallback'))
             nodes, edges = _convert_triples_to_graph_data(triples)
             fig = _create_plotly_graph_from_data(nodes, edges)
 
@@ -313,7 +315,7 @@ def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[
 
     except Exception as e:
         st.error(f"❌ Graph visualization failed: {str(e)}")
-        st.info("📋 Displaying text-based relationship view instead:")
+        st.info(get_text('results.text_based_fallback'))
         _display_text_based_graph(triples)
 
 
@@ -493,10 +495,10 @@ def _get_node_color_by_connections(connections: int) -> str:
 def _display_text_based_graph(triples: List[Triple]):
     """Display a text-based representation of the graph when Plotly is not available."""
     if not triples:
-        st.info("No relationships to display")
+        st.info(get_text('results.no_relationships'))
         return
 
-    st.markdown("**📋 Text-based relationship display:**")
+    st.markdown(get_text('results.text_based_display'))
 
     # Group relationships by predicate for better organization
     from collections import defaultdict
@@ -527,7 +529,7 @@ def _display_graph_export_options(graph_data: Dict[str, Any]):
         col1, col2 = st.columns(2)
 
         with col1:
-            if st.button("📄 Download as JSON"):
+            if st.button(get_text('buttons.download_json')):
                 import json
                 json_str = json.dumps(graph_data, ensure_ascii=False, indent=2)
                 st.download_button(
@@ -538,7 +540,7 @@ def _display_graph_export_options(graph_data: Dict[str, Any]):
                 )
 
         with col2:
-            if st.button("📊 Show Raw Data"):
+            if st.button(get_text('buttons.show_raw_data')):
                 st.json(graph_data)
 
 
@@ -602,7 +604,7 @@ def export_final_results_csv(triples: List[Triple], pipeline_result: PipelineRes
 
 def display_analysis_report(pipeline_result: PipelineResult):
     """Display a comprehensive analysis report."""
-    st.markdown("## 📊 Analysis Report")
+    st.markdown(f"## {get_text('results.analysis_report')}")
     
     # Generate report content
     report_sections = []
@@ -695,7 +697,7 @@ def display_comparison_view(current_result: PipelineResult, previous_results: Li
     if not previous_results:
         return
 
-    st.markdown("## 📈 Historical Comparison")
+    st.markdown(f"## {get_text('results.historical_comparison')}")
     
     # Create comparison metrics
     comparison_data = []
@@ -725,7 +727,7 @@ def display_comparison_view(current_result: PipelineResult, previous_results: Li
             )
             st.plotly_chart(fig, use_container_width=True)
         elif len(comparison_data) > 1:
-            st.info("📊 Trend chart requires Plotly library: `pip install plotly`")
+            st.info(get_text('errors.chart_analysis_requires_plotly'))
 
 
 def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) -> Optional[str]:
@@ -740,8 +742,8 @@ def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) 
         HTML string of the visualization, or None if failed
     """
     if not PYVIS_AVAILABLE:
-        st.error("🌐 Pyvis network visualization requires Pyvis library")
-        st.info("💡 Install with: `pip install pyvis>=0.3.2`")
+        st.error(get_text('errors.pyvis_required'))
+        st.info(get_text('errors.pyvis_install'))
         return None
 
     try:
@@ -831,7 +833,7 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
         height: Height of visualization in pixels
     """
     if not pyvis_data:
-        st.warning("🤷‍♂️ No graph data available for visualization")
+        st.warning(get_text('errors.no_graph_data'))
         if triples:
             _display_text_based_graph(triples)
         return
@@ -868,10 +870,10 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
                 components.html(html, height=height + 50, scrolling=True)
 
                 # Display export information
-                st.info("💡 **Interaction tips:** Drag nodes to rearrange, scroll to zoom, hover for details")
+                st.info(get_text('ui.interaction_tips'))
 
                 # Add download option
-                if st.button("📥 Download HTML"):
+                if st.button(get_text('buttons.download_html')):
                     st.download_button(
                         label="Save Interactive Graph",
                         data=html,
@@ -879,11 +881,11 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
                         mime="text/html"
                     )
             else:
-                st.error("Failed to generate Pyvis visualization")
+                st.error(get_text('errors.failed_pyvis'))
                 if triples:
                     _display_text_based_graph(triples)
         else:
-            st.error("🚫 Pyvis library not available")
+            st.error(get_text('errors.pyvis_not_available'))
             if triples:
                 _display_text_based_graph(triples)
     else:
@@ -901,8 +903,8 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
                 rel_text = f"{edge['from']} → {edge.get('label', 'related to')} → {edge['to']}"
                 relationships.append(rel_text)
 
-            st.markdown("### 📝 Text-Based Knowledge Graph")
+            st.markdown(f"### {get_text('results.text_based_kg')}")
             st.write(f"**Entities:** {', '.join(sorted(entities))}")
-            st.markdown("**Relationships:**")
+            st.markdown(get_text('results.relationships_title'))
             for i, rel in enumerate(relationships, 1):
                 st.write(f"{i}. {rel}")

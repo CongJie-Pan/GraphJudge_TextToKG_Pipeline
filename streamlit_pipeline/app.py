@@ -52,9 +52,28 @@ from streamlit_pipeline.utils.state_cleanup import get_cleanup_manager, check_an
 from streamlit_pipeline.utils.i18n import get_text
 
 
-# Configure Streamlit page
+# Early i18n initialization for page config
+from streamlit_pipeline.utils.i18n import get_current_language, get_i18n_manager
+
+def get_dynamic_page_title():
+    """Get page title based on current language setting."""
+    try:
+        manager = get_i18n_manager()
+        # Try to get current language from session state or default to 'en'
+        current_lang = 'en'  # Default fallback
+        if hasattr(st, 'session_state') and hasattr(st.session_state, 'language'):
+            current_lang = st.session_state.language
+
+        # Get page title for current language
+        if current_lang in manager.translations:
+            return manager.translations[current_lang].get('app', {}).get('page_title', 'GraphJudge - Intelligent Knowledge Graph Construction')
+    except:
+        pass
+    return 'GraphJudge - Intelligent Knowledge Graph Construction'
+
+# Configure Streamlit page with dynamic title
 st.set_page_config(
-    page_title="GraphJudge - Intelligent Knowledge Graph Construction",
+    page_title=get_dynamic_page_title(),
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -175,7 +194,7 @@ class GraphJudgeApp:
             self._render_footer()
             
         except Exception as e:
-            st.error("Application error occurred")
+            st.error(get_text('errors.app_error'))
             st.exception(e)
             
             # Log the error
@@ -209,23 +228,23 @@ class GraphJudgeApp:
             col1, col2, col3, col4 = st.columns(4)
             
             with col1:
-                st.metric("Total Runs", len(st.session_state.pipeline_results))
+                st.metric(get_text('metrics.total_runs'), len(st.session_state.pipeline_results))
 
             with col2:
                 avg_time = sum(r.total_time for r in successful_runs) / len(successful_runs)
-                st.metric("Average Processing Time", f"{avg_time:.1f}s")
+                st.metric(get_text('metrics.avg_processing_time'), get_text('metrics.time_seconds', time=f"{avg_time:.1f}"))
 
             with col3:
                 total_triples = sum(
                     len(r.triple_result.triples) if r.triple_result else 0
                     for r in successful_runs
                 )
-                st.metric("Total Generated Triples", total_triples)
+                st.metric(get_text('metrics.total_triples'), total_triples)
 
             with col4:
                 if successful_runs and successful_runs[-1].stats:
                     approval_rate = successful_runs[-1].stats.get('approval_rate', 0)
-                    st.metric("Recent Approval Rate", f"{approval_rate:.1%}")
+                    st.metric(get_text('metrics.approval_rate'), get_text('metrics.percentage', rate=f"{approval_rate:.1%}"))
     
     def _render_sidebar(self):
         """Render the sidebar with configuration options."""
@@ -277,40 +296,40 @@ class GraphJudgeApp:
             success_rate = metadata.successful_runs / metadata.run_count
             st.sidebar.text(get_text('sidebar.success_rate', rate=f"{success_rate:.1%}"))
 
-        st.sidebar.text(f"Cache Hit Rate: {cache_stats.hit_rate:.1%}")
-        st.sidebar.text(f"Cache Size: {cache_stats.total_size_bytes / 1024 / 1024:.1f} MB")
+        st.sidebar.text(get_text('sidebar.cache_hit_rate', rate=f"{cache_stats.hit_rate:.1%}"))
+        st.sidebar.text(get_text('sidebar.cache_size', size=f"{cache_stats.total_size_bytes / 1024 / 1024:.1f}"))
     
     def _test_api_connections(self):
         """Test API connections and display status."""
         try:
             # Get API client
             api_client = get_api_client()
-            st.sidebar.success("✅ API Configuration: Loaded successfully")
+            st.sidebar.success(get_text('sidebar.api_config_loaded'))
 
             # Test basic configuration
             from streamlit_pipeline.core.config import get_api_config
             try:
                 api_key, api_base = get_api_config(load_env=True)
                 if api_key:
-                    st.sidebar.success("✅ API Key: Configured")
+                    st.sidebar.success(get_text('sidebar.api_key_configured'))
 
                     # Perform actual API connection test
-                    st.sidebar.info("🔗 Testing actual API connections...")
+                    st.sidebar.info(get_text('sidebar.testing_actual_api'))
                     test_results = api_client.test_api_connection()
 
                     # Display test results for each model
                     for model_name, result in test_results.items():
                         if result["status"] == "success":
-                            st.sidebar.success(f"✅ {model_name}: Connection successful")
+                            st.sidebar.success(get_text('sidebar.api_connection_successful', model=model_name))
                             st.sidebar.caption(f"Model: {result['model']}")
                         else:
                             st.sidebar.error(f"❌ {model_name}: {result['error']}")
                             st.sidebar.caption(f"Model: {result['model']}")
 
                 else:
-                    st.sidebar.error("❌ API Key: Not configured")
+                    st.sidebar.error(get_text('sidebar.api_key_not_configured'))
             except Exception as e:
-                st.sidebar.error(f"❌ API Configuration Error: {str(e)}")
+                st.sidebar.error(get_text('errors.api_config_error', error=str(e)))
 
         except Exception as e:
             st.sidebar.error(f"API Test Failed: {str(e)}")
@@ -353,10 +372,10 @@ class GraphJudgeApp:
 
         # This would typically be handled by the progress callback
         # For now, show a static processing message
-        st.info("Pipeline is processing your input. This may take a few minutes...")
+        st.info(get_text('processing.processing_input'))
 
         # Add a cancel button
-        if st.button("❌ Cancel Processing", key="cancel_processing"):
+        if st.button(get_text('processing.cancel_processing'), key="cancel_processing"):
             st.session_state.processing = False
             st.rerun()
     
@@ -448,13 +467,13 @@ class GraphJudgeApp:
             simple_tracker.clear_display()
 
             if result.success:
-                st.success(f"🎉 Processing Complete! Total time: {result.total_time:.2f} seconds")
+                st.success(get_text('processing.processing_complete_time', time=f"{result.total_time:.2f}"))
                 st.balloons()
 
                 # Display simple processing summary
                 display_simple_processing_summary(simple_tracker, result)
             else:
-                st.error(f"❌ Processing Failed: {result.error}")
+                st.error(get_text('processing.processing_failed_prefix', error=result.error))
 
                 # Still show simple processing summary for debugging
                 display_simple_processing_summary(simple_tracker, result)
@@ -513,8 +532,8 @@ class GraphJudgeApp:
         
         else:
             # Show error information
-            st.error(f"Pipeline failed at stage: {result.error_stage}")
-            st.error(f"Error: {result.error}")
+            st.error(get_text('errors.pipeline_failed_stage_prefix', stage=result.error_stage))
+            st.error(get_text('errors.generic_error_prefix', error=result.error))
             
             # Show partial results if available
             if result.entity_result and result.entity_result.success:
@@ -556,17 +575,17 @@ class GraphJudgeApp:
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.markdown("**GraphJudge v1.0**")
-            st.caption("Powered by GPT-5-mini & Perplexity")
+            st.markdown(get_text('app.version_footer'))
+            st.caption(get_text('app.powered_by'))
         
         with col2:
             if st.session_state.current_result:
-                st.markdown(f"**Runtime**: {st.session_state.current_result.total_time:.2f}s")
-                st.caption(f"Processed at: {datetime.now().strftime('%H:%M:%S')}")
+                st.markdown(f"{get_text('app.runtime_label')}: {st.session_state.current_result.total_time:.2f}s")
+                st.caption(get_text('app.processed_at', time=datetime.now().strftime('%H:%M:%S')))
         
         with col3:
-            st.markdown("**Status**: Ready")
-            st.caption("Ready for next processing")
+            st.markdown(get_text('app.status_ready'))
+            st.caption(get_text('app.ready_for_next'))
 
 
 def main():
@@ -575,7 +594,7 @@ def main():
         app = GraphJudgeApp()
         app.run()
     except Exception as e:
-        st.error("Failed to initialize application")
+        st.error(get_text('errors.app_init_failed'))
         st.exception(e)
 
 

@@ -17,6 +17,7 @@ from ui.detailed_progress import (
     display_ectd_processing, display_triple_generation_processing,
     display_graph_judgment_processing
 )
+from utils.i18n import get_text
 
 from ui.components import (
     display_input_section, display_entity_results, display_triple_results,
@@ -28,13 +29,13 @@ from core.models import EntityResult, TripleResult, JudgmentResult, Triple, Pipe
 from core.pipeline import PipelineResult
 
 st.set_page_config(
-    page_title="Enhanced GraphJudge Pipeline Demo",
+    page_title=get_text('demo.title'),
     page_icon="🧠",
     layout="wide"
 )
 
-st.title("🧠 Enhanced GraphJudge Pipeline Demo")
-st.markdown("Detailed processing visualization similar to original source code terminal output")
+st.title(get_text('demo.title'))
+st.markdown(get_text('demo.description'))
 
 # Demo modes
 demo_mode = st.selectbox(

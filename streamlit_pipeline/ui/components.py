@@ -57,12 +57,12 @@ def validate_text_file(uploaded_file) -> tuple[str, str, bool]:
     # Check file size (limit to 10MB for safety)
     max_size = 10 * 1024 * 1024  # 10MB
     if uploaded_file.size > max_size:
-        st.error(f"❌ File too large. Maximum size allowed: {max_size / (1024*1024):.1f}MB")
+        st.error(get_text('errors.file_too_large', size=f"{max_size / (1024*1024):.1f}"))
         return "", "", False
 
     # Check if file is empty
     if uploaded_file.size == 0:
-        st.error("❌ File is empty. Please upload a file with content.")
+        st.error(get_text('errors.file_empty'))
         return "", "", False
 
     # Try multiple encodings for Chinese text files
@@ -87,7 +87,7 @@ def validate_text_file(uploaded_file) -> tuple[str, str, bool]:
         except (UnicodeDecodeError, UnicodeError):
             continue
         except Exception as e:
-            st.error(f"❌ Error reading file with {encoding}: {str(e)}")
+            st.error(get_text('errors.file_read_error', encoding=encoding, error=str(e)))
             continue
 
     return "", "", False
@@ -110,6 +110,9 @@ def display_input_section() -> str:
 
     with tab1:
         # File upload section
+        # NOTE: Streamlit's st.file_uploader() widget contains hardcoded English text
+        # (like "Drag and drop file here") that cannot be localized. This is a limitation
+        # of the Streamlit framework itself, not our application.
         uploaded_file = st.file_uploader(
             get_text('input.choose_file'),
             type=['txt'],
@@ -123,26 +126,26 @@ def display_input_section() -> str:
 
             if success:
                 input_text = file_content
-                st.success(f"✅ File uploaded successfully! (Encoding: {used_encoding})")
+                st.success(get_text('file_upload.success_message', encoding=used_encoding))
 
                 # Show file info
                 col1, col2, col3, col4 = st.columns(4)
                 with col1:
-                    st.metric("File Name", uploaded_file.name)
+                    st.metric(get_text('file_upload.file_name'), uploaded_file.name)
                 with col2:
-                    st.metric("File Size", f"{uploaded_file.size:,} bytes")
+                    st.metric(get_text('file_upload.file_size'), f"{uploaded_file.size:,} {get_text('file_upload.bytes')}")
                 with col3:
-                    st.metric("Encoding Used", used_encoding)
+                    st.metric(get_text('file_upload.encoding_used'), used_encoding)
                 with col4:
                     # Count Chinese characters
                     chinese_chars = sum(1 for char in file_content if '\u4e00' <= char <= '\u9fff')
-                    st.metric("Chinese Chars", f"{chinese_chars:,}")
+                    st.metric(get_text('file_upload.chinese_chars'), f"{chinese_chars:,}")
 
                 # Show preview of file content
-                with st.expander("📋 File Content Preview"):
+                with st.expander(get_text('file_upload.content_preview')):
                     preview_text = input_text[:500] + "..." if len(input_text) > 500 else input_text
                     st.text_area(
-                        "Preview",
+                        get_text('file_upload.preview'),
                         value=preview_text,
                         height=150,
                         disabled=True,
@@ -208,13 +211,13 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
             st.metric("Processing Time", f"{entity_result.processing_time:.2f}s")
 
         # Detailed processing phases display
-        st.markdown("### 🔬 Detailed Processing Phases")
-        st.markdown("#### Phase 1: Entity Extraction with GPT-5-mini")
-        st.info("📝 **Advanced Language Understanding**: GPT-5-mini analyzes classical Chinese text using contextual understanding and entity recognition patterns optimized for Chinese literature.")
+        st.markdown(f"### {get_text('entity.processing_phases')}")
+        st.markdown(f"#### {get_text('entity.phase1_title')}")
+        st.info(get_text('entity.phase1_description'))
 
         # Entity categorization and display
         if entity_result.entities:
-            st.markdown("##### 📊 Extracted Entities with Smart Categorization")
+            st.markdown(f"##### {get_text('entity.extracted_entities')}")
 
             # Enhanced entity display with categorization
             entity_categories = {
@@ -256,8 +259,8 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
 
                     col_idx += 1
 
-        st.markdown("#### Phase 2: Text Denoising and Restructuring")
-        st.info("🧹 **GPT-5-mini Text Optimization**: Intelligently restructures and cleans the text based on extracted entities, removing redundant descriptions while preserving essential factual content for accurate knowledge graph generation.")
+        st.markdown(f"#### {get_text('entity.phase2_title')}")
+        st.info(get_text('entity.phase2_description'))
 
         # Denoising comparison with enhanced display
         original_input = st.session_state.get('original_input', '')
@@ -265,7 +268,7 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
             col1, col2 = st.columns(2)
 
             with col1:
-                st.markdown("**📄 Original Input Text**")
+                st.markdown(get_text('ui.original_input_text'))
                 st.text_area(
                     "Raw Input",
                     original_input[:400] + ("..." if len(original_input) > 400 else ""),
@@ -276,7 +279,7 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
                 st.caption(f"Total length: {len(original_input):,} characters")
 
             with col2:
-                st.markdown("**✨ Denoised & Structured Text**")
+                st.markdown(get_text('ui.denoised_structured_text'))
                 st.text_area(
                     "Processed Output",
                     entity_result.denoised_text[:400] + ("..." if len(entity_result.denoised_text) > 400 else ""),
@@ -299,16 +302,16 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
             st.metric("Stage", "Entity Extraction", "Failed at this stage")
 
         if show_expanders:
-            with st.expander("🔍 Error Analysis & Troubleshooting"):
+            with st.expander(get_text('entity.error_analysis')):
                 _display_entity_error_analysis_content(entity_result)
         else:
-            st.markdown("### 🔍 Error Analysis & Troubleshooting")
+            st.markdown(f"### {get_text('entity.error_analysis')}")
             _display_entity_error_analysis_content(entity_result)
 
 
 def _display_entity_error_analysis_content(entity_result: EntityResult):
     """Helper function to display entity error analysis content."""
-    st.markdown("**Possible causes and solutions:**")
+    st.markdown(get_text('ui.possible_causes_solutions'))
 
     error_suggestions = [
         "**API Connectivity**: Check internet connection and API key configuration",
@@ -322,35 +325,35 @@ def _display_entity_error_analysis_content(entity_result: EntityResult):
         st.markdown(f"- {suggestion}")
 
     if hasattr(entity_result, 'technical_details') and entity_result.technical_details:
-        st.markdown("**Technical Details:**")
+        st.markdown(get_text('ui.technical_details'))
         st.code(entity_result.technical_details, language="text")
 
 
 def _display_triple_phases_content(triple_result: TripleResult):
     """Helper function to display triple generation phases content."""
-    st.markdown("### Phase 1: Semantic Analysis & Relation Extraction")
-    st.info("🧠 **GPT-5-mini Semantic Processing**: Analyzes denoised text to identify meaningful relationships between entities using advanced natural language understanding and Chinese literature context.")
+    st.markdown(f"### {get_text('triple.phase1_title')}")
+    st.info(get_text('triple.phase1_description'))
 
     # Processing statistics
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**📊 Text Processing**")
+        st.markdown(get_text('ui.text_processing'))
         if hasattr(triple_result, 'metadata') and triple_result.metadata:
             chunks_processed = triple_result.metadata.get('chunks_processed', 1)
             st.metric("Text Chunks", chunks_processed, "Processed segments")
         else:
             st.metric("Processing Method", "Sequential", "Text analysis")
     with col2:
-        st.markdown("**🔍 Relation Discovery**")
+        st.markdown(get_text('ui.relation_discovery'))
         if triple_result.triples:
             unique_relations = len(set(t.predicate for t in triple_result.triples))
             st.metric("Relation Types", unique_relations, "Discovered patterns")
     with col3:
-        st.markdown("**✨ Quality Enhancement**")
+        st.markdown(get_text('ui.quality_enhancement'))
         st.metric("Schema Validation", "JSON Format", "Structured output")
 
-    st.markdown("### Phase 2: Triple Validation & Formatting")
-    st.info("🔧 **Structure Validation**: Validates generated triples against schema requirements and applies quality filters to ensure proper subject-predicate-object relationships.")
+    st.markdown(f"### {get_text('triple.phase2_title')}")
+    st.info(get_text('triple.phase2_description'))
 
 
 
@@ -358,7 +361,7 @@ def _display_triple_phases_content(triple_result: TripleResult):
 
 def _display_triple_error_analysis_content(triple_result: TripleResult):
     """Helper function to display triple error analysis content."""
-    st.markdown("**Common issues and solutions:**")
+    st.markdown(get_text('ui.common_issues_solutions'))
     error_solutions = [
         "**Entity Quality**: Ensure entity extraction was successful with valid entities",
         "**Text Format**: Denoised text should be well-structured for relation extraction",
@@ -371,7 +374,7 @@ def _display_triple_error_analysis_content(triple_result: TripleResult):
         st.markdown(f"- {solution}")
 
     if hasattr(triple_result, 'technical_details') and triple_result.technical_details:
-        st.markdown("**Technical Details:**")
+        st.markdown(get_text('ui.technical_details'))
         st.code(triple_result.technical_details, language="json")
 
 
@@ -433,7 +436,7 @@ def _display_judgment_explanations_content(triples, judgment_result):
                         actual_citations = explanation_obj['actual_citations']
 
                 if actual_citations:
-                    st.markdown("**Source Citations:**")
+                    st.markdown(get_text('ui.source_citations'))
                     for idx, citation in enumerate(actual_citations, 1):
                         # Display each citation as a clickable link
                         if citation and citation.strip():
@@ -469,7 +472,7 @@ def _display_judgment_explanations_content(triples, judgment_result):
                                 st.markdown(f"{idx}. {safe_citation}")
                                 print(f"DEBUG: URL validation error for citation '{citation_text}': {url_error}")
 
-                st.markdown("**AI Judgment Explanation:**")
+                st.markdown(get_text('ui.ai_judgment_explanation'))
 
                 # Extract and format Traditional Chinese reasoning
                 reasoning_text = ""
@@ -526,7 +529,7 @@ def _display_judgment_explanations_content(triples, judgment_result):
                         # Fallback to display original text if parsing fails
                         st.markdown(cleaned_reasoning)
                 else:
-                    st.markdown("*No detailed explanation*")
+                    st.markdown(get_text('ui.no_detailed_explanation'))
 
 
 def _display_pipeline_stage_details_content(pipeline_result):
@@ -560,7 +563,7 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
         show_validation: Whether to show validation details
         show_expanders: Whether to create expanders for detailed sections
     """
-    st.markdown("## 🔗 Knowledge Triple Generation Results")
+    st.markdown(f"## {get_text('triple.title')}")
 
     if triple_result.success:
         # Enhanced summary metrics with detailed information
@@ -587,10 +590,10 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
 
         # Detailed processing phases display
         if show_expanders:
-            with st.expander("🔬 Detailed Triple Generation Phases", expanded=True):
+            with st.expander(get_text('triple.detailed_phases'), expanded=True):
                 _display_triple_phases_content(triple_result)
         else:
-            st.markdown("### 🔬 Detailed Triple Generation Phases")
+            st.markdown(f"### {get_text('triple.detailed_phases')}")
             _display_triple_phases_content(triple_result)
 
 
@@ -605,10 +608,10 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
             st.metric("Stage", "Triple Generation", "Failed at this stage")
 
         if show_expanders:
-            with st.expander("🔍 Triple Generation Error Analysis"):
+            with st.expander(get_text('triple.error_analysis')):
                 _display_triple_error_analysis_content(triple_result)
         else:
-            st.markdown("### 🔍 Triple Generation Error Analysis")
+            st.markdown(f"### {get_text('triple.error_analysis')}")
             _display_triple_error_analysis_content(triple_result)
     
     if triple_result.triples:
@@ -626,14 +629,14 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
         df = pd.DataFrame(triple_data)
         
         # Interactive table with selection
-        st.markdown("### 📊 Generated Knowledge Triples")
+        st.markdown(f"### {get_text('triple.generated_triples')}")
 
         # Table display options
         col1, col2 = st.columns([3, 1])
         with col1:
-            st.markdown("Click rows to view detailed information:")
+            st.markdown(get_text('ui.click_rows_details'))
         with col2:
-            export_format = st.selectbox("Export Format", ["JSON", "CSV"], key="triple_export")
+            export_format = st.selectbox(get_text('buttons.export_format'), ["JSON", "CSV"], key="triple_export")
         
         # Display the table
         selected_rows = st.dataframe(
@@ -645,7 +648,7 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
         )
         
         # Export functionality
-        if st.button("📥 Export Triples", key="export_triples"):
+        if st.button(get_text('buttons.export_triples'), key="export_triples"):
             if export_format == "JSON":
                 export_data = [asdict(triple) for triple in triple_result.triples]
                 st.download_button(
@@ -666,7 +669,7 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
         # Show validation information
 
     else:
-        st.warning("⚠️ No triples generated. Please check the entity extraction results.")
+        st.warning(get_text('ui.no_triples_generated'))
 
 
 def display_judgment_results(judgment_result: JudgmentResult, triples: List[Triple], show_expanders: bool = True):
@@ -678,7 +681,7 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         triples: The original triples that were judged
         show_expanders: Whether to create expanders for detailed sections
     """
-    st.markdown("## ⚖️ Graph Judgment Results")
+    st.markdown(f"## {get_text('judgment.title')}")
     
     # Summary metrics
     approved = sum(1 for j in judgment_result.judgments if j)
@@ -1046,7 +1049,10 @@ def create_sidebar_controls() -> Dict[str, Any]:
     # Update language if changed
     selected_lang = lang_options[selected_lang_index]
     if selected_lang != current_lang:
+        # Store the language change in session state for persistence
+        st.session_state.language = selected_lang
         set_language(selected_lang)
+        # Force complete page refresh to update all text
         st.rerun()
 
     st.sidebar.markdown("---")

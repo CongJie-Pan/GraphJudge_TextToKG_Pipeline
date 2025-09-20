@@ -28,6 +28,11 @@ import sys
 import io
 from pathlib import Path
 
+try:
+    from streamlit_pipeline.utils.i18n import get_text
+except ImportError:
+    from .i18n import get_text
+
 
 class ErrorType(Enum):
     """
@@ -100,20 +105,20 @@ class ErrorInfo:
     def display_in_streamlit(self):
         """Display the error in Streamlit with appropriate styling."""
         if self.severity == ErrorSeverity.CRITICAL:
-            st.error(f"🚨 Critical Error: {self.message}")
+            st.error(get_text('errors.critical_error', message=self.message))
         elif self.severity == ErrorSeverity.HIGH:
-            st.error(f"❌ Error: {self.message}")
+            st.error(get_text('errors.error_message', message=self.message))
         elif self.severity == ErrorSeverity.MEDIUM:
-            st.warning(f"⚠️ Warning: {self.message}")
+            st.warning(get_text('errors.warning_message', message=self.message))
         else:
-            st.info(f"ℹ️ Notice: {self.message}")
+            st.info(get_text('errors.notice_message', message=self.message))
         
         if self.suggestions:
-            st.markdown("**Suggested actions:**")
+            st.markdown(get_text('errors.suggested_actions'))
             for suggestion in self.suggestions:
                 st.markdown(f"• {suggestion}")
         
-        if self.technical_details and st.checkbox("Show technical details"):
+        if self.technical_details and st.checkbox(get_text('buttons.show_technical_details')):
             st.code(self.technical_details, language="text")
 
 

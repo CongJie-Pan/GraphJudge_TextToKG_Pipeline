@@ -13,6 +13,11 @@ from typing import Dict, List, Any, Optional, Callable
 import pandas as pd
 import json
 
+try:
+    from streamlit_pipeline.utils.i18n import get_text
+except ImportError:
+    from ..utils.i18n import get_text
+
 class DetailedProgressTracker:
     """
     Advanced progress tracker that mirrors the detailed processing information
@@ -36,8 +41,8 @@ class DetailedProgressTracker:
         Returns:
             tuple: (progress_container, log_container, metrics_container)
         """
-        st.markdown("## 🔄 Detailed Processing Progress")
-        st.markdown("Real-time processing information similar to terminal output from original source code")
+        st.markdown(f"## {get_text('processing.detailed_title')}")
+        st.markdown(get_text('processing.detailed_description'))
 
         # Create main containers
         self.progress_container = st.empty()
@@ -63,11 +68,11 @@ class DetailedProgressTracker:
             with self.progress_container.container():
                 st.markdown(f"### {phase_name}")
                 if description:
-                    st.info(f"📝 **Phase Description**: {description}")
+                    st.info(get_text('processing.phase_description', description=description))
 
                 # Show phase timing
                 total_elapsed = time.time() - self.start_time
-                st.caption(f"⏱️ Started at: {datetime.now().strftime('%H:%M:%S')} | Total elapsed: {total_elapsed:.1f}s")
+                st.caption(get_text('processing.timing_info', time=datetime.now().strftime('%H:%M:%S'), elapsed=f"{total_elapsed:.1f}"))
 
     def log_step(self, message: str, step_type: str = "INFO", show_timing: bool = True) -> None:
         """
@@ -111,7 +116,7 @@ class DetailedProgressTracker:
                     st.info(f"🔄 {message}")
 
                 if show_timing:
-                    st.caption(f"Phase elapsed: {phase_elapsed:.1f}s")
+                    st.caption(get_text('processing.phase_elapsed', elapsed=f"{phase_elapsed:.1f}"))
 
     def update_metrics(self, metrics: Dict[str, Any]) -> None:
         """
