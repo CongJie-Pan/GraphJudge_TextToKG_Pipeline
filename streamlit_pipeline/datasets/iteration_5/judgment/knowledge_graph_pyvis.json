@@ -1,0 +1,966 @@
+{
+  "nodes": [
+    {
+      "id": "乩壇（扶鸞）",
+      "label": "乩壇（扶鸞）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "乩壇（扶鸞）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "了結此案",
+      "label": "了結此案",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "了結此案\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "五歲",
+      "label": "五歲",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "五歲\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "兩家爭買婢致死之案",
+      "label": "兩家爭買婢致死之案",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "兩家爭買婢致死之案\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "國子監祭酒",
+      "label": "國子監祭酒",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "國子監祭酒\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "官事",
+      "label": "官事",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "官事\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "富族",
+      "label": "富族",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "富族\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "寶釵",
+      "label": "寶釵",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "寶釵\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "幼時",
+      "label": "幼時",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "幼時\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "徇情",
+      "label": "徇情",
+      "color": "#d62728",
+      "size": 18,
+      "title": "徇情\n类型: 概念\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "拐子（拐賣者）",
+      "label": "拐子（拐賣者）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "拐子（拐賣者）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "文龍",
+      "label": "文龍",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "文龍\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "李守中",
+      "label": "李守中",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "李守中\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "李氏",
+      "label": "李氏",
+      "color": "#1f77b4",
+      "size": 30,
+      "title": "李氏\n类型: 其他\n连接数: 5",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "李紈",
+      "label": "李紈",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "李紈\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "梨香院",
+      "label": "梨香院",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "梨香院\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "榮國府",
+      "label": "榮國府",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "榮國府\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "民間說服之術",
+      "label": "民間說服之術",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "民間說服之術\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "沙彌",
+      "label": "沙彌",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "沙彌\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "王夫人",
+      "label": "王夫人",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "王夫人\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "王子騰之妹",
+      "label": "王子騰之妹",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "王子騰之妹\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "王氏（薛母）",
+      "label": "王氏（薛母）",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "王氏（薛母）\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "甄老爺之女",
+      "label": "甄老爺之女",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "甄老爺之女\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "肇事者",
+      "label": "肇事者",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "肇事者\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "英蓮",
+      "label": "英蓮",
+      "color": "#1f77b4",
+      "size": 33,
+      "title": "英蓮\n类型: 其他\n连接数: 6",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "葫蘆廟",
+      "label": "葫蘆廟",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "葫蘆廟\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛姨媽",
+      "label": "薛姨媽",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "薛姨媽\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛家",
+      "label": "薛家",
+      "color": "#ff7f0e",
+      "size": 27,
+      "title": "薛家\n类型: 人物\n连接数: 4",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛家之子",
+      "label": "薛家之子",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "薛家之子\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛家入居賈府",
+      "label": "薛家入居賈府",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "薛家入居賈府\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛蟠",
+      "label": "薛蟠",
+      "color": "#ff7f0e",
+      "size": 30,
+      "title": "薛蟠\n类型: 人物\n连接数: 5",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛蟠之妹",
+      "label": "薛蟠之妹",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "薛蟠之妹\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛蟠之母",
+      "label": "薛蟠之母",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "薛蟠之母\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "護官符",
+      "label": "護官符",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "護官符\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈府",
+      "label": "賈府",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "賈府\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈珠",
+      "label": "賈珠",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "賈珠\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈蘭",
+      "label": "賈蘭",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "賈蘭\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈雨村",
+      "label": "賈雨村",
+      "color": "#ff7f0e",
+      "size": 24,
+      "title": "賈雨村\n类型: 人物\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "金陵名宦",
+      "label": "金陵名宦",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "金陵名宦\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "門子（新門子）",
+      "label": "門子（新門子）",
+      "color": "#1f77b4",
+      "size": 30,
+      "title": "門子（新門子）\n类型: 其他\n连接数: 5",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "馮家",
+      "label": "馮家",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "馮家\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "馮家爭奪英蓮",
+      "label": "馮家爭奪英蓮",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "馮家爭奪英蓮\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "馮淵",
+      "label": "馮淵",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "馮淵\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "黛玉",
+      "label": "黛玉",
+      "color": "#ff7f0e",
+      "size": 24,
+      "title": "黛玉\n类型: 人物\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "黛玉",
+      "to": "賈府",
+      "label": "寄居",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "黛玉 → 寄居 → 賈府\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "黛玉",
+      "to": "王夫人",
+      "label": "往來",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "黛玉 → 往來 → 王夫人\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "黛玉",
+      "to": "李氏",
+      "label": "往來",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "黛玉 → 往來 → 李氏\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "李氏",
+      "to": "賈珠",
+      "label": "妻子",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "李氏 → 妻子 → 賈珠\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "李氏",
+      "to": "賈蘭",
+      "label": "母親/養育者",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "李氏 → 母親/養育者 → 賈蘭\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈蘭",
+      "to": "五歲",
+      "label": "年齡",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈蘭 → 年齡 → 五歲\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "李守中",
+      "to": "國子監祭酒",
+      "label": "曾任",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "李守中 → 曾任 → 國子監祭酒\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "李氏",
+      "to": "金陵名宦",
+      "label": "出身",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "李氏 → 出身 → 金陵名宦\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "李氏",
+      "to": "李紈",
+      "label": "名",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "李氏 → 名 → 李紈\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "兩家爭買婢致死之案",
+      "label": "審理",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "賈雨村 → 審理 → 兩家爭買婢致死之案\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "徇情",
+      "label": "被勸",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈雨村 → 被勸 → 徇情\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "門子（新門子）",
+      "to": "葫蘆廟",
+      "label": "出身",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "門子（新門子） → 出身 → 葫蘆廟\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "門子（新門子）",
+      "to": "沙彌",
+      "label": "曾為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "門子（新門子） → 曾為 → 沙彌\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "門子（新門子）",
+      "to": "護官符",
+      "label": "示以",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "門子（新門子） → 示以 → 護官符\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "護官符",
+      "to": "官事",
+      "label": "影響",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "護官符 → 影響 → 官事\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "拐子（拐賣者）",
+      "to": "英蓮",
+      "label": "拐賣",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "拐子（拐賣者） → 拐賣 → 英蓮\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "英蓮",
+      "to": "甄老爺之女",
+      "label": "身分",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "英蓮 → 身分 → 甄老爺之女\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "英蓮",
+      "to": "幼時",
+      "label": "被拐時間",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "英蓮 → 被拐時間 → 幼時\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "馮家",
+      "to": "英蓮",
+      "label": "購得",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "馮家 → 購得 → 英蓮\n置信度: 0.85",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "馮淵",
+      "to": "馮家",
+      "label": "出自",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "馮淵 → 出自 → 馮家\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "馮淵",
+      "to": "英蓮",
+      "label": "購得",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "馮淵 → 購得 → 英蓮\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛家",
+      "to": "馮家爭奪英蓮",
+      "label": "與",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛家 → 與 → 馮家爭奪英蓮\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛家",
+      "to": "肇事者",
+      "label": "被指為",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛家 → 被指為 → 肇事者\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛蟠",
+      "to": "薛家之子",
+      "label": "為",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "薛蟠 → 為 → 薛家之子\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛蟠",
+      "to": "薛蟠",
+      "label": "名",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "薛蟠 → 名 → 薛蟠\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛蟠",
+      "to": "文龍",
+      "label": "表字",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛蟠 → 表字 → 文龍\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛蟠",
+      "to": "富族",
+      "label": "出身",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛蟠 → 出身 → 富族\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛蟠",
+      "to": "英蓮",
+      "label": "購得",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛蟠 → 購得 → 英蓮\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "王氏（薛母）",
+      "to": "薛蟠之母",
+      "label": "為",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "王氏（薛母） → 為 → 薛蟠之母\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "王氏（薛母）",
+      "to": "王子騰之妹",
+      "label": "為妹",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "王氏（薛母） → 為妹 → 王子騰之妹\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛姨媽",
+      "to": "薛家入居賈府",
+      "label": "隨",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛姨媽 → 隨 → 薛家入居賈府\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛姨媽",
+      "to": "賈府",
+      "label": "寓居",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛姨媽 → 寓居 → 賈府\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "寶釵",
+      "to": "薛蟠之妹",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "寶釵 → 為 → 薛蟠之妹\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛家",
+      "to": "梨香院",
+      "label": "寓居",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛家 → 寓居 → 梨香院\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "門子（新門子）",
+      "to": "了結此案",
+      "label": "策成",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "門子（新門子） → 策成 → 了結此案\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈雨村",
+      "to": "門子（新門子）",
+      "label": "發配",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈雨村 → 發配 → 門子（新門子）\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "乩壇（扶鸞）",
+      "to": "民間說服之術",
+      "label": "作為",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "乩壇（扶鸞） → 作為 → 民間說服之術\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "榮國府",
+      "to": "薛家",
+      "label": "與",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "榮國府 → 與 → 薛家\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    }
+  ],
+  "physics": {
+    "enabled": true,
+    "stabilization": {
+      "iterations": 100
+    },
+    "barnesHut": {
+      "gravitationalConstant": -2000,
+      "centralGravity": 0.3,
+      "springLength": 95,
+      "springConstant": 0.04,
+      "damping": 0.09
+    }
+  },
+  "metadata": {
+    "format": "pyvis",
+    "nodes_count": 44,
+    "edges_count": 38,
+    "conversion_timestamp": "2025-09-20T22:25:59.541609",
+    "physics_enabled": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "iteration_number": 6,
+  "created_at": "2025-09-22T12:36:33.076432",
+  "input_text": "第五回 遊幻境指迷十二釵 飲仙醪曲演紅樓夢\r\n\r\n如今且說林黛玉自在榮府以來，賈母萬般憐愛，寢食起居，一如寶玉，迎春、探春、惜春三個親孫女倒且靠後；便是寶玉和黛玉二人之親密友愛處，亦自較別個不同，日則同行同坐，夜則同息同止，真是言和意順，略無參商②。不想如今忽然來了一個薛寶釵，年歲雖大不多，然品格端方，容豐美，人多謂黛玉所不及。而且寶釵行為豁達，隨分從時，不比黛玉孤高自許，目無下塵，故比黛玉大得下...",
+  "input_length": 17004,
+  "phases_completed": [
+    "ectd",
+    "triples",
+    "judgment",
+    "graph_visualization"
+  ],
+  "phase_data": {
+    "ectd": {
+      "entities_count": 71,
+      "completed_at": "2025-09-22T12:37:06.017556"
+    },
+    "triples": {
+      "triples_count": 86,
+      "completed_at": "2025-09-22T12:37:20.422849"
+    },
+    "judgment": {
+      "approved_triples": 74,
+      "total_triples": 86,
+      "approval_rate": 0.8604651162790697,
+      "completed_at": "2025-09-22T12:59:29.153153"
+    },
+    "graph_visualization": {
+      "nodes_count": 76,
+      "edges_count": 74,
+      "entities_count": 76,
+      "has_visualization_data": true,
+      "completed_at": "2025-09-22T12:59:29.217183"
+    }
+  }
+}

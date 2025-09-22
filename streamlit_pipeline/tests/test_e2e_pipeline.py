@@ -594,15 +594,30 @@ class TestPipelinePerformance:
     def test_concurrent_pipeline_execution(self, sample_chinese_text, mock_successful_api_responses):
         """Test pipeline performance under concurrent load."""
 
-        with patch('streamlit_pipeline.core.entity_processor.call_gpt5_mini') as mock_entity_api, \
-             patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api_client, \
-             patch('streamlit_pipeline.core.pipeline.get_api_client') as mock_pipeline_api_client:
+        with patch('core.entity_processor.call_gpt5_mini') as mock_entity_api, \
+             patch('utils.api_client.call_gpt5_mini') as mock_entity_api_utils, \
+             patch('core.graph_judge.get_api_client') as mock_api_client, \
+             patch('core.pipeline.get_api_client') as mock_pipeline_api_client, \
+             patch('core.triple_generator.call_gpt5_mini') as mock_triple_api, \
+             patch('utils.api_client.get_api_client') as mock_utils_api_client:
 
             # Set up mocks
             self._setup_performance_mocks_unified(mock_entity_api, mock_api_client, mock_successful_api_responses)
 
+            # Set up the utils entity API mock with the same behavior
+            mock_entity_api_utils.side_effect = mock_entity_api.side_effect
+
             # Also set up the pipeline API client mock
             mock_pipeline_api_client.return_value = mock_api_client.return_value
+            mock_utils_api_client.return_value = mock_api_client.return_value
+
+            # Set up triple generator API mock with proper JSON format
+            mock_triple_api.return_value = '''{
+                "triples": [
+                    ["subject1", "predicate1", "object1"],
+                    ["subject2", "predicate2", "object2"]
+                ]
+            }'''
             
             # Run multiple pipelines concurrently
             import concurrent.futures

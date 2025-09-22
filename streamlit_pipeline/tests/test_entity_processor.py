@@ -275,7 +275,7 @@ class TestEntityProcessor:
         
         # Second call should be for denoising
         second_call_args = call_args_list[1][0]
-        assert "基於給定的實體，對文本進行去噪處理" in second_call_args[0]  # Should include new denoising prompt
+        assert "基於給定的實體，對古漢語文本進行去噪處理" in second_call_args[0]  # Should include new denoising prompt
 
     # Error propagation tests
     

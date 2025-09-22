@@ -445,7 +445,9 @@ class TestTripleGeneration:
         
         assert isinstance(result, TripleResult)
         # Should handle failures gracefully
-        assert result.metadata['text_processing']['chunks_processed'] == 0
+        assert result.success is False
+        assert result.metadata['text_processing']['chunks_processed'] == 1  # Chunk was processed but failed
+        assert result.metadata['text_processing']['chunks_with_triples'] == 0  # No successful triples
     
     def test_generate_triples_without_api_client(self):
         """Test triple generation without API client (mock mode)."""

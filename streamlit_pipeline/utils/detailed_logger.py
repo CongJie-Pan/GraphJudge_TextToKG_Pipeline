@@ -287,6 +287,18 @@ Log File: {self.log_filename}
             "event": "phase_end"
         })
 
+    def log_phase_complete(self, phase_name: str, success: bool, details: Dict[str, Any] = None):
+        """Log the completion of a pipeline phase (alias for backward compatibility)."""
+        combined_details = {
+            "phase_name": phase_name,
+            "success": success,
+            "event": "phase_complete"
+        }
+        if details:
+            combined_details.update(details)
+
+        self.log(LogLevel.PIPELINE, f"Completed {phase_name} - Success: {success}", combined_details)
+
     def log_api_call(self, api_name: str, prompt_length: int, response_length: int = None,
                      success: bool = True, error: str = None):
         """Log API call details."""

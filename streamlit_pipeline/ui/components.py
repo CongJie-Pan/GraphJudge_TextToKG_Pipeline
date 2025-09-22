@@ -154,7 +154,7 @@ def display_input_section() -> str:
 
                     # Show additional file analysis
                     if len(input_text) > 500:
-                        st.info(f"📄 Showing first 500 characters of {len(input_text):,} total characters")
+                        st.info(get_text('components.showing_first_chars', count=500, total=len(input_text)))
 
             else:
                 st.error(get_text('input.file_error'))
@@ -270,24 +270,24 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
             with col1:
                 st.markdown(get_text('ui.original_input_text'))
                 st.text_area(
-                    "Raw Input",
+                    get_text('components.raw_input'),
                     original_input[:400] + ("..." if len(original_input) > 400 else ""),
                     height=140,
                     disabled=True,
                     key="original_entity_text"
                 )
-                st.caption(f"Total length: {len(original_input):,} characters")
+                st.caption(get_text('components.total_length', length=len(original_input)))
 
             with col2:
                 st.markdown(get_text('ui.denoised_structured_text'))
                 st.text_area(
-                    "Processed Output",
+                    get_text('components.processed_output'),
                     entity_result.denoised_text[:400] + ("..." if len(entity_result.denoised_text) > 400 else ""),
                     height=140,
                     disabled=True,
                     key="denoised_entity_text"
                 )
-                st.caption(f"Processed length: {len(entity_result.denoised_text):,} characters")
+                st.caption(get_text('components.processed_length', length=len(entity_result.denoised_text)))
 
 
     else:
@@ -297,9 +297,9 @@ def display_entity_results(entity_result: EntityResult, show_expanders: bool = T
         # Error analysis and troubleshooting
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Processing Time", f"{entity_result.processing_time:.2f}s", "Before failure")
+            st.metric(get_text('metrics.processing_time'), f"{entity_result.processing_time:.2f}s", get_text('components.before_failure'))
         with col2:
-            st.metric("Stage", "Entity Extraction", "Failed at this stage")
+            st.metric(get_text('components.stage'), get_text('components.entity_extraction'), get_text('components.failed_at_stage'))
 
         if show_expanders:
             with st.expander(get_text('entity.error_analysis')):
@@ -314,11 +314,11 @@ def _display_entity_error_analysis_content(entity_result: EntityResult):
     st.markdown(get_text('ui.possible_causes_solutions'))
 
     error_suggestions = [
-        "**API Connectivity**: Check internet connection and API key configuration",
-        "**Input Format**: Ensure input text contains valid Chinese characters",
-        "**Rate Limiting**: API quota may be exceeded, try again later",
-        "**Text Length**: Input may be too long, try breaking into smaller segments",
-        "**Model Availability**: GPT-5-mini service may be temporarily unavailable"
+        get_text('error_suggestions.api_connectivity'),
+        get_text('error_suggestions.input_format'),
+        get_text('error_suggestions.rate_limiting'),
+        get_text('error_suggestions.text_length'),
+        get_text('error_suggestions.model_availability')
     ]
 
     for suggestion in error_suggestions:
@@ -340,17 +340,17 @@ def _display_triple_phases_content(triple_result: TripleResult):
         st.markdown(get_text('ui.text_processing'))
         if hasattr(triple_result, 'metadata') and triple_result.metadata:
             chunks_processed = triple_result.metadata.get('chunks_processed', 1)
-            st.metric("Text Chunks", chunks_processed, "Processed segments")
+            st.metric(get_text('components.text_chunks'), chunks_processed, get_text('components.processed_segments'))
         else:
-            st.metric("Processing Method", "Sequential", "Text analysis")
+            st.metric(get_text('components.processing_method'), get_text('components.sequential'), get_text('components.text_analysis'))
     with col2:
         st.markdown(get_text('ui.relation_discovery'))
         if triple_result.triples:
             unique_relations = len(set(t.predicate for t in triple_result.triples))
-            st.metric("Relation Types", unique_relations, "Discovered patterns")
+            st.metric(get_text('metrics.relation_types'), unique_relations, get_text('metrics.discovered_patterns'))
     with col3:
         st.markdown(get_text('ui.quality_enhancement'))
-        st.metric("Schema Validation", "JSON Format", "Structured output")
+        st.metric(get_text('metrics.schema_validation'), get_text('components.json_format'), get_text('metrics.structured_output'))
 
     st.markdown(f"### {get_text('triple.phase2_title')}")
     st.info(get_text('triple.phase2_description'))
@@ -363,11 +363,11 @@ def _display_triple_error_analysis_content(triple_result: TripleResult):
     """Helper function to display triple error analysis content."""
     st.markdown(get_text('ui.common_issues_solutions'))
     error_solutions = [
-        "**Entity Quality**: Ensure entity extraction was successful with valid entities",
-        "**Text Format**: Denoised text should be well-structured for relation extraction",
-        "**JSON Parsing**: Generated output must conform to valid JSON schema",
-        "**Rate Limits**: GPT-5-mini API may have reached usage limits",
-        "**Relation Complexity**: Text relationships may be too complex for current model"
+        get_text('error_suggestions.entity_quality'),
+        get_text('error_suggestions.text_format'),
+        get_text('error_suggestions.json_parsing'),
+        get_text('error_suggestions.rate_limits'),
+        get_text('error_suggestions.relation_complexity')
     ]
 
     for solution in error_solutions:
@@ -384,7 +384,7 @@ def _display_judgment_explanations_content(triples, judgment_result):
     """Helper function to display judgment explanations content with English labels."""
     for i, (triple, explanation) in enumerate(zip(triples, judgment_result.explanations)):
         if explanation:
-            judgment_status = "✅ Approved" if judgment_result.judgments[i] else "❌ Rejected"
+            judgment_status = get_text('judgment.approved') if judgment_result.judgments[i] else get_text('judgment.rejected')
             status_icon = "✅" if judgment_result.judgments[i] else "❌"
 
             # Create a concise header for the expander
@@ -399,15 +399,15 @@ def _display_judgment_explanations_content(triples, judgment_result):
                 # Display full triple information with enhanced formatting
                 col1, col2 = st.columns([3, 1])
                 with col1:
-                    st.markdown(f"**Complete Triple:** {triple.subject} - {triple.predicate} - {triple.object}")
+                    st.markdown(get_text('citations.complete_triple', subject=triple.subject, predicate=triple.predicate, object=triple.object))
                 with col2:
-                    st.markdown(f"**Status:** {judgment_status}")
+                    st.markdown(f"**{get_text('judgment.status')}:** {judgment_status}")
 
                 # Display confidence with formatting
                 if judgment_result.confidence and i < len(judgment_result.confidence):
                     confidence = judgment_result.confidence[i]
                     confidence_percent = confidence * 100
-                    st.markdown(f"**Confidence:** {confidence:.3f} ({confidence_percent:.1f}%)")
+                    st.markdown(get_text('citations.confidence_percent', confidence=confidence, percent=confidence_percent))
 
                 # Display evidence sources if available
                 if hasattr(judgment_result, 'metadata') and judgment_result.metadata:
@@ -418,15 +418,15 @@ def _display_judgment_explanations_content(triples, judgment_result):
                             evidence_sources = explanation_obj['evidence_sources']
 
                     if evidence_sources:
-                        # Translate evidence sources to English
+                        # Translate evidence sources using localization
                         source_translations = {
-                            'historical_records': 'Historical Records',
-                            'literary_works': 'Literary Works',
-                            'general_knowledge': 'General Knowledge',
-                            'domain_expertise': 'Domain Expertise'
+                            'historical_records': get_text('citations.historical_records'),
+                            'literary_works': get_text('citations.literary_works'),
+                            'general_knowledge': get_text('citations.general_knowledge'),
+                            'domain_expertise': get_text('citations.domain_expertise')
                         }
                         translated_sources = [source_translations.get(src, src) for src in evidence_sources]
-                        st.markdown(f"**Reference Sources:** {', '.join(translated_sources)}")
+                        st.markdown(get_text('citations.reference_sources', sources=', '.join(translated_sources)))
 
                 # Display actual citations if available
                 actual_citations = []
@@ -569,16 +569,16 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
         # Enhanced summary metrics with detailed information
         col1, col2, col3, col4, col5 = st.columns(5)
         with col1:
-            st.metric("Status", "✅ Success", "Generation Complete")
+            st.metric(get_text('status.status'), get_text('status.success'), get_text('metrics.generation_complete'))
         with col2:
-            st.metric("Processing Time", f"{triple_result.processing_time:.2f}s", "GPT-5-mini API")
+            st.metric(get_text('metrics.processing_time'), f"{triple_result.processing_time:.2f}s", "GPT-5-mini API")
         with col3:
-            st.metric("Triple Count", len(triple_result.triples), "Knowledge Relations")
+            st.metric(get_text('metrics.triple_count'), len(triple_result.triples), get_text('metrics.knowledge_relations'))
         with col4:
             # Calculate average confidence if available
             confidences = [t.confidence for t in triple_result.triples if hasattr(t, 'confidence') and t.confidence is not None]
             avg_confidence = sum(confidences) / len(confidences) if confidences else 0
-            st.metric("Avg Confidence", f"{avg_confidence:.2f}" if avg_confidence > 0 else "N/A", "Quality Score")
+            st.metric(get_text('metrics.avg_confidence'), f"{avg_confidence:.2f}" if avg_confidence > 0 else "N/A", get_text('metrics.quality_score'))
         with col5:
             # Count unique subjects and objects
             if triple_result.triples:
@@ -586,7 +586,7 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
                 for triple in triple_result.triples:
                     unique_entities.add(triple.subject)
                     unique_entities.add(triple.object)
-                st.metric("Unique Entities", len(unique_entities), "Graph Nodes")
+                st.metric(get_text('metrics.unique_entities'), len(unique_entities), get_text('metrics.graph_nodes'))
 
         # Detailed processing phases display
         if show_expanders:
@@ -603,9 +603,9 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
 
         col1, col2 = st.columns(2)
         with col1:
-            st.metric("Processing Time", f"{triple_result.processing_time:.2f}s", "Before failure")
+            st.metric(get_text('metrics.processing_time'), f"{triple_result.processing_time:.2f}s", get_text('components.before_failure'))
         with col2:
-            st.metric("Stage", "Triple Generation", "Failed at this stage")
+            st.metric(get_text('components.stage'), get_text('progress.triple_generation'), get_text('components.failed_at_stage'))
 
         if show_expanders:
             with st.expander(get_text('triple.error_analysis')):
@@ -620,10 +620,10 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
         for i, triple in enumerate(triple_result.triples):
             triple_data.append({
                 "#": i + 1,
-                "Subject": triple.subject,
-                "Predicate": triple.predicate,
-                "Object": triple.object,
-                "Confidence": f"{triple.confidence:.3f}" if triple.confidence else "N/A"
+                get_text('judgment.subject'): triple.subject,
+                get_text('judgment.relation'): triple.predicate,
+                get_text('judgment.object'): triple.object,
+                get_text('judgment.confidence'): f"{triple.confidence:.3f}" if triple.confidence else "N/A"
             })
         
         df = pd.DataFrame(triple_data)
@@ -690,31 +690,31 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
     
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.metric("Judgment Status", "✅ Complete" if judgment_result.success else "❌ Failed")
+        st.metric(get_text('metrics.judgment_status'), get_text('status.complete') if judgment_result.success else get_text('status.failed'))
     with col2:
-        st.metric("Processing Time", f"{judgment_result.processing_time:.2f}s")
+        st.metric(get_text('metrics.processing_time'), f"{judgment_result.processing_time:.2f}s")
     with col3:
-        st.metric("Approved", approved, delta=f"{approval_rate:.1%}")
+        st.metric(get_text('metrics.approved'), approved, delta=f"{approval_rate:.1%}")
     with col4:
-        st.metric("Rejected", rejected)
+        st.metric(get_text('metrics.rejected'), rejected)
     with col5:
         avg_confidence = sum(judgment_result.confidence) / len(judgment_result.confidence) if judgment_result.confidence else 0
-        st.metric("Average Confidence", f"{avg_confidence:.3f}")
+        st.metric(get_text('metrics.average_confidence_score'), f"{avg_confidence:.3f}")
     
     if judgment_result.judgments:
         # Create combined results
         results_data = []
         for i, (triple, judgment, confidence) in enumerate(zip(triples, judgment_result.judgments, judgment_result.confidence or [0] * len(triples))):
             status_emoji = "✅" if judgment else "❌"
-            status_text = "Approved" if judgment else "Rejected"
+            status_text = get_text('judgment.approved') if judgment else get_text('judgment.rejected')
 
             results_data.append({
                 "#": i + 1,
-                "Status": f"{status_emoji} {status_text}",
-                "Subject": triple.subject,
-                "Relation": triple.predicate,
-                "Object": triple.object,
-                "Confidence": f"{confidence:.3f}" if confidence > 0 else "N/A"
+                get_text('judgment.status'): f"{status_emoji} {status_text}",
+                get_text('judgment.subject'): triple.subject,
+                get_text('judgment.relation'): triple.predicate,
+                get_text('judgment.object'): triple.object,
+                get_text('judgment.confidence'): f"{confidence:.3f}" if confidence > 0 else "N/A"
             })
         
         df = pd.DataFrame(results_data)
@@ -723,28 +723,28 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         col1, col2 = st.columns(2)
         with col1:
             filter_option = st.selectbox(
-                "Filter Display",
-                ["All", "Approved Only", "Rejected Only"],
+                get_text('metrics.filter_display'),
+                [get_text('metrics.all_items'), get_text('metrics.approved_only'), get_text('metrics.rejected_only')],
                 key="judgment_filter"
             )
         with col2:
             sort_by = st.selectbox(
-                "Sort By",
-                ["#", "Confidence", "Status"],
+                get_text('metrics.sort_by'),
+                ["#", get_text('judgment.confidence'), get_text('judgment.status')],
                 key="judgment_sort"
             )
         
         # Apply filters
         filtered_df = df.copy()
-        if filter_option == "Approved Only":
-            filtered_df = filtered_df[filtered_df['Status'].str.contains("Approved")]
-        elif filter_option == "Rejected Only":
-            filtered_df = filtered_df[filtered_df['Status'].str.contains("Rejected")]
+        if filter_option == get_text('metrics.approved_only'):
+            filtered_df = filtered_df[filtered_df[get_text('judgment.status')].str.contains(get_text('judgment.approved'))]
+        elif filter_option == get_text('metrics.rejected_only'):
+            filtered_df = filtered_df[filtered_df[get_text('judgment.status')].str.contains(get_text('judgment.rejected'))]
 
         # Apply sorting
-        if sort_by == "Confidence":
+        if sort_by == get_text('judgment.confidence'):
             # Convert confidence to numeric for sorting
-            filtered_df['Confidence_numeric'] = filtered_df['Confidence'].apply(
+            filtered_df['Confidence_numeric'] = filtered_df[get_text('judgment.confidence')].apply(
                 lambda x: float(x) if x != "N/A" else 0
             )
             filtered_df = filtered_df.sort_values('Confidence_numeric', ascending=False)

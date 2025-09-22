@@ -1,0 +1,1750 @@
+{
+  "nodes": [
+    {
+      "id": "《紅樓夢》原稿",
+      "label": "《紅樓夢》原稿",
+      "color": "#9467bd",
+      "size": 27,
+      "title": "《紅樓夢》原稿\n类型: 作品\n连接数: 4",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "下人",
+      "label": "下人",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "下人\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "以情欲聲色警其痴頑",
+      "label": "以情欲聲色警其痴頑",
+      "color": "#d62728",
+      "size": 18,
+      "title": "以情欲聲色警其痴頑\n类型: 概念\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "佳人（寶釵、黛玉之影）",
+      "label": "佳人（寶釵、黛玉之影）",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "佳人（寶釵、黛玉之影）\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "元春",
+      "label": "元春",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "元春\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "十二曲（紅樓夢十二支）",
+      "label": "十二曲（紅樓夢十二支）",
+      "color": "#9467bd",
+      "size": 18,
+      "title": "十二曲（紅樓夢十二支）\n类型: 作品\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "千紅一窟（茶）",
+      "label": "千紅一窟（茶）",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "千紅一窟（茶）\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "可卿（秦可卿）",
+      "label": "可卿（秦可卿）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "可卿（秦可卿）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "史湘雲",
+      "label": "史湘雲",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "史湘雲\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "各省冊櫃",
+      "label": "各省冊櫃",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "各省冊櫃\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "夜叉",
+      "label": "夜叉",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "夜叉\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "太虛幻境",
+      "label": "太虛幻境",
+      "color": "#1f77b4",
+      "size": 24,
+      "title": "太虛幻境\n类型: 其他\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "太虛幻境之主",
+      "label": "太虛幻境之主",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "太虛幻境之主\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "奶娘",
+      "label": "奶娘",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "奶娘\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "妙玉",
+      "label": "妙玉",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "妙玉\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "嫺雅",
+      "label": "嫺雅",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "嫺雅\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "嬤嬤",
+      "label": "嬤嬤",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "嬤嬤\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "孽海情天",
+      "label": "孽海情天",
+      "color": "#d62728",
+      "size": 18,
+      "title": "孽海情天\n类型: 概念\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "寧府花園治酒",
+      "label": "寧府花園治酒",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "寧府花園治酒\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "寧榮二府女眷",
+      "label": "寧榮二府女眷",
+      "color": "#2ca02c",
+      "size": 24,
+      "title": "寧榮二府女眷\n类型: 地点\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "寶玉丫頭伴侍",
+      "label": "寶玉丫頭伴侍",
+      "color": "#ff7f0e",
+      "size": 24,
+      "title": "寶玉丫頭伴侍\n类型: 人物\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "尤氏",
+      "label": "尤氏",
+      "color": "#1f77b4",
+      "size": 27,
+      "title": "尤氏\n类型: 其他\n连接数: 4",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "巧姐",
+      "label": "巧姐",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "巧姐\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "常侍左右",
+      "label": "常侍左右",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "常侍左右\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "幻境用茶",
+      "label": "幻境用茶",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "幻境用茶\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "幻境用酒",
+      "label": "幻境用酒",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "幻境用酒\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "幻境用香",
+      "label": "幻境用香",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "幻境用香\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "府中老僕稱呼",
+      "label": "府中老僕稱呼",
+      "color": "#2ca02c",
+      "size": 18,
+      "title": "府中老僕稱呼\n类型: 地点\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "引子",
+      "label": "引子",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "引子\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "恨無常",
+      "label": "恨無常",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "恨無常\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "惜春",
+      "label": "惜春",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "惜春\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "拖賈寶玉陷入迷津",
+      "label": "拖賈寶玉陷入迷津",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "拖賈寶玉陷入迷津\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "探春",
+      "label": "探春",
+      "color": "#1f77b4",
+      "size": 24,
+      "title": "探春\n类型: 其他\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "晴雯",
+      "label": "晴雯",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "晴雯\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "木居士",
+      "label": "木居士",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "木居士\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "李紈",
+      "label": "李紈",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "李紈\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "枉凝眉",
+      "label": "枉凝眉",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "枉凝眉\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "林黛玉",
+      "label": "林黛玉",
+      "color": "#ff7f0e",
+      "size": 36,
+      "title": "林黛玉\n类型: 人物\n连接数: 7",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "溫柔",
+      "label": "溫柔",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "溫柔\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "灌愁海中",
+      "label": "灌愁海中",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "灌愁海中\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "灰侍者",
+      "label": "灰侍者",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "灰侍者\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "玉帶林中掛（暗指林黛玉）",
+      "label": "玉帶林中掛（暗指林黛玉）",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "玉帶林中掛（暗指林黛玉）\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "王熙鳳",
+      "label": "王熙鳳",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "王熙鳳\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "畫象（桂花與蓮枯）",
+      "label": "畫象（桂花與蓮枯）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "畫象（桂花與蓮枯）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "畫象（玉帶）",
+      "label": "畫象（玉帶）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "畫象（玉帶）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "畫象（美玉）",
+      "label": "畫象（美玉）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "畫象（美玉）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "畫象（金簪）",
+      "label": "畫象（金簪）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "畫象（金簪）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "痴情司",
+      "label": "痴情司",
+      "color": "#d62728",
+      "size": 18,
+      "title": "痴情司\n类型: 概念\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "秦可卿",
+      "label": "秦可卿",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "秦可卿\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "秦氏",
+      "label": "秦氏",
+      "color": "#1f77b4",
+      "size": 30,
+      "title": "秦氏\n类型: 其他\n连接数: 5",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "端方",
+      "label": "端方",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "端方\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "終身誤",
+      "label": "終身誤",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "終身誤\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "纏綿",
+      "label": "纏綿",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "纏綿\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "群芳髓（香）",
+      "label": "群芳髓（香）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "群芳髓（香）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "萬豔同杯（酒）",
+      "label": "萬豔同杯（酒）",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "萬豔同杯（酒）\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薄命冊畫（各人物判詞畫）",
+      "label": "薄命冊畫（各人物判詞畫）",
+      "color": "#d62728",
+      "size": 45,
+      "title": "薄命冊畫（各人物判詞畫）\n类型: 概念\n连接数: 10",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薄命司",
+      "label": "薄命司",
+      "color": "#d62728",
+      "size": 24,
+      "title": "薄命司\n类型: 概念\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "薛寶釵",
+      "label": "薛寶釵",
+      "color": "#ff7f0e",
+      "size": 33,
+      "title": "薛寶釵\n类型: 人物\n连接数: 6",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "襲人",
+      "label": "襲人",
+      "color": "#1f77b4",
+      "size": 21,
+      "title": "襲人\n类型: 其他\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "警幻仙姑",
+      "label": "警幻仙姑",
+      "color": "#1f77b4",
+      "size": 48,
+      "title": "警幻仙姑\n类型: 其他\n连接数: 11",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "豁達",
+      "label": "豁達",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "豁達\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "豐美",
+      "label": "豐美",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "豐美\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈寶玉",
+      "label": "賈寶玉",
+      "color": "#ff7f0e",
+      "size": 48,
+      "title": "賈寶玉\n类型: 人物\n连接数: 11",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈母",
+      "label": "賈母",
+      "color": "#ff7f0e",
+      "size": 24,
+      "title": "賈母\n类型: 人物\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈母親孫女",
+      "label": "賈母親孫女",
+      "color": "#ff7f0e",
+      "size": 21,
+      "title": "賈母親孫女\n类型: 人物\n连接数: 2",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈珍",
+      "label": "賈珍",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "賈珍\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "賈蓉",
+      "label": "賈蓉",
+      "color": "#ff7f0e",
+      "size": 18,
+      "title": "賈蓉\n类型: 人物\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "迎春",
+      "label": "迎春",
+      "color": "#1f77b4",
+      "size": 24,
+      "title": "迎春\n类型: 其他\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "迷津",
+      "label": "迷津",
+      "color": "#1f77b4",
+      "size": 24,
+      "title": "迷津\n类型: 其他\n连接数: 3",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "迷津之危",
+      "label": "迷津之危",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "迷津之危\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "邢夫人",
+      "label": "邢夫人",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "邢夫人\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "金陵十二釵",
+      "label": "金陵十二釵",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "金陵十二釵\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "金陵十二釵正冊",
+      "label": "金陵十二釵正冊",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "金陵十二釵正冊\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "離恨天上",
+      "label": "離恨天上",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "離恨天上\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "香菱（英蓮）",
+      "label": "香菱（英蓮）",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "香菱（英蓮）\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    },
+    {
+      "id": "麝月",
+      "label": "麝月",
+      "color": "#1f77b4",
+      "size": 18,
+      "title": "麝月\n类型: 其他\n连接数: 1",
+      "font": {
+        "size": 12
+      },
+      "borderWidth": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "林黛玉",
+      "to": "賈母",
+      "label": "受憐愛於",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "林黛玉 → 受憐愛於 → 賈母\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "林黛玉",
+      "to": "賈寶玉",
+      "label": "同行同息",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "林黛玉 → 同行同息 → 賈寶玉\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "林黛玉",
+      "to": "賈寶玉",
+      "label": "與…親密",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "林黛玉 → 與…親密 → 賈寶玉\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "林黛玉",
+      "label": "與…尤為熟樂",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈寶玉 → 與…尤為熟樂 → 林黛玉\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛寶釵",
+      "to": "端方",
+      "label": "品格",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛寶釵 → 品格 → 端方\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛寶釵",
+      "to": "豐美",
+      "label": "容貌",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛寶釵 → 容貌 → 豐美\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛寶釵",
+      "to": "豁達",
+      "label": "行為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛寶釵 → 行為 → 豁達\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛寶釵",
+      "to": "下人",
+      "label": "得人心於",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薛寶釵 → 得人心於 → 下人\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薛寶釵",
+      "to": "林黛玉",
+      "label": "與…並列為關涉人物",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薛寶釵 → 與…並列為關涉人物 → 林黛玉\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "迎春",
+      "to": "賈母親孫女",
+      "label": "身分",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "迎春 → 身分 → 賈母親孫女\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "探春",
+      "to": "賈母親孫女",
+      "label": "身分",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "探春 → 身分 → 賈母親孫女\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "迎春",
+      "to": "寧榮二府女眷",
+      "label": "與…同屬",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "迎春 → 與…同屬 → 寧榮二府女眷\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "探春",
+      "to": "寧榮二府女眷",
+      "label": "與…同屬",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "探春 → 與…同屬 → 寧榮二府女眷\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "惜春",
+      "to": "寧榮二府女眷",
+      "label": "與…同屬",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "惜春 → 與…同屬 → 寧榮二府女眷\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈珍",
+      "to": "尤氏",
+      "label": "妻子",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈珍 → 妻子 → 尤氏\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "尤氏",
+      "to": "寧府花園治酒",
+      "label": "於",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "尤氏 → 於 → 寧府花園治酒\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "尤氏",
+      "to": "賈母",
+      "label": "邀請",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "尤氏 → 邀請 → 賈母\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "尤氏",
+      "to": "邢夫人",
+      "label": "邀請",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "尤氏 → 邀請 → 邢夫人\n置信度: 0.85",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈蓉",
+      "to": "秦氏",
+      "label": "妻子",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈蓉 → 妻子 → 秦氏\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "秦氏",
+      "to": "嫺雅",
+      "label": "性格",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "秦氏 → 性格 → 嫺雅\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "秦氏",
+      "to": "溫柔",
+      "label": "處事態度",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "秦氏 → 處事態度 → 溫柔\n置信度: 0.80",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "秦氏",
+      "to": "賈母",
+      "label": "受信任於",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "秦氏 → 受信任於 → 賈母\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "秦氏",
+      "to": "賈寶玉",
+      "label": "曾安置",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "秦氏 → 曾安置 → 賈寶玉\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "嬤嬤",
+      "to": "府中老僕稱呼",
+      "label": "職稱",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "嬤嬤 → 職稱 → 府中老僕稱呼\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "襲人",
+      "to": "寶玉丫頭伴侍",
+      "label": "職務",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "襲人 → 職務 → 寶玉丫頭伴侍\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "晴雯",
+      "to": "寶玉丫頭伴侍",
+      "label": "職務",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "晴雯 → 職務 → 寶玉丫頭伴侍\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "麝月",
+      "to": "寶玉丫頭伴侍",
+      "label": "職務",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "麝月 → 職務 → 寶玉丫頭伴侍\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "奶娘",
+      "to": "常侍左右",
+      "label": "職務",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "奶娘 → 職務 → 常侍左右\n置信度: 0.85",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "玉帶林中掛（暗指林黛玉）",
+      "to": "林黛玉",
+      "label": "指代",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "玉帶林中掛（暗指林黛玉） → 指代 → 林黛玉\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "金陵十二釵",
+      "to": "薄命司",
+      "label": "藏於",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "金陵十二釵 → 藏於 → 薄命司\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "太虛幻境之主",
+      "label": "自稱職責",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "警幻仙姑 → 自稱職責 → 太虛幻境之主\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "離恨天上",
+      "label": "居所",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 居所 → 離恨天上\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "灌愁海中",
+      "label": "居所",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "警幻仙姑 → 居所 → 灌愁海中\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "賈寶玉",
+      "label": "引導",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 引導 → 賈寶玉\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "太虛幻境",
+      "label": "入",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈寶玉 → 入 → 太虛幻境\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "太虛幻境",
+      "to": "太虛幻境",
+      "label": "牌坊名",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "太虛幻境 → 牌坊名 → 太虛幻境\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "太虛幻境",
+      "to": "孽海情天",
+      "label": "匾額",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "太虛幻境 → 匾額 → 孽海情天\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "痴情司",
+      "label": "入內見",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈寶玉 → 入內見 → 痴情司\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "薄命司",
+      "label": "入內見",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "賈寶玉 → 入內見 → 薄命司\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命司",
+      "to": "各省冊櫃",
+      "label": "藏有",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命司 → 藏有 → 各省冊櫃\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "金陵十二釵正冊",
+      "label": "觀察",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈寶玉 → 觀察 → 金陵十二釵正冊\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "迎春",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 迎春\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "探春",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 探春\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "惜春",
+      "label": "包含",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 惜春\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "元春",
+      "label": "包含",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 元春\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "史湘雲",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 史湘雲\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "李紈",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 李紈\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "王熙鳳",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 王熙鳳\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "巧姐",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 巧姐\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "秦可卿",
+      "label": "包含",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 秦可卿\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "薄命冊畫（各人物判詞畫）",
+      "to": "襲人",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "薄命冊畫（各人物判詞畫） → 包含 → 襲人\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "畫象（玉帶）",
+      "to": "林黛玉",
+      "label": "暗指",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "畫象（玉帶） → 暗指 → 林黛玉\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "畫象（金簪）",
+      "to": "薛寶釵",
+      "label": "暗指",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "畫象（金簪） → 暗指 → 薛寶釵\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "畫象（美玉）",
+      "to": "妙玉",
+      "label": "暗指",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "畫象（美玉） → 暗指 → 妙玉\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "畫象（桂花與蓮枯）",
+      "to": "香菱（英蓮）",
+      "label": "暗指",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "畫象（桂花與蓮枯） → 暗指 → 香菱（英蓮）\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "千紅一窟（茶）",
+      "label": "設宴以",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 設宴以 → 千紅一窟（茶）\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "萬豔同杯（酒）",
+      "label": "設宴以",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "警幻仙姑 → 設宴以 → 萬豔同杯（酒）\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "十二曲（紅樓夢十二支）",
+      "label": "令演",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 令演 → 十二曲（紅樓夢十二支）\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "以情欲聲色警其痴頑",
+      "label": "語賈寶玉",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 語賈寶玉 → 以情欲聲色警其痴頑\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "佳人（寶釵、黛玉之影）",
+      "label": "誘惑出現",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 誘惑出現 → 佳人（寶釵、黛玉之影）\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "可卿（秦可卿）",
+      "label": "允今夕婚配",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "警幻仙姑 → 允今夕婚配 → 可卿（秦可卿）\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "纏綿",
+      "label": "與可卿",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "賈寶玉 → 與可卿 → 纏綿\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "賈寶玉",
+      "to": "迷津",
+      "label": "遇到",
+      "width": 5,
+      "color": "#2ECC40",
+      "title": "賈寶玉 → 遇到 → 迷津\n置信度: 1.00",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "迷津",
+      "to": "木居士",
+      "label": "掌舵者",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "迷津 → 掌舵者 → 木居士\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "迷津",
+      "to": "灰侍者",
+      "label": "撐篙者",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "迷津 → 撐篙者 → 灰侍者\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "夜叉",
+      "to": "拖賈寶玉陷入迷津",
+      "label": "曾欲",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "夜叉 → 曾欲 → 拖賈寶玉陷入迷津\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "警幻仙姑",
+      "to": "迷津之危",
+      "label": "警告",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "警幻仙姑 → 警告 → 迷津之危\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "《紅樓夢》原稿",
+      "to": "引子",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "《紅樓夢》原稿 → 包含 → 引子\n置信度: 0.90",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "《紅樓夢》原稿",
+      "to": "終身誤",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "《紅樓夢》原稿 → 包含 → 終身誤\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "《紅樓夢》原稿",
+      "to": "枉凝眉",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "《紅樓夢》原稿 → 包含 → 枉凝眉\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "《紅樓夢》原稿",
+      "to": "恨無常",
+      "label": "包含",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "《紅樓夢》原稿 → 包含 → 恨無常\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "群芳髓（香）",
+      "to": "幻境用香",
+      "label": "為",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "群芳髓（香） → 為 → 幻境用香\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "千紅一窟（茶）",
+      "to": "幻境用茶",
+      "label": "為",
+      "width": 4,
+      "color": "#2ECC40",
+      "title": "千紅一窟（茶） → 為 → 幻境用茶\n置信度: 0.95",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    },
+    {
+      "from": "萬豔同杯（酒）",
+      "to": "幻境用酒",
+      "label": "為",
+      "width": 3,
+      "color": "#FF851B",
+      "title": "萬豔同杯（酒） → 為 → 幻境用酒\n置信度: 0.75",
+      "arrows": "to",
+      "smooth": {
+        "type": "continuous"
+      }
+    }
+  ],
+  "physics": {
+    "enabled": true,
+    "stabilization": {
+      "iterations": 100
+    },
+    "barnesHut": {
+      "gravitationalConstant": -2000,
+      "centralGravity": 0.3,
+      "springLength": 95,
+      "springConstant": 0.04,
+      "damping": 0.09
+    }
+  },
+  "metadata": {
+    "format": "pyvis",
+    "nodes_count": 76,
+    "edges_count": 74,
+    "conversion_timestamp": "2025-09-22T12:59:29.185828",
+    "physics_enabled": true
+  }
+}

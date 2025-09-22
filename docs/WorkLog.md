@@ -421,4 +421,109 @@ Error: No triples were generated from the provided entities and text
 2) ok - ensure the explanination function worked in the streamlit_pipeline.
 3) ok - Acutal smoke test the latest edit.
 4) figure out how the confidence calculated.
-5) And it seemed that the perplexity judgement explaniations are not saved in the folder as the actual file.
+5) ok - And it seemed that the perplexity judgement explaniations are not saved in the folder as the actual file.
+6) add the eval function(功能) in the streamlit_pipeline, take the `graph_evaluation` for refernce.
+
+about 4) and 6) use the prompt below to the claude code :
+Current Confidence Logic:
+  1. "Yes" judgments → Fixed 0.8 confidence
+  2. "No" judgments → Fixed 0.7 confidence
+  3. Ambiguous responses → Fixed 0.5 confidence
+  4. API errors → 0.0 confidence
+
+  This is a naive heuristic approach with no mathematical foundation or algorithmic sophistication.     
+
+  Alternative: Advanced Confidence from Explainable Mode
+
+  The system does support a more advanced approach in explainable mode where:
+  - Confidence is extracted from LLM response using regex patterns
+  - Looks for explicit confidence scores in API responses
+  - Uses default 0.75 if no confidence found in response
+
+  Graph Evaluation Reference Analysis
+
+  The graph_evaluation system provides comprehensive evaluation metrics:
+
+  1. Triple Match F1: Exact triple matching
+  2. Graph Match Accuracy: Structural graph isomorphism
+  3. G-BLEU/G-ROUGE: Text similarity metrics adapted for graphs
+  4. G-BERTScore: Semantic similarity using BERT embeddings
+  5. Graph Edit Distance (GED): Minimum edit operations needed
+  6. Bipartite Matching: Optimal assignment algorithms
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Ready to code?                                                                                       │
+│                                                                                                      │
+│ Here is Claude's plan:                                                                               │
+│ ╭──────────────────────────────────────────────────────────────────────────────────────────────────╮ │
+│ │ Plan: Enhanced Evaluation System for streamlit_pipeline                                          │ │
+│ │                                                                                                  │ │
+│ │ Objective                                                                                        │ │
+│ │                                                                                                  │ │
+│ │ Add a comprehensive evaluation function to the streamlit_pipeline that integrates the            │ │
+│ │ sophisticated graph evaluation metrics from graph_evaluation directory to enhance the            │ │
+│ │ reliability of the text-to-graph system's quality assessment.                                    │ │
+│ │                                                                                                  │ │
+│ │ Current State Analysis                                                                           │ │
+│ │                                                                                                  │ │
+│ │ - Confidence calculation: Currently uses naive heuristics (0.8 for "Yes", 0.7 for "No")          │ │
+│ │ - Evaluation: Limited to binary LLM judgment without mathematical rigor                          │ │
+│ │ - Quality Assessment: No systematic graph quality metrics                                        │ │
+│ │                                                                                                  │ │
+│ │ Proposed Implementation Plan                                                                     │ │
+│ │                                                                                                  │ │
+│ │ Phase 1: Enhanced Confidence Calculation Module                                                  │ │
+│ │                                                                                                  │ │
+│ │ 1. Create: streamlit_pipeline/core/confidence_calculator.py                                      │ │
+│ │   - Mathematical confidence algorithms based on multiple factors                                 │ │
+│ │   - LLM response analysis (certainty keywords, hedge words, qualification phrases)               │ │
+│ │   - Statistical confidence based on response patterns                                            │ │
+│ │   - Ensemble confidence from multiple evaluation approaches                                      │ │
+│ │                                                                                                  │ │
+│ │ Phase 2: Graph Evaluation Integration                                                            │ │
+│ │                                                                                                  │ │
+│ │ 1. Create: streamlit_pipeline/core/graph_evaluator.py                                            │ │
+│ │   - Port key evaluation metrics from graph_evaluation/metrics/                                   │ │
+│ │   - Implement G-BLEU, G-ROUGE, G-BERTScore for triple quality                                    │ │
+│ │   - Add graph structural analysis (connectivity, coherence)                                      │ │
+│ │   - Integrate Graph Edit Distance for quality assessment                                         │ │
+│ │                                                                                                  │ │
+│ │ Phase 3: Streamlit UI Integration                                                                │ │
+│ │                                                                                                  │ │
+│ │ 1. Enhance: UI components to display evaluation metrics                                          │ │
+│ │   - Add evaluation results panels                                                                │ │
+│ │   - Graph quality visualizations                                                                 │ │
+│ │   - Confidence score breakdowns with explanations                                                │ │
+│ │   - Comparative analysis views                                                                   │ │
+│ │                                                                                                  │ │
+│ │ Phase 4: Documentation & Specification                                                           │ │
+│ │                                                                                                  │ │
+│ │ 1. Update: streamlit_pipeline/docs/spec.md                                                       │ │
+│ │   - Section 11: "Advanced Evaluation System"                                                     │ │
+│ │   - Technical specifications for evaluation metrics                                              │ │
+│ │   - Mathematical foundations for confidence calculation                                          │ │
+│ │   - Integration architecture diagrams                                                            │ │
+│ │ 2. Update: streamlit_pipeline/docs/TASK.md                                                       │ │
+│ │   - New task entries for evaluation system implementation                                        │ │
+│ │   - Dependencies and resource requirements                                                       │ │
+│ │   - Testing protocols for evaluation accuracy                                                    │ │
+│ │                                                                                                  │ │
+│ │ Key Deliverables                                                                                 │ │
+│ │                                                                                                  │ │
+│ │ 1. Mathematical confidence calculation module with multiple algorithms                           │ │
+│ │ 2. Comprehensive graph evaluation system integrated from graph_evaluation                        │ │
+│ │ 3. Enhanced UI components for evaluation result display                                          │ │
+│ │ 4. Updated documentation with detailed implementation specifications                             │ │
+│ │ 5. Comprehensive test suite for evaluation accuracy                                              │ │
+│ │                                                                                                  │ │
+│ │ Benefits                                                                                         │ │
+│ │                                                                                                  │ │
+│ │ - Replace naive confidence heuristics with mathematical rigor                                    │ │
+│ │ - Provide multi-dimensional graph quality assessment                                             │ │
+│ │ - Enable systematic comparison of different pipeline configurations                              │ │
+│ │ - Enhance research credibility with established evaluation metrics                               │ │
+│ │ - Support iterative improvement through quantitative feedback                                    │ │
+│ │                                                                                                  │ │
+│ │ This plan will transform the streamlit_pipeline from having basic binary judgment to a           │ │
+│ │ sophisticated evaluation system with mathematical confidence calculation and comprehensive graph │ │
+│ │  quality metrics.                                                                                │ │

@@ -1,0 +1,816 @@
+[
+  {
+    "triple": {
+      "subject": "林黛玉",
+      "predicate": "受憐愛於",
+      "object": "賈母",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "林黛玉",
+      "predicate": "同行同息",
+      "object": "賈寶玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "林黛玉",
+      "predicate": "與…親密",
+      "object": "賈寶玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "與…尤為熟樂",
+      "object": "林黛玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薛寶釵",
+      "predicate": "品格",
+      "object": "端方",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薛寶釵",
+      "predicate": "容貌",
+      "object": "豐美",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薛寶釵",
+      "predicate": "行為",
+      "object": "豁達",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薛寶釵",
+      "predicate": "得人心於",
+      "object": "下人",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薛寶釵",
+      "predicate": "與…並列為關涉人物",
+      "object": "林黛玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "迎春",
+      "predicate": "身分",
+      "object": "賈母親孫女",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "探春",
+      "predicate": "身分",
+      "object": "賈母親孫女",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "迎春",
+      "predicate": "與…同屬",
+      "object": "寧榮二府女眷",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "探春",
+      "predicate": "與…同屬",
+      "object": "寧榮二府女眷",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "惜春",
+      "predicate": "與…同屬",
+      "object": "寧榮二府女眷",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.8,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈珍",
+      "predicate": "妻子",
+      "object": "尤氏",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "尤氏",
+      "predicate": "於",
+      "object": "寧府花園治酒",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 1.0,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "尤氏",
+      "predicate": "邀請",
+      "object": "賈母",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "尤氏",
+      "predicate": "邀請",
+      "object": "邢夫人",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.85,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈蓉",
+      "predicate": "妻子",
+      "object": "秦氏",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "秦氏",
+      "predicate": "性格",
+      "object": "嫺雅",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "秦氏",
+      "predicate": "處事態度",
+      "object": "溫柔",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.8,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "秦氏",
+      "predicate": "受信任於",
+      "object": "賈母",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "秦氏",
+      "predicate": "曾安置",
+      "object": "賈寶玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "嬤嬤",
+      "predicate": "職稱",
+      "object": "府中老僕稱呼",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "襲人",
+      "predicate": "職務",
+      "object": "寶玉丫頭伴侍",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "晴雯",
+      "predicate": "職務",
+      "object": "寶玉丫頭伴侍",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 1.0,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "麝月",
+      "predicate": "職務",
+      "object": "寶玉丫頭伴侍",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "奶娘",
+      "predicate": "職務",
+      "object": "常侍左右",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.85,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "玉帶林中掛（暗指林黛玉）",
+      "predicate": "指代",
+      "object": "林黛玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "金陵十二釵",
+      "predicate": "藏於",
+      "object": "薄命司",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "自稱職責",
+      "object": "太虛幻境之主",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "居所",
+      "object": "離恨天上",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "居所",
+      "object": "灌愁海中",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "引導",
+      "object": "賈寶玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "入",
+      "object": "太虛幻境",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "太虛幻境",
+      "predicate": "牌坊名",
+      "object": "太虛幻境",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "太虛幻境",
+      "predicate": "匾額",
+      "object": "孽海情天",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "入內見",
+      "object": "痴情司",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "入內見",
+      "object": "薄命司",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命司",
+      "predicate": "藏有",
+      "object": "各省冊櫃",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "觀察",
+      "object": "金陵十二釵正冊",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "迎春",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "探春",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "惜春",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "元春",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "史湘雲",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "李紈",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "王熙鳳",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "巧姐",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "秦可卿",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 1.0,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "薄命冊畫（各人物判詞畫）",
+      "predicate": "包含",
+      "object": "襲人",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "畫象（玉帶）",
+      "predicate": "暗指",
+      "object": "林黛玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "畫象（金簪）",
+      "predicate": "暗指",
+      "object": "薛寶釵",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "畫象（美玉）",
+      "predicate": "暗指",
+      "object": "妙玉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "畫象（桂花與蓮枯）",
+      "predicate": "暗指",
+      "object": "香菱（英蓮）",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "設宴以",
+      "object": "千紅一窟（茶）",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "設宴以",
+      "object": "萬豔同杯（酒）",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "令演",
+      "object": "十二曲（紅樓夢十二支）",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "語賈寶玉",
+      "object": "以情欲聲色警其痴頑",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "誘惑出現",
+      "object": "佳人（寶釵、黛玉之影）",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "允今夕婚配",
+      "object": "可卿（秦可卿）",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "與可卿",
+      "object": "纏綿",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "賈寶玉",
+      "predicate": "遇到",
+      "object": "迷津",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 1.0,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "迷津",
+      "predicate": "掌舵者",
+      "object": "木居士",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "迷津",
+      "predicate": "撐篙者",
+      "object": "灰侍者",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "夜叉",
+      "predicate": "曾欲",
+      "object": "拖賈寶玉陷入迷津",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "警幻仙姑",
+      "predicate": "警告",
+      "object": "迷津之危",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "《紅樓夢》原稿",
+      "predicate": "包含",
+      "object": "引子",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.9,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "《紅樓夢》原稿",
+      "predicate": "包含",
+      "object": "終身誤",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "《紅樓夢》原稿",
+      "predicate": "包含",
+      "object": "枉凝眉",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "《紅樓夢》原稿",
+      "predicate": "包含",
+      "object": "恨無常",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "群芳髓（香）",
+      "predicate": "為",
+      "object": "幻境用香",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "千紅一窟（茶）",
+      "predicate": "為",
+      "object": "幻境用茶",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.95,
+    "approved": true
+  },
+  {
+    "triple": {
+      "subject": "萬豔同杯（酒）",
+      "predicate": "為",
+      "object": "幻境用酒",
+      "source_text": "林黛玉，自入榮府以來，賈母萬般憐愛；與賈寶玉日同行、夜同息，情深而親密。  \n賈寶玉，稟性愚拙偏雅，對諸姊妹無親疏之別；與林黛玉尤為熟樂。  \n薛寶釵，年長稍長，品格端方、容豐美、行為豁達，得下人心，..."
+    },
+    "judgment": true,
+    "confidence": 0.75,
+    "approved": true
+  }
+]

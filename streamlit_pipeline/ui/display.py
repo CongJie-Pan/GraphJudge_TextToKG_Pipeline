@@ -84,16 +84,16 @@ def display_final_results(pipeline_result: PipelineResult):
         
         with col1:
             st.metric(
-                "✅ Approved Triples",
+                get_text('metrics.approved_triples'),
                 approved_count,
-                delta=f"{(1-rejection_rate)*100:.1f}% approval rate"
+                delta=get_text('metrics.approval_rate_percent', rate=f"{(1-rejection_rate)*100:.1f}")
             )
 
         with col2:
             st.metric(
-                "❌ Rejected Triples",
+                get_text('metrics.rejected_triples'),
                 total_triples - approved_count,
-                delta=f"{rejection_rate*100:.1f}% rejection rate"
+                delta=get_text('metrics.rejection_rate_percent', rate=f"{rejection_rate*100:.1f}")
             )
 
         with col3:
@@ -103,20 +103,20 @@ def display_final_results(pipeline_result: PipelineResult):
                 if pipeline_result.judgment_result.confidence else 0
             )
             st.metric(
-                "🎯 Average Confidence",
+                get_text('metrics.average_confidence'),
                 f"{avg_confidence:.3f}"
             )
 
         with col4:
             st.metric(
-                "⏱️ Total Processing Time",
+                get_text('metrics.total_processing_time'),
                 f"{pipeline_result.total_time:.1f}s"
             )
         
         # Display approved triples as the final knowledge graph
         if approved_triples:
             st.markdown(f"## {get_text('results.final_kg')}")
-            st.markdown(f"After AI judgment, the following **{len(approved_triples)}** knowledge triples were deemed accurate:")
+            st.markdown(get_text('results.final_kg_description', count=len(approved_triples)))
 
             # Store pipeline result in session state for graph visualization
             st.session_state.pipeline_result = pipeline_result
@@ -280,7 +280,7 @@ def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[
             nodes = graph_data["nodes"]
             edges = graph_data["edges"]
 
-            st.success(f"🎨 Visualizing knowledge graph: {len(nodes)} entities, {len(edges)} relationships")
+            st.success(get_text('graph.visualizing_graph', entities=len(nodes), relationships=len(edges)))
 
             # Display summary metrics from graph data
             if "report" in graph_data and "summary" in graph_data["report"]:
@@ -288,15 +288,15 @@ def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[
                 col1, col2, col3, col4 = st.columns(4)
 
                 with col1:
-                    st.metric("Entities", summary.get("entities", len(nodes)))
+                    st.metric(get_text('graph.entities'), summary.get("entities", len(nodes)))
                 with col2:
-                    st.metric("Relationships", summary.get("relationships", len(edges)))
+                    st.metric(get_text('graph.relationships'), summary.get("relationships", len(edges)))
                 with col3:
                     if "approved_triples" in summary:
-                        st.metric("Approved", summary["approved_triples"])
+                        st.metric(get_text('metrics.approved'), summary["approved_triples"])
                 with col4:
                     if "average_confidence" in summary:
-                        st.metric("Avg Confidence", f"{summary['average_confidence']:.3f}")
+                        st.metric(get_text('metrics.avg_confidence'), f"{summary['average_confidence']:.3f}")
 
             # Create visualization using pre-processed data
             fig = _create_plotly_graph_from_data(nodes, edges)
@@ -651,39 +651,36 @@ def display_analysis_report(pipeline_result: PipelineResult):
         st.markdown(section)
     
     # Recommendations
-    st.markdown("""
-    ### 💡 Recommendations
-
-    1. **High Quality Results**: Triples with confidence >0.8 can be used directly
-    2. **Manual Review**: Recommend manual review for results with confidence 0.5-0.8
-    3. **Result Optimization**: For more high-quality results, try adjusting the expression of input text
-    """)
+    st.markdown(get_text('recommendations.title'))
+    st.markdown(get_text('recommendations.high_quality'))
+    st.markdown(get_text('recommendations.manual_review'))
+    st.markdown(get_text('recommendations.result_optimization'))
 
 
 def get_quality_grade(confidence: float) -> str:
     """Convert confidence score to quality grade."""
     if confidence >= 0.9:
-        return "🏆 Excellent"
+        return get_text('quality_grades.excellent')
     elif confidence >= 0.8:
-        return "🥇 Good"
+        return get_text('quality_grades.good')
     elif confidence >= 0.6:
-        return "🥈 Average"
+        return get_text('quality_grades.average')
     elif confidence >= 0.4:
-        return "🥉 Fair"
+        return get_text('quality_grades.fair')
     else:
-        return "⚠️ Needs Improvement"
+        return get_text('quality_grades.needs_improvement')
 
 
 def get_rejection_suggestion(triple: Triple, explanation: Optional[str]) -> str:
     """Generate suggestion for rejected triples."""
     if explanation and "inaccurate" in explanation.lower():
-        return "Check if the relationship between subject and object is correctly expressed"
+        return get_text('rejection_suggestions.check_relationship')
     elif explanation and "irrelevant" in explanation.lower():
-        return "Confirm whether this relationship is relevant to the topic"
+        return get_text('rejection_suggestions.confirm_relevance')
     elif explanation and "vague" in explanation.lower():
-        return "Try using more explicit expressions"
+        return get_text('rejection_suggestions.use_explicit_expressions')
     else:
-        return "Re-examine the expression or context of this relationship"
+        return get_text('rejection_suggestions.reexamine_expression')
 
 
 def display_comparison_view(current_result: PipelineResult, previous_results: List[PipelineResult]):
@@ -845,26 +842,26 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("🔹 Entities", nodes_count)
+        st.metric(get_text('graph.entities'), nodes_count)
     with col2:
-        st.metric("🔗 Relationships", edges_count)
+        st.metric(get_text('graph.relationships'), edges_count)
     with col3:
-        physics_status = "✅ Enabled" if metadata.get("physics_enabled", True) else "❌ Disabled"
-        st.metric("⚡ Physics", physics_status)
+        physics_status = get_text('graph.physics_enabled') if metadata.get("physics_enabled", True) else get_text('graph.physics_disabled')
+        st.metric(get_text('graph.physics_status'), physics_status)
 
     # Viewer selection
     viewer_option = st.selectbox(
-        "🎨 Choose Visualization:",
-        ["Interactive Network (Pyvis)", "Simple Text Display"],
+        get_text('graph.choose_visualization'),
+        [get_text('graph.interactive_network'), get_text('graph.simple_text_display')],
         index=0
     )
 
-    if viewer_option == "Interactive Network (Pyvis)":
+    if viewer_option == get_text('graph.interactive_network'):
         if PYVIS_AVAILABLE:
             # Generate Pyvis visualization
             html = create_pyvis_knowledge_graph(pyvis_data, height)
             if html:
-                st.success(f"🌐 Interactive knowledge graph loaded: {nodes_count} entities, {edges_count} relationships")
+                st.success(get_text('graph.interactive_graph_loaded', nodes=nodes_count, relationships=edges_count))
 
                 # Display in Streamlit
                 components.html(html, height=height + 50, scrolling=True)

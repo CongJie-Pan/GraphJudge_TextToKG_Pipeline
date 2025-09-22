@@ -627,7 +627,7 @@ class TestLoggingIntegration(BaseIntegrationTest):
             assert result.success is True
             assert len(result.entities) == 3
 
-    @patch('streamlit_pipeline.utils.detailed_logger.DetailedLogger')
+    @patch('utils.detailed_logger.DetailedLogger')
     def test_triple_generator_logging_integration(self, mock_logger_class):
         """Test that triple generator integrates correctly with logging system."""
         from core.triple_generator import generate_triples
@@ -635,18 +635,20 @@ class TestLoggingIntegration(BaseIntegrationTest):
         mock_logger = MagicMock()
         mock_logger_class.return_value = mock_logger
 
-        # Mock API call
+        # Mock API call (patch at module level where it's imported)
         with patch('core.triple_generator.call_gpt5_mini') as mock_api:
-            mock_api.return_value = '''[
-                {"subject": "subject1", "predicate": "predicate1", "object": "object1"},
-                {"subject": "subject2", "predicate": "predicate2", "object": "object2"}
-            ]'''
+            mock_api.return_value = '''{
+                "triples": [
+                    ["subject1", "predicate1", "object1"],
+                    ["subject2", "predicate2", "object2"]
+                ]
+            }'''
 
             # Test triple generation with logging
-            result = generate_triples("Sample denoised text", ["entity1", "entity2"])
+            result = generate_triples(["entity1", "entity2"], "Sample denoised text")
 
             # Verify logger was initialized for triple generation phase
-            mock_logger_class.assert_called_with(phase="triple_gen")
+            mock_logger_class.assert_called_with(phase="triples")
 
             # Verify logging calls
             mock_logger.log_info.assert_called()
@@ -655,7 +657,7 @@ class TestLoggingIntegration(BaseIntegrationTest):
             assert result.success is True
             assert len(result.triples) == 2
 
-    @patch('streamlit_pipeline.utils.detailed_logger.DetailedLogger')
+    @patch('utils.detailed_logger.DetailedLogger')
     def test_graph_judge_logging_integration(self, mock_logger_class):
         """Test that graph judge integrates correctly with logging system."""
         from core.graph_judge import judge_triples
@@ -663,12 +665,14 @@ class TestLoggingIntegration(BaseIntegrationTest):
         mock_logger = MagicMock()
         mock_logger_class.return_value = mock_logger
 
-        # Mock API call
-        with patch('core.graph_judge.call_perplexity_api') as mock_api:
-            mock_api.return_value = '''[
-                {"judgment": "correct", "confidence": 0.95},
-                {"judgment": "incorrect", "confidence": 0.85}
-            ]'''
+        # Mock the API client instead of the GraphJudge class to allow real logger creation
+        with patch('core.graph_judge.get_api_client') as mock_get_api_client:
+            # Mock API client that returns successful judgments
+            mock_api_client = MagicMock()
+            mock_get_api_client.return_value = mock_api_client
+
+            # Mock API response for judgment calls
+            mock_api_client.call_perplexity.return_value = "Yes"
 
             # Test graph judgment with logging
             from core.models import Triple
@@ -677,10 +681,10 @@ class TestLoggingIntegration(BaseIntegrationTest):
                 Triple("subject2", "predicate2", "object2")
             ]
 
-            result = judge_triples(test_triples, "Original text context")
+            result = judge_triples(test_triples)
 
             # Verify logger was initialized for graph judge phase
-            mock_logger_class.assert_called_with(phase="graph_judge")
+            mock_logger_class.assert_called_with(phase="judgment")
 
             # Verify logging calls
             mock_logger.log_info.assert_called()
@@ -713,8 +717,8 @@ class TestLoggingIntegration(BaseIntegrationTest):
 
         # Create loggers for different phases
         ectd_logger = DetailedLogger(phase="ectd")
-        triple_logger = DetailedLogger(phase="triple_gen")
-        judge_logger = DetailedLogger(phase="graph_judge")
+        triple_logger = DetailedLogger(phase="triples")
+        judge_logger = DetailedLogger(phase="judgment")
 
         # Log messages from each phase
         ectd_logger.log_info("ENTITY", "Entity extraction started")
@@ -723,8 +727,8 @@ class TestLoggingIntegration(BaseIntegrationTest):
 
         # Verify separate log files exist
         ectd_file = ectd_logger.logs_dir / f"ectd_{ectd_logger.session_id}.log"
-        triple_file = triple_logger.logs_dir / f"triple_gen_{triple_logger.session_id}.log"
-        judge_file = judge_logger.logs_dir / f"graph_judge_{judge_logger.session_id}.log"
+        triple_file = triple_logger.logs_dir / f"triples_{triple_logger.session_id}.log"
+        judge_file = judge_logger.logs_dir / f"judgment_{judge_logger.session_id}.log"
 
         assert ectd_file.exists()
         assert triple_file.exists()
@@ -758,20 +762,20 @@ class TestLoggingIntegration(BaseIntegrationTest):
 
         logger.log_warning("STORAGE", "Disk space running low")
 
-        # Verify error file creation
+        # Verify error file creation (logger uses single error file for all levels)
         error_file = logger.logs_dir / f"test_error_{logger.session_id}_errors.log"
-        warning_file = logger.logs_dir / f"test_error_{logger.session_id}_warnings.log"
+        debug_file = logger.logs_dir / f"test_error_{logger.session_id}.log"
 
         assert error_file.exists()
-        assert warning_file.exists()
+        assert debug_file.exists()
 
-        # Verify error content
+        # Verify error content (errors go to error file, warnings to main log)
         error_content = error_file.read_text(encoding='utf-8')
-        warning_content = warning_file.read_text(encoding='utf-8')
+        debug_content = debug_file.read_text(encoding='utf-8')
 
         assert "API connection failed" in error_content
         assert "error_code" in error_content
-        assert "Disk space running low" in warning_content
+        assert "Disk space running low" in debug_content
 
     def test_api_call_logging_integration(self):
         """Test that API calls are properly logged with metrics."""
@@ -794,11 +798,11 @@ class TestLoggingIntegration(BaseIntegrationTest):
 
         # Verify successful call logging
         assert "API call to GPT-5-mini" in debug_content
-        assert "input_tokens: 500" in debug_content
-        assert "success: true" in debug_content
+        assert '"prompt_length": 500' in debug_content
+        assert '"success": true' in debug_content
 
         # Verify failed call logging
-        assert "success: false" in debug_content
+        assert '"success": false' in debug_content
         assert "Rate limit exceeded" in error_content
 
     def test_pipeline_lifecycle_logging(self):
@@ -839,7 +843,7 @@ class TestLoggingIntegration(BaseIntegrationTest):
         assert "graph_judgment" in content
         assert "Pipeline execution completed" in content
 
-        # Verify metrics were logged
-        assert "entity_count: 25" in content
-        assert "triple_count: 40" in content
-        assert "judged_count: 40" in content
+        # Verify metrics were logged (check for JSON format)
+        assert '"entity_count": 25' in content
+        assert '"triple_count": 40' in content
+        assert '"judged_count": 40' in content

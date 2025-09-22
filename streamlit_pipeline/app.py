@@ -55,21 +55,55 @@ from streamlit_pipeline.utils.i18n import get_text
 # Early i18n initialization for page config
 from streamlit_pipeline.utils.i18n import get_current_language, get_i18n_manager
 
-def get_dynamic_page_title():
-    """Get page title based on current language setting."""
+# Initialize i18n system early to ensure proper language loading
+def init_i18n_for_page_config():
+    """Initialize i18n system early for page configuration."""
     try:
-        manager = get_i18n_manager()
-        # Try to get current language from session state or default to 'en'
-        current_lang = 'en'  # Default fallback
-        if hasattr(st, 'session_state') and hasattr(st.session_state, 'language'):
-            current_lang = st.session_state.language
+        # Ensure session state exists with proper default
+        if 'current_language' not in st.session_state:
+            st.session_state.current_language = 'en'
 
-        # Get page title for current language
-        if current_lang in manager.translations:
-            return manager.translations[current_lang].get('app', {}).get('page_title', 'GraphJudge - Intelligent Knowledge Graph Construction')
-    except:
-        pass
-    return 'GraphJudge - Intelligent Knowledge Graph Construction'
+        # Initialize the i18n manager with better error handling
+        manager = get_i18n_manager()
+        if manager and manager.translations:
+            return manager
+
+        # If manager failed, try to initialize manually
+        from streamlit_pipeline.utils.i18n import I18nManager
+        backup_manager = I18nManager()
+        return backup_manager
+
+    except Exception as e:
+        # Last resort: return None but log the issue
+        print(f"I18n initialization failed: {e}")
+        return None
+
+def get_dynamic_page_title():
+    """Get page title based on current language setting with proper i18n fallback."""
+    try:
+        # Try to initialize i18n system
+        manager = init_i18n_for_page_config()
+        if manager and manager.translations:
+            # Get current language, defaulting to 'en'
+            current_lang = st.session_state.get('current_language', 'en')
+
+            # Ensure the language exists in translations
+            if current_lang in manager.translations:
+                app_translations = manager.translations[current_lang].get('app', {})
+                if 'page_title' in app_translations:
+                    return app_translations['page_title']
+
+            # Fallback to English if current language not found
+            if 'en' in manager.translations:
+                en_app = manager.translations['en'].get('app', {})
+                if 'page_title' in en_app:
+                    return en_app['page_title']
+
+    except Exception as e:
+        print(f"Page title localization failed: {e}")
+
+    # Ultimate fallback - still avoid hardcoding by using default English
+    return "GraphJudge - Intelligent Knowledge Graph Construction"
 
 # Configure Streamlit page with dynamic title
 st.set_page_config(
@@ -122,25 +156,62 @@ class GraphJudgeApp:
     
     def __init__(self):
         """Initialize the application."""
+        # Initialize i18n system first to ensure language support
+        self._initialize_i18n()
+
         self.config = config.get_model_config()
         self.error_handler = ErrorHandler()
         self.orchestrator = PipelineOrchestrator()
         self.progress_display = PipelineProgressDisplay()
-        
+
         # Initialize enhanced session state management
         self.session_manager = get_session_manager()
         self.persistence_manager = get_persistence_manager()
         self.cleanup_manager = get_cleanup_manager()
-        
+
         # Initialize session state (now handled by session manager)
         self._initialize_session_state()
-        
+
         # Set up logging
         self._setup_logging()
-        
+
         # Schedule automatic cleanup
         self.cleanup_manager.schedule_automatic_cleanup(interval_minutes=30)
-    
+
+    def _initialize_i18n(self):
+        """Initialize the i18n system with proper session state setup and error handling."""
+        try:
+            # Ensure current_language is set in session state with validation
+            if 'current_language' not in st.session_state:
+                st.session_state.current_language = 'en'  # Default to English
+
+            # Validate the current language setting
+            valid_languages = ['en', 'zh_CN', 'zh_TW']
+            if st.session_state.current_language not in valid_languages:
+                st.session_state.current_language = 'en'  # Reset to default if invalid
+
+            # Initialize the i18n manager with error handling
+            manager = get_i18n_manager()
+            if manager and manager.translations:
+                # Verify translations are loaded for current language
+                current_lang = st.session_state.current_language
+                if current_lang not in manager.translations:
+                    # Fallback to English if current language not available
+                    st.session_state.current_language = 'en'
+                    st.warning(f"Language '{current_lang}' not available, using English")
+            else:
+                # Manager initialization failed, try manual initialization
+                from streamlit_pipeline.utils.i18n import I18nManager
+                backup_manager = I18nManager()
+                if not backup_manager.translations:
+                    st.warning("Translation system initialized with limited functionality")
+
+        except Exception as e:
+            # Critical error in i18n initialization
+            st.error(f"Failed to initialize internationalization system: {e}")
+            # Ensure we have a fallback language setting
+            st.session_state.current_language = 'en'
+
     def _initialize_session_state(self):
         """Initialize Streamlit session state variables using enhanced session manager."""
         # Session state is now handled by the SessionStateManager
@@ -205,19 +276,50 @@ class GraphJudgeApp:
                 )
     
     def _render_header(self):
-        """Render the application header."""
-        st.title(get_text('app.title'))
-        st.markdown(f"""
-        {get_text('app.description')}
+        """Render the application header with proper language support."""
+        try:
+            # Ensure the current language is properly set
+            current_lang = st.session_state.get('current_language', 'en')
 
-        {get_text('app.getting_started')}
-        """)
-        
-        # Quick stats if we have results
-        if st.session_state.pipeline_results:
-            self._render_quick_stats()
-        
-        st.markdown("---")
+            # Get localized text with error handling
+            title_text = get_text('app.title')
+            desc_text = get_text('app.description')
+            getting_started_text = get_text('app.getting_started')
+
+            # Debug info (can be removed in production)
+            if st.session_state.get('debug_mode', False):
+                st.sidebar.text(f"Current Language: {current_lang}")
+                st.sidebar.text(f"Title: {title_text[:30]}...")
+
+            # Render header elements
+            st.title(title_text)
+            st.markdown(f"""
+            {desc_text}
+
+            {getting_started_text}
+            """)
+
+            # Quick stats if we have results
+            if st.session_state.pipeline_results:
+                self._render_quick_stats()
+
+            st.markdown("---")
+
+        except Exception as e:
+            # Fallback to English if there's an error
+            st.title("🧠 GraphJudge - Intelligent Knowledge Graph Construction System")
+            st.markdown("""
+            **GraphJudge** is an intelligent knowledge graph construction system based on large language models.
+            Through a three-stage processing pipeline, it extracts entities from Chinese text, generates
+            knowledge triples, and uses AI for quality assessment.
+
+            💡 **Getting Started**: Upload a Chinese text file (.txt) or paste text directly to begin analysis.
+            """)
+
+            if st.session_state.get('debug_mode', False):
+                st.error(f"Header rendering error: {e}")
+
+            st.markdown("---")
     
     def _render_quick_stats(self):
         """Render quick statistics from previous runs."""

@@ -1,0 +1,1405 @@
+{
+  "judged_triples": [
+    {
+      "triple": {
+        "subject": "黛玉",
+        "predicate": "寄居",
+        "object": "賈府",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "黛玉",
+        "predicate": "往來",
+        "object": "王夫人",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "黛玉",
+        "predicate": "往來",
+        "object": "李氏",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.8,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "王夫人",
+        "predicate": "職務",
+        "object": "賈府婦長",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "李氏",
+        "predicate": "妻子",
+        "object": "賈珠",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈珠",
+        "predicate": "已亡",
+        "object": "賈珠",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.75,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "李氏",
+        "predicate": "母親/養育者",
+        "object": "賈蘭",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈蘭",
+        "predicate": "年齡",
+        "object": "五歲",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "李守中",
+        "predicate": "曾任",
+        "object": "國子監祭酒",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "李氏",
+        "predicate": "出身",
+        "object": "金陵名宦",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "李氏",
+        "predicate": "名",
+        "object": "李紈",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "李氏",
+        "predicate": "性格",
+        "object": "慎守家務",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "審理",
+        "object": "兩家爭買婢致死之案",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "發出",
+        "object": "發簽",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.85,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "發簽",
+        "predicate": "作用",
+        "object": "發差",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "被勸",
+        "object": "徇情",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "門子（新門子）",
+        "predicate": "出身",
+        "object": "葫蘆廟",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "門子（新門子）",
+        "predicate": "曾為",
+        "object": "沙彌",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "門子（新門子）",
+        "predicate": "示以",
+        "object": "護官符",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "護官符",
+        "predicate": "影響",
+        "object": "官事",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "拐子（拐賣者）",
+        "predicate": "拐賣",
+        "object": "英蓮",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "英蓮",
+        "predicate": "身分",
+        "object": "甄老爺之女",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "英蓮",
+        "predicate": "被拐時間",
+        "object": "幼時",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "馮家",
+        "predicate": "購得",
+        "object": "英蓮",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.85,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "馮淵",
+        "predicate": "出自",
+        "object": "馮家",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "馮淵",
+        "predicate": "購得",
+        "object": "英蓮",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "馮淵",
+        "predicate": "被殺",
+        "object": "馮淵",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.95,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "薛家",
+        "predicate": "與",
+        "object": "馮家爭奪英蓮",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛家",
+        "predicate": "被指為",
+        "object": "肇事者",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "為",
+        "object": "薛家之子",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "名",
+        "object": "薛蟠",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "表字",
+        "object": "文龍",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "出身",
+        "object": "富族",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "購得",
+        "object": "英蓮",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "王氏（薛母）",
+        "predicate": "為",
+        "object": "薛蟠之母",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 1.0,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "王氏（薛母）",
+        "predicate": "為妹",
+        "object": "王子騰之妹",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.9,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "王子騰",
+        "predicate": "職稱",
+        "object": "統制（京營節度使）",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.75,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "薛姨媽",
+        "predicate": "隨",
+        "object": "薛家入居賈府",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛姨媽",
+        "predicate": "寓居",
+        "object": "賈府",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "寶釵",
+        "predicate": "為",
+        "object": "薛蟠之妹",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.95,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "薛蟠",
+        "predicate": "欲送",
+        "object": "寶釵",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.95,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "薛家",
+        "predicate": "寓居",
+        "object": "梨香院",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "葫蘆廟",
+        "predicate": "角色",
+        "object": "出產新門子",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "門子（新門子）",
+        "predicate": "策成",
+        "object": "了結此案",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "賈雨村",
+        "predicate": "發配",
+        "object": "門子（新門子）",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "乩壇（扶鸞）",
+        "predicate": "作為",
+        "object": "民間說服之術",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "門子（新門子）",
+        "predicate": "建議使用",
+        "object": "乩壇（扶鸞）",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.85,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈府",
+        "predicate": "與",
+        "object": "榮國府",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.85,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈府",
+        "predicate": "與",
+        "object": "寧國府",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "賈府",
+        "predicate": "與",
+        "object": "薛家",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.95,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "榮國府",
+        "predicate": "與",
+        "object": "寧國府",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.9,
+      "approved": false
+    },
+    {
+      "triple": {
+        "subject": "榮國府",
+        "predicate": "與",
+        "object": "薛家",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": true,
+      "confidence": 0.75,
+      "approved": true
+    },
+    {
+      "triple": {
+        "subject": "寧國府",
+        "predicate": "與",
+        "object": "薛家",
+        "source_text": "黛玉寄居賈府，常往王夫人處與姊妹謀家務。王夫人為賈府婦長，日事繁忙。李氏即賈珠之妻；賈珠早亡，留一子賈蘭，年方五歲，已入學。李氏出身金陵名宦，父李守中曾任國子監祭酒；因奉「女子無才便是德」之教，李氏名..."
+      },
+      "judgment": false,
+      "confidence": 0.8,
+      "approved": false
+    }
+  ],
+  "explanations": [
+    {
+      "reasoning": "根據《紅樓夢》原文記載，「林黛玉為賈母外孫女，即寶玉的姑表妹，寄居賈府，父母雙亡」，明確說明了黛玉寄居賈府的事實。此外，原文亦描述「如今且說林黛玉自在榮府，一來賈母萬般憐愛，寢食起居一如寶玉」，進一步證實了她長期居住在賈府並受到賈母特別照顧的情況。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikibooks.org/wiki/%E9%AB%98%E4%B8%AD%E8%AF%AD%E6%96%87/%E5%BF%85%E4%BF%AE%E4%B8%89/%E6%9E%97%E9%BB%9B%E7%8E%89%E8%BF%9B%E8%B4%BE%E5%BA%9C",
+        "https://ctext.org/hongloumeng/ch3/zh",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/005.htm",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC005%E5%9B%9E",
+        "https://chinese.hksyu.edu/chinese/Sharing/%E5%BC%B5%E6%9B%89%E9%9B%AF%20%20%E3%80%8A%E5%BE%9E%E9%87%B5%E9%BB%9B%E4%B9%8B%E8%BE%A8%E6%8E%A2%E8%A8%8E%E6%9B%B9%E9%9B%AA%E8%8A%B9%E7%9A%84%E5%A5%B3%E6%80%A7%E8%A7%80%EF%BC%8D%E5%85%BC%E8%AB%96%E3%80%88%E7%B4%85%E6%A8%93%E5%A4%A2%E3%80%89%E4%B8%AD%E5%BF%83%E6%80%9D%E6%83%B3%E3%80%8B.pdf",
+        "https://m.gushiwen.cn/guwen/bookv_04963692b2c7.aspx",
+        "http://freereddream.blogspot.com",
+        "http://140.117.153.69/ctdr/files/1077_2280.pdf"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文，王夫人經常攜帶黛玉參與各種活動，如「王夫人忙攜黛玉從後房門由後廊往西」以及「遂攜了王夫人林黛玉寶玉等過去看戲」等描述[1][4]。此外，黛玉在重要事務上會主動向王夫人匯報，如「黛玉就告訴賈政、王夫人道：『蒙兩位大人這種吩咐，甥女再也不敢辭』」，顯示兩人確實有密切的往來關係[2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm3.HTM",
+        "https://ctext.org/wiki.pl?if=gb&chapter=356103",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/030.htm",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC008%E5%9B%9E",
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC025%E5%9B%9E",
+        "https://m.gushiwen.cn/guwen/bookv_0dbf2ba3ddb6.aspx",
+        "https://m.gushiwen.cn/guwen/bookv_ebdff892f0e9.aspx",
+        "https://www.8bei8.com/book/hongloumeng_95.html",
+        "https://ctext.org/wiki.pl?if=gb&chapter=51452"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，李紋、李綺姐妹「其後四人又與香菱一同加入海棠社，爭聯即景詩」，而黛玉作為詩社的重要成員，必然與李氏姐妹有詩文往來[4]。此外，李紈作為賈府重要成員，「貾母王夫人因素喜李紈賢惠，且年輕守節，令人敬伏」，她與同住大觀園的黛玉在日常生活中自然有所交往[4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://commons.ln.edu.hk/cgi/viewcontent.cgi?article=1224&context=chi_diss",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://aipiaxi.com/article-detail/648955",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC022%E5%9B%9E",
+        "http://www.360doc.com/content/24/0730/09/84682882_1130021301.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文描述，賈母才是賈府真正的婦長，文中多處稱賈母為「老祖宗」，並且「賈母聽說，益發高興起來，忙遣人去請薛姨媽邢夫人等」顯示賈母具有發號施令的地位[2]。王夫人在家族中的地位從座次安排可見一斑：「只薛姨媽和賈母對坐，邢夫人王夫人只坐在房門前兩張椅子上」，說明王夫人雖為重要成員但並非府中女性首領[2]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2%E7%AB%A0%E5%9B%9E%E5%88%97%E8%A1%A8",
+        "http://cls.lib.ntu.edu.tw/hlm/read/text/body.ASP?CHNO=043",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC005%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/018.htm",
+        "http://cls.lib.ntu.edu.tw/hlm/body/hlm110.htm",
+        "https://www.cuhk.edu.hk/ics/clrc/crcl_37/liu.pdf",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/e01.htm",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2",
+        "https://ctext.org/hongloumeng/zh"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文「原來這李氏即賈珠之妻」以及「她與賈家榮國府賈政長子賈珠成婚」的記述，李氏確實是賈珠的妻子，這個基本事實關係是正確的。[1][3] 李氏在《紅樓夢》中又名李紈，字宮裁，是金陵十二釵正冊之一，賈珠雖早逝但留下遺腹子賈蘭，李氏作為寡婦在賈府中撫養兒子並陪伴小姑們。[1][3]",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2%EF%BC%88%E7%A8%8B%E7%94%B2%E6%9C%AC%EF%BC%89/%E5%9B%9B",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://zh.wikipedia.org/zh-cn/%E6%9D%8E%E7%B4%88",
+        "https://news.qq.com/rain/a/20241121A07TIG00",
+        "https://zh.wikipedia.org/zh-hant/%E6%9D%8E%E7%B4%88",
+        "https://m.sfccn.com/2023/11-9/5NMDE0MDZfMTg3NDI5NA.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據搜索結果顯示，賈珠確實已經死亡，如冷子興演說榮國府時提到「這政老爹的夫人王氏，頭胎生的公子，名喚賈珠，十四歲進學，不到二十歲就娶了妻生了子，一病死了」[5]，以及文中多次提及「早夭而死的賈珠」[1]。然而，此三元組的語法結構存在明顯錯誤，因為主語和賓語均為同一實體「賈珠」，在知識圖譜的關係表達中，一個實體不能與自身構成「已亡」的二元關係，正確的表達應該是「賈珠－狀態－已亡」或類似的結構形式。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://hongloumeng.shahaizi.com/hongloumeng/82/14510.html",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC098%E5%9B%9E",
+        "http://www.360doc.com/content/24/0921/17/18314967_1134657644.shtml",
+        "http://www.360doc.com/content/23/1102/08/13924396_1102484410.shtml",
+        "https://m.qulishi.com/article/202209/652677.html"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，「原來這李氏即賈珠之妻。珠雖夭亡，幸存一子，取名賈蘭」，明確說明李氏是賈蘭的生母[1]。李氏在丈夫賈珠去世後，「一概不問不聞，惟知侍親養子」，專心一意撫養教育賈蘭，充分體現了她作為母親和養育者的角色[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5fa14ac3fd89780001f05dea",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC075%E5%9B%9E",
+        "https://zh.wikipedia.org/zh-cn/%E6%9D%8E%E7%B4%88",
+        "https://zh.wikipedia.org/zh-hant/%E6%9D%8E%E7%B4%88",
+        "https://www.peopleapp.com/rmharticle/30018515209",
+        "https://m.sfccn.com/2023/11-9/5NMDE0MDZfMTg3NDI5NA.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓梦》第四回原文記載：「原來這李氏即賈珠之妻，珠雖夭亡，幸存一子，取名賈蘭，今方五歲，已入學攻書」，明確顯示賈蘭在黛玉初入賈府時確實為五歲[1]。雖然《紅樓夢》中人物年齡存在前後不一致的問題，如第七十八回提到賈蘭十三歲，但在特定時間點（紅樓七年）賈蘭五歲這一陳述在原著中有明確依據[1][5]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.360doc.com/content/23/0705/11/440216_1087406168.shtml",
+        "https://news.qq.com/rain/a/20241027A032KN00",
+        "https://zh.wikipedia.org/zh-cn/%E7%BA%A2%E6%A5%BC%E6%A2%A6%E5%B9%B4%E8%B0%B1",
+        "http://cll.newdu.com/m/view.php?aid=48123",
+        "https://www.jntimes.cn/jsdt/nj/202504/t20250420_8478051.shtml",
+        "http://set.baidu.com/view/38209d3cf111f18583d05aa1.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載，李紈之父李守中確實曾任國子監祭酒一職，這在小說第四回「薄命女偏逢薄命郎葫蘆僧亂判葫蘆案」中有明確提及[2][4]。國子監祭酒作為古代主管國子監或太學的教育行政長官，是中國古代最高學府的重要職位，李守中擔任此職使得李紈能夠嫁入賈府這樣的名門望族[2][3]。",
+      "evidence_sources": [
+        "historical_records",
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "http://www.360doc.com/content/19/0508/08/11400841_834259466.shtml",
+        "http://huanggai.com.cn/archiver/?tid-357.html",
+        "https://www.toutiao.com/article/6746893120647987725/",
+        "https://blog.sina.com.cn/s/blog_5e93fc720102vil5.html",
+        "https://www.youtube.com/watch?v=ov6Glb80SnE"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文明確記載「這李氏亦係金陵名宦之女，父名李守中，曾為國子監祭酒」，證實李氏確實出身於金陵名宦家庭[1][2]。李守中擔任國子監祭酒這一職務在古代相當於現今的教育部長職位，屬於朝廷重要官職，完全符合「名宦」的定義，這在《紅樓夢》多個版本中都有一致的記載[1][2][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2%EF%BC%88%E7%A8%8B%E7%94%B2%E6%9C%AC%EF%BC%89/%E5%9B%9B",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://m.21jingji.com/article/20231109/a1fe339940931ccc9f1c56f5e4125095.html",
+        "https://aipiaxi.com/article-detail/648955",
+        "https://m.qulishi.com/article/202206/629754.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載「原來這李氏即賈珠之妻」以及「卻以紡績女紅為要，因取名為李紈，字宮裁」，可確認李氏的名字確實是李紈[2]。這位李氏為金陵名宦之女，父親李守中曾任國子監祭酒，她嫁給賈政長子賈珠後成為榮國府的長媳，是金陵十二釵正冊之一[1][2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E6%9D%8E%E7%B4%88",
+        "https://vocus.cc/article/5fa14ac3fd89780001f05dea",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC050%E5%9B%9E",
+        "https://www.thepaper.cn/newsDetail_forward_10089296",
+        "https://zh.wikipedia.org/zh-cn/%E6%9D%8E%E7%B4%88",
+        "https://blog.sina.com.cn/s/blog_4d1f126c01031khc.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文描述，李紈「在丈夫亡故後，只顧養育賈蘭，不大照管賈家的家事」且「因對下人心善，不大管事，人稱『大菩薩』」，這與「慎守家務」的描述完全相反[1]。李紈的性格特點是「恬淡守靜，待下寬和」，雖為王夫人長媳但「主要工作是陪眾小姑」，只有在王熙鳳病時才與探春、寶釵共同執掌府事，平時並非以管理家務見長[1][3]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E6%9D%8E%E7%B4%88",
+        "https://chinese.hksyu.edu/chinese/Sharing/%E5%BC%B5%E6%9B%89%E9%9B%AF%20%20%E3%80%8A%E5%BE%9E%E9%87%B5%E9%BB%9B%E4%B9%8B%E8%BE%A8%E6%8E%A2%E8%A8%8E%E6%9B%B9%E9%9B%AA%E8%8A%B9%E7%9A%84%E5%A5%B3%E6%80%A7%E8%A7%80%EF%BC%8D%E5%85%BC%E8%AB%96%E3%80%88%E7%B4%85%E6%A8%93%E5%A4%A2%E3%80%89%E4%B8%AD%E5%BF%83%E6%80%9D%E6%83%B3%E3%80%8B.pdf",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "http://joansreading.blogspot.com/2010/07/blog-post_12.html",
+        "http://bec001.web3.ncku.edu.tw/var/file/142/1142/img/1592/4508.pdf",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2%EF%BC%88%E7%A8%8B%E4%B9%99%E6%9C%AC%EF%BC%89/%E7%AC%AC%E4%B8%89%E5%8D%81%E4%B8%80%E5%9B%9E_%E8%87%B3%E7%AC%AC%E5%9B%9B%E5%8D%81%E5%9B%9E",
+        "https://teric.naer.edu.tw/wSite/PDFReader?xmlId=1634804&fileName=1400771490050&format=PDF",
+        "https://mirror1.dsedj.gov.mo/tplan/2022/plan/C092.pdf"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載：「如今且說雨村，因補授了應天府，一下馬就有一件人命官司詳至案下，乃是兩家爭買一婢，各不相讓，以至毆傷人命。彼時雨村即傳原告之人來審」，明確證實賈雨村補授應天府知府後確實審理了兩家爭買婢女致死的人命案件。[1][2] 此案涉及薛蟠為爭奪香菱（英蓮）而打死小鄉宦之子冯渊，賈雨村在門子的指點下了解到薛家是四大家族之一，最終採取了妥協處理方式，體現了《紅樓夢》中官場黑暗和權勢傾軋的主題。[4][5]",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5eb5c8f6fd89780001477da5",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://newspaper.jcrb.com/2024/20241026/20241026_004/20241026_004_4.htm",
+        "https://www.163.com/dy/article/JN418C1E0556BI9C.html",
+        "https://www.thepaper.cn/newsDetail_forward_13214427",
+        "http://legalinfo.moj.gov.cn/zhfxfzwh/fzwhfsgs/202111/t20211105_440831.html",
+        "https://ctext.org/hongloumeng/ch4/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓梦》第四回的描述，賈雨村在審理薛蟠打死馮淵一案時「正當發簽捉拿薛蟠時，結果讓門子制止了」，表明他並未真正發出發簽而是被及時阻止[3]。原文明確記載「只見案旁站著一個門子，使眼色不叫他發簽。雨村心下狐疑，只得停了手」，說明賈雨村最終並沒有完成發簽這個動作[4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://www.gutenberg.org/ebooks/24264.epub.images",
+        "https://blog.sina.com.cn/s/blog_6f61fd590102yrmf.html",
+        "http://www.360doc.com/content/23/0528/11/10736290_1082446372.shtml",
+        "https://www.chinawriter.com.cn/n1/2020/0708/c404063-31775638.html",
+        "https://www.hnsdfz.org/a/jiaoyanzu/Chinese/jiaoxuehuodong/2019/0321/5616.html"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據提供的《紅樓夢》相關文獻資料分析，「發簽」和「發差」這兩個詞彙在古典文學和現代中文語境中都缺乏明確的定義和合理的語義關聯[2][3][4]。搜索結果中涉及《紅樓夢》的通靈寶玉功效描述為「一除陰邪、二療冤疾、三知禍福」，但與此三元組表述的概念完全無關，且「發簽 作用 發差」的語法結構不符合標準的中文表達規範[2]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise",
+        "general_knowledge"
+      ],
+      "actual_citations": [
+        "http://finance.people.com.cn/BIG5/n/2014/0609/c216612-25121471.html",
+        "https://commons.ln.edu.hk/cgi/viewcontent.cgi?article=1221&context=chi_diss",
+        "https://commons.ln.edu.hk/cgi/viewcontent.cgi?article=1224&context=chi_diss",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://www.litphil.sinica.edu.tw/newsletter/104/104-119-146.pdf",
+        "https://isbn.ncl.edu.tw/NEW_ISBNNet/C00_index.php?Pfile=1331&KeepThis=true&...",
+        "http://www.360doc.com/content/23/0528/11/10736290_1082446372.shtml"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回的描述，賈雨村確實在門子的勸說下徇情枉法，原文明確提到「賈雨村在門子的怂恿下，見危不幫」以及「此事皆由葫蘆廟內之沙彌新門子所出」[1][4]。在香菱拐賣案中，門子向賈雨村展示了護官符並勸說他不要得罪權貴，最終賈雨村「便徇情枉法，胡亂判斷了此案」[2][5]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://guoxue.ifeng.com/c/7iEBAGtMLqQ",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/004.htm",
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://vocus.cc/article/5eb5c8f6fd89780001477da5",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://www.gyjjjcw.gov.cn/gysjw/article.html?id=2916",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2%EF%BC%88%E7%A8%8B%E4%B9%99%E6%9C%AC%EF%BC%89/%E7%AC%AC%E4%B8%80%E5%9B%9E_%E8%87%B3%E7%AC%AC%E5%8D%81%E5%9B%9E",
+        "https://ctext.org/hongloumeng/ch120/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓梢》原著內容，門子確實出身於葫蘆廟，搜索結果[3]明確指出「葫蘆僧指的是門子」，並說明「賈雨村和門子也都跟葫蘆廟有一些淵源」[3]。在小說第四回「葫蘆僧亂判葫蘆案」中，門子原本是葫蘆廟的小沙彌，後來還俗成為衙門門子，當他在公堂上遇到貾雨村時提及了二人在葫蘆廟時的淵源，這進一步證實了門子的葫蘆廟出身背景[2][5]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "http://www.sxycrb.com/2025-02/25/content_374985.html",
+        "http://cll.newdu.com/m/view.php?aid=43503",
+        "https://vocus.cc/article/5eb5c8f6fd89780001477da5",
+        "https://m.fx361.cc/news/2021/1228/13617888.html",
+        "http://legalinfo.moj.gov.cn/zhfxfzwh/fzwhfsgs/202111/t20211105_440831.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載「原來這門子本是葫蘆廟內一個小沙彌，因被火之後，無處安身，欲投別廟去修行，又耐不得清涼景況，因想這件生意倒還輕省熱鬧，遂趁年紀蓄了發，充了門子」[2]，明確證實了門子（新門子）曾為沙彌的身分。多個文學研究資料也一致確認門子原本是葫蘆廟裡的小沙彌，在廟宇失火後選擇還俗，後來在應天府擔任門子一職[1][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://newstaiwan.net/2024/05/06/178466/",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://news.qq.com/rain/a/20221207A00L5000",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/004.htm",
+        "http://www.purepen.com/hlm/004.htm"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載「說著，門子掏出了一張『護官符』遞給賈雨村」[1]，確實存在門子向賈雨村展示護官符的情節，因此此三元組陳述正確。這位門子原為葫蘆僧，後在衙門任職，他向新任知府賈雨村提供了記載本省四大家族勢力的「護官符」[4][5]，幫助其了解官場關係網絡以避免得罪權貴。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.merit-times.com.tw/NewsPage.aspx?unid=376861",
+        "http://www.guoxue123.com/hongxue/0001/scjs/018.htm",
+        "https://topics.gmw.cn/2019-05/21/content_33657591.htm",
+        "http://www.360doc.com/content/22/0706/19/34976898_1038861123.shtml",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據《紅樓梦》第四回的描述，護官符確實影響官事，因為書中明確提到「凡作地方官者，皆有一個私單，上面寫的本省最有權有勢、極富極貴的大鄉紳名姓」，「倘若不知，一時觸犯了這樣的人家，不但官爵，只怕連性命還保不住呢」[1][2]。貾雨村正是根據門子提及的護官符了解到事關四大家族後便徇情枉法判案，書中指出「一張護官符卻搞得烏煙瘴氣、是非顛倒、冤案難白」，充分說明了護官符對官場判案和官員行為的直接影響[2][4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.guoxue123.com/hongxue/0001/scjs/018.htm",
+        "https://www.thepaper.cn/newsDetail_forward_13214427",
+        "https://www.163.com/dy/article/IND6GNDF0521FDQV.html",
+        "https://topics.gmw.cn/2019-05/21/content_33657591.htm",
+        "https://fbs.qq.com/read/1045339815/34",
+        "http://www.360doc.com/content/23/0520/16/18314967_1081448008.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載，甄英蓮在元宵節被家人霍啟帶去看燈時失蹤，「待他小解完了來抱時，那有英蓮的蹤影」，英蓮確實被拐子拐賣[4]。後續在賈雨村審理案件時明確提到「其祸皆因拐子某人而起，拐之人原系某乡某姓人氏」，證實了拐子拐賣英蓮的事實，且英蓮「受了拐子這几年折磨」後被賣給他人[7]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://yule.sohu.com/20080714/n258129945_4.shtml",
+        "https://moodle.eduhk.hk/pluginfile.php/289885/mod_folder/content/0/%E7%AC%AC%E4%BA%94%E7%B5%84%EF%BC%9A%E6%9D%8E%E6%BC%81%E3%80%8A%E6%84%8F%E4%B8%AD%E7%B7%A3%E3%80%8B%E7%9A%84%E6%88%8F%E6%9B%B2%E5%86%99%E4%BD%9C%E8%A7%82%E7%A0%94%E7%A9%B6.pdf?forcedownload=1",
+        "http://www.360doc.com/content/16/0127/22/21574872_531115316.shtml",
+        "https://www.gutenberg.org/cache/epub/24264/pg24264-images.html",
+        "https://www.gutenberg.org/ebooks/24264.epub.images",
+        "https://www.163.com/dy/article/H8PUJB130521DQ9P.html",
+        "https://www.163.com/dy/article/JFJ5HJDC0548BC0O.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》原文中門子向賈雨村所說「他就是葫蘆廟旁住的甄老爺的女兒，小名英蓮的」，可以確認英蓮確實是甄老爺（甄士隱）之女[3][4]。此外，原著中明確提到「香菱是甄老爺唯一的女兒，夫婦倆半生只得一女，愛若掌上明珠」，而香菱正是英蓮被拐賣後的名字[5]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/H7HCCCDS05533TVZ.html",
+        "https://news.qq.com/rain/a/20220928A02ZT500",
+        "https://m.qulishi.com/article/202206/626714.html",
+        "http://www.360doc.com/content/23/0729/11/36319167_1090452581.shtml",
+        "http://www.360doc.com/content/20/0418/18/10262472_906882560.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》文本記載，英蓮確實在幼時被人販子拐走，搜索結果明確指出\"香菱四歲被人販子拐走\"[4]，而第一回中也提到\"英蓮就此失蹤，再沒有和親人重逢，她是被人販子拐走了，這樣過了十來年，出落成一個半大姑娘時，才賣給男子為妾\"[1]。這個時間線與\"幼時被拐\"的描述完全吻合，因為四歲屬於幼童階段，而\"過了十來年\"後成為\"半大姑娘\"的敘述進一步證實了她被拐時年紀很小的事實[1]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://www.thepaper.cn/newsDetail_forward_17517151",
+        "https://www.163.com/dy/article/J4SLC7AH0521UUI4.html",
+        "https://news.qq.com/rain/a/20240618A016I200",
+        "http://www.360doc.com/content/20/1028/14/44388306_942806095.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載，「拐子收了馮家的錢」且「冯公子相看了，兑了银子」，確實發生了馮家購買英蓮的交易行為[1][3]。雖然後來「薛蟠打死馮淵，搶走她」，但這並不否定先前購買行為的存在，只是購得後又被強奪的情況[1][2]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/681afec2fd897800012c3ca4",
+        "https://finance.sina.cn/2022-04-09/detail-imcwiwst0775888.d.html",
+        "https://www.163.com/dy/article/J4SLC7AH0521UUI4.html",
+        "http://www.360doc.com/content/19/1019/10/33139984_867760707.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回的描述，馮淵姓馮且「父母早亡，也沒什麼兄弟，就守著一些薄產過日子」[3]，這表明他確實有父母和家業，符合出自馮家的基本條件。按照中國傳統姓氏文化和命名慣例，姓馮之人通常確實出自馮氏家族，且文本中沒有任何證據顯示馮淵有過繼或其他特殊出身背景。",
+      "evidence_sources": [
+        "literary_works",
+        "general_knowledge"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/5eb5c8f6fd89780001477da5",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://news.qq.com/rain/a/20240713A035M200",
+        "https://blog.csdn.net/luoganttcc/article/details/128776991",
+        "http://www.360doc.com/content/22/1121/07/80817707_1056869725.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回的記載，「那天馮公子看了英蓮以後，馬上付了錢訂下英蓮」[2]，證實馮淵確實購得了英蓮。原文進一步描述「冯渊购买英莲后，并未直接将她接进门，而是等过三天后再迎接她，为的是挑选一个好日子」[3]，顯示這是一個完整的購買交易，只是後來因薛蟠介入而發生變故。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://vocus.cc/article/5eb5c8f6fd89780001477da5",
+        "https://m.qulishi.com/article/202202/585296.html",
+        "https://finance.sina.cn/2022-04-09/detail-imcwiwst0775888.d.html",
+        "https://www.huxiu.com/article/524601.html",
+        "http://www.360doc.com/content/20/0418/18/10262472_906882560.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載，馮淵是被薛蟠指使手下豪奴打死的，原文明確描述「那薛家公子豈是讓人的，便喝著手下人一打，將馮公子打了個稀爛，抬回家去三日死了」[1][2]。因此三元組中聲稱馮淵被馮淵自己所殺是完全錯誤的，實際上馮淵是薛蟠爭奪英蓮（香菱）時暴力衝突的受害者，並非自殺[2][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://www.163.com/dy/article/FRTHPHUQ0541H8R7.html",
+        "https://m.qulishi.com/article/202204/605630.html",
+        "http://www.360doc.com/content/23/0729/11/36319167_1090449992.shtml",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第四回的記載，薛家與馮家確實存在爭奪英蓮的情況，原文描述「馮家和金陵惡霸薛家搶著買一個丫鬟」，顯示雙方都想要購買英蓮[1]。雖然馮淵已經先買下英蓮，但薛蟠仍強行奪取並「打死馮淵」，這構成了兩家之間對英蓮的實質性爭奪[3][4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/amp/681afec2fd897800012c3ca4",
+        "http://www.360doc.com/content/20/0727/14/70986113_927064441.shtml",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM",
+        "https://zh.wikipedia.org/zh-hant/%E8%96%9B%E8%9F%A0"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓梦》相關資料，薛蟠確實被指為「肇事者」，如搜尋結果中明確提到「肇事者薛蟠則收拾收拾心情，帶著新搶的美人，和親媽親妹妹一起上京」，顯示薛家成員薛蟠在某起事件中被直接稱為肇事者[3]。此外，文本中描述薛蟠「搶的搶，被打死的打死」等行為，進一步證實了薛家成員確實在多個事件中扮演了肇事者的角色，使得薛家整體被視為問題的根源[3]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://blog.sina.com.cn/s/blog_1522d51090102zx3x.html",
+        "https://hongloumeng.shahaizi.com/hongloumeng/81/11931.html",
+        "http://m.3233.cn/n/ob18-121238.html",
+        "https://news.qq.com/rain/a/20240821A0161D00",
+        "http://www.360doc.com/content/23/0513/19/37183450_1080562159.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第六十七回原文「見薛蟠自外而入，眼中尚有淚痕未乾。一進門。便向他母親拍手說道：『媽，可知柳大哥、尤三姐的事麼？』薛姨媽說：『我才聽見說，正在這裏和你妹子說這件公案呢。』」，明確顯示薛蟠稱薛姨媽為母親，薛姨媽稱寶釵為薛蟠的妹子[4]。從《紅樓夢》第四回「他便帶了母妹竟自起身長行去了」以及第四十八回「薛姨媽便和宝钗香菱并两个老年的嬷嬷连日打点行装」等描述中，可確認薛蟠、薛姨媽、薛寶釵同屬薛家，且薛家為四大家族之一[1][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "http://www.360doc.com/content/20/0212/15/37581541_891504965.shtml",
+        "https://m.gushiwen.cn/guwen/bookv_6b3c00d799cd.aspx",
+        "http://cls.lib.ntu.edu.tw/hlm/read/text/BODY.asp?CHNO=067",
+        "http://www.360doc.com/content/20/0211/15/129428_891275889.shtml",
+        "https://m.gushiwen.cn/guwen/bookv_7c519d01a721.aspx"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據維基百科及相關文獻資料，薛蟠確實是《紅樓夢》中人物的正式名稱，字文龍，外號「呆霸王」，薛姨媽之子，薛寶釵之兄[6]。從知識圖譜的角度來看，「薛蟠 名 薛蟠」這個三元組表達了實體名稱與其本身標識符的對應關係，在語義上構成了正確的自指陳述[1][6]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise",
+        "general_knowledge"
+      ],
+      "actual_citations": [
+        "http://curvytime-redchamber.blogspot.com/2008/09/blog-post.html",
+        "http://cll.newdu.com/m/view.php?aid=43602",
+        "https://m.qulishi.com/article/202305/677591.html",
+        "https://scholars.lib.ntu.edu.tw/bitstream/123456789/19597/1/0028_200806_5.pdf",
+        "https://news.qq.com/rain/a/20200723A0WCI100",
+        "https://zh.wikipedia.org/zh-hant/%E8%96%9B%E8%9F%A0"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "** 根據《紅樓夢》原文記載「這薛公子學名薛蟠，表字文龍，今年方十有五歲，性情奢侈，言語傲慢」[2][5]，薛蟠的表字確實是文龍。從文學分析角度來看，「蟠」字本意為蟠龍，而其表字「文龍」與名字形成巧妙呼應，因為「文」的原本意思就是「紋」，因此蟠龍與文龍在字義上完全對應[1]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://curvytime-redchamber.blogspot.com/2008/09/blog-post.html",
+        "https://www.163.com/dy/article/JH1LRUBE05568GV5.html",
+        "http://www.360doc.com/content/20/0211/15/129428_891275889.shtml",
+        "http://iguoxue.ifeng.com/59968289/news.shtml",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM",
+        "https://zh.wikipedia.org/zh-hant/%E8%96%9B%E8%9F%A0"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據搜索結果顯示，薛蟠確實出身富族，他「生在富貴之家」且「出生於四大家族之一的薛家」，薛家素有「豐年好大雪，珍珠如土金如鐵」的顯赫地位[1][2]。薛家作為四大家族之一，「家資百萬，是妥妥的皇商家庭」，在《紅樓夢》中被描述為經濟實力雄厚的望族，因此薛蟠出身富族的陳述完全正確[3][4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://m.fx361.cc/news/2022/0518/10321844.html",
+        "https://scholars.lib.ntu.edu.tw/bitstream/123456789/19597/1/0028_200806_5.pdf",
+        "https://www.163.com/dy/article/G48UPE1705444MJT.html",
+        "http://www.360doc.com/content/22/1121/07/80817707_1056869725.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第四回原文記載，「薛蟠見英蓮生得不俗，立意買他，又遇馮家來奪人，因恃強喝令手下豪奴將馮淵打死」[1]，確實成功購得英蓮。第八十回中香菱已作為薛蟠的妾室生活在薛家，並受到薛蟠正妻金桂的欺凌[2]，進一步證實薛蟠確實擁有英蓮。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC080%E5%9B%9E",
+        "https://www.chinanews.com.cn/cul/2011/03-29/2936289.shtml",
+        "https://www.163.com/dy/article/FRGCHVKN05451QJR.html",
+        "https://zh.wikipedia.org/zh-hant/%E8%96%9B%E8%9F%A0",
+        "https://guoxue.ifeng.com/c/7lFq0p7tjmf"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回原文記載「寡母王氏乃現任京營節度使王子騰之妹，與榮國府賈政的夫人王氏，是一母所生的姊妹，今年方四十上下年紀，只有薛蟠一子」，明確顯示王氏確實為薛蟠之母[4]。維基百科亦記載「薛姨媽，中國古典名著《紅樓夢》人物，薛蟠和薛寶釵之母」，而薛姨媽本姓王氏，出身四大家族之王家，證實了王氏（薛母）與薛蟠的母子關係[1]。",
+      "evidence_sources": [
+        "historical_records",
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-tw/%E8%96%9B%E5%A7%A8%E5%A6%88",
+        "https://news.qq.com/rain/a/20211201A038YU00",
+        "https://zh.wikipedia.org/zh-cn/%E7%BA%A2%E6%A5%BC%E6%A2%A6%E4%BA%BA%E7%89%A9%E5%88%97%E8%A1%A8",
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據搜索結果顯示「薛姨媽王氏，是王夫人的一奶同胞妹妹」[2]，而王夫人與王子騰為兄妹關係，因此薛姨媽王氏確實是王子騰之妹，該三元組陳述正確。從《紅樓梦》的家族關係架構來看，王子騰、王夫人、薛姨媽三人同為金陵王家的同胞兄妹，搜索結果中明確提及「薛姨媽雖然也是王家女兒」[1]，證實了這一血緣關係。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/GQ4JDRSH0521UUI4.html",
+        "https://news.qq.com/rain/a/20240528A01BI800",
+        "https://m.qulishi.com/article/202112/571193.html"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據維基百科《紅樓夢角色列表》的記載，王子騰的身份是「都太尉統制縣伯之後，金陵節度使」，其中「統制」是其祖上爵位的組成部分而非其個人職稱，且其實際職務為金陵節度使而非京營節度使[2]。《紅樓夢》原文中王子騰首次出場於第三回，作為王夫人的兄長，其官職地位顯赫但具體職稱與三元組所述不符[2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://m.3233.cn/n/axot-135115.html",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8"
+      ],
+      "error_type": "factual_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回的原文記載，賈政邀請薛姨媽住進賈府梨香院，薛姨媽「遂忙道謝應允」，「從此後薛家母子就在梨香院住了」，證實了薛姨媽確實隨薛家入居賈府[1]。《紅樓夢》第八回中寶玉「來至梨香院中，先入薛姨媽室中來」的描述進一步確認薛姨媽在賈府的居住狀況，這一安排是為了讓薛姨媽能夠更好地管束薛蟠的行為[4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC086%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/085.htm",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm8.HTM",
+        "http://cls.lib.ntu.edu.tw/hlm/read/text/BODY.asp?CHNO=067",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》第四回的記載，「賈政讓王夫人安排薛氏一家住進東南角的梨香院」，「從此，薛氏一家在梨香院安頓下來」，明確描述了薛姨媽住在賈府內的情況[1][4]。梨香院原是「荣公暮年養靜之所」，屬於賈府的一部分，而「薛姨媽每日或飯後，或晚間便過來，或與賈母閒談，或與王夫人相敘」，進一步證實了她確實寓居於賈府之中[4]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/681afec2fd897800012c3ca4",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC086%E5%9B%9E",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/029.htm",
+        "https://m.gushiwen.cn/guwen/bookv_7b1c1aa22065.aspx",
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/007.htm",
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC025%E5%9B%9E",
+        "https://m.gushiwen.cn/guwen/bookv_7c519d01a721.aspx",
+        "https://ctext.org/hongloumeng/ch7/zh",
+        "https://ctext.org/hongloumeng/ch29/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原著內容，薛寶釵確實是薛蟠的妹妹，搜尋結果中明確提到「薛蟠和薛宝钗兄妹俩人」以及「薛家兄妹」等表述，直接證實了兄妹關係[4][3]。從文學作品的人物設定來看，薛寶釵與哥哥薛蟠同為薛家子女，隨母親薛姨媽一同客居賈府，這一家庭關係在《紅樓夢》中是基本的人物設定[1][2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://news.qq.com/rain/a/20220321A08RUD00",
+        "http://www.360doc.com/content/21/0818/16/76637984_991607197.shtml",
+        "http://www.360doc.com/content/22/0403/17/79147923_1024682062.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，薛蟠與薛寶釵為兄妹關係，如第四回中描述「薛家母子就在梨香院住了」以及第六十七回中提到「寶釵見了，別的都不理論，倒是薛蟠的小像，拿著細細看了一看，又看看他哥哥」[2][5]。從文學作品的人物關係設定來看，薛蟠作為薛寶釵的兄长，在《紅樓夢》的敘事結構中並無「欲送寶釵」的情節設定，此三元組違背了原著中的基本人物關係邏輯。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC028%E5%9B%9E",
+        "https://zh.wikisource.org/zh-hant/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://m.gushiwen.cn/guwen/bookv_661dbe9f6b5d.aspx",
+        "http://cls.lib.ntu.edu.tw/hlm/read/text/BODY.asp?CHNO=067",
+        "https://www.8bei8.com/book/hongloumeng_67.html",
+        "https://m.gushiwen.cn/guwen/bookv_7c519d01a721.aspx"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第四回原文明確記載「從此後薛家母子就在梨香院住了」[2]，證實薛家確實寓居於梨香院這一事實。該院落原為「當日榮公暮年養靜之所，小小巧巧，約有十餘間房屋，前廳後舍俱全」[2]，薛姨媽攜薛寶釵、薛蟠初來賈府時便安頓於此處[3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://vocus.cc/article/681afec2fd897800012c3ca4",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://zh.wikipedia.org/zh-cn/%E6%A2%A8%E9%A6%99%E9%99%A2",
+        "https://zh.wikisource.org/wiki/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC008%E5%9B%9E",
+        "http://www.stanc.org/wp3p8/%E7%B4%85%E6%A8%93%E5%A4%A287%E5%B9%B4%E7%89%8836%E9%9B%86-%E6%AF%8F%E9%9B%86%E6%A6%82%E8%A6%81",
+        "https://ctext.org/hongloumeng/zh"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據搜索結果顯示，葫蘆廟是《紅樓夢》中賈雨村曾經寄居的廟宇，而葫蘆僧是從該廟出來後成為衙門門子的人物，但三元組中「角色」作為關係詞語法不當且「出產新門子」表述不準確[1][2]。正確的理解應該是葫蘆僧這個人物從葫蘆廟的和尚身份轉變為衙門門子，如搜索結果所述「一個根本沒有資格過問案情的小小門子，竟敢於向那位正義凜然的知府大人遞使眼色」，這描述的是同一人物的身份轉換而非廟宇「出產」門子[1]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "http://cll.newdu.com/m/view.php?aid=43503",
+        "https://guoxue.ifeng.com/c/7iEBAGtMLqQ",
+        "https://ctext.org/hongloumeng/ch4/zh",
+        "https://zh.wikipedia.org/zh-hant/%E8%B4%BE%E9%9B%A8%E6%9D%91"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第四回「薄命女偏逢薄命郎，葫蘆僧判斷葫蘆案」的情節，門子向賈雨村獻策並成功幫助其處理薛蟠案件，確實達成了「策成了結此案」的結果。該門子透過告知賈雨村「護官符」的內容並提出具體的處理建議，最終使得這個複雜案件得以妥善了結，體現了其計謀的成功實施。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://news.qq.com/rain/a/20250119A04ORN00",
+        "https://www.163.com/dy/article/K9B6VELQ0552H59B.html",
+        "https://overwatch.blizzard.com/zh-tw/news/patch-notes/",
+        "https://www.va.gov/search/?query=Trang+ch%E1%BB%A7+Ghi+l%E1%BA%A1i+m%C3%A0n+h%C3%ACnh.%28TG%3Ae10838%29.jwc",
+        "https://newurtopia.com/blogs/blog"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》第四回原文記載「雨村又恐他對人說出當日貧賤時事來，因此心中大不樂意。後來到底尋了他一個不是，遠遠的充發了才罷」，賈雨村確實將門子發配充軍[1]。這個門子原是葫蘆廟內的沙彌，後來成為賈雨村的門子，賈雨村擔心他會洩露自己貧賤時的往事，最終找了個藉口將其遠遠發配[1][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "http://www.xn--5rtnx620bw5s.tw/e/e1/004.htm",
+        "https://guoxue.ifeng.com/c/7iEBAGtMLqQ",
+        "https://zh.wikisource.org/zh-hans/%E7%B4%85%E6%A8%93%E5%A4%A2/%E7%AC%AC004%E5%9B%9E",
+        "https://cti.lib.virginia.edu/cll/chinese_literature/hongloumeng/Hlm4.HTM"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "**: 根據搜索結果顯示，明末以來民間教團常借扶鸞來為宗教說法，且鸞堂的扶鸞內容大都為勸善詩文，具有強烈的教化色彩，這證實了扶鸞確實作為一種民間說服手段[3][5]。進一步來看，知識菁英懷抱儒家道德理想，在失去原來教化舞台後轉而參與鸞堂事務，顯示扶鸞活動承擔了道德勸化與社會說服的重要功能[3]。",
+      "evidence_sources": [
+        "historical_records",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-tw/%E6%89%B6%E4%B9%A9",
+        "https://idv.sinica.edu.tw/jcting/essay/12-1.pdf",
+        "https://blogcastle.lib.fcu.edu.tw/archives/2582",
+        "https://www.thenewslens.com/article/102826",
+        "https://religion.moi.gov.tw/Knowledge/Content?ci=2",
+        "https://www.cuhk.edu.hk/ics/journal/articles/v65p139.pdf",
+        "https://zh.daoinfo.org/index.php?title=%E6%89%B6%E4%B9%A9&variant=zh-hant",
+        "http://www.eeo.com.cn/gcj/2024/0603/664788.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》中門子的角色定位，他們主要負責看門守第、傳遞消息等基礎事務，不具備提供宗教占卜建議的身份和職能。雖然搜索結果顯示扶鸞在明清時期廣泛存在於各社會階層中，但這種涉及神靈附身的宗教儀式通常由專門的道士、乩手或有文化背景的人來主持，與門子的實務性職責不符。",
+      "evidence_sources": [
+        "historical_records",
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://dao.crs.cuhk.edu.hk/Main/wp-content/uploads/2024/12/DAOJrl2_07.pdf",
+        "https://penghu.info/OB54878A8FD2F308D2E4",
+        "https://zh.wikipedia.org/zh-tw/%E6%89%B6%E4%B9%A9",
+        "https://waseda.repo.nii.ac.jp/record/63505/files/KyoikuToKenkyu_38_4.pdf",
+        "https://religion.moi.gov.tw/Knowledge/Content?ci=2",
+        "https://toaj.stpi.niar.org.tw/index/journal/volume/article/4b1141f98ec6d716018ecc0f7564022a"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，榮國府是賈府的組成部分而非並列關係，「賈家的崛起主要來自賈演和賈源兄弟二人」，其中「弟弟賈源封獲榮國公」建立了榮國府[4]。此三元組使用「與」字暗示並列關係存在關係錯誤，因為賈府是包含寧國府和榮國府的大家族總稱，正如原文所述榮國府只是「方是榮國府了」的一個具體府邸[2]。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://chieniteach.weebly.com/uploads/4/4/0/6/44062885/%E8%AB%96%E3%80%8A%E7%B4%85%E6%A8%93%E5%A4%A2_%E3%80%8B%E5%94%AF%E4%BA%8C%E8%80%81%E5%AB%97%E5%B0%8D%E7%85%A7.pdf",
+        "https://vocus.cc/article/5c541ec3fd89780001c63055",
+        "https://www.163.com/dy/article/J9IHC3TJ05568GV5.html",
+        "https://boardmix.cn/article/hlmcharacterrelations/"
+      ],
+      "error_type": "relationship_error"
+    },
+    {
+      "reasoning": "根據搜索結果顯示「『紅樓夢』對賈府尤其是寧國府的混亂腐敗的著墨」，可見寧國府是賈府的組成部分，但此三元組缺乏明確的關係詞來表達兩者間的具體關係[1]。《紅樓夢》中賈府分為荣国府和寧国府兩個分支，搜索結果中提到「贾府又是以荣国府为中心」，說明賈府是包含寧國府在內的整個家族概念，但「賈府 與 寧國府」這種表述在語法結構上不完整[2]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://life.fhl.net/Literature/culture/hongloumeng/hlm13.htm",
+        "http://www.360doc.com/content/18/0430/09/18841360_749838131.shtml",
+        "https://www.163.com/dy/article/J393HRPJ0521DQ9P.html",
+        "https://umo7.com/history/3/3797.html"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載「這四家皆連絡有親，一損皆損，一榮皆榮，扶持遮飾，俱有照應的」，賈府與薛家確實存在密切關係，但此三元組缺少明確的關係謂詞描述。知識圖譜中的標準三元組應遵循（主體，關係，客體）的完整結構，而「賈府 與 薛家」僅提供兩個實體而無具體關係表述，不符合知識圖譜的基本語法規範。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "https://zh.wikipedia.org/zh-hant/%E9%87%91%E9%99%B5%E5%9B%9B%E5%A4%A7%E5%AE%B6%E6%97%8F",
+        "https://www.thepaper.cn/newsDetail_forward_11914008",
+        "https://www.163.com/dy/article/G4LRQAB00541IODP.html",
+        "https://www.threads.com/@4cat_breeder/post/C-aWrzWPycq",
+        "https://boardmix.cn/article/hlmcharacterrelations/",
+        "http://www.360doc.com/content/22/0403/17/79147923_1024681641.shtml"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "此三元組缺少明確的關係謂詞，僅包含兩個實體「榮國府」與「寧國府」而無具體關係描述，不符合知識圖譜三元組「實體 關係 實體」的標準結構要求。根據《紅樓梦》原文描述「荣国府、宁国府和大观园，虽同属于贾府，却是三个色调迥异的空间」及「荣国府（西府）、宁国府（东府）」的記載，兩者確實存在關聯但需要明確的關係標示如「同属于」、「並列于」等謂詞來構成完整三元組。",
+      "evidence_sources": [
+        "literary_works",
+        "domain_expertise"
+      ],
+      "actual_citations": [
+        "http://www.360doc.com/content/24/0207/17/37581541_1113564306.shtml",
+        "https://zh.wikipedia.org/zh-tw/%E7%BA%A2%E6%A5%BC%E6%A2%A6",
+        "https://www.163.com/dy/article/I48H68UP0521FDQV.html",
+        "https://blog.sina.com.cn/s/blog_5e93fc720102ywz7.html",
+        "https://news.qq.com/rain/a/20200628A0REVM00",
+        "https://zh.wikipedia.org/zh-hant/%E5%AF%A7%E5%9C%8B%E5%BA%9C_(%E7%B4%85%E6%A8%93%E5%A4%A2)"
+      ],
+      "error_type": "validation_error"
+    },
+    {
+      "reasoning": "**: 根據《紅樓夢》原文記載，薛家確實與榮國府存在密切關係，「薛家投親靠友，一開始借住在榮國府的梨香院」，顯示薛家長期居住在榮國府內[1]。此外，薛姨媽是王夫人的姐妹，通過婚姻關係使得薜家與榮國府的賈家成為親戚，形成了「金陵四大家族」中賈、薛兩家的血緣聯繫[2][3]。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/JBR721O00521FDQV.html",
+        "https://zh.wikipedia.org/zh-hant/%E9%87%91%E9%99%B5%E5%9B%9B%E5%A4%A7%E5%AE%B6%E6%97%8F",
+        "https://www.threads.com/@4cat_breeder/post/C-aWrzWPycq",
+        "https://boardmix.cn/article/hlmcharacterrelations/",
+        "https://zh.wikipedia.org/zh-cn/%E7%BA%A2%E6%A5%BC%E6%A2%A6%E4%BA%BA%E7%89%A9%E5%88%97%E8%A1%A8",
+        "http://www.360doc.com/content/23/0730/13/10736290_1090574542.shtml"
+      ],
+      "error_type": null
+    },
+    {
+      "reasoning": "根據《紅樓夢》原文記載，薛家是「投親靠友，一開始借住在榮國府的梨香院」[1]，薛家的主要居住地點是榮國府而非寧國府。雖然原文提到「薛蟠和寧國府賈珍為代表的那群人是一丘之貉，薛蟠出角門和東府男丁廝混」[1]，但這僅表示薛蟠與寧國府人員有社交往來，並不構成薛家與寧國府的直接關係。",
+      "evidence_sources": [
+        "literary_works"
+      ],
+      "actual_citations": [
+        "https://www.163.com/dy/article/JBR721O00521FDQV.html",
+        "https://zh.wikipedia.org/zh-hant/%E9%87%91%E9%99%B5%E5%9B%9B%E5%A4%A7%E5%AE%B6%E6%97%8F",
+        "https://boardmix.cn/article/hlmcharacterrelations/",
+        "https://guoxue.ifeng.com/c/7nS2LqsLLBx",
+        "https://zh.wikipedia.org/zh-cn/%E7%BA%A2%E6%A5%BC%E6%A2%A6%E4%BA%BA%E7%89%A9%E5%88%97%E8%A1%A8",
+        "http://www.360doc.com/content/25/0404/14/27880450_1150538508.shtml"
+      ],
+      "error_type": "relationship_error"
+    }
+  ],
+  "success": true,
+  "processing_time": 847.258739233017,
+  "error": null,
+  "summary": {
+    "total_triples": 53,
+    "approved_triples": 38,
+    "rejected_triples": 15,
+    "approval_rate": 0.7169811320754716
+  },
+  "timestamp": "2025-09-20T22:25:59.492650"
+}
