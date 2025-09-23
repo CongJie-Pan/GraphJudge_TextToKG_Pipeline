@@ -18,7 +18,7 @@ try:
     from .entity_processor import extract_entities
     from .triple_generator import generate_triples
     from .graph_judge import judge_triples, judge_triples_with_explanations
-    from .models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
+    from .models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState, EvaluationResult
     from .graph_converter import (
         create_graph_from_judgment_result,
         create_graph_from_triples,
@@ -39,7 +39,7 @@ except ImportError:
     from core.entity_processor import extract_entities
     from core.triple_generator import generate_triples
     from core.graph_judge import judge_triples
-    from core.models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState
+    from core.models import EntityResult, TripleResult, JudgmentResult, Triple, PipelineState, EvaluationResult
     from core.graph_converter import (
         create_graph_from_judgment_result,
         create_graph_from_triples,
@@ -58,7 +58,7 @@ except ImportError:
 class PipelineResult:
     """Complete pipeline result containing all stage outputs."""
     success: bool
-    stage_reached: int  # 0=entity, 1=triple, 2=judgment, 3=complete
+    stage_reached: int  # 0=entity, 1=triple, 2=judgment, 3=evaluation, 4=complete
     total_time: float
 
     # Stage results
@@ -70,6 +70,11 @@ class PipelineResult:
     graph_data: Optional[Dict[str, Any]] = None  # Plotly format (backward compatibility)
     pyvis_data: Optional[Dict[str, Any]] = None  # Pyvis format (primary viewer)
     kgshows_data: Optional[Dict[str, Any]] = None  # kgGenShows format (for other projects)
+
+    # Evaluation results (optional)
+    evaluation_result: Optional['EvaluationResult'] = None  # Forward reference since EvaluationResult is in models
+    evaluation_enabled: bool = False
+    reference_graph_info: Optional[Dict[str, Any]] = None
 
     # Error information
     error: Optional[str] = None
@@ -103,17 +108,20 @@ class PipelineOrchestrator:
         self.pipeline_state = PipelineState()
         self.storage_manager = get_storage_manager()
         
-    def run_pipeline(self, input_text: str, progress_callback=None, config_options=None) -> PipelineResult:
+    def run_pipeline(self, input_text: str, progress_callback=None, config_options=None,
+                     evaluation_config=None, reference_graph=None) -> PipelineResult:
         """
-        Execute the complete three-stage GraphJudge pipeline.
+        Execute the complete GraphJudge pipeline with optional evaluation.
 
         Args:
             input_text: The raw Chinese text to process
             progress_callback: Optional callback function for progress updates
             config_options: Optional configuration options from UI
+            evaluation_config: Optional evaluation configuration (enable_evaluation, enable_ged, etc.)
+            reference_graph: Optional reference graph for evaluation (list of Triple objects)
 
         Returns:
-            PipelineResult containing all stage outputs and metadata
+            PipelineResult containing all stage outputs and metadata, including optional evaluation
         """
         start_time = time.time()
 
@@ -294,6 +302,52 @@ class PipelineOrchestrator:
 
             result.stage_reached = 3
             self.pipeline_state.judgment_result = judgment_result
+
+            # Stage 3.5: Optional Graph Quality Evaluation
+            # Check if evaluation is requested and reference graph is available
+            evaluation_enabled = (evaluation_config and
+                                evaluation_config.get('enable_evaluation', False) and
+                                reference_graph is not None)
+
+            if evaluation_enabled:
+                self.detailed_logger.log_info("PIPELINE", "Starting Optional Stage: Graph Quality Evaluation", {
+                    "stage": "evaluation",
+                    "reference_graph_size": len(reference_graph),
+                    "predicted_graph_size": len([t for t, approved in zip(triple_result.triples, judgment_result.judgments) if approved])
+                })
+
+                if progress_callback:
+                    progress_callback(3, "Running graph quality evaluation...")
+
+                evaluation_result = self._execute_evaluation_stage(
+                    triple_result.triples,
+                    judgment_result.judgments,
+                    reference_graph,
+                    evaluation_config
+                )
+
+                result.evaluation_result = evaluation_result
+                result.evaluation_enabled = True
+                result.reference_graph_info = {
+                    "size": len(reference_graph),
+                    "format": "Triple objects"
+                }
+
+                if evaluation_result and evaluation_result.success:
+                    self.detailed_logger.log_info("EVALUATION", "Graph evaluation completed successfully", {
+                        "overall_score": evaluation_result.metrics.get_overall_score(),
+                        "processing_time": evaluation_result.processing_time
+                    })
+                else:
+                    self.detailed_logger.log_warning("EVALUATION", "Graph evaluation failed or incomplete", {
+                        "error": evaluation_result.error if evaluation_result else "Unknown error"
+                    })
+            else:
+                self.detailed_logger.log_info("PIPELINE", "Graph evaluation skipped", {
+                    "evaluation_config_provided": evaluation_config is not None,
+                    "reference_graph_provided": reference_graph is not None,
+                    "evaluation_enabled": evaluation_config.get('enable_evaluation', False) if evaluation_config else False
+                })
 
             # Stage 4: Graph Conversion for Visualization
             self.detailed_logger.log_info("PIPELINE", "Starting Stage 4: Graph Conversion", {
@@ -524,7 +578,87 @@ class PipelineOrchestrator:
             )
 
         return judgment_result
-    
+
+    def _execute_evaluation_stage(self, triples: List[Triple], judgments: List[bool],
+                                reference_graph: List[Triple], evaluation_config: Dict[str, Any]) -> Optional[EvaluationResult]:
+        """
+        Execute the optional graph quality evaluation stage.
+
+        Args:
+            triples: List of generated triples
+            judgments: List of judgment results (True/False for each triple)
+            reference_graph: Reference graph for evaluation
+            evaluation_config: Evaluation configuration options
+
+        Returns:
+            EvaluationResult containing evaluation metrics or None if failed
+        """
+        try:
+            # Import evaluation modules with graceful fallback
+            try:
+                from ..eval.graph_evaluator import GraphEvaluator
+            except ImportError:
+                # Fallback import for direct execution
+                import sys
+                import os
+                eval_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'eval')
+                sys.path.insert(0, eval_path)
+                from graph_evaluator import GraphEvaluator
+
+            # Create predicted graph from approved triples only
+            predicted_graph = [triple for triple, approved in zip(triples, judgments) if approved]
+
+            if not predicted_graph:
+                self.detailed_logger.log_warning("EVALUATION", "No approved triples for evaluation")
+                return None
+
+            # Configure evaluator based on evaluation config
+            enable_ged = evaluation_config.get('enable_ged', False)
+            enable_bert_score = evaluation_config.get('enable_bert_score', True)
+            max_evaluation_time = evaluation_config.get('max_evaluation_time', 30.0)
+
+            evaluator = GraphEvaluator(
+                enable_ged=enable_ged,
+                enable_bert_score=enable_bert_score,
+                max_evaluation_time=max_evaluation_time
+            )
+
+            # Run evaluation
+            evaluation_result = evaluator.evaluate_graph(predicted_graph, reference_graph)
+
+            self.detailed_logger.log_info("EVALUATION", "Evaluation completed", {
+                "success": evaluation_result.success,
+                "predicted_triples": len(predicted_graph),
+                "reference_triples": len(reference_graph),
+                "processing_time": evaluation_result.processing_time
+            })
+
+            return evaluation_result
+
+        except Exception as e:
+            error_msg = f"Evaluation stage failed: {str(e)}"
+            self.detailed_logger.log_error("EVALUATION", error_msg, {
+                "error_type": type(e).__name__,
+                "error_message": str(e)
+            })
+
+            # Return failed evaluation result instead of None for better error tracking
+            from ..core.models import GraphMetrics
+            empty_metrics = GraphMetrics(
+                triple_match_f1=0.0, graph_match_accuracy=0.0,
+                g_bleu_precision=0.0, g_bleu_recall=0.0, g_bleu_f1=0.0,
+                g_rouge_precision=0.0, g_rouge_recall=0.0, g_rouge_f1=0.0,
+                g_bert_precision=0.0, g_bert_recall=0.0, g_bert_f1=0.0
+            )
+
+            return EvaluationResult(
+                metrics=empty_metrics,
+                metadata={"error_type": "evaluation_stage_error"},
+                success=False,
+                processing_time=0.0,
+                error=error_msg
+            )
+
     def _generate_stats(self, result: PipelineResult) -> Dict[str, Any]:
         """
         Generate summary statistics for the pipeline run.
@@ -563,7 +697,26 @@ class PipelineOrchestrator:
             # Calculate approval rate
             if result.judgment_result.judgments:
                 stats['approval_rate'] = stats['approved_triples'] / len(result.judgment_result.judgments)
-        
+
+        # Add evaluation statistics if available
+        if result.evaluation_result and result.evaluation_enabled:
+            stats.update({
+                'evaluation_enabled': True,
+                'evaluation_success': result.evaluation_result.success,
+                'evaluation_time': result.evaluation_result.processing_time,
+                'reference_graph_size': result.reference_graph_info.get('size', 0) if result.reference_graph_info else 0
+            })
+
+            if result.evaluation_result.success:
+                stats.update({
+                    'overall_evaluation_score': result.evaluation_result.metrics.get_overall_score(),
+                    'triple_match_f1': result.evaluation_result.metrics.triple_match_f1,
+                    'graph_match_accuracy': result.evaluation_result.metrics.graph_match_accuracy,
+                    'g_bert_f1': result.evaluation_result.metrics.g_bert_f1
+                })
+        else:
+            stats['evaluation_enabled'] = False
+
         return stats
     
     def get_pipeline_state(self) -> PipelineState:
@@ -581,16 +734,18 @@ class PipelineOrchestrator:
         self.pipeline_state = PipelineState()
 
 
-def run_full_pipeline(input_text: str, progress_callback=None) -> PipelineResult:
+def run_full_pipeline(input_text: str, progress_callback=None, evaluation_config=None, reference_graph=None) -> PipelineResult:
     """
-    Convenience function to run the complete pipeline.
-    
+    Convenience function to run the complete pipeline with optional evaluation.
+
     Args:
         input_text: The raw Chinese text to process
         progress_callback: Optional progress callback function
-        
+        evaluation_config: Optional evaluation configuration
+        reference_graph: Optional reference graph for evaluation
+
     Returns:
-        PipelineResult with all stage outputs
+        PipelineResult with all stage outputs and optional evaluation
     """
     orchestrator = PipelineOrchestrator()
-    return orchestrator.run_pipeline(input_text, progress_callback)
+    return orchestrator.run_pipeline(input_text, progress_callback, evaluation_config=evaluation_config, reference_graph=reference_graph)

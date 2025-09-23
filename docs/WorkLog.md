@@ -422,7 +422,7 @@ Error: No triples were generated from the provided entities and text
 3) ok - Acutal smoke test the latest edit.
 4) figure out how the confidence calculated.
 5) ok - And it seemed that the perplexity judgement explaniations are not saved in the folder as the actual file.
-6) add the eval function(功能) in the streamlit_pipeline, take the `graph_evaluation` for refernce.
+6) ok- add the eval function(功能) in the streamlit_pipeline, take the `graph_evaluation` for refernce.
 
 about 4) and 6) use the prompt below to the claude code :
 Current Confidence Logic:
@@ -526,4 +526,23 @@ Current Confidence Logic:
 │ │                                                                                                  │ │
 │ │ This plan will transform the streamlit_pipeline from having basic binary judgment to a           │ │
 │ │ sophisticated evaluation system with mathematical confidence calculation and comprehensive graph │ │
-│ │  quality metrics.                                                                                │ │
+│ │  quality metrics.         
+
+---
+
+### 2025/9/23
+
+1. ok - plan to debug these bugs in the tests of "streamlit_pipeline\tests" : 
+  1. API Authentication Issues (Expected in test environment):
+    - E2E pipeline tests requiring actual API keys
+    - Evaluation integration tests needing OpenAI/Perplexity API access
+  2. Performance Timing Issues (Environment-dependent):
+    - Some performance tests have strict timing expectations
+    - BertScore computation causing slower evaluation times
+  3. Minor Function Signature Issues:
+    - New evaluation tests using outdated function signatures
+    - Mock patching issues with non-existent attributes
+
+2. 請移除 streamlit_pipeline 中(包含UI)所有 "AI Confidence 和 Quality Grade 顯示功能"。你的quality 和 confidence 沒經過量化，故請刪除之。
+3. Eval(評估) 沒有最後顯示在streamlit ui，它有進行eval處理嗎? 我看來是沒有耶。
+  請撰寫以上兩個測試在test folder，看有無完成實現。

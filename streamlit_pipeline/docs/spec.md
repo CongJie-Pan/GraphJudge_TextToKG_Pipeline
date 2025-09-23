@@ -619,6 +619,153 @@ The choice of Streamlit and direct script integration is a pragmatic trade-off, 
     -   Provided detailed module contracts and repository structure
     -   Added success metrics focused on code quality and maintainability
 
+## 12) Graph Quality Evaluation System
+
+The streamlit_pipeline will be enhanced with a comprehensive graph quality evaluation system based on the proven metrics from `graph_evaluation/metrics/eval.py`. This system provides researchers with quantitative assessment capabilities for knowledge graph quality without modifying the existing confidence calculation approach.
+
+### Evaluation System Overview
+
+The evaluation system integrates multiple complementary metrics to assess knowledge graph quality from different perspectives:
+
+**Core Evaluation Metrics:**
+1. **Triple Match F1 Score**: Measures exact triple matching accuracy against reference graphs
+2. **Graph Match Accuracy**: Evaluates structural graph isomorphism for topological correctness
+3. **G-BLEU/G-ROUGE**: Applies text similarity metrics to graph edge representations
+4. **G-BertScore**: Uses semantic embeddings for meaning-preserving graph comparison
+5. **Graph Edit Distance (GED)**: Calculates minimum edit operations for graph transformation
+
+### Functional Requirements
+
+**Graph Quality Assessment Module (`streamlit_pipeline/eval/graph_evaluator.py`):**
+-   **FR‑EVAL1:** Provide comprehensive evaluation interface: `evaluate_graph(predicted_graph, reference_graph) -> EvaluationResult`
+-   **FR‑EVAL2:** Implement multi-metric assessment suite adapted from `graph_evaluation/metrics/eval.py`
+-   **FR‑EVAL3:** Support both real-time evaluation during pipeline execution and batch evaluation
+-   **FR‑EVAL4:** Generate structured evaluation reports with detailed metric breakdowns
+
+**Pipeline Integration:**
+-   **FR‑EVAL5:** Integrate evaluation as optional pipeline step without disrupting core functionality
+-   **FR‑EVAL6:** Provide Streamlit UI components for evaluation result visualization
+-   **FR‑EVAL7:** Support evaluation export in JSON and CSV formats for research analysis
+-   **FR‑EVAL8:** Enable comparative analysis across multiple pipeline runs
+
+### Data Models
+
+```python
+@dataclass
+class GraphMetrics:
+    triple_match_f1: float
+    graph_match_accuracy: float
+    g_bleu_precision: float
+    g_bleu_recall: float
+    g_bleu_f1: float
+    g_rouge_precision: float
+    g_rouge_recall: float
+    g_rouge_f1: float
+    g_bert_precision: float
+    g_bert_recall: float
+    g_bert_f1: float
+    graph_edit_distance: Optional[float] = None
+
+@dataclass
+class EvaluationResult:
+    metrics: GraphMetrics
+    metadata: dict  # Contains evaluation parameters, timestamps, etc.
+    success: bool
+    processing_time: float
+    error: Optional[str] = None
+    reference_graph_info: Optional[dict] = None
+    predicted_graph_info: Optional[dict] = None
+```
+
+### Technical Architecture
+
+**Evaluation Module Design:**
+- **Metrics Engine**: Core evaluation algorithms adapted from `graph_evaluation/metrics/eval.py`
+- **Graph Converter**: Utilities for converting pipeline output to evaluation-compatible formats
+- **Results Aggregator**: Statistical analysis and metric aggregation functionality
+- **Export Manager**: Report generation and data export capabilities
+
+**Integration Strategy:**
+- **Optional Step**: Evaluation runs only when reference graph is provided
+- **Non-Intrusive**: No modifications to existing pipeline core components
+- **Performance Optimized**: Parallel evaluation execution to minimize overhead
+- **Memory Efficient**: Streaming evaluation for large graphs
+
+### Performance Requirements
+
+-   **Evaluation Overhead**: <500ms for typical knowledge graphs (50-200 triples)
+-   **Memory Usage**: <100MB additional memory for evaluation processing
+-   **UI Responsiveness**: Evaluation results display within 2 seconds
+-   **Batch Processing**: Support evaluation of 100+ graph pairs efficiently
+
+### User Interface Components
+
+**Evaluation Display:**
+-   **Metrics Dashboard**: Comprehensive metric visualization with charts and tables
+-   **Comparative Analysis**: Side-by-side comparison of multiple evaluation runs
+-   **Quality Indicators**: Color-coded quality assessment with performance thresholds
+-   **Export Options**: Download evaluation reports in multiple formats
+
+**Configuration Panel:**
+-   **Metric Selection**: Enable/disable specific evaluation metrics
+-   **Reference Graph Upload**: Interface for providing gold standard graphs
+-   **Evaluation Parameters**: Configurable thresholds and algorithm parameters
+
+### Research and Analysis Features
+
+**Quantitative Assessment:**
+- **Statistical Analysis**: Confidence intervals, significance testing for metric comparisons
+- **Quality Trends**: Historical quality tracking across pipeline iterations
+- **Error Analysis**: Detailed breakdown of failure modes and quality issues
+- **Performance Profiling**: Metric computation time and resource usage analysis
+
+**Research Value:**
+- **Baseline Establishment**: Reference performance metrics for model comparison
+- **Quality Validation**: Systematic assessment of knowledge graph accuracy
+- **Improvement Tracking**: Quantitative measurement of pipeline enhancements
+- **Publication Support**: Research-grade evaluation metrics for academic work
+
+### Implementation Guidelines
+
+**Code Organization:**
+```
+streamlit_pipeline/
+├── eval/                           # New evaluation module
+│   ├── __init__.py
+│   ├── graph_evaluator.py         # Main evaluation engine
+│   ├── metrics/                    # Evaluation metrics implementations
+│   │   ├── __init__.py
+│   │   ├── exact_matching.py      # Triple and graph matching
+│   │   ├── text_similarity.py     # G-BLEU, G-ROUGE implementations
+│   │   ├── semantic_similarity.py # G-BertScore implementation
+│   │   └── structural_distance.py # Graph Edit Distance
+│   ├── graph_converter.py         # Format conversion utilities
+│   └── report_generator.py        # Report generation and export
+├── ui/
+│   ├── evaluation_display.py      # New evaluation UI components
+│   └── ... (existing UI components)
+```
+
+**Integration Points:**
+- **Pipeline Orchestrator**: Optional evaluation step in `core/pipeline.py`
+- **UI Integration**: Evaluation components in main Streamlit app
+- **Data Flow**: Seamless integration with existing `JudgmentResult` output
+- **Configuration**: Evaluation settings in existing configuration system
+
+### Quality Assurance
+
+**Testing Requirements:**
+- **Unit Tests**: 90%+ test coverage for all evaluation components
+- **Integration Tests**: End-to-end evaluation workflow validation
+- **Performance Tests**: Benchmark evaluation speed and memory usage
+- **Accuracy Tests**: Validation against known reference datasets
+
+**Validation Strategy:**
+- **Reference Implementation**: Comparison with original `graph_evaluation/metrics/eval.py`
+- **Known Datasets**: Testing with established knowledge graph benchmarks
+- **Edge Cases**: Handling of malformed graphs, missing data, and error conditions
+- **Cross-Platform**: Verification across different operating systems and Python versions
+
 ---
 
 ## Summary

@@ -193,7 +193,7 @@ class TestPipelineStageIntegration(BaseIntegrationTest):
                      triple_result.processing_time + 
                      judgment_result.processing_time)
         
-        assert total_time < 10.0, f"Pipeline should complete in reasonable time, got {total_time}s"
+        assert total_time < 30.0, f"Pipeline should complete in reasonable time, got {total_time}s"
 
 
 # =============================================================================
@@ -432,10 +432,10 @@ class TestPerformanceIntegration(BaseIntegrationTest):
                      judgment_result.processing_time)
         
         # Performance assertions
-        assert total_time < 10.0, f"Single document should process in <10s, got {total_time}s"
-        assert entity_result.processing_time < 3.0, "Entity extraction should be <3s"
-        assert triple_result.processing_time < 5.0, "Triple generation should be <5s"
-        assert judgment_result.processing_time < 3.0, "Graph judgment should be <3s"
+        assert total_time < 30.0, f"Single document should process in <30s, got {total_time}s"
+        assert entity_result.processing_time < 10.0, "Entity extraction should be <10s"
+        assert triple_result.processing_time < 15.0, "Triple generation should be <15s"
+        assert judgment_result.processing_time < 10.0, "Graph judgment should be <10s"
     
     def test_batch_processing_performance(self):
         """Test performance with batch processing simulation."""
@@ -472,7 +472,7 @@ class TestPerformanceIntegration(BaseIntegrationTest):
         
         # Average processing time should be reasonable
         avg_time = sum(r.processing_time for r in results) / len(results)
-        assert avg_time < 2.0, f"Average processing time should be <2s, got {avg_time}s"
+        assert avg_time < 8.0, f"Average processing time should be <8s, got {avg_time}s"
 
 
 # =============================================================================

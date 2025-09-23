@@ -15,6 +15,7 @@ Key principles:
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any, Union
 from enum import Enum, auto
+from datetime import datetime
 import time
 import json
 
@@ -386,3 +387,174 @@ class ProcessingTimer:
             return 0.0
         end = self.end_time or time.time()
         return end - self.start_time
+
+
+# ============================================================================
+# Graph Quality Evaluation Models
+# ============================================================================
+
+@dataclass
+class GraphMetrics:
+    """
+    Comprehensive graph evaluation metrics based on multiple assessment dimensions.
+
+    This class encapsulates all evaluation metrics computed by the graph evaluator,
+    providing a structured representation of graph quality assessment results.
+    Based on metrics from graph_evaluation/metrics/eval.py.
+    """
+    # Exact matching metrics
+    triple_match_f1: float  # F1 score for exact triple matching
+    graph_match_accuracy: float  # Structural graph isomorphism accuracy
+
+    # Text similarity metrics (G-BLEU)
+    g_bleu_precision: float  # BLEU precision for graph edges
+    g_bleu_recall: float     # BLEU recall for graph edges
+    g_bleu_f1: float         # BLEU F1 score for graph edges
+
+    # Text similarity metrics (G-ROUGE)
+    g_rouge_precision: float # ROUGE precision for graph edges
+    g_rouge_recall: float    # ROUGE recall for graph edges
+    g_rouge_f1: float        # ROUGE F1 score for graph edges
+
+    # Semantic similarity metrics (G-BertScore)
+    g_bert_precision: float  # BertScore precision for graph edges
+    g_bert_recall: float     # BertScore recall for graph edges
+    g_bert_f1: float         # BertScore F1 score for graph edges
+
+    # Optional structural distance metric
+    graph_edit_distance: Optional[float] = None  # Average graph edit distance (computationally expensive)
+
+    def get_overall_score(self) -> float:
+        """
+        Calculate an overall quality score by averaging key metrics.
+
+        Returns:
+            float: Overall quality score between 0.0 and 1.0
+        """
+        key_metrics = [
+            self.triple_match_f1,
+            self.graph_match_accuracy,
+            self.g_bleu_f1,
+            self.g_rouge_f1,
+            self.g_bert_f1
+        ]
+        return sum(key_metrics) / len(key_metrics)
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert metrics to dictionary format for export."""
+        return {
+            "exact_matching": {
+                "triple_match_f1": self.triple_match_f1,
+                "graph_match_accuracy": self.graph_match_accuracy
+            },
+            "text_similarity": {
+                "g_bleu": {
+                    "precision": self.g_bleu_precision,
+                    "recall": self.g_bleu_recall,
+                    "f1": self.g_bleu_f1
+                },
+                "g_rouge": {
+                    "precision": self.g_rouge_precision,
+                    "recall": self.g_rouge_recall,
+                    "f1": self.g_rouge_f1
+                }
+            },
+            "semantic_similarity": {
+                "g_bert_score": {
+                    "precision": self.g_bert_precision,
+                    "recall": self.g_bert_recall,
+                    "f1": self.g_bert_f1
+                }
+            },
+            "structural_distance": {
+                "graph_edit_distance": self.graph_edit_distance
+            },
+            "overall_score": self.get_overall_score()
+        }
+
+
+@dataclass
+class EvaluationResult:
+    """
+    Complete evaluation result containing metrics, metadata, and processing information.
+
+    This class provides a comprehensive container for graph evaluation results,
+    including detailed metrics, processing metadata, and error information.
+    """
+    metrics: GraphMetrics                    # Computed evaluation metrics
+    metadata: Dict[str, Any]                 # Evaluation parameters, timestamps, etc.
+    success: bool                            # Whether evaluation completed successfully
+    processing_time: float                   # Time taken for evaluation in seconds
+    error: Optional[str] = None              # Error message if evaluation failed
+    reference_graph_info: Optional[Dict[str, Any]] = None  # Reference graph statistics
+    predicted_graph_info: Optional[Dict[str, Any]] = None  # Predicted graph statistics
+
+    def __post_init__(self):
+        """Initialize metadata with default values if not provided."""
+        if not self.metadata:
+            self.metadata = {}
+
+        # Add timestamp if not present
+        if 'timestamp' not in self.metadata:
+            self.metadata['timestamp'] = datetime.now().isoformat()
+
+        # Add evaluation version if not present
+        if 'evaluation_version' not in self.metadata:
+            self.metadata['evaluation_version'] = '1.0'
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert evaluation result to dictionary format for export."""
+        result = {
+            "evaluation_summary": {
+                "success": self.success,
+                "processing_time": self.processing_time,
+                "overall_score": self.metrics.get_overall_score() if self.success else 0.0,
+                "timestamp": self.metadata.get('timestamp'),
+                "evaluation_version": self.metadata.get('evaluation_version')
+            },
+            "metrics": self.metrics.to_dict() if self.success else {},
+            "metadata": self.metadata
+        }
+
+        if self.error:
+            result["error"] = self.error
+
+        if self.reference_graph_info:
+            result["reference_graph"] = self.reference_graph_info
+
+        if self.predicted_graph_info:
+            result["predicted_graph"] = self.predicted_graph_info
+
+        return result
+
+    def export_summary(self) -> str:
+        """Generate a human-readable summary of evaluation results."""
+        if not self.success:
+            return f"Evaluation failed: {self.error}"
+
+        summary_lines = [
+            f"Graph Evaluation Summary",
+            f"========================",
+            f"Overall Score: {self.metrics.get_overall_score():.3f}",
+            f"Processing Time: {self.processing_time:.2f}s",
+            f"",
+            f"Exact Matching Metrics:",
+            f"  Triple Match F1: {self.metrics.triple_match_f1:.3f}",
+            f"  Graph Match Accuracy: {self.metrics.graph_match_accuracy:.3f}",
+            f"",
+            f"Text Similarity Metrics:",
+            f"  G-BLEU F1: {self.metrics.g_bleu_f1:.3f}",
+            f"  G-ROUGE F1: {self.metrics.g_rouge_f1:.3f}",
+            f"",
+            f"Semantic Similarity Metrics:",
+            f"  G-BertScore F1: {self.metrics.g_bert_f1:.3f}",
+        ]
+
+        if self.metrics.graph_edit_distance is not None:
+            summary_lines.extend([
+                f"",
+                f"Structural Distance:",
+                f"  Graph Edit Distance: {self.metrics.graph_edit_distance:.3f}"
+            ])
+
+        return "\n".join(summary_lines)

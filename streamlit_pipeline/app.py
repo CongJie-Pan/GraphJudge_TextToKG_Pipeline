@@ -37,6 +37,10 @@ from streamlit_pipeline.ui.display import display_final_results, display_compari
 from streamlit_pipeline.ui.error_display import (
     PipelineProgressDisplay, display_error_card, ErrorRecoveryHelper
 )
+from streamlit_pipeline.ui.evaluation_display import (
+    display_evaluation_dashboard, display_evaluation_configuration,
+    display_reference_graph_upload, display_evaluation_export_options
+)
 from streamlit_pipeline.ui.simple_progress import (
     SimpleProgressTracker, display_simple_processing_summary,
     display_entity_processing, display_triple_generation_processing,
@@ -353,6 +357,17 @@ class GraphJudgeApp:
         # Get configuration options
         st.session_state.config_options = create_sidebar_controls()
 
+        # Evaluation configuration section
+        st.sidebar.markdown("---")
+        evaluation_config = display_evaluation_configuration()
+        st.session_state.evaluation_config = evaluation_config
+
+        # Reference graph upload section (only if evaluation is enabled)
+        if evaluation_config.get('enable_evaluation', False):
+            st.sidebar.markdown("---")
+            reference_graph = display_reference_graph_upload()
+            st.session_state.reference_graph = reference_graph
+
         # API Status
         st.sidebar.markdown("---")
         st.sidebar.markdown(f"### {get_text('sidebar.api_status')}")
@@ -529,9 +544,20 @@ class GraphJudgeApp:
                         "Validating triples with Perplexity AI"
                     )
 
-            # Run the pipeline with detailed tracking
+            # Run the pipeline with detailed tracking and evaluation support
             start_time = time.time()
-            result = self.orchestrator.run_pipeline(input_text, progress_callback, st.session_state.config_options)
+
+            # Get evaluation configuration and reference graph if available
+            evaluation_config = st.session_state.get('evaluation_config', {})
+            reference_graph = st.session_state.get('reference_graph', None)
+
+            result = self.orchestrator.run_pipeline(
+                input_text,
+                progress_callback,
+                st.session_state.config_options,
+                evaluation_config=evaluation_config,
+                reference_graph=reference_graph
+            )
             end_time = time.time()
             
             # Store results using enhanced session management
@@ -614,7 +640,15 @@ class GraphJudgeApp:
         if result.success:
             # Show final results prominently
             display_final_results(result)
-            
+
+            # Show evaluation results if available
+            if hasattr(result, 'evaluation_result') and result.evaluation_result:
+                st.markdown("---")
+                display_evaluation_dashboard(result.evaluation_result, show_detailed=True)
+
+                # Export options for evaluation results
+                display_evaluation_export_options(result.evaluation_result, f"evaluation_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+
             # Detailed results in expandable sections
             with st.expander("🔍 View Detailed Results by Stage", expanded=False):
                 if result.entity_result:

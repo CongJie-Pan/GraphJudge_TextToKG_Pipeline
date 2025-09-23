@@ -416,5 +416,70 @@
     "domain_expertise": "Domain Expertise",
     "complete_triple": "**Complete Triple:** {subject} - {predicate} - {object}",
     "confidence_percent": "**Confidence:** {confidence:.3f} ({percent:.1f}%)"
+  },
+  "evaluation": {
+    "dashboard_title": "📊 Graph Quality Evaluation Dashboard",
+    "overview_title": "Overview Metrics",
+    "detailed_title": "Detailed Metrics Breakdown",
+    "metadata_title": "Evaluation Information",
+    "visualization_title": "Metrics Visualization",
+    "comparative_analysis_title": "Comparative Analysis",
+    "configuration_title": "Evaluation Configuration",
+    "export_title": "Export Evaluation Results",
+    "reference_graph_title": "Reference Graph Upload",
+
+    "triple_match_f1": "Triple Match F1",
+    "graph_accuracy": "Graph Accuracy",
+    "g_bleu_f1": "G-BLEU F1",
+    "g_rouge_f1": "G-ROUGE F1",
+    "g_bert_f1": "G-BertScore F1",
+
+    "exact_matching_title": "Exact Matching Metrics",
+    "text_similarity_title": "Text Similarity Metrics",
+    "semantic_similarity_title": "Semantic Similarity Metrics",
+    "structural_similarity_title": "Structural Similarity Metrics",
+
+    "precision": "Precision",
+    "recall": "Recall",
+    "f1_score": "F1 Score",
+    "graph_edit_distance": "Graph Edit Distance",
+
+    "radar_chart_title": "Overall Quality Assessment",
+    "precision_recall_title": "Precision vs Recall",
+    "f1_comparison_title": "F1 Score Comparison",
+    "metrics_comparison_title": "Metrics Comparison",
+    "comparison_chart_title": "Evaluation Runs Comparison",
+    "evaluation_runs": "Evaluation Runs",
+    "metric_scores": "Metric Scores",
+
+    "enable_evaluation": "Enable Graph Quality Evaluation",
+    "enable_evaluation_help": "Enable comprehensive graph quality assessment with reference graph comparison",
+    "enable_bert_score": "Enable BertScore Evaluation",
+    "bert_score_help": "Enable semantic similarity evaluation using BERT embeddings (requires additional dependencies)",
+    "enable_ged": "Enable Graph Edit Distance",
+    "ged_help": "Enable structural similarity evaluation using graph edit distance (computationally expensive)",
+    "max_eval_time": "Maximum Evaluation Time (seconds)",
+    "max_eval_time_help": "Maximum time allowed for evaluation before timeout",
+    "advanced_options": "Advanced Evaluation Options",
+
+    "upload_reference_graph": "Upload Reference Graph",
+    "reference_graph_help": "Upload a reference knowledge graph in JSON, CSV, or TXT format for quality comparison",
+    "reference_graph_success": "Reference graph uploaded successfully! Found",
+    "reference_graph_error": "Failed to upload reference graph",
+    "reference_graph_stats": "Reference Graph Statistics",
+
+    "export_json": "Export as JSON",
+    "export_csv": "Export as CSV",
+    "export_summary": "Export Summary",
+    "download_json": "Download JSON Report",
+    "download_csv": "Download CSV Report",
+    "download_summary": "Download Summary Report",
+    "export_success": "Evaluation results exported successfully as {format}!",
+
+    "error_title": "Evaluation Error",
+    "plotly_not_available": "Advanced visualizations are not available. Install plotly for enhanced charts.",
+    "comparison_insufficient_data": "Need at least 2 evaluation results for comparison analysis.",
+    "comparison_no_successful_results": "No successful evaluation results available for comparison.",
+    "ged_not_available": "Graph Edit Distance not computed (disabled or computation failed)."
   }
 }

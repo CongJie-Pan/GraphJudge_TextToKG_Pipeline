@@ -28,39 +28,47 @@ from .error_handling import ErrorHandler, ErrorInfo, ErrorType
 
 class SessionStateKey(Enum):
     """Enumeration of all session state keys used in the application."""
-    
+
     # Core pipeline data
     PIPELINE_RESULTS = "pipeline_results"
     CURRENT_RESULT = "current_result"
     PIPELINE_STATE = "pipeline_state"
-    
+
     # Processing state
     PROCESSING = "processing"
     CURRENT_STAGE = "current_stage"
     PROGRESS_DATA = "progress_data"
-    
+
     # Application state
     RUN_COUNT = "run_count"
     SESSION_ID = "session_id"
     CONFIG_OPTIONS = "config_options"
-    
+
     # Data cache and performance
     DATA_CACHE = "data_cache"
     CACHE_STATS = "cache_stats"
-    
+
     # UI state
     SHOW_DETAILED_RESULTS = "show_detailed_results"
     SHOW_COMPARISON = "show_comparison"
     SELECTED_RESULT_INDEX = "selected_result_index"
-    
+
     # Logging and debugging
     LOGGER = "logger"
     DEBUG_MODE = "debug_mode"
     ERROR_HISTORY = "error_history"
-    
+
     # Temporary storage
     TEMP_INPUT = "temp_input"
     TEMP_SELECTIONS = "temp_selections"
+
+    # Evaluation system state
+    EVALUATION_CONFIG = "evaluation_config"
+    REFERENCE_GRAPH = "reference_graph"
+    REFERENCE_GRAPH_INFO = "reference_graph_info"
+    EVALUATION_RESULTS = "evaluation_results"
+    EVALUATION_ENABLED = "evaluation_enabled"
+    UPLOADED_REFERENCE_FILES = "uploaded_reference_files"
 
 
 @dataclass
@@ -172,6 +180,14 @@ class SessionStateManager:
         # Temporary storage
         self._ensure_key_exists(SessionStateKey.TEMP_INPUT, "")
         self._ensure_key_exists(SessionStateKey.TEMP_SELECTIONS, {})
+
+        # Evaluation system state
+        self._ensure_key_exists(SessionStateKey.EVALUATION_CONFIG, {})
+        self._ensure_key_exists(SessionStateKey.REFERENCE_GRAPH, None)
+        self._ensure_key_exists(SessionStateKey.REFERENCE_GRAPH_INFO, {})
+        self._ensure_key_exists(SessionStateKey.EVALUATION_RESULTS, [])
+        self._ensure_key_exists(SessionStateKey.EVALUATION_ENABLED, False)
+        self._ensure_key_exists(SessionStateKey.UPLOADED_REFERENCE_FILES, {})
     
     def _ensure_key_exists(self, key: SessionStateKey, default_value: Any):
         """Ensure a session state key exists with default value."""
@@ -523,6 +539,93 @@ class SessionStateManager:
         except Exception as e:
             self.logger.error(f"Failed to export session data: {str(e)}")
             return {'error': str(e)}
+
+    # Evaluation system methods
+
+    def set_evaluation_config(self, config: Dict[str, Any]):
+        """
+        Set evaluation configuration in session state.
+
+        Args:
+            config: Evaluation configuration dictionary
+        """
+        st.session_state[SessionStateKey.EVALUATION_CONFIG.value] = config
+        st.session_state[SessionStateKey.EVALUATION_ENABLED.value] = config.get('enable_evaluation', False)
+
+    def get_evaluation_config(self) -> Dict[str, Any]:
+        """Get current evaluation configuration."""
+        return st.session_state[SessionStateKey.EVALUATION_CONFIG.value]
+
+    def set_reference_graph(self, triples: List, graph_info: Dict[str, Any]):
+        """
+        Set reference graph for evaluation.
+
+        Args:
+            triples: List of Triple objects
+            graph_info: Information about the reference graph
+        """
+        st.session_state[SessionStateKey.REFERENCE_GRAPH.value] = triples
+        st.session_state[SessionStateKey.REFERENCE_GRAPH_INFO.value] = graph_info
+
+    def get_reference_graph(self) -> Optional[List]:
+        """Get current reference graph."""
+        return st.session_state[SessionStateKey.REFERENCE_GRAPH.value]
+
+    def get_reference_graph_info(self) -> Dict[str, Any]:
+        """Get reference graph information."""
+        return st.session_state[SessionStateKey.REFERENCE_GRAPH_INFO.value]
+
+    def add_evaluation_result(self, evaluation_result):
+        """
+        Add an evaluation result to the session state.
+
+        Args:
+            evaluation_result: EvaluationResult object
+        """
+        results = st.session_state[SessionStateKey.EVALUATION_RESULTS.value]
+        results.append(evaluation_result)
+
+        # Keep only the last 10 evaluation results to prevent memory bloat
+        if len(results) > 10:
+            st.session_state[SessionStateKey.EVALUATION_RESULTS.value] = results[-10:]
+
+    def get_evaluation_results(self) -> List:
+        """Get all evaluation results from session state."""
+        return st.session_state[SessionStateKey.EVALUATION_RESULTS.value]
+
+    def clear_evaluation_data(self):
+        """Clear all evaluation-related data from session state."""
+        st.session_state[SessionStateKey.EVALUATION_CONFIG.value] = {}
+        st.session_state[SessionStateKey.REFERENCE_GRAPH.value] = None
+        st.session_state[SessionStateKey.REFERENCE_GRAPH_INFO.value] = {}
+        st.session_state[SessionStateKey.EVALUATION_RESULTS.value] = []
+        st.session_state[SessionStateKey.EVALUATION_ENABLED.value] = False
+        st.session_state[SessionStateKey.UPLOADED_REFERENCE_FILES.value] = {}
+
+    def is_evaluation_ready(self) -> bool:
+        """
+        Check if evaluation is ready to run.
+
+        Returns:
+            True if evaluation is enabled and reference graph is available
+        """
+        return (st.session_state[SessionStateKey.EVALUATION_ENABLED.value] and
+                st.session_state[SessionStateKey.REFERENCE_GRAPH.value] is not None)
+
+    def store_uploaded_reference_file(self, file_id: str, file_info: Dict[str, Any]):
+        """
+        Store information about an uploaded reference file.
+
+        Args:
+            file_id: Unique identifier for the file
+            file_info: Information about the uploaded file
+        """
+        files = st.session_state[SessionStateKey.UPLOADED_REFERENCE_FILES.value]
+        files[file_id] = file_info
+
+    def get_uploaded_reference_files(self) -> Dict[str, Any]:
+        """Get information about uploaded reference files."""
+        return st.session_state[SessionStateKey.UPLOADED_REFERENCE_FILES.value]
 
 
 # Global session state manager instance

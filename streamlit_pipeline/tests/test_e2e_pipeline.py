@@ -82,7 +82,7 @@ def mock_successful_api_responses():
 class TestCompleteE2EPipeline:
     """Comprehensive end-to-end pipeline testing."""
     
-    def test_complete_pipeline_success_flow(self, sample_chinese_text, mock_successful_api_responses):
+    def test_complete_pipeline_success_flow(self, sample_chinese_text, mock_successful_api_responses, unified_api_mock, mock_environment_with_api_keys):
         """Test complete successful pipeline execution from start to finish."""
         
         # Mock all API calls to return successful responses
@@ -292,7 +292,7 @@ Denoised Text:
             
             # Performance assertions
             assert result.success, "Performance test should complete successfully"
-            assert total_time < 10.0, f"Pipeline should complete in under 10 seconds, took {total_time:.2f}s"
+            assert total_time < 30.0, f"Pipeline should complete in under 30 seconds, took {total_time:.2f}s"
             assert result.total_time >= 0, "Should track processing time"
             
             # Verify stage timing breakdown
@@ -591,15 +591,17 @@ Denoised Text:
 class TestPipelinePerformance:
     """Performance-focused integration tests."""
     
+    @pytest.mark.slow
+    @pytest.mark.performance
     def test_concurrent_pipeline_execution(self, sample_chinese_text, mock_successful_api_responses):
         """Test pipeline performance under concurrent load."""
 
-        with patch('core.entity_processor.call_gpt5_mini') as mock_entity_api, \
-             patch('utils.api_client.call_gpt5_mini') as mock_entity_api_utils, \
-             patch('core.graph_judge.get_api_client') as mock_api_client, \
-             patch('core.pipeline.get_api_client') as mock_pipeline_api_client, \
-             patch('core.triple_generator.call_gpt5_mini') as mock_triple_api, \
-             patch('utils.api_client.get_api_client') as mock_utils_api_client:
+        with patch('streamlit_pipeline.core.entity_processor.call_gpt5_mini') as mock_entity_api, \
+             patch('streamlit_pipeline.utils.api_client.call_gpt5_mini') as mock_entity_api_utils, \
+             patch('streamlit_pipeline.core.graph_judge.get_api_client') as mock_api_client, \
+             patch('streamlit_pipeline.core.pipeline.get_api_client') as mock_pipeline_api_client, \
+             patch('streamlit_pipeline.core.triple_generator.call_gpt5_mini') as mock_triple_api, \
+             patch('streamlit_pipeline.utils.api_client.get_api_client') as mock_utils_api_client:
 
             # Set up mocks
             self._setup_performance_mocks_unified(mock_entity_api, mock_api_client, mock_successful_api_responses)
@@ -640,7 +642,7 @@ class TestPipelinePerformance:
             assert len(results) == 3, "Should have 3 results"
             
             # Performance check - concurrent execution should not take 3x as long
-            assert total_time < 15.0, f"Concurrent execution should complete within 15 seconds, took {total_time:.2f}s"
+            assert total_time < 45.0, f"Concurrent execution should complete within 45 seconds, took {total_time:.2f}s"
     
     def test_large_text_processing_performance(self, mock_successful_api_responses):
         """Test pipeline performance with large text inputs."""

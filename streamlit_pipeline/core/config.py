@@ -13,7 +13,7 @@ Key simplifications:
 """
 
 import os
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Dict, Any
 from pathlib import Path
 
 
@@ -32,6 +32,18 @@ MAX_RETRIES = 3
 
 # Reasoning effort configuration for GPT-5 models
 REASONING_EFFORTS = ["minimal", "medium", None]  # None means use model default
+
+# Graph Quality Evaluation Configuration
+EVALUATION_ENABLED = False  # Default disabled for backward compatibility
+EVALUATION_ENABLE_GED = False  # Graph Edit Distance (expensive computation)
+EVALUATION_ENABLE_BERT_SCORE = True  # Semantic similarity using BERT
+EVALUATION_TIMEOUT = 30.0  # Maximum evaluation time in seconds
+EVALUATION_BATCH_SIZE = 10  # Maximum graphs to evaluate in batch mode
+
+# Reference graph management
+REFERENCE_GRAPH_MAX_SIZE = 1000  # Maximum number of triples in reference graph
+REFERENCE_GRAPH_FORMATS = ["json", "csv", "txt"]  # Supported upload formats
+REFERENCE_GRAPH_TEMP_DIR = "temp/reference_graphs"  # Temporary storage directory
 
 
 def load_env_file() -> None:
@@ -145,4 +157,23 @@ def get_model_config() -> dict:
         "progressive_timeouts": PROGRESSIVE_TIMEOUTS,
         "reasoning_efforts": REASONING_EFFORTS,
         "max_retries": MAX_RETRIES
+    }
+
+
+def get_evaluation_config() -> Dict[str, Any]:
+    """
+    Get evaluation configuration with defaults and environment overrides.
+
+    Returns:
+        Dictionary containing evaluation configuration options
+    """
+    return {
+        'enable_evaluation': os.environ.get('EVALUATION_ENABLED', str(EVALUATION_ENABLED)).lower() == 'true',
+        'enable_ged': os.environ.get('EVALUATION_ENABLE_GED', str(EVALUATION_ENABLE_GED)).lower() == 'true',
+        'enable_bert_score': os.environ.get('EVALUATION_ENABLE_BERT_SCORE', str(EVALUATION_ENABLE_BERT_SCORE)).lower() == 'true',
+        'max_evaluation_time': float(os.environ.get('EVALUATION_TIMEOUT', str(EVALUATION_TIMEOUT))),
+        'batch_size': int(os.environ.get('EVALUATION_BATCH_SIZE', str(EVALUATION_BATCH_SIZE))),
+        'reference_graph_max_size': int(os.environ.get('REFERENCE_GRAPH_MAX_SIZE', str(REFERENCE_GRAPH_MAX_SIZE))),
+        'supported_formats': REFERENCE_GRAPH_FORMATS,
+        'temp_dir': os.environ.get('REFERENCE_GRAPH_TEMP_DIR', REFERENCE_GRAPH_TEMP_DIR)
     }

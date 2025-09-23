@@ -67,6 +67,12 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "performance: Performance and load tests"
     )
+    config.addinivalue_line(
+        "markers", "windows_timing: Tests with Windows-specific timing adjustments"
+    )
+    config.addinivalue_line(
+        "markers", "bert_score: Tests requiring BertScore computation"
+    )
 
 
 def pytest_collection_modifyitems(config, items):
@@ -163,6 +169,151 @@ def api_error_responses():
         "timeout": PerplexityFixtures.timeout_error(),
         "malformed": GPT5MiniFixtures.malformed_response()
     }
+
+
+@pytest.fixture
+def unified_api_mock():
+    """
+    Provide unified API mock configuration for consistent testing across all modules.
+
+    This fixture addresses API authentication issues by providing a comprehensive
+    mock setup that works across E2E tests, evaluation integration tests, and
+    performance tests.
+    """
+    from unittest.mock import Mock, patch
+
+    # Create unified mock client
+    mock_client = Mock()
+
+    # Configure GPT-5-mini responses
+    def mock_gpt5_response(prompt, **kwargs):
+        """Unified GPT-5 response handler."""
+        prompt_lower = prompt.lower()
+
+        # Entity extraction responses
+        if '提取實體' in prompt or 'extract entities' in prompt_lower:
+            return "['林黛玉', '賈寶玉', '榮國府', '賈母']"
+
+        # Text denoising responses
+        elif '文本去噪' in prompt or 'denoise' in prompt_lower:
+            return "林黛玉來到榮國府，深受賈母喜愛。賈寶玉初見林黛玉。"
+
+        # Triple generation responses
+        elif 'json' in prompt_lower or '三元組' in prompt or 'triple' in prompt_lower:
+            return '''```json
+{
+    "triples": [
+        ["林黛玉", "來到", "榮國府"],
+        ["林黛玉", "受到喜愛", "賈母"],
+        ["賈寶玉", "初見", "林黛玉"]
+    ]
+}
+```'''
+
+        # Default response
+        else:
+            return "Mock response for: " + prompt[:100]
+
+    # Configure Perplexity responses
+    def mock_perplexity_response(prompt, **kwargs):
+        """Unified Perplexity response handler."""
+        # Graph judgment responses
+        if 'judgment' in prompt.lower() or '判斷' in prompt:
+            return """Triple 1: ACCEPT (Confidence: 0.95) - 林黛玉確實來到榮國府
+Triple 2: ACCEPT (Confidence: 0.90) - 林黛玉確實受到賈母喜愛
+Triple 3: ACCEPT (Confidence: 0.88) - 賾寶玉確實初見林黛玉"""
+
+        # Default response
+        else:
+            return "Mock Perplexity response for: " + prompt[:100]
+
+    # Set up mock client methods
+    mock_client.call_gpt5_mini = Mock(side_effect=mock_gpt5_response)
+    mock_client.call_perplexity = Mock(side_effect=mock_perplexity_response)
+    mock_client.complete = Mock(return_value=Mock(
+        choices=[Mock(message=Mock(content="Mock completion response"))]
+    ))
+
+    # Test API connection responses
+    mock_client.test_api_connection = Mock(return_value={
+        "gpt5_mini": {"status": "success", "model": "gpt-5-mini"},
+        "perplexity": {"status": "success", "model": "perplexity/sonar-reasoning"}
+    })
+
+    return mock_client
+
+
+@pytest.fixture
+def platform_timing_multiplier():
+    """
+    Provide platform-specific timing multipliers for performance tests.
+
+    This fixture addresses timing inconsistencies across different platforms
+    and environments (Windows, CI/CD, local development).
+    """
+    import platform
+    import os
+
+    # Base timing multiplier
+    multiplier = 1.0
+
+    # Platform-specific adjustments
+    if platform.system() == "Windows":
+        multiplier *= 1.5  # Windows can be slower due to antivirus, etc.
+    elif platform.system() == "Darwin":  # macOS
+        multiplier *= 1.2
+
+    # CI/CD environment adjustments
+    if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+        multiplier *= 2.0  # CI environments are often slower
+
+    # Debug mode adjustments
+    if __debug__:
+        multiplier *= 1.3
+
+    return multiplier
+
+
+@pytest.fixture
+def mock_environment_with_api_keys():
+    """
+    Provide test environment with proper API key mocking.
+
+    This fixture bypasses API authentication issues by setting up
+    mock environment variables and API configurations.
+    """
+    import os
+    from unittest.mock import patch
+
+    # Mock environment variables
+    test_env = {
+        'OPENAI_API_KEY': 'test-openai-key-12345',
+        'PERPLEXITY_API_KEY': 'test-perplexity-key-67890',
+        'AZURE_OPENAI_KEY': 'test-azure-key-abcdef',
+        'AZURE_OPENAI_ENDPOINT': 'https://test-endpoint.openai.azure.com/'
+    }
+
+    # Store original environment
+    original_env = {}
+    for key in test_env:
+        original_env[key] = os.environ.get(key)
+        os.environ[key] = test_env[key]
+
+    # Mock the config functions to return test values
+    with patch('streamlit_pipeline.core.config.get_api_config') as mock_get_api_config, \
+         patch('streamlit_pipeline.core.config.get_api_key') as mock_get_api_key:
+
+        mock_get_api_config.return_value = (test_env['OPENAI_API_KEY'], None)
+        mock_get_api_key.return_value = test_env['OPENAI_API_KEY']
+
+        yield test_env
+
+    # Restore original environment
+    for key, value in original_env.items():
+        if value is None:
+            os.environ.pop(key, None)
+        else:
+            os.environ[key] = value
 
 
 # =============================================================================
