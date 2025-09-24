@@ -11,6 +11,42 @@ import re
 from typing import List, Dict, Any, Optional
 from collections import Counter
 
+
+def _validate_triple_structure(triple: List[str]) -> bool:
+    """Validate that a triple has the expected structure [subject, predicate, object]."""
+    return isinstance(triple, list) and len(triple) >= 3 and all(isinstance(elem, str) for elem in triple[:3])
+
+
+def _safe_triple_to_text(triple: List[str]) -> str:
+    """Safely convert a triple to text sequence, handling malformed triples and Unicode."""
+    if not _validate_triple_structure(triple):
+        try:
+            triple_repr = repr(triple)[:100]
+            logging.warning(f"Malformed triple encountered in text conversion: {triple_repr}")
+        except Exception:
+            logging.warning("Malformed triple encountered in text conversion (display error)")
+
+        # Use available elements or placeholders
+        subject = str(triple[0]) if len(triple) > 0 and triple[0] is not None else "INVALID_SUBJECT"
+        predicate = str(triple[1]) if len(triple) > 1 and triple[1] is not None else "INVALID_PREDICATE"
+        object_val = str(triple[2]) if len(triple) > 2 and triple[2] is not None else "INVALID_OBJECT"
+
+        try:
+            return f"{subject} {predicate} {object_val}".lower().strip()
+        except Exception as e:
+            logging.warning(f"Unicode error in text conversion: {e}")
+            return "invalid_subject invalid_predicate invalid_object"
+
+    try:
+        # Ensure proper Unicode handling
+        subject = str(triple[0]).strip()
+        predicate = str(triple[1]).strip()
+        object_val = str(triple[2]).strip()
+        return f"{subject} {predicate} {object_val}".lower().strip()
+    except Exception as e:
+        logging.warning(f"Unicode error in triple text conversion: {e}")
+        return "invalid_subject invalid_predicate invalid_object"
+
 # Optional dependencies with graceful fallbacks
 try:
     from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
@@ -35,6 +71,9 @@ def get_bleu_rouge_scores(reference_graphs: List[List[List[str]]],
     These metrics adapt traditional text similarity measures for graph evaluation
     by treating graph edges as text sequences for comparison.
 
+    Now handles unequal graph counts by evaluating available pairs and providing
+    meaningful BLEU/ROUGE scores regardless of triple count differences.
+
     Args:
         reference_graphs: List of reference graphs, each graph is a list of triples
         predicted_graphs: List of predicted graphs, each graph is a list of triples
@@ -46,8 +85,14 @@ def get_bleu_rouge_scores(reference_graphs: List[List[List[str]]],
         return _get_empty_scores()
 
     if len(reference_graphs) != len(predicted_graphs):
-        logging.warning(f"Graph count mismatch: {len(reference_graphs)} reference vs {len(predicted_graphs)} predicted")
-        return _get_empty_scores()
+        logging.warning(f"Graph count mismatch: {len(reference_graphs)} reference vs {len(predicted_graphs)} predicted - continuing with available pairs")
+        # Use minimum count to evaluate available pairs rather than failing
+        min_count = min(len(reference_graphs), len(predicted_graphs))
+        reference_graphs = reference_graphs[:min_count]
+        predicted_graphs = predicted_graphs[:min_count]
+
+        if min_count == 0:
+            return _get_empty_scores()
 
     bleu_scores = []
     rouge_scores = []
@@ -89,13 +134,12 @@ def get_bleu_rouge_scores(reference_graphs: List[List[List[str]]],
 
 
 def _graph_to_text_sequences(graph: List[List[str]]) -> List[str]:
-    """Convert graph triples to text sequences for similarity computation."""
+    """Convert graph triples to text sequences for similarity computation with validation."""
     sequences = []
     for triple in graph:
-        if len(triple) >= 3:
-            # Create edge representation: "subject predicate object"
-            edge_text = f"{triple[0]} {triple[1]} {triple[2]}"
-            sequences.append(edge_text.lower().strip())
+        # Use safe conversion that handles malformed triples
+        edge_text = _safe_triple_to_text(triple)
+        sequences.append(edge_text)
     return sequences
 
 

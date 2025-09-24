@@ -9,6 +9,42 @@ streamlit_pipeline evaluation system.
 import logging
 from typing import List, Dict, Any, Optional, Tuple
 
+
+def _validate_triple_structure(triple: List[str]) -> bool:
+    """Validate that a triple has the expected structure [subject, predicate, object]."""
+    return isinstance(triple, list) and len(triple) >= 3 and all(isinstance(elem, str) for elem in triple[:3])
+
+
+def _safe_triple_to_text(triple: List[str]) -> str:
+    """Safely convert a triple to text sequence, handling malformed triples and Unicode."""
+    if not _validate_triple_structure(triple):
+        try:
+            triple_repr = repr(triple)[:100]
+            logging.warning(f"Malformed triple encountered in semantic similarity: {triple_repr}")
+        except Exception:
+            logging.warning("Malformed triple encountered in semantic similarity (display error)")
+
+        # Use available elements or placeholders
+        subject = str(triple[0]) if len(triple) > 0 and triple[0] is not None else "INVALID_SUBJECT"
+        predicate = str(triple[1]) if len(triple) > 1 and triple[1] is not None else "INVALID_PREDICATE"
+        object_val = str(triple[2]) if len(triple) > 2 and triple[2] is not None else "INVALID_OBJECT"
+
+        try:
+            return f"{subject} {predicate} {object_val}".strip()
+        except Exception as e:
+            logging.warning(f"Unicode error in semantic text conversion: {e}")
+            return "invalid_subject invalid_predicate invalid_object"
+
+    try:
+        # Ensure proper Unicode handling for semantic similarity
+        subject = str(triple[0]).strip()
+        predicate = str(triple[1]).strip()
+        object_val = str(triple[2]).strip()
+        return f"{subject} {predicate} {object_val}".strip()
+    except Exception as e:
+        logging.warning(f"Unicode error in semantic triple conversion: {e}")
+        return "invalid_subject invalid_predicate invalid_object"
+
 # Optional dependencies with graceful fallbacks
 try:
     from bert_score import score as score_bert
@@ -36,6 +72,9 @@ def get_bert_score(reference_graphs: List[List[List[str]]],
     G-BertScore adapts BertScore for graph evaluation by treating graph edges
     as text sequences and computing semantic similarity using BERT embeddings.
 
+    Now handles unequal graph counts by evaluating available pairs and providing
+    meaningful semantic similarity scores regardless of triple count differences.
+
     Args:
         reference_graphs: List of reference graphs, each graph is a list of triples
         predicted_graphs: List of predicted graphs, each graph is a list of triples
@@ -48,8 +87,14 @@ def get_bert_score(reference_graphs: List[List[List[str]]],
         return {"precision": 0.0, "recall": 0.0, "f1": 0.0}
 
     if len(reference_graphs) != len(predicted_graphs):
-        logging.warning(f"Graph count mismatch: {len(reference_graphs)} reference vs {len(predicted_graphs)} predicted")
-        return {"precision": 0.0, "recall": 0.0, "f1": 0.0}
+        logging.warning(f"Graph count mismatch: {len(reference_graphs)} reference vs {len(predicted_graphs)} predicted - continuing with available pairs")
+        # Use minimum count to evaluate available pairs rather than failing
+        min_count = min(len(reference_graphs), len(predicted_graphs))
+        reference_graphs = reference_graphs[:min_count]
+        predicted_graphs = predicted_graphs[:min_count]
+
+        if min_count == 0:
+            return {"precision": 0.0, "recall": 0.0, "f1": 0.0}
 
     if BERT_SCORE_AVAILABLE:
         return _compute_bert_score_actual(reference_graphs, predicted_graphs, model_type)
@@ -194,13 +239,12 @@ def _compute_semantic_fallback(reference_graphs: List[List[List[str]]],
 
 
 def _graph_to_text_sequences(graph: List[List[str]]) -> List[str]:
-    """Convert graph triples to text sequences for semantic similarity computation."""
+    """Convert graph triples to text sequences for semantic similarity computation with validation."""
     sequences = []
     for triple in graph:
-        if len(triple) >= 3:
-            # Create natural language representation of the triple
-            edge_text = f"{triple[0]} {triple[1]} {triple[2]}"
-            sequences.append(edge_text.strip())
+        # Use safe conversion that handles malformed triples
+        edge_text = _safe_triple_to_text(triple)
+        sequences.append(edge_text)
     return sequences
 
 

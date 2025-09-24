@@ -128,20 +128,10 @@ class GraphEvaluator:
             self.evaluation_count += 1
             self.total_evaluation_time += processing_time
 
-            # Create comprehensive metadata
-            metadata = {
-                "predicted_graph_size": len(predicted_graph),
-                "reference_graph_size": len(reference_graph),
-                "evaluation_settings": {
-                    "ged_enabled": enable_ged_override or self.enable_ged,
-                    "bert_score_enabled": self.enable_bert_score
-                },
-                "performance": {
-                    "processing_time": processing_time,
-                    "evaluation_count": self.evaluation_count,
-                    "average_time": self.total_evaluation_time / self.evaluation_count
-                }
-            }
+            # Create comprehensive metadata with size difference diagnostics
+            metadata = self._create_enhanced_metadata(
+                predicted_graph, reference_graph, processing_time, enable_ged_override
+            )
 
             # Generate graph statistics
             pred_info = self._get_graph_info(predicted_graph)
@@ -200,27 +190,60 @@ class GraphEvaluator:
         return results
 
     def _validate_inputs(self, predicted_graph: List[Triple], reference_graph: List[Triple]) -> Tuple[bool, Optional[str]]:
-        """Validate input graphs for evaluation."""
+        """
+        Validate input graphs for evaluation with comprehensive error checking.
+
+        Now allows different graph sizes and focuses on data quality validation
+        rather than size constraints, supporting variable triple generation.
+        """
         if not isinstance(predicted_graph, list):
             return False, "Predicted graph must be a list of Triple objects"
 
         if not isinstance(reference_graph, list):
             return False, "Reference graph must be a list of Triple objects"
 
+        # Allow empty graphs for meaningful evaluation (0 precision/recall)
+        if len(predicted_graph) == 0 and len(reference_graph) == 0:
+            logging.warning("Both predicted and reference graphs are empty")
+
         if len(predicted_graph) == 0:
-            return False, "Predicted graph cannot be empty"
+            logging.warning("Predicted graph is empty - evaluation will show 0 precision, valid recall")
 
         if len(reference_graph) == 0:
-            return False, "Reference graph cannot be empty"
+            logging.warning("Reference graph is empty - evaluation will show 0 recall, valid precision")
 
-        # Validate Triple objects
+        # Validate Triple objects in predicted graph with detailed error checking
+        invalid_predicted_count = 0
         for i, triple in enumerate(predicted_graph):
             if not isinstance(triple, Triple):
-                return False, f"Predicted graph item {i} is not a Triple object"
+                return False, f"Predicted graph item {i} is not a Triple object, got {type(triple)}"
 
+            # Check for empty or None values in Triple fields
+            if not triple.subject or not triple.predicate or not triple.object:
+                logging.warning(f"Predicted graph triple {i} has empty fields: subject='{triple.subject}', predicate='{triple.predicate}', object='{triple.object}'")
+                invalid_predicted_count += 1
+
+        # Validate Triple objects in reference graph with detailed error checking
+        invalid_reference_count = 0
         for i, triple in enumerate(reference_graph):
             if not isinstance(triple, Triple):
-                return False, f"Reference graph item {i} is not a Triple object"
+                return False, f"Reference graph item {i} is not a Triple object, got {type(triple)}"
+
+            # Check for empty or None values in Triple fields
+            if not triple.subject or not triple.predicate or not triple.object:
+                logging.warning(f"Reference graph triple {i} has empty fields: subject='{triple.subject}', predicate='{triple.predicate}', object='{triple.object}'")
+                invalid_reference_count += 1
+
+        # Log validation summary
+        if invalid_predicted_count > 0:
+            logging.warning(f"Found {invalid_predicted_count} triples with empty fields in predicted graph")
+
+        if invalid_reference_count > 0:
+            logging.warning(f"Found {invalid_reference_count} triples with empty fields in reference graph")
+
+        # Log size information for diagnostics
+        if len(predicted_graph) != len(reference_graph):
+            logging.info(f"Graph size difference: predicted={len(predicted_graph)}, reference={len(reference_graph)}")
 
         return True, None
 
@@ -232,63 +255,100 @@ class GraphEvaluator:
                            pred_graph: List[List[str]],
                            ref_graph: List[List[str]],
                            enable_ged: bool) -> Tuple[bool, Optional[GraphMetrics]]:
-        """Compute all evaluation metrics for the given graphs."""
+        """Compute all evaluation metrics for the given graphs with robust error handling."""
         try:
-            # Import metric modules (lazy loading)
+            # Import metric modules (lazy loading) with individual error handling
             if self._exact_matching is None:
-                from .metrics.exact_matching import get_triple_match_f1, get_graph_match_accuracy
-                self._exact_matching = (get_triple_match_f1, get_graph_match_accuracy)
+                try:
+                    from .metrics.exact_matching import get_triple_match_f1, get_graph_match_accuracy
+                    self._exact_matching = (get_triple_match_f1, get_graph_match_accuracy)
+                except ImportError as e:
+                    logging.error(f"Failed to import exact matching metrics: {e}")
+                    return False, f"Failed to import exact matching metrics: {e}"
 
             if self._text_similarity is None:
-                from .metrics.text_similarity import get_bleu_rouge_scores
-                self._text_similarity = get_bleu_rouge_scores
+                try:
+                    from .metrics.text_similarity import get_bleu_rouge_scores
+                    self._text_similarity = get_bleu_rouge_scores
+                except ImportError as e:
+                    logging.error(f"Failed to import text similarity metrics: {e}")
+                    return False, f"Failed to import text similarity metrics: {e}"
 
             if self.enable_bert_score and self._semantic_similarity is None:
-                from .metrics.semantic_similarity import get_bert_score
-                self._semantic_similarity = get_bert_score
+                try:
+                    from .metrics.semantic_similarity import get_bert_score
+                    self._semantic_similarity = get_bert_score
+                except ImportError as e:
+                    logging.warning(f"Failed to import semantic similarity metrics: {e}")
+                    self._semantic_similarity = None
 
             if enable_ged and self._structural_distance is None:
-                from .metrics.structural_distance import get_graph_edit_distance
-                self._structural_distance = get_graph_edit_distance
+                try:
+                    from .metrics.structural_distance import get_graph_edit_distance
+                    self._structural_distance = get_graph_edit_distance
+                except ImportError as e:
+                    logging.warning(f"Failed to import structural distance metrics: {e}")
+                    self._structural_distance = None
 
-            # Compute exact matching metrics
-            triple_f1 = self._exact_matching[0]([ref_graph], [pred_graph])
-            graph_accuracy = self._exact_matching[1]([pred_graph], [ref_graph])
+            # Compute exact matching metrics with error handling
+            try:
+                triple_f1 = self._exact_matching[0]([ref_graph], [pred_graph])
+                graph_accuracy = self._exact_matching[1]([pred_graph], [ref_graph])
+            except Exception as e:
+                logging.error(f"Exact matching computation failed: {e}")
+                return False, f"Exact matching computation failed: {e}"
 
-            # Compute text similarity metrics
-            text_scores = self._text_similarity([ref_graph], [pred_graph])
+            # Compute text similarity metrics with error handling
+            try:
+                text_scores = self._text_similarity([ref_graph], [pred_graph])
+            except Exception as e:
+                logging.error(f"Text similarity computation failed: {e}")
+                text_scores = {'bleu': {'precision': 0.0, 'recall': 0.0, 'f1': 0.0},
+                              'rouge': {'precision': 0.0, 'recall': 0.0, 'f1': 0.0}}
 
-            # Compute semantic similarity metrics
+            # Compute semantic similarity metrics with error handling
             bert_scores = None
             if self.enable_bert_score and self._semantic_similarity:
-                bert_scores = self._semantic_similarity([ref_graph], [pred_graph])
+                try:
+                    bert_scores = self._semantic_similarity([ref_graph], [pred_graph])
+                except Exception as e:
+                    logging.warning(f"Semantic similarity computation failed: {e}")
+                    bert_scores = {'precision': 0.0, 'recall': 0.0, 'f1': 0.0}
 
-            # Compute structural distance metrics
+            # Compute structural distance metrics with error handling
             ged_score = None
             if enable_ged and self._structural_distance:
-                ged_score = self._structural_distance(ref_graph, pred_graph)
+                try:
+                    ged_score = self._structural_distance(ref_graph, pred_graph)
+                except Exception as e:
+                    logging.warning(f"Graph edit distance computation failed: {e}")
+                    ged_score = None
 
-            # Create GraphMetrics object
-            metrics = GraphMetrics(
-                triple_match_f1=float(triple_f1),
-                graph_match_accuracy=float(graph_accuracy),
-                g_bleu_precision=float(text_scores['bleu']['precision']),
-                g_bleu_recall=float(text_scores['bleu']['recall']),
-                g_bleu_f1=float(text_scores['bleu']['f1']),
-                g_rouge_precision=float(text_scores['rouge']['precision']),
-                g_rouge_recall=float(text_scores['rouge']['recall']),
-                g_rouge_f1=float(text_scores['rouge']['f1']),
-                g_bert_precision=float(bert_scores['precision']) if bert_scores else 0.0,
-                g_bert_recall=float(bert_scores['recall']) if bert_scores else 0.0,
-                g_bert_f1=float(bert_scores['f1']) if bert_scores else 0.0,
-                graph_edit_distance=float(ged_score) if ged_score is not None else None
-            )
+            # Create GraphMetrics object with safe value extraction
+            try:
+                metrics = GraphMetrics(
+                    triple_match_f1=float(triple_f1) if triple_f1 is not None else 0.0,
+                    graph_match_accuracy=float(graph_accuracy) if graph_accuracy is not None else 0.0,
+                    g_bleu_precision=float(text_scores.get('bleu', {}).get('precision', 0.0)),
+                    g_bleu_recall=float(text_scores.get('bleu', {}).get('recall', 0.0)),
+                    g_bleu_f1=float(text_scores.get('bleu', {}).get('f1', 0.0)),
+                    g_rouge_precision=float(text_scores.get('rouge', {}).get('precision', 0.0)),
+                    g_rouge_recall=float(text_scores.get('rouge', {}).get('recall', 0.0)),
+                    g_rouge_f1=float(text_scores.get('rouge', {}).get('f1', 0.0)),
+                    g_bert_precision=float(bert_scores.get('precision', 0.0)) if bert_scores else 0.0,
+                    g_bert_recall=float(bert_scores.get('recall', 0.0)) if bert_scores else 0.0,
+                    g_bert_f1=float(bert_scores.get('f1', 0.0)) if bert_scores else 0.0,
+                    graph_edit_distance=float(ged_score) if ged_score is not None else None
+                )
+            except Exception as e:
+                logging.error(f"GraphMetrics object creation failed: {e}")
+                return False, f"GraphMetrics object creation failed: {e}"
 
             return True, metrics
 
         except Exception as e:
-            logging.error(f"Metric computation failed: {str(e)}")
-            return False, f"Failed to compute metrics: {str(e)}"
+            logging.error(f"Unexpected error in metric computation: {str(e)}")
+            return False, f"Unexpected error in metric computation: {str(e)}"
 
     def _get_empty_metrics(self) -> GraphMetrics:
         """Get empty metrics object for error cases."""
@@ -338,6 +398,87 @@ class GraphEvaluator:
                 "max_evaluation_time": self.max_evaluation_time
             }
         }
+
+    def _create_enhanced_metadata(self, predicted_graph: List[Triple], reference_graph: List[Triple],
+                                  processing_time: float, enable_ged_override: Optional[bool]) -> Dict[str, Any]:
+        """
+        Create comprehensive metadata with size difference diagnostics and evaluation insights.
+
+        Args:
+            predicted_graph: Predicted graph triples
+            reference_graph: Reference graph triples
+            processing_time: Time taken for evaluation
+            enable_ged_override: GED setting override
+
+        Returns:
+            Dict containing comprehensive evaluation metadata
+        """
+        pred_size = len(predicted_graph)
+        ref_size = len(reference_graph)
+
+        # Calculate size ratios and patterns
+        size_ratio = pred_size / ref_size if ref_size > 0 else float('inf') if pred_size > 0 else 1.0
+
+        # Determine generation behavior
+        if size_ratio > 1.2:
+            generation_behavior = "over_generation"
+        elif size_ratio < 0.8:
+            generation_behavior = "under_generation"
+        else:
+            generation_behavior = "appropriate_size"
+
+        # Size difference metrics
+        size_difference = pred_size - ref_size
+        abs_size_difference = abs(size_difference)
+
+        metadata = {
+            # Basic size information
+            "predicted_graph_size": pred_size,
+            "reference_graph_size": ref_size,
+            "size_difference": size_difference,
+            "abs_size_difference": abs_size_difference,
+            "size_ratio": size_ratio,
+
+            # Size analysis
+            "size_analysis": {
+                "generation_behavior": generation_behavior,
+                "equal_sizes": pred_size == ref_size,
+                "over_generated": pred_size > ref_size,
+                "under_generated": pred_size < ref_size,
+                "size_difference_percentage": (abs_size_difference / max(pred_size, ref_size)) * 100 if max(pred_size, ref_size) > 0 else 0.0
+            },
+
+            # Evaluation coverage
+            "evaluation_coverage": {
+                "evaluated_pairs": min(pred_size, ref_size),
+                "unevaluated_predicted": max(0, pred_size - ref_size),
+                "unevaluated_reference": max(0, ref_size - pred_size),
+                "coverage_ratio": min(pred_size, ref_size) / max(pred_size, ref_size) if max(pred_size, ref_size) > 0 else 1.0
+            },
+
+            # Evaluation settings
+            "evaluation_settings": {
+                "ged_enabled": enable_ged_override or self.enable_ged,
+                "bert_score_enabled": self.enable_bert_score,
+                "evaluation_mode": "count_agnostic"  # Indicates we handle unequal counts
+            },
+
+            # Performance metrics
+            "performance": {
+                "processing_time": processing_time,
+                "evaluation_count": self.evaluation_count,
+                "average_time": self.total_evaluation_time / self.evaluation_count
+            },
+
+            # Quality insights
+            "quality_insights": {
+                "can_compute_precision": pred_size > 0,
+                "can_compute_recall": ref_size > 0,
+                "meaningful_evaluation": pred_size > 0 or ref_size > 0
+            }
+        }
+
+        return metadata
 
 
 # Convenience functions for direct usage
