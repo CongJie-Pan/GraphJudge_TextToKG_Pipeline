@@ -178,3 +178,11 @@ streamlit_pipeline/logs/
 .serena/
 
 node_modules/
+
+docs/
+
+.claude/
+
+CLAUDE.md
+
+AGENTS.md

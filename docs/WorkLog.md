@@ -543,6 +543,82 @@ Current Confidence Logic:
     - New evaluation tests using outdated function signatures
     - Mock patching issues with non-existent attributes
 
-2. 請移除 streamlit_pipeline 中(包含UI)所有 "AI Confidence 和 Quality Grade 顯示功能"。你的quality 和 confidence 沒經過量化，故請刪除之。
-3. Eval(評估) 沒有最後顯示在streamlit ui，它有進行eval處理嗎? 我看來是沒有耶。
+2. ok - 請移除 streamlit_pipeline 中(包含UI)所有 "AI Confidence 和 Quality Grade 顯示功能"。你的quality 和 confidence 沒經過量化，故請刪除之。
+3. ok - Eval(評估) 沒有最後顯示在streamlit ui，它有進行eval處理嗎? 我看來是沒有耶。
   請撰寫以上兩個測試在test folder，看有無完成實現。
+
+### 2025/9/24
+
+#### bugs below
+
+- bug 1 
+```
+2025-09-24 14:58:39.733 Examining the path of torch.classes raised:
+Traceback (most recent call last):
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\web\bootstrap.py", line 347, in run
+    if asyncio.get_running_loop().is_running():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\watcher\local_sources_watcher.py", line 217, in get_module_paths
+    potential_paths = extract_paths(module)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\watcher\local_sources_watcher.py", line 210, in <lambda>
+    lambda m: list(m.__path__._path),
+                   ^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\_classes.py", line 13, in __getattr__
+    proxy = torch._C._get_custom_class_python_wrapper(self.name, attr)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Tried to instantiate class '__path__._path', but it does not exist! Ensure that it is registered via torch::class_
+2025-09-24 14:58:42.967 Examining the path of torch.classes raised:
+Traceback (most recent call last):
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\web\bootstrap.py", line 347, in run
+    if asyncio.get_running_loop().is_running():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\watcher\local_sources_watcher.py", line 217, in get_module_paths
+    potential_paths = extract_paths(module)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\watcher\local_sources_watcher.py", line 210, in <lambda>
+    lambda m: list(m.__path__._path),
+                   ^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\_classes.py", line 13, in __getattr__
+    proxy = torch._C._get_custom_class_python_wrapper(self.name, attr)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Tried to instantiate class '__path__._path', but it does not exist! Ensure that it is registered via torch::class_
+
+StreamlitAPIException: Expanders may not be nested inside other expanders.
+
+Traceback:
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 266, in run
+    self._render_main_interface()
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 484, in _render_main_interface
+    self._render_results_section(st.session_state.current_result)
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\app.py", line 687, in _render_results_section
+    display_judgment_results(result.judgment_result, result.triple_result.triples, show_expanders=False)
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\ui\components.py", line 743, in display_judgment_results
+    _display_judgment_explanations_content(triples, judgment_result)
+File "D:\AboutCoding\AI_Research\GraphJudge_TextToKG_CLI\streamlit_pipeline\ui\components.py", line 398, in _display_judgment_explanations_content
+    with st.expander(expander_header, expanded=False):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\runtime\metrics_util.py", line 410, in wrapped_func
+    result = non_optional_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\elements\layouts.py", line 601, in expander
+    return self.dg._block(block_proto=block_proto)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\delta_generator.py", line 518, in _block
+    _check_nested_element_violation(self, block_type, ancestor_block_types)
+File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\site-packages\streamlit\delta_generator.py", line 598, in _check_nested_element_violation
+    raise StreamlitAPIException(
+```
+
+- Condisered 
+  1. in the eval metrics, the triple number of two graphs (referenced and generated) need to be the same. but the generated graph triple number is not predictable. That will cause the problem. 
