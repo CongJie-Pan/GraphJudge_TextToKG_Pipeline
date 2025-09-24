@@ -1,0 +1,278 @@
+{
+  "triples": [
+    {
+      "subject": "紅樓夢",
+      "predicate": "書名",
+      "object": "紅樓夢",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "紅樓夢",
+      "predicate": "又名",
+      "object": "石頭記",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "石頭記",
+      "predicate": "書名",
+      "object": "石頭記",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "甄士隱",
+      "predicate": "人名",
+      "object": "甄士隱",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "賈雨村",
+      "predicate": "人名",
+      "object": "賈雨村",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "甄士隱",
+      "predicate": "身份",
+      "object": "書中人物",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "賈雨村",
+      "predicate": "身份",
+      "object": "書中人物",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "女媧氏",
+      "predicate": "地點",
+      "object": "大荒山",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "女媧氏",
+      "predicate": "行為",
+      "object": "煉石補天",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "大荒山",
+      "predicate": "包含",
+      "object": "無稽崖",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "無稽崖",
+      "predicate": "處所",
+      "object": "青埂峰下",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "女媧氏",
+      "predicate": "煉成",
+      "object": "三萬六千五百零一塊頑石",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "三萬六千五百零一塊頑石",
+      "predicate": "其中使用數量",
+      "object": "三萬六千五百塊",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "三萬六千五百零一塊頑石",
+      "predicate": "遺留於",
+      "object": "青埂峰",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "青埂峰",
+      "predicate": "位置",
+      "object": "青埂峰下",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "石頭",
+      "predicate": "性質",
+      "object": "靈性通明",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "石頭",
+      "predicate": "感受",
+      "object": "自愧自嗟",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "僧",
+      "predicate": "同行者",
+      "object": "道士",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "僧",
+      "predicate": "對象",
+      "object": "石頭",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "道士",
+      "predicate": "對象",
+      "object": "石頭",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "僧",
+      "predicate": "行為",
+      "object": "變石為美玉",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "道士",
+      "predicate": "行為",
+      "object": "變石為美玉",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "美玉",
+      "predicate": "形狀",
+      "object": "扇墜大小",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "美玉",
+      "predicate": "可用作",
+      "object": "扇墜",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "美玉",
+      "predicate": "被攜入",
+      "object": "詩禮簪纓之族",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "美玉",
+      "predicate": "被攜入",
+      "object": "溫柔鄉",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "紅樓夢",
+      "predicate": "旨在",
+      "object": "風塵懷閨秀",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    },
+    {
+      "subject": "風塵",
+      "predicate": "關聯對象",
+      "object": "閨秀",
+      "source_text": "《紅樓夢》者，書名也。又名《石頭記》。作者自言以夢幻、通靈為始，故以「甄士隱夢幻識通靈」為首回題。作者又以「風塵懷閨秀」為旨，述昔日閨中女子之事，非專責責世也。\n\n甄士隱者，人名也。賈雨村者，人名也。...",
+      "metadata": {
+        "extracted_from": "gpt_response"
+      }
+    }
+  ],
+  "metadata": {
+    "text_processing": {
+      "original_length": 337,
+      "chunks_created": 1,
+      "chunks_processed": 1,
+      "chunks_with_triples": 1
+    },
+    "extraction_stats": {
+      "entities_provided": 17,
+      "total_triples_extracted": 28,
+      "unique_triples": 28,
+      "duplicates_removed": 0
+    },
+    "validation": {
+      "pydantic_available": true,
+      "schema_validation": "enabled"
+    }
+  },
+  "success": true,
+  "processing_time": 10.100703477859497,
+  "error": null,
+  "timestamp": "2025-09-24T14:07:02.155102"
+}

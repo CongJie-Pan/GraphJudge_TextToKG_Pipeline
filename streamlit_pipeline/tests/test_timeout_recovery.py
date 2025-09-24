@@ -46,7 +46,7 @@ class TestProgressiveTimeouts:
             "progressive_timeouts": [120, 180, 240],
             "reasoning_efforts": ["minimal", "medium", None],
             "max_retries": 3,
-            "temperature": 0.0,
+            "temperature": 1.0,
             "max_tokens": 12000
         }
 
@@ -77,7 +77,7 @@ class TestProgressiveTimeouts:
             "progressive_timeouts": [120, 180, 240],
             "reasoning_efforts": ["minimal", "medium", None],
             "max_retries": 3,
-            "temperature": 0.0,
+            "temperature": 1.0,
             "max_tokens": 12000
         }
 
@@ -107,7 +107,7 @@ class TestProgressiveTimeouts:
             "progressive_timeouts": [120, 180, 240],
             "reasoning_efforts": ["minimal", "medium", None],
             "max_retries": 3,
-            "temperature": 0.0,
+            "temperature": 1.0,
             "max_tokens": 12000
         }
 
@@ -286,7 +286,7 @@ class TestConfigurationUpdates:
         config = get_model_config()
 
         # Verify updated model parameters
-        assert config["temperature"] == 0.0  # Updated from 1.0 for deterministic output
+        assert config["temperature"] == 1.0  # GPT-5-mini requirement
         assert config["max_tokens"] == 12000  # Updated from 8000
 
 

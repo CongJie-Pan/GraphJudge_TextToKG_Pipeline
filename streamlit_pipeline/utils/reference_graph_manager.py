@@ -180,8 +180,27 @@ class ReferenceGraphManager:
                     # [subject, predicate, object] format
                     triples.append(Triple(str(item[0]), str(item[1]), str(item[2])))
                 elif isinstance(item, dict):
+                    # GraphJudge approval format: {"triple": {...}, "judgment": true, "approved": true, ...}
+                    if 'triple' in item and isinstance(item['triple'], dict):
+                        # Check if this is an approved triple (prefer 'approved' field, fallback to 'judgment')
+                        is_approved = item.get('approved', item.get('judgment', True))
+
+                        if is_approved:
+                            triple_data = item['triple']
+                            if all(key in triple_data for key in ['subject', 'predicate', 'object']):
+                                # Create Triple object with optional source_text
+                                source_text = triple_data.get('source_text')
+                                metadata = triple_data.get('metadata', {})
+
+                                triples.append(Triple(
+                                    subject=str(triple_data['subject']),
+                                    predicate=str(triple_data['predicate']),
+                                    object=str(triple_data['object']),
+                                    source_text=source_text,
+                                    metadata=metadata
+                                ))
                     # {"subject": "", "predicate": "", "object": ""} format
-                    if all(key in item for key in ['subject', 'predicate', 'object']):
+                    elif all(key in item for key in ['subject', 'predicate', 'object']):
                         triples.append(Triple(str(item['subject']), str(item['predicate']), str(item['object'])))
                     elif all(key in item for key in ['s', 'p', 'o']):
                         triples.append(Triple(str(item['s']), str(item['p']), str(item['o'])))

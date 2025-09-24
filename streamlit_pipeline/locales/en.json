@@ -402,7 +402,7 @@
     "literary_works": "Literary Works",
     "general_knowledge": "General Knowledge",
     "domain_expertise": "Domain Expertise",
-    "complete_triple": "**Complete Triple:** {subject} - {predicate} - {object}",
+    "complete_triple": "**Complete Triple:** {subject} - {predicate} - {object}"
   },
   "evaluation": {
     "dashboard_title": "📊 Graph Quality Evaluation Dashboard",

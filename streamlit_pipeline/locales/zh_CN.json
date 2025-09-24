@@ -431,6 +431,6 @@
     "literary_works": "文学作品",
     "general_knowledge": "常识",
     "domain_expertise": "领域专业知识",
-    "complete_triple": "**完整三元组：** {subject} - {predicate} - {object}",
+    "complete_triple": "**完整三元组：** {subject} - {predicate} - {object}"
   }
 }
