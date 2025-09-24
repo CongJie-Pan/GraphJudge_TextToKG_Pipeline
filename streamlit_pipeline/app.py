@@ -641,13 +641,37 @@ class GraphJudgeApp:
             # Show final results prominently
             display_final_results(result)
 
-            # Show evaluation results if available
-            if hasattr(result, 'evaluation_result') and result.evaluation_result:
-                st.markdown("---")
-                display_evaluation_dashboard(result.evaluation_result, show_detailed=True)
+            # Show evaluation section (always visible)
+            st.markdown("---")
+            st.markdown("## 📊 Graph Quality Evaluation")
 
-                # Export options for evaluation results
-                display_evaluation_export_options(result.evaluation_result, f"evaluation_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+            if hasattr(result, 'evaluation_result') and result.evaluation_result:
+                if result.evaluation_result.success:
+                    st.success("✅ **Graph evaluation completed successfully!**")
+                    display_evaluation_dashboard(result.evaluation_result, show_detailed=True)
+
+                    # Export options for evaluation results
+                    display_evaluation_export_options(result.evaluation_result, f"evaluation_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+                else:
+                    st.error("❌ **Graph evaluation failed.**")
+                    if result.evaluation_result.error:
+                        st.error(f"Error: {result.evaluation_result.error}")
+            else:
+                st.info("📈 **Want to evaluate your knowledge graph quality?**")
+                st.markdown("""
+                **Graph evaluation provides comprehensive quality metrics by comparing your generated graph with a reference graph.**
+
+                **To enable evaluation:**
+                1. 📤 Upload a reference knowledge graph in the sidebar (JSON, CSV, or TXT format)
+                2. ✅ Enable "Graph Quality Evaluation" in the sidebar configuration
+                3. 🔄 Run the pipeline again to see detailed quality metrics including:
+                   - **Exact Matching**: Triple-level accuracy comparison
+                   - **Text Similarity**: BLEU and ROUGE scores for semantic content
+                   - **Semantic Similarity**: BertScore for meaning-based evaluation
+                   - **Structural Analysis**: Graph topology and relationship patterns
+
+                *Note: Evaluation requires a reference graph to compare against.*
+                """)
 
             # Detailed results in expandable sections
             with st.expander("🔍 View Detailed Results by Stage", expanded=False):

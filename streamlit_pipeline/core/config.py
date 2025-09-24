@@ -34,7 +34,7 @@ MAX_RETRIES = 3
 REASONING_EFFORTS = ["minimal", "medium", None]  # None means use model default
 
 # Graph Quality Evaluation Configuration
-EVALUATION_ENABLED = False  # Default disabled for backward compatibility
+EVALUATION_ENABLED = True  # Default enabled to show evaluation results
 EVALUATION_ENABLE_GED = False  # Graph Edit Distance (expensive computation)
 EVALUATION_ENABLE_BERT_SCORE = True  # Semantic similarity using BERT
 EVALUATION_TIMEOUT = 30.0  # Maximum evaluation time in seconds

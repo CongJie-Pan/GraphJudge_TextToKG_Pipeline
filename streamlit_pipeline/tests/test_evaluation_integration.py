@@ -92,7 +92,6 @@ class TestEvaluationPipelineIntegration:
 
         mock_judge.return_value = Mock(
             judgments=[True, True],
-            confidence=[0.9, 0.8],
             success=True,
             processing_time=0.8
         )
@@ -156,7 +155,6 @@ class TestEvaluationPipelineIntegration:
 
         mock_judge.return_value = Mock(
             judgments=[True, True],
-            confidence=[0.9, 0.8],
             success=True,
             processing_time=0.8
         )
@@ -190,7 +188,7 @@ class TestEvaluationPipelineIntegration:
                 success=True, processing_time=1.0
             )
             mock_judge.return_value = Mock(
-                judgments=[True], confidence=[0.9],
+                judgments=[True],
                 success=True, processing_time=0.8
             )
 
@@ -504,7 +502,7 @@ class TestEndToEndEvaluationWorkflow:
                 )
 
                 mock_judge.return_value = Mock(
-                    judgments=[True], confidence=[0.9],
+                    judgments=[True],
                     success=True, processing_time=0.8
                 )
 

@@ -229,13 +229,11 @@ class TestTripleValidation:
     
     def test_validate_triple_valid(self):
         """Test validation of valid triple."""
-        triple = Triple("John", "works_at", "Google", confidence=0.8)
-        
+        triple = Triple("John", "works_at", "Google")
+
         result = validate_triple(triple)
-        
+
         assert result.is_valid is True
-        assert result.metadata['has_confidence'] is True
-        assert result.metadata['confidence_score'] == 0.8
     
     def test_validate_triple_not_triple_instance(self):
         """Test validation of non-Triple object."""
@@ -297,29 +295,13 @@ class TestTripleValidation:
         assert any("Predicate is unusually long" in warning for warning in result.warnings)
         assert any("Object is unusually long" in warning for warning in result.warnings)
     
-    def test_validate_triple_confidence_validation(self):
-        """Test confidence score validation."""
-        # Valid confidence
-        triple1 = Triple("A", "B", "C", confidence=0.5)
+    def test_validate_triple_basic_validation(self):
+        """Test basic triple validation."""
+        # Valid triple
+        triple1 = Triple("A", "B", "C")
         result1 = validate_triple(triple1)
         assert result1.is_valid is True
-        
-        # Invalid confidence - too high (should be caught by Triple.__post_init__)
-        with pytest.raises(ValueError):
-            Triple("A", "B", "C", confidence=1.5)
-        
-        # Invalid confidence - negative (should be caught by Triple.__post_init__)
-        with pytest.raises(ValueError):
-            Triple("A", "B", "C", confidence=-0.1)
     
-    def test_validate_triple_low_confidence_warning(self):
-        """Test warning for low confidence scores."""
-        triple = Triple("John", "works_at", "Google", confidence=0.2)
-        
-        result = validate_triple(triple)
-        
-        assert result.is_valid is True
-        assert any("low confidence" in warning for warning in result.warnings)
 
 
 class TestTriplesListValidation:
@@ -393,86 +375,42 @@ class TestJudgmentConsistencyValidation:
             Triple("Mary", "lives_in", "NYC")
         ]
         judgments = [True, False]
-        confidence = [0.9, 0.3]
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
+
+        result = validate_judgment_consistency(triples, judgments, None)
+
         assert result.is_valid is True
         assert result.metadata['total_judgments'] == 2
         assert result.metadata['true_judgments'] == 1
         assert result.metadata['false_judgments'] == 1
-        assert result.metadata['average_confidence'] == 0.6
     
     def test_validate_judgment_consistency_length_mismatch_judgments(self):
         """Test validation with mismatched triples and judgments length."""
         triples = [Triple("A", "B", "C"), Triple("X", "Y", "Z")]
         judgments = [True]  # Wrong length
-        confidence = [0.8, 0.9]
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
+
+        result = validate_judgment_consistency(triples, judgments, None)
+
         assert result.is_valid is False
         assert "Mismatch between triples (2) and judgments (1)" in result.error_message
     
-    def test_validate_judgment_consistency_length_mismatch_confidence(self):
-        """Test validation with mismatched triples and confidence length."""
-        triples = [Triple("A", "B", "C"), Triple("X", "Y", "Z")]
-        judgments = [True, False]
-        confidence = [0.8]  # Wrong length
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
-        assert result.is_valid is False
-        assert "Mismatch between triples (2) and confidence scores (1)" in result.error_message
     
     def test_validate_judgment_consistency_non_lists(self):
         """Test validation with non-list inputs."""
-        result = validate_judgment_consistency("not list", [True], [0.8])
-        
+        result = validate_judgment_consistency("not list", [True], None)
+
         assert result.is_valid is False
         assert "All inputs must be lists" in result.error_message
     
-    def test_validate_judgment_consistency_invalid_confidence_type(self):
-        """Test validation with non-numeric confidence scores."""
-        triples = [Triple("A", "B", "C")]
-        judgments = [True]
-        confidence = ["not_numeric"]
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
-        assert result.is_valid is False
-        assert "not numeric" in result.error_message
     
-    def test_validate_judgment_consistency_out_of_range_confidence(self):
-        """Test validation with out-of-range confidence scores."""
-        triples = [Triple("A", "B", "C")]
-        judgments = [True]
-        confidence = [1.5]  # Out of range
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
-        assert result.is_valid is False
-        assert "out of range [0,1]" in result.error_message
     
-    def test_validate_judgment_consistency_low_confidence_warning(self):
-        """Test warning for low confidence scores."""
-        triples = [Triple("A", "B", "C")]
-        judgments = [True]
-        confidence = [0.4]  # Low confidence
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
-        assert result.is_valid is True
-        assert any("Low confidence score" in warning for warning in result.warnings)
     
     def test_validate_judgment_consistency_all_true_warning(self):
         """Test warning when all judgments are true."""
         triples = [Triple("A", "B", "C"), Triple("X", "Y", "Z")]
         judgments = [True, True]
-        confidence = [0.9, 0.8]
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
+
+        result = validate_judgment_consistency(triples, judgments, None)
+
         assert result.is_valid is True
         assert any("All triples were judged as true" in warning for warning in result.warnings)
     
@@ -480,10 +418,9 @@ class TestJudgmentConsistencyValidation:
         """Test warning when all judgments are false."""
         triples = [Triple("A", "B", "C"), Triple("X", "Y", "Z")]
         judgments = [False, False]
-        confidence = [0.7, 0.6]
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
+
+        result = validate_judgment_consistency(triples, judgments, None)
+
         assert result.is_valid is True
         assert any("All triples were judged as false" in warning for warning in result.warnings)
     
@@ -491,17 +428,13 @@ class TestJudgmentConsistencyValidation:
         """Test metadata calculations accuracy."""
         triples = [Triple("A", "B", "C") for _ in range(5)]
         judgments = [True, True, False, True, False]
-        confidence = [0.9, 0.8, 0.3, 0.7, 0.2]
-        
-        result = validate_judgment_consistency(triples, judgments, confidence)
-        
+
+        result = validate_judgment_consistency(triples, judgments, None)
+
         assert result.is_valid is True
         assert result.metadata['total_judgments'] == 5
         assert result.metadata['true_judgments'] == 3
         assert result.metadata['false_judgments'] == 2
-        assert result.metadata['average_confidence'] == 0.58  # (0.9+0.8+0.3+0.7+0.2)/5
-        assert result.metadata['min_confidence'] == 0.2
-        assert result.metadata['max_confidence'] == 0.9
 
 
 class TestApiResponseValidation:
@@ -628,17 +561,16 @@ class TestValidationIntegration:
         
         # Triples
         triples = [
-            Triple("John", "works_at", "Google", confidence=0.9),
-            Triple("Mary", "lives_in", "New York", confidence=0.85),
-            Triple("Bob", "knows", "Alice", confidence=0.8)
+            Triple("John", "works_at", "Google"),
+            Triple("Mary", "lives_in", "New York"),
+            Triple("Bob", "knows", "Alice")
         ]
         triple_result = validate_triples_list(triples)
         assert triple_result.is_valid
-        
+
         # Judgments
         judgments = [True, True, False]
-        confidence_scores = [0.92, 0.88, 0.4]
-        judgment_result = validate_judgment_consistency(triples, judgments, confidence_scores)
+        judgment_result = validate_judgment_consistency(triples, judgments, None)
         assert judgment_result.is_valid
         
         # All validations should pass

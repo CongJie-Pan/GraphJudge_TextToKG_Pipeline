@@ -84,16 +84,16 @@ class TestEvaluationSystemIntegration:
 
         # Sample test data for comprehensive testing
         self.large_predicted_graph = [
-            Triple("Paris", "capital_of", "France", confidence=0.95),
-            Triple("London", "capital_of", "UK", confidence=0.90),
-            Triple("Berlin", "capital_of", "Germany", confidence=0.88),
-            Triple("Madrid", "capital_of", "Spain", confidence=0.92),
-            Triple("Rome", "capital_of", "Italy", confidence=0.87),
-            Triple("France", "located_in", "Europe", confidence=0.98),
-            Triple("UK", "located_in", "Europe", confidence=0.97),
-            Triple("Germany", "located_in", "Europe", confidence=0.96),
-            Triple("Spain", "located_in", "Europe", confidence=0.94),
-            Triple("Italy", "located_in", "Europe", confidence=0.93),
+            Triple("Paris", "capital_of", "France"),
+            Triple("London", "capital_of", "UK"),
+            Triple("Berlin", "capital_of", "Germany"),
+            Triple("Madrid", "capital_of", "Spain"),
+            Triple("Rome", "capital_of", "Italy"),
+            Triple("France", "located_in", "Europe"),
+            Triple("UK", "located_in", "Europe"),
+            Triple("Germany", "located_in", "Europe"),
+            Triple("Spain", "located_in", "Europe"),
+            Triple("Italy", "located_in", "Europe"),
         ]
 
         self.large_reference_graph = [
@@ -201,7 +201,6 @@ class TestEvaluationSystemIntegration:
             mock_judge_instance = Mock()
             mock_judge_instance.judge_triples.return_value = Mock(
                 judgments=[True, True, True, True, True],
-                confidence=[0.9, 0.8, 0.85, 0.92, 0.88],
                 success=True,
                 processing_time=0.3
             )
@@ -352,8 +351,7 @@ class TestEvaluationPerformanceBenchmarks:
             graph.append(Triple(
                 subject=f"Entity_{i}",
                 predicate=f"relation_{i % 10}",  # Reuse predicates
-                object=f"Object_{i}",
-                confidence=0.8 + (i % 20) * 0.01  # Vary confidence
+                object=f"Object_{i}"
             ))
         return graph
 

@@ -15,7 +15,7 @@ Key simplifications from original:
 
 Maintains core functionality:
 - Graph triple validation using Perplexity sonar-reasoning model
-- Binary judgment results with confidence scores
+- Binary judgment results
 - Basic explainable reasoning with evidence sources
 - Proper response parsing and validation
 """
@@ -46,7 +46,6 @@ class ExplainableJudgment:
     Simplified version of the complex ExplainableJudgment from original script.
     """
     judgment: str  # "Yes" or "No"
-    confidence: float  # 0.0 to 1.0
     reasoning: str  # Explanation of the judgment
     evidence_sources: List[str]  # Types of evidence used
     alternative_suggestions: List[Dict[str, Any]]  # Alternative correct triples
@@ -93,7 +92,7 @@ class GraphJudge:
             triples: List of Triple objects to validate
 
         Returns:
-            JudgmentResult with judgments, confidence scores, and metadata
+            JudgmentResult with judgments and metadata
         """
         self.detailed_logger.log_info("JUDGMENT", "Starting graph judgment process", {
             "triple_count": len(triples),
@@ -105,14 +104,12 @@ class GraphJudge:
             self.detailed_logger.log_warning("JUDGMENT", "No triples provided for judgment")
             return JudgmentResult(
                 judgments=[],
-                confidence=[],
                 success=True,
                 processing_time=0.0
             )
 
         start_time = time.time()
         judgments = []
-        confidence_scores = []
         api_calls = 0
 
         try:
@@ -139,29 +136,22 @@ class GraphJudge:
                     binary_judgment = judgment == "Yes"
                     judgments.append(binary_judgment)
 
-                    # Assign confidence based on response clarity and error status
                     if had_error:
-                        confidence = 0.0  # Zero confidence for API errors
-                        self.detailed_logger.log_warning("JUDGMENT", f"API error for triple {idx + 1}, setting confidence to 0", {
+                        self.detailed_logger.log_warning("JUDGMENT", f"API error for triple {idx + 1}", {
                             "triple_index": idx,
                             "judgment_response": judgment
                         })
                     else:
-                        confidence = self._estimate_confidence(judgment)
                         self.detailed_logger.log_debug("JUDGMENT", f"Triple {idx + 1} judged successfully", {
                             "triple_index": idx,
                             "judgment": judgment,
-                            "binary_result": binary_judgment,
-                            "confidence": confidence
+                            "binary_result": binary_judgment
                         })
-
-                    confidence_scores.append(confidence)
                     api_calls += 1
 
                 except Exception as e:
                     # Handle individual triple errors gracefully
                     judgments.append(False)  # Conservative default
-                    confidence_scores.append(0.0)  # Zero confidence for errors
                     self.detailed_logger.log_error("JUDGMENT", f"Error judging triple {idx + 1}", {
                         "triple_index": idx,
                         "error": str(e),
@@ -175,21 +165,18 @@ class GraphJudge:
 
             # Log final judgment results
             approved_count = sum(1 for j in judgments if j)
-            avg_confidence = sum(confidence_scores) / len(confidence_scores) if confidence_scores else 0.0
 
             self.detailed_logger.log_info("JUDGMENT", "Graph judgment completed successfully", {
                 "total_triples": len(triples),
                 "approved_triples": approved_count,
                 "rejected_triples": len(triples) - approved_count,
                 "approval_rate": approved_count / len(triples) if triples else 0.0,
-                "average_confidence": avg_confidence,
                 "api_calls_made": api_calls,
                 "processing_time": processing_time
             })
 
             return JudgmentResult(
                 judgments=judgments,
-                confidence=confidence_scores,
                 success=True,
                 processing_time=processing_time
             )
@@ -207,7 +194,6 @@ class GraphJudge:
 
             return JudgmentResult(
                 judgments=[False] * len(triples),  # Conservative defaults
-                confidence=[0.0] * len(triples),
                 success=False,
                 processing_time=processing_time,
                 error=str(e)
@@ -241,7 +227,6 @@ class GraphJudge:
             return {
                 "judgments": [],
                 "explanations": [],
-                "confidence": [],
                 "success": True,
                 "processing_time": 0.0,
                 "metadata": {"total_triples": 0, "api_calls": 0}
@@ -250,7 +235,6 @@ class GraphJudge:
         start_time = time.time()
         judgments = []
         explanations = []
-        confidence_scores = []
         api_calls = 0
 
         try:
@@ -274,7 +258,6 @@ class GraphJudge:
 
                         binary_judgment = explanation_result.judgment == "Yes"
                         judgments.append(binary_judgment)
-                        confidence_scores.append(explanation_result.confidence)
                         explanations.append({
                             "reasoning": explanation_result.reasoning,
                             "evidence_sources": explanation_result.evidence_sources,
@@ -286,7 +269,6 @@ class GraphJudge:
                             "triple_index": idx,
                             "judgment": explanation_result.judgment,
                             "binary_result": binary_judgment,
-                            "confidence": explanation_result.confidence,
                             "reasoning_length": len(explanation_result.reasoning) if explanation_result.reasoning else 0,
                             "evidence_sources_count": len(explanation_result.evidence_sources) if explanation_result.evidence_sources else 0
                         })
@@ -296,8 +278,6 @@ class GraphJudge:
                         judgment = self._judge_single_triple(instruction)
                         binary_judgment = judgment == "Yes"
                         judgments.append(binary_judgment)
-                        confidence = self._estimate_confidence(judgment)
-                        confidence_scores.append(confidence)
                         explanations.append({
                             "reasoning": f"Binary judgment: {judgment}",
                             "evidence_sources": [],
@@ -309,7 +289,6 @@ class GraphJudge:
                             "triple_index": idx,
                             "judgment": judgment,
                             "binary_result": binary_judgment,
-                            "confidence": confidence
                         })
 
                     api_calls += 1
@@ -317,7 +296,6 @@ class GraphJudge:
                 except Exception as e:
                     # Handle individual triple errors gracefully
                     judgments.append(False)
-                    confidence_scores.append(0.0)
                     explanations.append({
                         "reasoning": f"Error during processing: {str(e)}",
                         "evidence_sources": [],
@@ -337,14 +315,12 @@ class GraphJudge:
 
             # Log final explainable judgment results
             approved_count = sum(1 for j in judgments if j)
-            avg_confidence = sum(confidence_scores) / len(confidence_scores) if confidence_scores else 0.0
 
             self.detailed_logger.log_info("JUDGMENT", "Explainable graph judgment completed successfully", {
                 "total_triples": len(triples),
                 "approved_triples": approved_count,
                 "rejected_triples": len(triples) - approved_count,
                 "approval_rate": approved_count / len(triples) if triples else 0.0,
-                "average_confidence": avg_confidence,
                 "api_calls_made": api_calls,
                 "reasoning_enabled": include_reasoning,
                 "processing_time": processing_time
@@ -353,7 +329,6 @@ class GraphJudge:
             return {
                 "judgments": judgments,
                 "explanations": explanations,
-                "confidence": confidence_scores,
                 "success": True,
                 "processing_time": processing_time,
                 "metadata": {
@@ -379,7 +354,6 @@ class GraphJudge:
             return {
                 "judgments": [False] * len(triples),
                 "explanations": [{"reasoning": str(e), "error_type": "catastrophic_failure"}] * len(triples),
-                "confidence": [0.0] * len(triples),
                 "success": False,
                 "processing_time": processing_time,
                 "error": str(e),
@@ -508,7 +482,6 @@ class GraphJudge:
 
                 return ExplainableJudgment(
                     judgment="No",
-                    confidence=0.0,
                     reasoning=f"Error during processing (both citation and fallback failed): {str(e)}",
                     evidence_sources=[],
                     alternative_suggestions=[],
@@ -571,7 +544,6 @@ Please answer only "Yes" or "No":"""
 
 1. Judgment: [只回答 "Yes" 或 "No"]
 
-2. Confidence: [0.0到1.0之間的數字，表示您的確定程度]
 
 3. Detailed Reasoning: [用繁體中文寫出恰好兩句話的詳細說明，每句話中必須包含具體的參考來源。對於《紅樓夢》相關內容，請引用原文。格式要求：
    - 第一句：分析三元組的正確性並說明主要依據來源
@@ -660,7 +632,6 @@ Please answer only "Yes" or "No":"""
         if not response:
             return ExplainableJudgment(
                 judgment="No",
-                confidence=0.0,
                 reasoning="API回應為空",
                 evidence_sources=[],
                 alternative_suggestions=[],
@@ -674,13 +645,6 @@ Please answer only "Yes" or "No":"""
             # Extract judgment (works for both English and Chinese responses)
             judgment = self._parse_binary_response(response_text)
 
-            # Extract confidence (look for decimal numbers, handle Chinese context)
-            confidence_match = re.search(r'confidence[:\s]*([0-9]*\.?[0-9]+)', response_text, re.IGNORECASE)
-            if not confidence_match:
-                # Also check for Chinese format
-                confidence_match = re.search(r'確定程度[：:]\s*([0-9]*\.?[0-9]+)', response_text)
-            confidence = float(confidence_match.group(1)) if confidence_match else 0.75
-            confidence = max(0.0, min(1.0, confidence))  # Clamp to [0,1]
 
             # Extract reasoning with better Traditional Chinese support
             reasoning = ""
@@ -749,7 +713,6 @@ Please answer only "Yes" or "No":"""
 
             return ExplainableJudgment(
                 judgment=judgment,
-                confidence=confidence,
                 reasoning=reasoning,
                 evidence_sources=evidence_sources,
                 alternative_suggestions=[],  # Simplified - no alternative extraction
@@ -762,7 +725,6 @@ Please answer only "Yes" or "No":"""
 
             return ExplainableJudgment(
                 judgment="No",
-                confidence=0.0,
                 reasoning=f"解析回應時發生錯誤: {str(e)}",
                 evidence_sources=[],
                 alternative_suggestions=[],
@@ -793,7 +755,6 @@ Please answer only "Yes" or "No":"""
         if not content:
             return ExplainableJudgment(
                 judgment="No",
-                confidence=0.0,
                 reasoning="API回應為空",
                 evidence_sources=[],
                 alternative_suggestions=[],
@@ -808,13 +769,6 @@ Please answer only "Yes" or "No":"""
             # Extract judgment (works for both English and Chinese responses)
             judgment = self._parse_binary_response(response_text)
 
-            # Extract confidence (look for decimal numbers, handle Chinese context)
-            confidence_match = re.search(r'confidence[:\s]*([0-9]*\.?[0-9]+)', response_text, re.IGNORECASE)
-            if not confidence_match:
-                # Also check for Chinese format
-                confidence_match = re.search(r'確定程度[：:]\s*([0-9]*\.?[0-9]+)', response_text)
-            confidence = float(confidence_match.group(1)) if confidence_match else 0.75
-            confidence = max(0.0, min(1.0, confidence))  # Clamp to [0,1]
 
             # Extract reasoning with better Traditional Chinese support
             reasoning = ""
@@ -881,11 +835,10 @@ Please answer only "Yes" or "No":"""
                 else:
                     error_type = "validation_error"
 
-            print(f"DEBUG: Parsed judgment={judgment}, confidence={confidence}, citations={len(citations)}")
+            print(f"DEBUG: Parsed judgment={judgment}, citations={len(citations)}")
 
             return ExplainableJudgment(
                 judgment=judgment,
-                confidence=confidence,
                 reasoning=reasoning,
                 evidence_sources=evidence_sources,
                 alternative_suggestions=[],  # Simplified - no alternative extraction
@@ -899,7 +852,6 @@ Please answer only "Yes" or "No":"""
 
             return ExplainableJudgment(
                 judgment="No",
-                confidence=0.0,
                 reasoning=f"解析回應時發生錯誤: {str(e)}",
                 evidence_sources=[],
                 alternative_suggestions=[],
@@ -908,24 +860,6 @@ Please answer only "Yes" or "No":"""
                 actual_citations=citations  # Include citations even on parsing error
             )
     
-    def _estimate_confidence(self, judgment: str) -> float:
-        """
-        Estimate confidence score for binary judgment.
-        Simplified heuristic when detailed confidence is not available.
-        
-        Args:
-            judgment: Binary judgment ("Yes" or "No")
-            
-        Returns:
-            Confidence score between 0.0 and 1.0
-        """
-        # Simple heuristic: assume reasonable confidence for clear responses
-        if judgment == "Yes":
-            return 0.8  # High confidence for positive judgments
-        elif judgment == "No":
-            return 0.7  # Slightly lower confidence for negative judgments
-        else:
-            return 0.5  # Low confidence for ambiguous responses
 
 
 # Convenience functions for direct usage
@@ -939,7 +873,7 @@ def judge_triples(triples: List[Triple]) -> JudgmentResult:
         triples: List of Triple objects to validate
         
     Returns:
-        JudgmentResult with binary judgments and confidence scores
+        JudgmentResult with binary judgments
     """
     judge = GraphJudge()
     return judge.judge_triples(triples)

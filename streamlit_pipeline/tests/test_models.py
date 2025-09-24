@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from core.models import (
     Triple, EntityResult, TripleResult, JudgmentResult, PipelineState,
-    PipelineStage, ProcessingStatus, ConfidenceLevel,
+    PipelineStage, ProcessingStatus,
     create_error_result, ProcessingTimer
 )
 
@@ -42,49 +42,8 @@ class TestTriple:
         assert triple.subject == "John"
         assert triple.predicate == "works_at"
         assert triple.object == "Google"
-        assert triple.confidence is None
         assert triple.source_text is None
         assert triple.metadata == {}
-    
-    def test_triple_creation_with_confidence(self):
-        """Test triple creation with confidence score."""
-        triple = Triple(
-            subject="Alice",
-            predicate="lives_in",
-            object="New York",
-            confidence=0.85
-        )
-        
-        assert triple.confidence == 0.85
-        assert triple.confidence_level == ConfidenceLevel.VERY_HIGH
-    
-    def test_triple_confidence_validation(self):
-        """Test confidence score validation."""
-        # Valid confidence scores
-        for conf in [0.0, 0.5, 1.0]:
-            triple = Triple("A", "B", "C", confidence=conf)
-            assert triple.confidence == conf
-        
-        # Invalid confidence scores should raise ValueError
-        with pytest.raises(ValueError, match="Confidence must be between 0.0 and 1.0"):
-            Triple("A", "B", "C", confidence=1.5)
-        
-        with pytest.raises(ValueError, match="Confidence must be between 0.0 and 1.0"):
-            Triple("A", "B", "C", confidence=-0.1)
-    
-    def test_triple_confidence_level_mapping(self):
-        """Test confidence level enum mapping."""
-        test_cases = [
-            (0.1, ConfidenceLevel.VERY_LOW),
-            (0.3, ConfidenceLevel.LOW),
-            (0.5, ConfidenceLevel.MEDIUM),
-            (0.7, ConfidenceLevel.HIGH),
-            (0.9, ConfidenceLevel.VERY_HIGH)
-        ]
-        
-        for confidence, expected_level in test_cases:
-            triple = Triple("A", "B", "C", confidence=confidence)
-            assert triple.confidence_level == expected_level
     
     def test_triple_to_dict(self):
         """Test triple serialization to dictionary."""
@@ -92,18 +51,16 @@ class TestTriple:
             subject="John",
             predicate="knows",
             object="Mary",
-            confidence=0.8,
             source_text="John knows Mary well",
             metadata={"context": "friendship"}
         )
-        
+
         result = triple.to_dict()
-        
+
         expected = {
             'subject': "John",
-            'predicate': "knows", 
+            'predicate': "knows",
             'object': "Mary",
-            'confidence': 0.8,
             'source_text': "John knows Mary well",
             'metadata': {"context": "friendship"}
         }
@@ -116,17 +73,15 @@ class TestTriple:
             'subject': "Alice",
             'predicate': "works_at",
             'object': "Microsoft",
-            'confidence': 0.7,
             'source_text': "Alice works at Microsoft",
             'metadata': {"department": "engineering"}
         }
-        
+
         triple = Triple.from_dict(data)
-        
+
         assert triple.subject == "Alice"
         assert triple.predicate == "works_at"
         assert triple.object == "Microsoft"
-        assert triple.confidence == 0.7
         assert triple.source_text == "Alice works at Microsoft"
         assert triple.metadata == {"department": "engineering"}
     
@@ -143,19 +98,13 @@ class TestTriple:
         assert triple.subject == "Bob"
         assert triple.predicate == "lives_in"
         assert triple.object == "London"
-        assert triple.confidence is None
         assert triple.source_text is None
         assert triple.metadata == {}
     
     def test_triple_str_representation(self):
         """Test string representation of triples."""
-        # Without confidence
-        triple1 = Triple("A", "B", "C")
-        assert str(triple1) == "(A, B, C)"
-        
-        # With confidence
-        triple2 = Triple("X", "Y", "Z", confidence=0.75)
-        assert str(triple2) == "(X, Y, Z) (confidence: 0.75)"
+        triple = Triple("A", "B", "C")
+        assert str(triple) == "(A, B, C)"
 
 
 class TestEntityResult:
@@ -244,12 +193,10 @@ class TestJudgmentResult:
     def test_judgment_result_creation_basic(self):
         """Test basic JudgmentResult creation."""
         result = JudgmentResult(
-            judgments=[True, False, True],
-            confidence=[0.8, 0.3, 0.9]
+            judgments=[True, False, True]
         )
-        
+
         assert result.judgments == [True, False, True]
-        assert result.confidence == [0.8, 0.3, 0.9]
         assert result.explanations is None
         assert result.success is True
         assert result.processing_time == 0.0
@@ -265,7 +212,6 @@ class TestJudgmentResult:
         
         result = JudgmentResult(
             judgments=[True, False, True],
-            confidence=[0.9, 0.2, 0.95],
             explanations=explanations,
             success=True,
             processing_time=3.5
@@ -278,17 +224,15 @@ class TestJudgmentResult:
         """Test JudgmentResult serialization."""
         result = JudgmentResult(
             judgments=[True, False],
-            confidence=[0.8, 0.4],
             explanations=["Good", "Bad"],
             success=True,
             processing_time=2.0
         )
-        
+
         data = result.to_dict()
-        
+
         expected = {
             'judgments': [True, False],
-            'confidence': [0.8, 0.4],
             'explanations': ["Good", "Bad"],
             'success': True,
             'processing_time': 2.0,
@@ -338,7 +282,7 @@ class TestPipelineState:
         assert state.progress_percentage == 70.0
         
         # All completed
-        state.judgment_result = JudgmentResult([True], [0.8])
+        state.judgment_result = JudgmentResult([True])
         state.status = ProcessingStatus.SUCCEEDED
         assert state.progress_percentage == 100.0
         assert state.is_complete
@@ -371,7 +315,7 @@ class TestPipelineState:
         assert PipelineStage.TRIPLE_GENERATION in completed
         
         # All stages completed
-        state.judgment_result = JudgmentResult([True], [0.8])
+        state.judgment_result = JudgmentResult([True])
         completed = state.get_completed_stages()
         assert len(completed) == 3
         assert PipelineStage.GRAPH_JUDGMENT in completed
@@ -397,24 +341,6 @@ class TestPipelineState:
 
 class TestEnums:
     """Test cases for enum classes."""
-    
-    def test_confidence_level_from_score(self):
-        """Test confidence level classification from scores."""
-        test_cases = [
-            (0.0, ConfidenceLevel.VERY_LOW),
-            (0.1, ConfidenceLevel.VERY_LOW),
-            (0.2, ConfidenceLevel.LOW),
-            (0.35, ConfidenceLevel.LOW),
-            (0.4, ConfidenceLevel.MEDIUM),
-            (0.55, ConfidenceLevel.MEDIUM),
-            (0.6, ConfidenceLevel.HIGH),
-            (0.75, ConfidenceLevel.HIGH),
-            (0.8, ConfidenceLevel.VERY_HIGH),
-            (1.0, ConfidenceLevel.VERY_HIGH)
-        ]
-        
-        for score, expected_level in test_cases:
-            assert ConfidenceLevel.from_score(score) == expected_level
     
     def test_pipeline_stage_values(self):
         """Test pipeline stage enum values."""
@@ -458,10 +384,9 @@ class TestUtilityFunctions:
     def test_create_error_result_judgment(self):
         """Test creating error JudgmentResult."""
         result = create_error_result(JudgmentResult, "Judgment error")
-        
+
         assert isinstance(result, JudgmentResult)
         assert result.judgments == []
-        assert result.confidence == []
         assert result.explanations is None
         assert result.success is False
         assert result.processing_time == 0.0
@@ -532,8 +457,8 @@ class TestDataModelIntegration:
         
         # Generate triples
         triples = [
-            Triple("Alice", "works_at", "Company X", confidence=0.9),
-            Triple("Bob", "works_at", "Company X", confidence=0.85)
+            Triple("Alice", "works_at", "Company X"),
+            Triple("Bob", "works_at", "Company X")
         ]
         triple_result = TripleResult(
             triples=triples,
@@ -545,7 +470,6 @@ class TestDataModelIntegration:
         # Judge triples
         judgment_result = JudgmentResult(
             judgments=[True, True],
-            confidence=[0.92, 0.88],
             explanations=["Clear employment relationship", "Explicit in text"],
             success=True,
             processing_time=1.8
@@ -567,7 +491,6 @@ class TestDataModelIntegration:
         
         # Verify data consistency
         assert len(triple_result.triples) == len(judgment_result.judgments)
-        assert len(judgment_result.judgments) == len(judgment_result.confidence)
         assert all(isinstance(t, Triple) for t in triple_result.triples)
     
     def test_error_propagation_through_pipeline(self):

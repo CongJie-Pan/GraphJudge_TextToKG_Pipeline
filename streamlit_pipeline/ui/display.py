@@ -96,16 +96,6 @@ def display_final_results(pipeline_result: PipelineResult):
                 delta=get_text('metrics.rejection_rate_percent', rate=f"{rejection_rate*100:.1f}")
             )
 
-        with col3:
-            avg_confidence = (
-                sum(pipeline_result.judgment_result.confidence) /
-                len(pipeline_result.judgment_result.confidence)
-                if pipeline_result.judgment_result.confidence else 0
-            )
-            st.metric(
-                get_text('metrics.average_confidence'),
-                f"{avg_confidence:.3f}"
-            )
 
         with col4:
             st.metric(
@@ -153,30 +143,19 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
 
     Args:
         triples: List of approved triples
-        judgment_result: Judgment results for confidence scores
+        judgment_result: Judgment results for triples
         graph_data: Pre-processed graph data from pipeline conversion
     """
     # Create a beautiful table format
     final_data = []
     for i, triple in enumerate(triples):
-        confidence_idx = None
-        # Find the original index of this triple for confidence
-        if judgment_result.confidence:
-            confidence_idx = i
-        
-        confidence = (judgment_result.confidence[confidence_idx] 
-                     if confidence_idx is not None and confidence_idx < len(judgment_result.confidence)
-                     else 0.0)
-        
         # Create a formatted entry
         final_data.append({
             "#": i + 1,
             "Knowledge Triple": f"【{triple.subject}】 → {triple.predicate} → 【{triple.object}】",
             "Subject": triple.subject,
             "Relation": triple.predicate,
-            "Object": triple.object,
-            "AI Confidence": f"{confidence:.3f}" if confidence > 0 else "N/A",
-            "Quality Grade": get_quality_grade(confidence) if confidence > 0 else "Not Rated"
+            "Object": triple.object
         })
     
     df = pd.DataFrame(final_data)
@@ -186,7 +165,7 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
     
     # Interactive data table with selection
     selected_indices = st.dataframe(
-        df[["#", "Knowledge Triple", "AI Confidence", "Quality Grade"]],
+        df[["#", "Knowledge Triple"]],
         use_container_width=True,
         hide_index=True,
         on_select="rerun",
@@ -196,16 +175,6 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
                 "Knowledge Triple",
                 help="Click to view detailed information",
                 width="large"
-            ),
-            "AI Confidence": st.column_config.ProgressColumn(
-                "AI Confidence",
-                min_value=0.0,
-                max_value=1.0,
-                format="%.3f"
-            ),
-            "Quality Grade": st.column_config.TextColumn(
-                "Quality Grade",
-                help="Quality rating based on confidence"
             )
         }
     )
@@ -294,9 +263,6 @@ def create_enhanced_knowledge_graph(triples: List[Triple], graph_data: Optional[
                 with col3:
                     if "approved_triples" in summary:
                         st.metric(get_text('metrics.approved'), summary["approved_triples"])
-                with col4:
-                    if "average_confidence" in summary:
-                        st.metric(get_text('metrics.avg_confidence'), f"{summary['average_confidence']:.3f}")
 
             # Create visualization using pre-processed data
             fig = _create_plotly_graph_from_data(nodes, edges)
@@ -421,7 +387,7 @@ def _create_plotly_graph_from_data(nodes: List[Dict], edges: List[Dict]):
         hovermode='closest',
         margin=dict(b=40, l=20, r=20, t=50),
         annotations=[dict(
-            text="💡 Hover over nodes and edges for details | Node size = relationship count | Edge thickness = confidence",
+            text="💡 Hover over nodes and edges for details | Node size = relationship count",
             showarrow=False,
             xref="paper", yref="paper",
             x=0.5, y=-0.05,
@@ -454,9 +420,9 @@ def _convert_triples_to_graph_data(triples: List[Triple]) -> Tuple[List[Dict], L
             "source": triple.subject,
             "target": triple.object,
             "label": triple.predicate,
-            "weight": triple.confidence or 0.5,
-            "width": max(2, int((triple.confidence or 0.5) * 5)),
-            "color": _get_confidence_color(triple.confidence or 0.5)
+            "weight": 0.5,
+            "width": 3,
+            "color": "rgba(100, 149, 237, 0.7)"  # Standard blue color
         })
 
     # Create nodes
@@ -472,14 +438,6 @@ def _convert_triples_to_graph_data(triples: List[Triple]) -> Tuple[List[Dict], L
     return nodes, edges
 
 
-def _get_confidence_color(confidence: float) -> str:
-    """Get edge color based on confidence score."""
-    if confidence >= 0.8:
-        return "rgba(46, 204, 64, 0.7)"  # Green for high confidence
-    elif confidence >= 0.6:
-        return "rgba(255, 133, 27, 0.7)"  # Orange for medium confidence
-    else:
-        return "rgba(170, 170, 170, 0.7)"  # Gray for low confidence
 
 
 def _get_node_color_by_connections(connections: int) -> str:
@@ -511,10 +469,7 @@ def _display_text_based_graph(triples: List[Triple]):
     for predicate, relations in grouped_relations.items():
         with st.expander(f"🔗 {predicate} ({len(relations)} relationships)"):
             for i, (subject, obj) in enumerate(relations[:20], 1):  # Limit display
-                confidence = ""
-                if hasattr(triples[i-1], 'confidence') and triples[i-1].confidence:
-                    confidence = f" (confidence: {triples[i-1].confidence:.3f})"
-                st.text(f"{i}. {subject} → {predicate} → {obj}{confidence}")
+                st.text(f"{i}. {subject} → {predicate} → {obj}")
 
             if len(relations) > 20:
                 st.info(f"... and {len(relations) - 20} more relationships")
@@ -559,8 +514,7 @@ def export_final_results_json(triples: List[Triple], pipeline_result: PipelineRe
             {
                 "subject": triple.subject,
                 "predicate": triple.predicate,
-                "object": triple.object,
-                "confidence": triple.confidence or 0.0
+                "object": triple.object
             }
             for triple in triples
         ],
@@ -586,9 +540,7 @@ def export_final_results_csv(triples: List[Triple], pipeline_result: PipelineRes
             "#": i + 1,
             "Subject": triple.subject,
             "Predicate": triple.predicate,
-            "Object": triple.object,
-            "Confidence": triple.confidence or 0.0,
-            "Quality Grade": get_quality_grade(triple.confidence or 0.0)
+            "Object": triple.object
         })
     
     df = pd.DataFrame(csv_data)
@@ -657,18 +609,6 @@ def display_analysis_report(pipeline_result: PipelineResult):
     st.markdown(get_text('recommendations.result_optimization'))
 
 
-def get_quality_grade(confidence: float) -> str:
-    """Convert confidence score to quality grade."""
-    if confidence >= 0.9:
-        return get_text('quality_grades.excellent')
-    elif confidence >= 0.8:
-        return get_text('quality_grades.good')
-    elif confidence >= 0.6:
-        return get_text('quality_grades.average')
-    elif confidence >= 0.4:
-        return get_text('quality_grades.fair')
-    else:
-        return get_text('quality_grades.needs_improvement')
 
 
 def get_rejection_suggestion(triple: Triple, explanation: Optional[str]) -> str:

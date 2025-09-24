@@ -551,7 +551,6 @@ class PipelineOrchestrator:
                 dict_result = judge_triples_with_explanations(triples, include_reasoning=True)
                 return JudgmentResult(
                     judgments=dict_result["judgments"],
-                    confidence=dict_result["confidence"],
                     explanations=dict_result["explanations"],
                     success=dict_result["success"],
                     processing_time=dict_result["processing_time"],
@@ -570,7 +569,6 @@ class PipelineOrchestrator:
         if error_info is not None:
             return JudgmentResult(
                 judgments=[],
-                confidence=[],
                 explanations=None,
                 success=False,
                 processing_time=0.0,

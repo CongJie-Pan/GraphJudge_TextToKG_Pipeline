@@ -149,7 +149,6 @@
     "approved_only": "仅批准",
     "rejected_only": "仅拒绝",
     "status": "状态",
-    "confidence": "置信度",
     "subject": "主语",
     "relation": "关系",
     "object": "宾语",
@@ -293,7 +292,6 @@
     "click_rows_details": "点击行查看详细信息:",
     "no_triples_generated": "⚠️ 未生成三元组。请检查实体提取结果。",
     "chart_analysis_plotly": "图表分析需要 Plotly 库支持",
-    "no_confidence_data": "没有可用的置信度分布数据",
     "no_quality_analysis": "没有可用的质量分析数据",
     "structural_quality": "**结构质量**",
     "content_quality": "**内容质量**",
@@ -322,14 +320,12 @@
     "rejected_triples": "❌ 已拒绝三元组",
     "approval_rate_percent": "{rate}% 通过率",
     "rejection_rate_percent": "{rate}% 拒绝率",
-    "average_confidence": "🎯 平均置信度",
     "total_processing_time": "⏱️ 总处理时间",
     "entities_found": "发现实体",
     "processing_time": "处理时间",
     "triple_count": "三元组数量",
     "generation_complete": "生成完成",
     "knowledge_relations": "知识关系",
-    "avg_confidence": "平均置信度",
     "quality_score": "质量评分",
     "unique_entities": "唯一实体",
     "graph_nodes": "图节点",
@@ -340,7 +336,6 @@
     "judgment_status": "判断状态",
     "approved": "已批准",
     "rejected": "已拒绝",
-    "average_confidence_score": "平均置信度",
     "filter_display": "筛选显示",
     "sort_by": "排序依据",
     "all_items": "全部",
@@ -418,13 +413,6 @@
     "rate_limits": "**速率限制**：GPT-5-mini API 可能已达到使用限制",
     "relation_complexity": "**关系复杂性**：文本关系对当前模型可能过于复杂"
   },
-  "quality_grades": {
-    "excellent": "🏆 优秀",
-    "good": "🥇 良好",
-    "average": "🥈 一般",
-    "fair": "🥉 尚可",
-    "needs_improvement": "⚠️ 需要改进"
-  },
   "rejection_suggestions": {
     "check_relationship": "检查主语和宾语之间的关系是否正确表达",
     "confirm_relevance": "确认此关系是否与主题相关",
@@ -444,6 +432,5 @@
     "general_knowledge": "常识",
     "domain_expertise": "领域专业知识",
     "complete_triple": "**完整三元组：** {subject} - {predicate} - {object}",
-    "confidence_percent": "**置信度：** {confidence:.3f} ({percent:.1f}%)"
   }
 }

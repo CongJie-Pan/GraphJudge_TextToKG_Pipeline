@@ -83,8 +83,7 @@ class TestPipelineStageIntegration(BaseIntegrationTest):
             Triple(
                 subject=t["subject"],
                 predicate=t["predicate"],
-                object=t["object"],
-                confidence=t.get("confidence", 0.8)
+                object=t["object"]
             )
             for t in scenario["triples"]
         ]
@@ -113,8 +112,7 @@ class TestPipelineStageIntegration(BaseIntegrationTest):
             Triple(
                 subject=t["subject"],
                 predicate=t["predicate"],
-                object=t["object"],
-                confidence=t.get("confidence", 0.8)
+                object=t["object"]
             )
             for t in scenario["triples"]
         ]
@@ -128,18 +126,15 @@ class TestPipelineStageIntegration(BaseIntegrationTest):
         
         # Simulate judgment using triple results
         judgments = [j["judgment"] for j in scenario["judgments"]]
-        confidence_scores = [j["confidence"] for j in scenario["judgments"]]
-        
+
         judgment_result = JudgmentResult(
             judgments=judgments,
-            confidence=confidence_scores,
             success=True,
             processing_time=1.5
         )
-        
+
         # Assert integration consistency
         assert len(judgment_result.judgments) == len(triple_result.triples)
-        assert len(judgment_result.confidence) == len(triple_result.triples)
         assert judgment_result.success, "Judgment should succeed with valid triple input"
     
     def test_full_pipeline_integration(self):
@@ -159,8 +154,7 @@ class TestPipelineStageIntegration(BaseIntegrationTest):
             Triple(
                 subject=t["subject"],
                 predicate=t["predicate"],
-                object=t["object"],
-                confidence=t.get("confidence", 0.8)
+                object=t["object"]
             )
             for t in scenario["triples"]
         ]
@@ -178,7 +172,6 @@ class TestPipelineStageIntegration(BaseIntegrationTest):
         # Stage 3: Graph judgment
         judgment_result = JudgmentResult(
             judgments=[j["judgment"] for j in scenario["judgments"]],
-            confidence=[j["confidence"] for j in scenario["judgments"]],
             explanations=[j["explanation"] for j in scenario["judgments"]],
             success=True,
             processing_time=1.8
@@ -343,7 +336,7 @@ class TestErrorPropagation(BaseIntegrationTest):
             processing_time=1.0
         )
         
-        triples = [Triple("A", "relates_to", "B", confidence=0.8)]
+        triples = [Triple("A", "relates_to", "B")]
         triple_result = TripleResult(
             triples=triples,
             metadata={"validation_passed": True},
@@ -409,7 +402,7 @@ class TestPerformanceIntegration(BaseIntegrationTest):
         
         # Stage 2: Triple generation (simulated)
         triples = [
-            Triple(t["subject"], t["predicate"], t["object"], t.get("confidence", 0.8))
+            Triple(t["subject"], t["predicate"], t["object"])
             for t in scenario["triples"]
         ]
         triple_result = TripleResult(
@@ -422,7 +415,6 @@ class TestPerformanceIntegration(BaseIntegrationTest):
         # Stage 3: Graph judgment (simulated)
         judgment_result = JudgmentResult(
             judgments=[j["judgment"] for j in scenario["judgments"]],
-            confidence=[j["confidence"] for j in scenario["judgments"]],
             success=True,
             processing_time=1.8
         )
@@ -529,20 +521,17 @@ class TestDataConsistency(BaseIntegrationTest):
         
         judgment_result = JudgmentResult(
             judgments=[j["judgment"] for j in scenario["judgments"]],
-            confidence=[j["confidence"] for j in scenario["judgments"]],
             explanations=[j["explanation"] for j in scenario["judgments"]],
             success=True,
             processing_time=1.5
         )
-        
+
         # Verify 1:1 correspondence
         assert len(judgment_result.judgments) == len(triple_result.triples)
-        assert len(judgment_result.confidence) == len(triple_result.triples)
         assert len(judgment_result.explanations) == len(triple_result.triples)
-        
+
         # Verify data types are consistent
         assert all(isinstance(j, bool) for j in judgment_result.judgments)
-        assert all(isinstance(c, (int, float)) and 0 <= c <= 1 for c in judgment_result.confidence)
         assert all(isinstance(e, str) and len(e) > 0 for e in judgment_result.explanations)
     
     def test_processing_metadata_consistency(self):
@@ -559,8 +548,7 @@ class TestDataConsistency(BaseIntegrationTest):
                 2.1
             ),
             JudgmentResult(
-                [j["judgment"] for j in scenario["judgments"]],
-                [j["confidence"] for j in scenario["judgments"]],
+                judgments=[j["judgment"] for j in scenario["judgments"]],
                 success=True,
                 processing_time=1.8
             )

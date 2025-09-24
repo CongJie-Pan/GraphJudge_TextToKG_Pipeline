@@ -40,7 +40,6 @@ def mock_judge_triples():
     with patch('streamlit_pipeline.core.pipeline.judge_triples') as mock:
         mock.return_value = JudgmentResult(
             judgments=[True, True],
-            confidence=[0.9, 0.8],
             explanations=None,  # Basic function returns no explanations
             success=True,
             processing_time=1.5
@@ -54,7 +53,6 @@ def mock_judge_triples_with_explanations():
     with patch('streamlit_pipeline.core.pipeline.judge_triples_with_explanations') as mock:
         mock.return_value = {
             "judgments": [True, True],
-            "confidence": [0.9, 0.8],
             "explanations": [
                 {
                     "reasoning": "This triple is correct based on the classical text context",
@@ -97,7 +95,6 @@ class TestExplanationIntegration:
         assert isinstance(result, JudgmentResult)
         assert result.success is True
         assert result.judgments == [True, True]
-        assert result.confidence == [0.9, 0.8]
         assert result.explanations is not None
         assert len(result.explanations) == 2
         assert result.explanations[0]["reasoning"] == "This triple is correct based on the classical text context"
@@ -119,7 +116,6 @@ class TestExplanationIntegration:
         assert isinstance(result, JudgmentResult)
         assert result.success is True
         assert result.judgments == [True, True]
-        assert result.confidence == [0.9, 0.8]
         assert result.explanations is None  # No explanations when disabled
 
     def test_pipeline_with_no_config(self, sample_triples, mock_judge_triples):
@@ -180,7 +176,6 @@ class TestExplanationIntegration:
 
             mock_judge.return_value = JudgmentResult(
                 judgments=[True],
-                confidence=[0.9],
                 explanations=None,
                 success=True,
                 processing_time=1.0
@@ -216,7 +211,6 @@ class TestExplanationIntegration:
             # Mock different processing times
             mock_basic.return_value = JudgmentResult(
                 judgments=[True, True],
-                confidence=[0.9, 0.8],
                 explanations=None,
                 success=True,
                 processing_time=1.0  # Faster
@@ -224,7 +218,6 @@ class TestExplanationIntegration:
 
             mock_detailed.return_value = {
                 "judgments": [True, True],
-                "confidence": [0.9, 0.8],
                 "explanations": [{"reasoning": "test"}, {"reasoning": "test"}],
                 "success": True,
                 "processing_time": 3.0  # Slower due to explanations

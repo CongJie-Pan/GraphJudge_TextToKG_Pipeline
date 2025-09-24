@@ -319,7 +319,7 @@ class TestStatePersistenceManager(unittest.TestCase):
             processing_time=2.5
         )
         
-        triple = Triple(subject="s1", predicate="p1", object="o1", confidence=0.9)
+        triple = Triple(subject="s1", predicate="p1", object="o1")
         triple_result = TripleResult(
             triples=[triple],
             metadata={"source": "test"},
@@ -329,7 +329,6 @@ class TestStatePersistenceManager(unittest.TestCase):
         
         judgment_result = JudgmentResult(
             judgments=[True, False],
-            confidence=[0.8, 0.6],
             success=True,
             processing_time=1.5
         )

@@ -59,14 +59,13 @@ def mock_successful_api_responses():
             'denoised_text': '林黛玉來到榮國府，深受賈母喜愛。賈寶玉初見林黛玉。賈府是金陵四大家族之一。'
         },
         'triple_generation': [
-            {'subject': '林黛玉', 'predicate': '來到', 'object': '榮國府', 'confidence': 0.95},
-            {'subject': '林黛玉', 'predicate': '受到喜愛', 'object': '賈母', 'confidence': 0.90},
-            {'subject': '賈寶玉', 'predicate': '初見', 'object': '林黛玉', 'confidence': 0.88},
-            {'subject': '賈府', 'predicate': '屬於', 'object': '金陵四大家族', 'confidence': 0.92}
+            {'subject': '林黛玉', 'predicate': '來到', 'object': '榮國府'},
+            {'subject': '林黛玉', 'predicate': '受到喜愛', 'object': '賈母'},
+            {'subject': '賈寶玉', 'predicate': '初見', 'object': '林黛玉'},
+            {'subject': '賈府', 'predicate': '屬於', 'object': '金陵四大家族'}
         ],
         'graph_judgment': {
             'judgments': [True, True, True, True],
-            'confidence': [0.95, 0.90, 0.88, 0.92],
             'explanations': [
                 '林黛玉確實來到榮國府居住',
                 '賈母確實喜愛林黛玉',
@@ -122,13 +121,12 @@ class TestCompleteE2EPipeline:
             
             # Configure graph judgment client - use call_perplexity method
             judgment_parts = []
-            for i, (judgment, confidence, explanation) in enumerate(
+            for i, (judgment, explanation) in enumerate(
                 zip(mock_successful_api_responses['graph_judgment']['judgments'],
-                    mock_successful_api_responses['graph_judgment']['confidence'],
                     mock_successful_api_responses['graph_judgment']['explanations'])
             ):
                 result = "Yes" if judgment else "No"
-                judgment_parts.append(f"Triple {i+1}: {result} (Confidence: {confidence:.2f}) - {explanation}")
+                judgment_parts.append(f"Triple {i+1}: {result} - {explanation}")
 
             mock_graph_judge_client.call_perplexity.return_value = "\n".join(judgment_parts)
             
@@ -266,13 +264,12 @@ Denoised Text:
                 else:
                     # Graph judgment response - return text directly
                     judgment_parts = []
-                    for i, (judgment, confidence, explanation) in enumerate(
+                    for i, (judgment, explanation) in enumerate(
                         zip(mock_successful_api_responses['graph_judgment']['judgments'],
-                            mock_successful_api_responses['graph_judgment']['confidence'],
                             mock_successful_api_responses['graph_judgment']['explanations'])
                     ):
                         result = "Yes" if judgment else "No"
-                        judgment_parts.append(f"Triple {i+1}: {result} (Confidence: {confidence:.2f}) - {explanation}")
+                        judgment_parts.append(f"Triple {i+1}: {result} - {explanation}")
 
                     return "\n".join(judgment_parts)
 
@@ -433,18 +430,12 @@ Denoised Text:
             
             # Number of judgments should match number of triples
             assert len(judgments) == len(triples), "Should have one judgment per triple"
-            assert len(result.judgment_result.confidence) == len(triples), "Should have one confidence score per triple"
             
             # Verify data types and constraints
             for triple in triples:
                 assert isinstance(triple.subject, str) and triple.subject.strip(), "Triple subjects should be non-empty strings"
                 assert isinstance(triple.predicate, str) and triple.predicate.strip(), "Triple predicates should be non-empty strings"
                 assert isinstance(triple.object, str) and triple.object.strip(), "Triple objects should be non-empty strings"
-                if triple.confidence is not None:
-                    assert 0.0 <= triple.confidence <= 1.0, "Triple confidence should be between 0 and 1"
-            
-            for confidence in result.judgment_result.confidence:
-                assert 0.0 <= confidence <= 1.0, "Judgment confidence should be between 0 and 1"
     
     # Helper methods
     
@@ -477,8 +468,7 @@ Denoised Text:
                         {
                             "subject": triple["subject"],
                             "predicate": triple["predicate"],
-                            "object": triple["object"],
-                            "confidence": triple.get("confidence", 0.8)
+                            "object": triple["object"]
                         }
                         for triple in responses['triple_generation']
                     ]
@@ -520,13 +510,12 @@ Denoised Text:
             else:
                 # Graph judgment response - return text directly
                 judgment_parts = []
-                for i, (judgment, confidence, explanation) in enumerate(
+                for i, (judgment, explanation) in enumerate(
                     zip(responses['graph_judgment']['judgments'],
-                        responses['graph_judgment']['confidence'],
                         responses['graph_judgment']['explanations'])
                 ):
                     result = "ACCEPT" if judgment else "REJECT"
-                    judgment_parts.append(f"Triple {i+1}: {result} (Confidence: {confidence:.2f}) - {explanation}")
+                    judgment_parts.append(f"Triple {i+1}: {result} - {explanation}")
 
                 return "\n".join(judgment_parts)
 
@@ -565,7 +554,7 @@ Denoised Text:
             ]
         }
         
-        response.choices[0].message.content = f"```json\n{triples_json}\n```"
+        response.choices[0].message.content = f"```json\n{json.dumps(triples_json)}\n```"
         return response
     
     def _create_judgment_response(self, data: Dict[str, Any]) -> Mock:
@@ -576,11 +565,11 @@ Denoised Text:
         
         # Create judgment response
         judgment_parts = []
-        for i, (judgment, confidence, explanation) in enumerate(
-            zip(data['judgments'], data['confidence'], data['explanations'])
+        for i, (judgment, explanation) in enumerate(
+            zip(data['judgments'], data['explanations'])
         ):
             result = "ACCEPT" if judgment else "REJECT"
-            judgment_parts.append(f"Triple {i+1}: {result} (Confidence: {confidence:.2f}) - {explanation}")
+            judgment_parts.append(f"Triple {i+1}: {result} - {explanation}")
         
         response.choices[0].message.content = "\n".join(judgment_parts)
         return response
@@ -718,8 +707,7 @@ class TestPipelinePerformance:
                         {
                             "subject": triple["subject"],
                             "predicate": triple["predicate"],
-                            "object": triple["object"],
-                            "confidence": triple.get("confidence", 0.8)
+                            "object": triple["object"]
                         }
                         for triple in responses['triple_generation']
                     ]
@@ -761,13 +749,12 @@ class TestPipelinePerformance:
             else:
                 # Graph judgment response - return text directly
                 judgment_parts = []
-                for i, (judgment, confidence, explanation) in enumerate(
+                for i, (judgment, explanation) in enumerate(
                     zip(responses['graph_judgment']['judgments'],
-                        responses['graph_judgment']['confidence'],
                         responses['graph_judgment']['explanations'])
                 ):
                     result = "ACCEPT" if judgment else "REJECT"
-                    judgment_parts.append(f"Triple {i+1}: {result} (Confidence: {confidence:.2f}) - {explanation}")
+                    judgment_parts.append(f"Triple {i+1}: {result} - {explanation}")
 
                 return "\n".join(judgment_parts)
 
@@ -805,7 +792,7 @@ Denoised Text:
             ]
         }
         
-        response.choices[0].message.content = f"```json\n{triples_json}\n```"
+        response.choices[0].message.content = f"```json\n{json.dumps(triples_json)}\n```"
         return response
     
     def _create_judgment_response(self, data):
@@ -815,11 +802,11 @@ Denoised Text:
         response.choices[0].message = Mock()
         
         judgment_parts = []
-        for i, (judgment, confidence, explanation) in enumerate(
-            zip(data['judgments'], data['confidence'], data['explanations'])
+        for i, (judgment, explanation) in enumerate(
+            zip(data['judgments'], data['explanations'])
         ):
             result = "ACCEPT" if judgment else "REJECT"
-            judgment_parts.append(f"Triple {i+1}: {result} (Confidence: {confidence:.2f}) - {explanation}")
+            judgment_parts.append(f"Triple {i+1}: {result} - {explanation}")
         
         response.choices[0].message.content = "\n".join(judgment_parts)
         return response

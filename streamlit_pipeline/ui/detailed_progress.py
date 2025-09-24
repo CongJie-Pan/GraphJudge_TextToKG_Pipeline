@@ -347,7 +347,7 @@ def display_graph_judgment_processing(triples_count: int, progress_callback: Opt
 
     tracker.log_step("Initializing Perplexity API Graph Judge system...")
     tracker.log_step("Loading sonar-reasoning model with enhanced fact-checking capabilities...")
-    tracker.log_step("Setting up explainable judgment with confidence scoring...")
+    tracker.log_step("Setting up explainable judgment with reasoning...")
 
     # Show configuration from run_gj.py
     tracker.update_metrics({

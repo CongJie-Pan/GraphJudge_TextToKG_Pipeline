@@ -113,7 +113,6 @@ def create_mock_perplexity_client(scenario: str = "DREAM_OF_RED_CHAMBER") -> Moc
     judgments = [
         {
             "judgment": j["judgment"],
-            "confidence": j["confidence"], 
             "triple_index": j["triple_index"]
         }
         for j in scenario_data["judgments"]
@@ -286,16 +285,14 @@ class TestDataGenerator:
     """Generate test data for various scenarios."""
     
     @staticmethod
-    def create_test_triple(subject: str = "测试主语", 
+    def create_test_triple(subject: str = "测试主语",
                           predicate: str = "测试谓语",
-                          object: str = "测试宾语",
-                          confidence: Optional[float] = 0.85) -> Triple:
+                          object: str = "测试宾语") -> Triple:
         """Create a test Triple object."""
         return Triple(
             subject=subject,
             predicate=predicate,
-            object=object,
-            confidence=confidence
+            object=object
         )
     
     @staticmethod
@@ -344,15 +341,13 @@ class TestDataGenerator:
                                    include_explanations: bool = False) -> JudgmentResult:
         """Create a test JudgmentResult object."""
         judgments = [True] * num_triples
-        confidence = [0.9, 0.8, 0.85, 0.92, 0.88][:num_triples]
         explanations = None
-        
+
         if include_explanations:
             explanations = [f"解释 {i+1}" for i in range(num_triples)]
-        
+
         return JudgmentResult(
             judgments=judgments,
-            confidence=confidence,
             explanations=explanations,
             success=success,
             processing_time=processing_time,

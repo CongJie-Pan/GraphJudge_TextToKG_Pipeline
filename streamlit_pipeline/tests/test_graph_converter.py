@@ -29,32 +29,27 @@ def create_test_data():
         Triple(
             subject="女媧氏",
             predicate="地點",
-            object="大荒山",
-            confidence=0.9
+            object="大荒山"
         ),
         Triple(
             subject="女媧氏",
             predicate="地點",
-            object="無稽崖",
-            confidence=0.8
+            object="無稽崖"
         ),
         Triple(
             subject="石頭",
             predicate="地點",
-            object="青埂峰",
-            confidence=0.7
+            object="青埂峰"
         ),
         Triple(
             subject="賈寶玉",
             predicate="身份",
-            object="主角",
-            confidence=0.95
+            object="主角"
         ),
         Triple(
             subject="賈寶玉",
             predicate="家族",
-            object="賈家",
-            confidence=0.9
+            object="賈家"
         )
     ]
 
@@ -69,8 +64,6 @@ def create_test_data():
     # Create test judgment result (approve most triples)
     judgment_result = JudgmentResult(
         judgments=[True, True, False, True, True],  # Reject the 3rd triple
-        confidence=[0.9, 0.8, 0.3, 0.95, 0.9],
-        explanations=["Valid", "Valid", "Low confidence", "Valid", "Valid"],
         success=True,
         processing_time=2.0
     )

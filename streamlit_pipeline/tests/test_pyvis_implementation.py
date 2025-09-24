@@ -32,50 +32,42 @@ def create_test_data():
         Triple(
             subject="賈寶玉",
             predicate="身份",
-            object="主角",
-            confidence=0.95
+            object="主角"
         ),
         Triple(
             subject="賈寶玉",
             predicate="家族",
-            object="賈家",
-            confidence=0.9
+            object="賈家"
         ),
         Triple(
             subject="林黛玉",
             predicate="身份",
-            object="表妹",
-            confidence=0.85
+            object="表妹"
         ),
         Triple(
             subject="林黛玉",
             predicate="居住",
-            object="賈府",
-            confidence=0.8
+            object="賈府"
         ),
         Triple(
             subject="薛寶釵",
             predicate="家族",
-            object="薛家",
-            confidence=0.88
+            object="薛家"
         ),
         Triple(
             subject="賈府",
             predicate="地點",
-            object="京城",
-            confidence=0.75
+            object="京城"
         ),
         Triple(
             subject="《紅樓夢》",
             predicate="作者",
-            object="曹雪芹",
-            confidence=0.98
+            object="曹雪芹"
         ),
         Triple(
             subject="太虛幻境",
             predicate="地點",
-            object="虛擬世界",
-            confidence=0.6  # Lower confidence - might be rejected
+            object="虛擬世界"
         )
     ]
 
@@ -87,10 +79,9 @@ def create_test_data():
         metadata={"test_mode": True, "source": "test_data"}
     )
 
-    # Create test judgment result (approve most, reject low confidence ones)
+    # Create test judgment result (approve most, reject last one)
     judgment_result = JudgmentResult(
         judgments=[True, True, True, True, True, True, True, False],  # Reject last triple
-        confidence=[0.95, 0.9, 0.85, 0.8, 0.88, 0.75, 0.98, 0.3],
         explanations=[
             "Main character confirmed",
             "Family relationship clear",

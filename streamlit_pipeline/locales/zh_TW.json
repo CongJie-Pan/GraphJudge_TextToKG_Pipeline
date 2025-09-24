@@ -149,7 +149,6 @@
     "approved_only": "僅批准",
     "rejected_only": "僅拒絕",
     "status": "狀態",
-    "confidence": "信心度",
     "subject": "主語",
     "relation": "關係",
     "object": "賓語",
@@ -293,7 +292,6 @@
     "click_rows_details": "點擊行查看詳細資訊:",
     "no_triples_generated": "⚠️ 未生成三元組。請檢查實體提取結果。",
     "chart_analysis_plotly": "圖表分析需要 Plotly 函式庫支援",
-    "no_confidence_data": "沒有可用的置信度分佈資料",
     "no_quality_analysis": "沒有可用的品質分析資料",
     "structural_quality": "**結構品質**",
     "content_quality": "**內容品質**",
@@ -322,14 +320,12 @@
     "rejected_triples": "❌ 已拒絕三元組",
     "approval_rate_percent": "{rate}% 通過率",
     "rejection_rate_percent": "{rate}% 拒絕率",
-    "average_confidence": "🎯 平均置信度",
     "total_processing_time": "⏱️ 總處理時間",
     "entities_found": "發現實體",
     "processing_time": "處理時間",
     "triple_count": "三元組數量",
     "generation_complete": "生成完成",
     "knowledge_relations": "知識關係",
-    "avg_confidence": "平均置信度",
     "quality_score": "品質評分",
     "unique_entities": "唯一實體",
     "graph_nodes": "圖節點",
@@ -340,7 +336,6 @@
     "judgment_status": "判斷狀態",
     "approved": "已批准",
     "rejected": "已拒絕",
-    "average_confidence_score": "平均置信度",
     "filter_display": "篩選顯示",
     "sort_by": "排序依據",
     "all_items": "全部",
@@ -418,13 +413,6 @@
     "rate_limits": "**速率限制**：GPT-5-mini API 可能已達到使用限制",
     "relation_complexity": "**關係複雜性**：文字關係對當前模型可能過於複雜"
   },
-  "quality_grades": {
-    "excellent": "🏆 優秀",
-    "good": "🥇 良好",
-    "average": "🥈 一般",
-    "fair": "🥉 尚可",
-    "needs_improvement": "⚠️ 需要改進"
-  },
   "rejection_suggestions": {
     "check_relationship": "檢查主語和賓語之間的關係是否正確表達",
     "confirm_relevance": "確認此關係是否與主題相關",
@@ -444,6 +432,5 @@
     "general_knowledge": "常識",
     "domain_expertise": "領域專業知識",
     "complete_triple": "**完整三元組：** {subject} - {predicate} - {object}",
-    "confidence_percent": "**置信度：** {confidence:.3f} ({percent:.1f}%)"
   }
 }

@@ -19,7 +19,8 @@
       "Bash(PYTHONPATH=. python -c \"\nfrom streamlit_pipeline.ui.components import _display_judgment_explanations_content\nprint(''UI components import successful'')\n\")",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(claude help)"
     ]
   },
   "outputStyle": "default"

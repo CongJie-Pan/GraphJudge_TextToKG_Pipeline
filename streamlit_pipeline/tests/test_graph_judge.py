@@ -81,7 +81,6 @@ class TestTripleJudgment:
             
             assert isinstance(result, JudgmentResult)
             assert result.judgments == []
-            assert result.confidence == []
             assert result.success is True
             assert isinstance(result, JudgmentResult)
             # metadata removed for simplification
@@ -100,8 +99,6 @@ class TestTripleJudgment:
             assert isinstance(result, JudgmentResult)
             assert len(result.judgments) == 1
             assert result.judgments[0] is True
-            assert len(result.confidence) == 1
-            assert result.confidence[0] > 0.0
             assert result.success is True
             # metadata removed for simplification # assert result.metadata["total_triples"] == 1
             # metadata removed for simplification # assert result.metadata["api_calls"] == 1
@@ -123,8 +120,6 @@ class TestTripleJudgment:
             
             assert len(result.judgments) == 3
             assert result.judgments == [True, False, True]
-            assert len(result.confidence) == 3
-            assert all(conf > 0.0 for conf in result.confidence)
             assert result.success is True
             # metadata removed for simplification # assert result.metadata["total_triples"] == 3
             # metadata removed for simplification # assert result.metadata["api_calls"] == 3
@@ -150,7 +145,6 @@ class TestTripleJudgment:
             
             assert len(result.judgments) == 3
             assert result.judgments == [True, False, False]  # Failed judgment defaults to False
-            assert result.confidence[1] == 0.0  # Failed judgment has 0 confidence
             assert result.success is True  # Overall operation still succeeds
     
     def test_judge_triples_catastrophic_failure(self):
@@ -159,15 +153,13 @@ class TestTripleJudgment:
         # by creating a JudgmentResult that represents what would happen
         result = JudgmentResult(
             judgments=[False],
-            confidence=[0.0],
             success=False,
             processing_time=0.0,
             error="Catastrophic failure"
         )
-        
+
         assert len(result.judgments) == 1
         assert result.judgments[0] is False
-        assert result.confidence[0] == 0.0
         assert result.success is False
         assert "Catastrophic failure" in result.error
 
@@ -207,7 +199,6 @@ class TestInstructionCreation:
             prompt = judge._create_explainable_prompt(instruction)
             
             assert "曹雪芹 創作 紅樓夢" in prompt
-            assert "Confidence" in prompt
             assert "Reasoning" in prompt
             assert "Evidence Sources" in prompt
             assert "紅樓夢" in prompt
@@ -295,7 +286,6 @@ class TestResponseParsing:
             response = """
             1. Judgment: Yes
             
-            2. Confidence: 0.95
             
             3. Detailed Reasoning: This statement is factually correct. Apple Inc. was co-founded by Steve Jobs along with Steve Wozniak and Ronald Wayne in 1976. Steve Jobs played a crucial role as the visionary leader and co-founder of the company.
             
@@ -312,7 +302,6 @@ class TestResponseParsing:
             
             assert isinstance(result, ExplainableJudgment)
             assert result.judgment == "Yes"
-            assert result.confidence == 0.95
             assert "Steve Jobs" in result.reasoning
             assert "historical_records" in result.evidence_sources
             assert result.error_type is None
@@ -330,7 +319,6 @@ class TestResponseParsing:
             
             assert isinstance(result, ExplainableJudgment)
             assert result.judgment in ["Yes", "No"]  # Should still extract binary judgment
-            assert 0.0 <= result.confidence <= 1.0
             assert result.reasoning != ""
             assert len(result.evidence_sources) > 0
 
@@ -346,7 +334,6 @@ class TestExplainableReasoning:
             
             assert result["judgments"] == []
             assert result["explanations"] == []
-            assert result["confidence"] == []
             assert result["success"] is True
             # metadata removed for simplification # assert result["metadata"]["total_triples"] == 0
     
@@ -356,7 +343,6 @@ class TestExplainableReasoning:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = """
             1. Judgment: Yes
-            2. Confidence: 0.90
             3. Detailed Reasoning: Apple was indeed founded by Steve Jobs.
             4. Evidence Sources: historical_records
             """
@@ -389,30 +375,6 @@ class TestExplainableReasoning:
             # metadata removed for simplification # assert result["metadata"]["reasoning_enabled"] is False
 
 
-class TestConfidenceEstimation:
-    """Test confidence score estimation."""
-    
-    def test_estimate_confidence_yes(self):
-        """Test confidence estimation for Yes judgment."""
-        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
-            judge = GraphJudge()
-            confidence = judge._estimate_confidence("Yes")
-            assert confidence == 0.8
-    
-    def test_estimate_confidence_no(self):
-        """Test confidence estimation for No judgment."""
-        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
-            judge = GraphJudge()
-            confidence = judge._estimate_confidence("No")
-            assert confidence == 0.7
-    
-    def test_estimate_confidence_other(self):
-        """Test confidence estimation for other responses."""
-        with patch('streamlit_pipeline.core.graph_judge.get_api_client'):
-            judge = GraphJudge()
-            confidence = judge._estimate_confidence("Maybe")
-            assert confidence == 0.5
-
 
 class TestConvenienceFunctions:
     """Test module-level convenience functions."""
@@ -437,7 +399,6 @@ class TestConvenienceFunctions:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = """
             1. Judgment: Yes
-            2. Confidence: 0.85
             3. Detailed Reasoning: Test reasoning
             """
             mock_api.return_value = mock_client
@@ -466,7 +427,6 @@ class TestEdgeCases:
             result = judge.judge_triples([triple])
             
             assert result.judgments[0] is False  # None response defaults to False
-            assert result.confidence[0] == 0.7  # Confidence for "No"
     
     def test_judge_with_empty_response(self):
         """Test handling of empty API response."""
@@ -577,7 +537,6 @@ class TestPerformanceAndTiming:
             mock_client = Mock()
             mock_client.call_perplexity.return_value = """
             1. Judgment: Yes
-            2. Confidence: 0.90
             """
             mock_api.return_value = mock_client
             

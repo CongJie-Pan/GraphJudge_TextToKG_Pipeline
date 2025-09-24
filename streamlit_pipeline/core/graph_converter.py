@@ -106,7 +106,6 @@ class GraphConverter:
         self.entities: Set[str] = set()
         self.relationships: List[str] = []
         self.valid_triplets: List[Tuple[str, str, str]] = []
-        self.confidence_scores: List[float] = []
 
         # Statistics
         self.stats = {
@@ -115,7 +114,6 @@ class GraphConverter:
             'rejected_triples': 0,
             'unique_entities': 0,
             'unique_relationships': 0,
-            'average_confidence': 0.0
         }
 
     def convert_judgment_result_to_graph(self,
@@ -146,13 +144,10 @@ class GraphConverter:
             # Get judgment for this triple
             if i < len(judgment_result.judgments):
                 is_approved = judgment_result.judgments[i]
-                confidence = (judgment_result.confidence[i]
-                            if judgment_result.confidence and i < len(judgment_result.confidence)
-                            else 0.5)
 
                 if is_approved:
                     self.stats['approved_triples'] += 1
-                    self._add_approved_triple(triple, confidence)
+                    self._add_approved_triple(triple)
                 else:
                     self.stats['rejected_triples'] += 1
 
@@ -180,8 +175,7 @@ class GraphConverter:
         for triple in triples:
             self.stats['total_triples'] += 1
             self.stats['approved_triples'] += 1
-            confidence = triple.confidence if triple.confidence is not None else 0.8
-            self._add_approved_triple(triple, confidence)
+            self._add_approved_triple(triple)
 
         # Update final statistics
         self._update_final_stats()
@@ -193,7 +187,6 @@ class GraphConverter:
         self.entities.clear()
         self.relationships.clear()
         self.valid_triplets.clear()
-        self.confidence_scores.clear()
 
         self.stats = {
             'total_triples': 0,
@@ -201,10 +194,9 @@ class GraphConverter:
             'rejected_triples': 0,
             'unique_entities': 0,
             'unique_relationships': 0,
-            'average_confidence': 0.0
         }
 
-    def _add_approved_triple(self, triple: Triple, confidence: float):
+    def _add_approved_triple(self, triple: Triple):
         """Add an approved triple to the graph data."""
         # Add entities
         self.entities.add(triple.subject)
@@ -212,7 +204,6 @@ class GraphConverter:
 
         # Store the triple
         self.valid_triplets.append((triple.subject, triple.predicate, triple.object))
-        self.confidence_scores.append(confidence)
 
         # Add relationship in visualization format
         relationship = f"{triple.subject} - {triple.predicate} - {triple.object}"
@@ -223,8 +214,6 @@ class GraphConverter:
         self.stats['unique_entities'] = len(self.entities)
         self.stats['unique_relationships'] = len(self.relationships)
 
-        if self.confidence_scores:
-            self.stats['average_confidence'] = sum(self.confidence_scores) / len(self.confidence_scores)
 
     def _generate_graph_json(self) -> Dict[str, Any]:
         """Generate the complete graph JSON structure."""
@@ -247,16 +236,14 @@ class GraphConverter:
 
         # Create edges data for visualization
         edges = []
-        for i, (subject, predicate, obj) in enumerate(self.valid_triplets):
-            confidence = self.confidence_scores[i] if i < len(self.confidence_scores) else 0.5
-
+        for subject, predicate, obj in self.valid_triplets:
             edges.append({
                 "source": subject,
                 "target": obj,
                 "label": predicate,
-                "weight": confidence,
-                "color": self._get_edge_color(confidence),
-                "width": max(1, int(confidence * 5))  # Width based on confidence
+                "weight": 0.5,
+                "color": "#1f77b4",  # Standard blue color
+                "width": 3  # Fixed width
             })
 
         # Create report section
@@ -267,7 +254,6 @@ class GraphConverter:
                 "total_evaluated": self.stats['total_triples'],
                 "approved_triples": self.stats['approved_triples'],
                 "rejected_triples": self.stats['rejected_triples'],
-                "average_confidence": round(self.stats['average_confidence'], 3),
                 "processing_timestamp": datetime.now().isoformat()
             },
             "processing_summary": {
@@ -333,16 +319,14 @@ class GraphConverter:
 
         # Create edges for Pyvis
         edges = []
-        for i, (subject, predicate, obj) in enumerate(self.valid_triplets):
-            confidence = self.confidence_scores[i] if i < len(self.confidence_scores) else 0.5
-
+        for subject, predicate, obj in self.valid_triplets:
             edges.append({
                 "from": subject,
                 "to": obj,
                 "label": predicate,
-                "width": max(1, int(confidence * 5)),  # Width based on confidence
-                "color": self._get_edge_color(confidence),
-                "title": f"{subject} → {predicate} → {obj}\n置信度: {confidence:.2f}",
+                "width": 3,  # Fixed width
+                "color": "#1f77b4",  # Standard blue color
+                "title": f"{subject} → {predicate} → {obj}",
                 "arrows": "to",
                 "smooth": {"type": "continuous"}
             })
@@ -400,8 +384,7 @@ class GraphConverter:
                     "total_evaluated": self.stats['total_triples'],
                     "approved_triples": self.stats['approved_triples'],
                     "rejected_triples": self.stats['rejected_triples'],
-                    "average_confidence": round(self.stats['average_confidence'], 3),
-                    "processing_timestamp": datetime.now().isoformat()
+                        "processing_timestamp": datetime.now().isoformat()
                 },
                 "processing_summary": {
                     "total_evaluated": self.stats['total_triples'],
@@ -471,14 +454,6 @@ class GraphConverter:
         else:
             return "#45B7D1"  # Blue for less connected
 
-    def _get_edge_color(self, confidence: float) -> str:
-        """Get color for edge based on confidence score."""
-        if confidence >= 0.8:
-            return "#2ECC40"  # Green for high confidence
-        elif confidence >= 0.6:
-            return "#FF851B"  # Orange for medium confidence
-        else:
-            return "#AAAAAA"  # Gray for low confidence
 
     def _create_error_graph(self, error_message: str) -> Dict[str, Any]:
         """Create an error graph structure."""

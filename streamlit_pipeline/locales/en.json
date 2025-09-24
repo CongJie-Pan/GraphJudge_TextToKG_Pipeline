@@ -170,7 +170,6 @@
     "approved_only": "Approved Only",
     "rejected_only": "Rejected Only",
     "status": "Status",
-    "confidence": "Confidence",
     "subject": "Subject",
     "relation": "Relation",
     "object": "Object",
@@ -199,14 +198,12 @@
     "rejected_triples": "❌ Rejected Triples",
     "approval_rate_percent": "{rate}% approval rate",
     "rejection_rate_percent": "{rate}% rejection rate",
-    "average_confidence": "🎯 Average Confidence",
     "total_processing_time": "⏱️ Total Processing Time",
     "entities_found": "Entities Found",
     "processing_time": "Processing Time",
     "triple_count": "Triple Count",
     "generation_complete": "Generation Complete",
     "knowledge_relations": "Knowledge Relations",
-    "avg_confidence": "Avg Confidence",
     "quality_score": "Quality Score",
     "unique_entities": "Unique Entities",
     "graph_nodes": "Graph Nodes",
@@ -217,7 +214,6 @@
     "judgment_status": "Judgment Status",
     "approved": "Approved",
     "rejected": "Rejected",
-    "average_confidence_score": "Average Confidence",
     "filter_display": "Filter Display",
     "sort_by": "Sort By",
     "all_items": "All",
@@ -300,7 +296,6 @@
     "click_rows_details": "Click rows to view detailed information:",
     "no_triples_generated": "⚠️ No triples generated. Please check the entity extraction results.",
     "chart_analysis_plotly": "Chart analysis requires Plotly library support",
-    "no_confidence_data": "No confidence distribution data available",
     "no_quality_analysis": "No quality analysis data available",
     "structural_quality": "**Structural Quality**",
     "content_quality": "**Content Quality**",
@@ -332,7 +327,7 @@
     "large_graph_warning": "⚠️ Large graph detected ({entities} entities). Showing first 20 for performance.",
     "graph_visualization_failed": "❌ Graph visualization failed: {error}",
     "knowledge_graph_network": "🕸️ Knowledge Graph Network Visualization",
-    "interaction_help": "💡 Hover over nodes and edges for details | Node size = relationship count | Edge thickness = confidence"
+    "interaction_help": "💡 Hover over nodes and edges for details | Node size = relationship count"
   },
   "progress": {
     "processing_progress": "🔄 Processing Progress",
@@ -389,13 +384,6 @@
     "rate_limits": "**Rate Limits**: GPT-5-mini API may have reached usage limits",
     "relation_complexity": "**Relation Complexity**: Text relationships may be too complex for current model"
   },
-  "quality_grades": {
-    "excellent": "🏆 Excellent",
-    "good": "🥇 Good",
-    "average": "🥈 Average",
-    "fair": "🥉 Fair",
-    "needs_improvement": "⚠️ Needs Improvement"
-  },
   "rejection_suggestions": {
     "check_relationship": "Check if the relationship between subject and object is correctly expressed",
     "confirm_relevance": "Confirm whether this relationship is relevant to the topic",
@@ -404,8 +392,8 @@
   },
   "recommendations": {
     "title": "### 💡 Recommendations",
-    "high_quality": "1. **High Quality Results**: Triples with confidence >0.8 can be used directly",
-    "manual_review": "2. **Manual Review**: Recommend manual review for results with confidence 0.5-0.8",
+    "high_quality": "1. **High Quality Results**: Approved triples can be used directly",
+    "manual_review": "2. **Manual Review**: Review judgment explanations for context",
     "result_optimization": "3. **Result Optimization**: For more high-quality results, try adjusting the expression of input text"
   },
   "citations": {
@@ -415,7 +403,6 @@
     "general_knowledge": "General Knowledge",
     "domain_expertise": "Domain Expertise",
     "complete_triple": "**Complete Triple:** {subject} - {predicate} - {object}",
-    "confidence_percent": "**Confidence:** {confidence:.3f} ({percent:.1f}%)"
   },
   "evaluation": {
     "dashboard_title": "📊 Graph Quality Evaluation Dashboard",

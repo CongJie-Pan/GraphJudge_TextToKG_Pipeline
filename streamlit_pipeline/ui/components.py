@@ -403,11 +403,6 @@ def _display_judgment_explanations_content(triples, judgment_result):
                 with col2:
                     st.markdown(f"**{get_text('judgment.status')}:** {judgment_status}")
 
-                # Display confidence with formatting
-                if judgment_result.confidence and i < len(judgment_result.confidence):
-                    confidence = judgment_result.confidence[i]
-                    confidence_percent = confidence * 100
-                    st.markdown(get_text('citations.confidence_percent', confidence=confidence, percent=confidence_percent))
 
                 # Display evidence sources if available
                 if hasattr(judgment_result, 'metadata') and judgment_result.metadata:
@@ -574,11 +569,6 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
             st.metric(get_text('metrics.processing_time'), f"{triple_result.processing_time:.2f}s", "GPT-5-mini API")
         with col3:
             st.metric(get_text('metrics.triple_count'), len(triple_result.triples), get_text('metrics.knowledge_relations'))
-        with col4:
-            # Calculate average confidence if available
-            confidences = [t.confidence for t in triple_result.triples if hasattr(t, 'confidence') and t.confidence is not None]
-            avg_confidence = sum(confidences) / len(confidences) if confidences else 0
-            st.metric(get_text('metrics.avg_confidence'), f"{avg_confidence:.2f}" if avg_confidence > 0 else "N/A", get_text('metrics.quality_score'))
         with col5:
             # Count unique subjects and objects
             if triple_result.triples:
@@ -623,7 +613,6 @@ def display_triple_results(triple_result: TripleResult, show_validation: bool = 
                 get_text('judgment.subject'): triple.subject,
                 get_text('judgment.relation'): triple.predicate,
                 get_text('judgment.object'): triple.object,
-                get_text('judgment.confidence'): f"{triple.confidence:.3f}" if triple.confidence else "N/A"
             })
         
         df = pd.DataFrame(triple_data)
@@ -697,14 +686,11 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         st.metric(get_text('metrics.approved'), approved, delta=f"{approval_rate:.1%}")
     with col4:
         st.metric(get_text('metrics.rejected'), rejected)
-    with col5:
-        avg_confidence = sum(judgment_result.confidence) / len(judgment_result.confidence) if judgment_result.confidence else 0
-        st.metric(get_text('metrics.average_confidence_score'), f"{avg_confidence:.3f}")
     
     if judgment_result.judgments:
         # Create combined results
         results_data = []
-        for i, (triple, judgment, confidence) in enumerate(zip(triples, judgment_result.judgments, judgment_result.confidence or [0] * len(triples))):
+        for i, (triple, judgment) in enumerate(zip(triples, judgment_result.judgments)):
             status_emoji = "✅" if judgment else "❌"
             status_text = get_text('judgment.approved') if judgment else get_text('judgment.rejected')
 
@@ -714,7 +700,6 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
                 get_text('judgment.subject'): triple.subject,
                 get_text('judgment.relation'): triple.predicate,
                 get_text('judgment.object'): triple.object,
-                get_text('judgment.confidence'): f"{confidence:.3f}" if confidence > 0 else "N/A"
             })
         
         df = pd.DataFrame(results_data)
@@ -730,7 +715,7 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
         with col2:
             sort_by = st.selectbox(
                 get_text('metrics.sort_by'),
-                ["#", get_text('judgment.confidence'), get_text('judgment.status')],
+                ["#", get_text('judgment.status')],
                 key="judgment_sort"
             )
         
@@ -742,14 +727,7 @@ def display_judgment_results(judgment_result: JudgmentResult, triples: List[Trip
             filtered_df = filtered_df[filtered_df[get_text('judgment.status')].str.contains(get_text('judgment.rejected'))]
 
         # Apply sorting
-        if sort_by == get_text('judgment.confidence'):
-            # Convert confidence to numeric for sorting
-            filtered_df['Confidence_numeric'] = filtered_df[get_text('judgment.confidence')].apply(
-                lambda x: float(x) if x != "N/A" else 0
-            )
-            filtered_df = filtered_df.sort_values('Confidence_numeric', ascending=False)
-            filtered_df = filtered_df.drop('Confidence_numeric', axis=1)
-        elif sort_by == "Status":
+        if sort_by == "Status":
             filtered_df = filtered_df.sort_values('Status', ascending=True)
 
         st.markdown(f"### 📋 Judgment Results Details ({len(filtered_df)} items)")
@@ -969,18 +947,7 @@ def display_judgment_analysis(judgment_result: JudgmentResult, triples: List[Tri
         st.plotly_chart(fig_pie, use_container_width=True)
     
     with col2:
-        # Confidence distribution
-        if judgment_result.confidence and any(c > 0 for c in judgment_result.confidence):
-            fig_hist = px.histogram(
-                x=judgment_result.confidence,
-                title="Confidence Distribution",
-                labels={'x': 'Confidence', 'y': 'Count'},
-                nbins=10
-            )
-            fig_hist.update_layout(showlegend=False)
-            st.plotly_chart(fig_hist, use_container_width=True)
-        else:
-            st.info("No confidence distribution data available")
+        st.info("Additional analytics will be displayed here in future versions")
 
 
 def display_pipeline_summary(pipeline_result: PipelineResult, show_expanders: bool = True):

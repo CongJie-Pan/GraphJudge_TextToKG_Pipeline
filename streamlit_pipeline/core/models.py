@@ -48,33 +48,6 @@ class ProcessingStatus(Enum):
     ARCHIVED = "archived"              # Job complete, results displayed
 
 
-class ConfidenceLevel(Enum):
-    """
-    Enumeration for confidence levels in judgments and extractions.
-    """
-    VERY_LOW = (0.0, 0.2)      # 0-20% confidence
-    LOW = (0.2, 0.4)           # 20-40% confidence  
-    MEDIUM = (0.4, 0.6)        # 40-60% confidence
-    HIGH = (0.6, 0.8)          # 60-80% confidence
-    VERY_HIGH = (0.8, 1.0)     # 80-100% confidence
-    
-    def __init__(self, min_val: float, max_val: float):
-        self.min_val = min_val
-        self.max_val = max_val
-    
-    @classmethod
-    def from_score(cls, score: float) -> 'ConfidenceLevel':
-        """Convert numerical confidence score to confidence level."""
-        if score < 0.2:
-            return cls.VERY_LOW
-        elif score < 0.4:
-            return cls.LOW
-        elif score < 0.6:
-            return cls.MEDIUM
-        elif score < 0.8:
-            return cls.HIGH
-        else:
-            return cls.VERY_HIGH
 
 
 @dataclass
@@ -89,29 +62,16 @@ class Triple:
         subject: The subject entity of the triple
         predicate: The relationship/predicate connecting subject and object
         object: The object entity of the triple
-        confidence: Optional confidence score (0.0-1.0)
         source_text: Optional original text that generated this triple
         metadata: Additional information about the triple
     """
     subject: str
     predicate: str
     object: str
-    confidence: Optional[float] = None
     source_text: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
-        """Validate triple data after initialization."""
-        if self.confidence is not None:
-            if not (0.0 <= self.confidence <= 1.0):
-                raise ValueError(f"Confidence must be between 0.0 and 1.0, got {self.confidence}")
     
-    @property
-    def confidence_level(self) -> Optional[ConfidenceLevel]:
-        """Get confidence level enum for this triple."""
-        if self.confidence is not None:
-            return ConfidenceLevel.from_score(self.confidence)
-        return None
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert triple to dictionary representation."""
@@ -119,7 +79,6 @@ class Triple:
             'subject': self.subject,
             'predicate': self.predicate,
             'object': self.object,
-            'confidence': self.confidence,
             'source_text': self.source_text,
             'metadata': self.metadata
         }
@@ -131,15 +90,13 @@ class Triple:
             subject=data['subject'],
             predicate=data['predicate'],
             object=data['object'],
-            confidence=data.get('confidence'),
             source_text=data.get('source_text'),
             metadata=data.get('metadata', {})
         )
     
     def __str__(self) -> str:
         """String representation of the triple."""
-        conf_str = f" (confidence: {self.confidence:.2f})" if self.confidence else ""
-        return f"({self.subject}, {self.predicate}, {self.object}){conf_str}"
+        return f"({self.subject}, {self.predicate}, {self.object})"
 
 
 @dataclass
@@ -191,19 +148,17 @@ class JudgmentResult:
     """
     Result object for graph judgment operations.
     
-    Contains judgment decisions, confidence scores, and optional
+    Contains judgment decisions and optional
     explanations for each evaluated triple.
     
     Attributes:
         judgments: List of True/False decisions for each triple
-        confidence: List of confidence scores (0-1) for each judgment
         explanations: Optional detailed explanations for explainable mode
         success: Whether the operation completed successfully
         processing_time: Time taken for the operation in seconds
         error: Error message if operation failed, None otherwise
     """
     judgments: List[bool]  # True/False for each triple
-    confidence: List[float]  # Confidence scores (0-1)
     explanations: Optional[List[str]] = None  # For explainable mode
     success: bool = True
     processing_time: float = 0.0
@@ -213,7 +168,6 @@ class JudgmentResult:
         """Convert result to dictionary representation."""
         return {
             'judgments': self.judgments,
-            'confidence': self.confidence,
             'explanations': self.explanations,
             'success': self.success,
             'processing_time': self.processing_time,
@@ -343,7 +297,6 @@ def create_error_result(result_type: type, error_message: str, processing_time: 
     elif result_type == JudgmentResult:
         return JudgmentResult(
             judgments=[],
-            confidence=[],
             explanations=None,
             success=False,
             processing_time=processing_time,
