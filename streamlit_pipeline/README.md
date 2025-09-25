@@ -1,319 +1,473 @@
-# GraphJudge Streamlit Pipeline
+# GraphJudge Streamlit Pipeline: Ancient Chinese Text to Knowledge Graph Processing
 
-A refactored, modular implementation of the GraphJudge text-to-knowledge-graph pipeline optimized for Streamlit integration. This project extracts and refactors core functionality from the main GraphJudge system into clean, testable modules suitable for web application deployment.
+This streamlit pipeline is a specialized revision and extension of the research presented in the paper [Can LLMs be Good Graph Judge for Knowledge Graph Construction?](https://arxiv.org/abs/2411.17388). <a href="https://github.com/hhy-huang/GraphJudge" target="_blank">
+    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/hhy-huang/GraphJudge?style=social" />
+</a>
 
-## Quick Start
+The pipeline is specifically optimized for **ancient Chinese text processing**, transforming classical Chinese literature (such as 紅樓夢/Dream of the Red Chamber) into high-quality knowledge graphs through a sophisticated three-stage LLM-powered workflow with interactive web interface capabilities.
 
-### Prerequisites
+## Architecture Overview
 
-- Python 3.8+ (tested on 3.8-3.11)
-- API keys for OpenAI (or Azure OpenAI) and Perplexity
+![Pipeline Mechanism](img/streamlit_pipeline_mechanism.jpg)
 
-### Installation
+**Pipeline Flow Description**: The streamlit pipeline processes Chinese text through a four-stage sequential workflow beginning with entity extraction using GPT-5-mini for named entity recognition and context-aware text denoising. The cleaned text then undergoes triple generation to create subject-predicate-object relationships, followed by graph judgment using Perplexity Sonar reasoning to evaluate and filter triples with confidence scoring. Finally, an optional evaluation stage assesses graph quality against reference graphs before converting results into multiple interactive visualization formats including Plotly, Pyvis, and kgGenShows for comprehensive knowledge graph output.
 
-1. **Clone the repository and navigate to the streamlit pipeline:**
-   ```bash
-   cd streamlit_pipeline
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configure API credentials:**
-   ```bash
-   cp .env.example .env
-   # Edit .env file with your API keys
-   ```
-
-4. **Run tests to verify setup:**
-   ```bash
-   python run_tests.py --coverage
-   ```
+**⚠️ Evaluation Function Status**: Please note that the evaluation functionality is currently incomplete and may produce identical scores across different metrics (G-BLEU, G-ROUGE, G-BertScore) due to fallback mechanisms when certain dependencies are missing. The system falls back to basic word overlap calculations when advanced metric packages like NLTK, rouge-score, or bert-score are unavailable, resulting in identical precision/recall/F1 values that do not reflect the distinct characteristics of each similarity measure.
 
 ## Project Structure
 
 ```
 streamlit_pipeline/
-├── README.md                 # This documentation
-├── requirements.txt          # Python dependencies
-├── .env.example             # Environment configuration template
-├── run_tests.py             # Test runner script (entry point)
-├── pytest.ini              # Test framework configuration
+├── README.md                           # Pipeline-specific documentation
+├── QUICKSTART.md                       # Quick start guide
+├── requirements.txt                    # Core dependencies
+├── .env.example                        # API configuration template
+├── pytest.ini                         # Test framework configuration
+├── run_tests.py                        # Test runner (main entry point)
+├── run_app.py                         # Application launcher
+├── app.py                             # Main Streamlit application
+├── demo_enhanced_pipeline.py          # Demo script with examples
 │
-├── core/                    # Core pipeline modules
+├── core/                              # Core pipeline modules
 │   ├── __init__.py
-│   ├── config.py           # Configuration management
-│   ├── models.py           # Data models (Triple, EntityResult, etc.)
-│   └── entity_processor.py # Entity extraction and text denoising
+│   ├── config.py                      # Configuration management & API setup
+│   ├── models.py                      # Data models (Triple, EntityResult, JudgmentResult, etc.)
+│   ├── entity_processor.py            # Stage 1: Entity extraction and text denoising
+│   ├── triple_generator.py            # Stage 2: Knowledge graph triple generation
+│   ├── graph_judge.py                 # Stage 3: Triple validation and judgment
+│   └── pipeline.py                    # PipelineOrchestrator - main workflow coordinator
 │
-├── utils/                   # Utility modules
+├── utils/                             # Utility modules
 │   ├── __init__.py
-│   ├── api_client.py       # LLM API client wrapper
-│   └── validation.py       # Input validation and sanitization
+│   ├── api_client.py                  # Unified LLM API wrapper (OpenAI, Perplexity, Azure)
+│   ├── validation.py                  # Input validation and sanitization
+│   ├── error_handling.py              # Error management and recovery utilities
+│   ├── session_state.py               # Streamlit session management
+│   ├── detailed_logger.py             # Comprehensive logging system
+│   ├── storage_manager.py             # File and data storage management
+│   └── state_*.py                     # State management utilities
 │
-└── tests/                   # Test suite
-    ├── __init__.py
-    ├── conftest.py         # Pytest fixtures and configuration
-    ├── test_models.py      # Data model tests
-    ├── test_config.py      # Configuration tests
-    ├── test_validation.py  # Validation tests
-    ├── test_integration.py # Integration tests
-    ├── test_utils.py       # Testing utilities
-    └── fixtures/           # Test data and mock API responses
-        └── api_fixtures.py
+├── ui/                                # Streamlit UI components
+│   ├── __init__.py
+│   ├── components.py                  # Reusable UI components
+│   ├── display.py                     # Result visualization and formatting
+│   ├── error_display.py               # Error handling and user feedback
+│   └── detailed_progress.py           # Real-time progress tracking
+│
+├── eval/                              # Graph evaluation system
+│   ├── __init__.py
+│   ├── graph_evaluator.py             # Main evaluation coordinator
+│   └── metrics/                       # Evaluation metrics
+│       ├── exact_matching.py          # Exact triple matching metrics
+│       ├── semantic_similarity.py     # Semantic similarity evaluation
+│       └── text_similarity.py         # Text-based similarity metrics
+│
+├── tests/                             # Comprehensive test suite
+│   ├── __init__.py
+│   ├── conftest.py                    # Pytest fixtures and configuration
+│   ├── test_models.py                 # Data model validation tests
+│   ├── test_config.py                 # Configuration management tests
+│   ├── test_validation.py             # Input validation tests
+│   ├── test_integration.py            # Cross-module integration tests
+│   ├── test_utils.py                  # Testing utilities and helpers
+│   └── fixtures/                      # Test data and mock responses
+│       ├── __init__.py
+│       ├── api_fixtures.py            # Mock API responses
+│       └── mock_api_responses.py      # Additional mock data
+│
+├── datasets/                          # Sample data and processing results
+│   ├── iteration_*/                   # Timestamped processing iterations
+│   │   ├── entity_results.json        # ECTD stage outputs
+│   │   ├── triple_results.json        # Triple generation outputs
+│   │   ├── judgment_results.json      # Graph judgment results
+│   │   └── graph_data.json            # Final graph visualizations
+│   └── original_source/               # Source texts and reference data
+│
+├── temp/                              # Temporary processing files
+├── test_outputs/                      # Test result artifacts
+├── logs/                              # Application and processing logs
+├── docs/                              # Additional documentation
+└── .github/                           # GitHub workflows and CI/CD
+    └── workflows/
+        └── ci.yml                     # Continuous integration pipeline
 ```
 
-### Why is `run_tests.py` in the Main Folder?
+### Core Architecture Components
 
-The test runner script (`run_tests.py`) is located in the main project folder rather than in `/tests` for several important reasons:
+#### **Pipeline Orchestrator** (`core/pipeline.py`)
+- **PipelineOrchestrator**: Main workflow coordinator managing the complete pipeline
+- **PipelineResult**: Comprehensive result container for all stage outputs
+- **run_full_pipeline()**: Entry point function for programmatic pipeline execution
+- Handles error recovery, progress tracking, and result storage across all stages
 
-- **Entry Point Convention**: Test runners are entry points, not test files themselves, and belong at the package root level
-- **Path Resolution**: Being at the root simplifies import paths and working directory management
-- **Industry Standard**: Most projects (Django, Node.js, etc.) place test runners at the root level
-- **CI/CD Friendly**: Automation systems expect test runners at predictable root locations
-- **User Experience**: Developers expect to run `python run_tests.py` from the main project directory
+#### **Data Models** (`core/models.py`)
+- **Triple**: Knowledge graph relationship representation (subject-predicate-object)
+- **EntityResult**: Entity extraction and text denoising results container
+- **TripleResult**: Triple generation outputs with metadata
+- **JudgmentResult**: Graph judgment decisions with confidence scores and explanations
+- **EvaluationResult**: Optional graph quality assessment metrics
+- **GraphMetrics**: Comprehensive evaluation metrics (F1, BLEU, ROUGE, BERT scores)
 
-The `/tests` folder contains only actual test files (`test_*.py`), fixtures, and test utilities, maintaining clear separation of concerns.
+#### **Stage Processing Modules**
+- **Entity Processor** (`core/entity_processor.py`): GPT-5-mini powered entity extraction and Chinese text denoising
+- **Triple Generator** (`core/triple_generator.py`): Subject-predicate-object relationship extraction
+- **Graph Judge** (`core/graph_judge.py`): Perplexity Sonar reasoning for triple validation
 
-## Configuration
+#### **API Integration** (`utils/api_client.py`)
+- Unified interface supporting OpenAI, Azure OpenAI, and Perplexity APIs
+- Rate limiting, retry mechanisms, and exponential backoff
+- Comprehensive error handling and response validation
+- Async operation support for improved performance
 
-### API Setup
+## Guidance
 
-The pipeline requires API keys for:
-1. **OpenAI GPT-5-mini** (for entity extraction and text denoising)
-2. **Perplexity Sonar** (for graph judgment)
+### Prerequisites
 
-Configure using `.env` file:
+- **Python 3.8-3.11** (tested and optimized for these versions)
+- **API Access**: OpenAI (or Azure OpenAI) and Perplexity API keys
+- **System Requirements**: 4GB+ RAM recommended for large text processing
+
+### Quick Start
+
+#### 1. Environment Setup
 
 ```bash
-# Copy the example file
+# Navigate to streamlit pipeline directory
+cd streamlit_pipeline
+
+# Install core dependencies
+pip install -r requirements.txt
+
+# Setup environment configuration
 cp .env.example .env
+```
 
-# Edit with your API keys (choose one option):
+#### 2. API Configuration
 
-# Option 1: Azure OpenAI (Recommended for enterprise)
+Edit the `.env` file with your API credentials:
+
+```bash
+# Option 1: Standard OpenAI (Recommended for research)
+OPENAI_API_KEY=your_openai_key_here
+
+# Option 2: Azure OpenAI (Recommended for enterprise)
 AZURE_OPENAI_KEY=your_azure_key_here
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 
-# Option 2: Standard OpenAI
-OPENAI_API_KEY=your_openai_key_here
-
 # Required: Perplexity for graph judgment
 PERPLEXITY_API_KEY=your_perplexity_key_here
+
+# Optional: Additional judgment providers
+KIMI_API_KEY=your_kimi_key_here
+GEMINI_API_KEY=your_gemini_key_here
 ```
 
-### Model Configuration
-
-The pipeline uses these default models:
-- **Entity Extraction**: GPT-5-mini (temperature: 0.0, max_tokens: 4000)
-- **Triple Generation**: GPT-5-mini (deterministic output)
-- **Graph Judgment**: Perplexity Sonar Reasoning
-
-Settings can be customized in `core/config.py`.
-
-## Testing
-
-### Test Framework
-
-The project uses **pytest** with comprehensive testing including:
-- **Unit Tests**: Individual component testing
-- **Integration Tests**: Cross-module interaction testing  
-- **Mock API Tests**: Simulated API responses for reliable testing
-- **Performance Tests**: Timing and scalability validation
-- **Coverage Reporting**: 90%+ code coverage requirement
-
-### Running Tests
+#### 3. Verification and Testing
 
 ```bash
-# Run all unit tests
-python run_tests.py
-
-# Run with coverage report
+# Run comprehensive test suite with coverage
 python run_tests.py --coverage
 
-# Run specific test types
-python run_tests.py --integration  # Include integration tests
-python run_tests.py --performance  # Include performance tests
-python run_tests.py --smoke       # Quick smoke tests only
-
-# Run with different options
-python run_tests.py --verbose     # Detailed output
-python run_tests.py --fail-fast   # Stop on first failure
-python run_tests.py --parallel 4  # Run in parallel with 4 processes
+# Run integration tests (requires API keys)
+python run_tests.py --integration
 
 # Generate HTML coverage report
 python run_tests.py --html-coverage
-
-# Run specific test pattern
-python run_tests.py --pattern "test_config"
 ```
 
-### Test Structure
+#### 4. Launch Application
 
-- **Test Files**: Located in `/tests` folder, following `test_*.py` naming
-- **Fixtures**: Shared test data and mocks in `tests/fixtures/`
-- **Configuration**: `pytest.ini` and `conftest.py` for test setup
-- **Utilities**: Common testing patterns in `tests/test_utils.py`
+```bash
+# Method 1: Using the launcher script
+python run_app.py
 
-## Core Components
+# Method 2: Direct Streamlit execution
+streamlit run app.py
 
-### Entity Processor (`core/entity_processor.py`)
-- Extracts named entities from input text
-- Performs text denoising based on identified entities
-- Handles Chinese and English text processing
-- Async operation with error handling and retry logic
+# Method 3: Demo script with examples
+python demo_enhanced_pipeline.py
+```
 
-### Data Models (`core/models.py`)
-- **Triple**: Represents knowledge graph relationships (subject-predicate-object)
-- **EntityResult**: Encapsulates entity extraction results
-- **TripleResult**: Contains generated triples with metadata
-- **JudgmentResult**: Holds graph judgment decisions with confidence scores
+### Core Pipeline Usage
 
-### API Client (`utils/api_client.py`)
-- Unified interface for multiple LLM APIs (OpenAI, Azure OpenAI, Perplexity)
-- Rate limiting and error handling
-- Retry mechanisms with exponential backoff
-- Response validation and parsing
-
-### Validation System (`utils/validation.py`)
-- Input text validation (length, content, encoding)
-- Data model validation using Pydantic
-- Security checks for malicious content
-- Cross-platform compatibility validation
-
-## Pipeline Workflow
-
-1. **Input Validation**: Text preprocessing and sanitization
-2. **Entity Extraction**: Identify key entities using GPT-5-mini
-3. **Text Denoising**: Clean and structure text based on entities
-4. **Triple Generation**: Create knowledge graph relationships
-5. **Graph Judgment**: Validate triples using Perplexity reasoning
-6. **Output Generation**: Return filtered, high-quality knowledge graph
-
-## Integration with Streamlit
-
-This pipeline is designed for easy Streamlit integration:
+#### **Programmatic API Usage**
 
 ```python
 import asyncio
-from core.entity_processor import EntityProcessor
-from core.models import EntityResult
+from core.pipeline import PipelineOrchestrator
+from core.models import Triple
 
-# Initialize processor
-processor = EntityProcessor()
+# Initialize pipeline
+orchestrator = PipelineOrchestrator()
 
-# Process text (async)
-async def process_text(text: str) -> EntityResult:
-    return await processor.extract_entities(text)
+# Process Chinese text
+input_text = "林黛玉是賈寶玉的表妹，她聰明伶俐，才華橫溢。"
+
+# Basic pipeline execution
+result = orchestrator.run_pipeline(input_text)
+
+if result.success:
+    print(f"Entities found: {len(result.entity_result.entities)}")
+    print(f"Triples generated: {len(result.triple_result.triples)}")
+    print(f"Approved triples: {result.stats['approved_triples']}")
+    print(f"Processing time: {result.total_time:.2f}s")
+else:
+    print(f"Pipeline failed at {result.error_stage}: {result.error}")
+```
+
+#### **Advanced Pipeline Configuration**
+
+```python
+# Pipeline with evaluation against reference graph
+reference_graph = [
+    Triple("林黛玉", "是", "賈寶玉的妹妹),
+    Triple("林黛玉", "特點", "聪聰明伶俐"),
+    Triple("林黛玉", "特點", "才華洋溢")
+]
+
+evaluation_config = {
+    'enable_evaluation': True,
+    'enable_ged': True,  # Graph Edit Distance (computationally intensive)
+    'enable_bert_score': True,
+    'max_evaluation_time': 60.0
+}
+
+config_options = {
+    'enable_explanations': True  # Get detailed reasoning for judgments
+}
+
+# Execute with evaluation
+result = orchestrator.run_pipeline(
+    input_text=input_text,
+    config_options=config_options,
+    evaluation_config=evaluation_config,
+    reference_graph=reference_graph
+)
+
+if result.evaluation_enabled and result.evaluation_result.success:
+    metrics = result.evaluation_result.metrics
+    print(f"Overall Score: {metrics.get_overall_score():.3f}")
+    print(f"Triple Match F1: {metrics.triple_match_f1:.3f}")
+    print(f"G-BERT F1: {metrics.g_bert_f1:.3f}")
+```
+
+#### **Streamlit Integration Patterns**
+
+```python
+import streamlit as st
+from core.pipeline import PipelineOrchestrator
+
+@st.cache_resource
+def get_pipeline_orchestrator():
+    """Cached pipeline orchestrator for Streamlit."""
+    return PipelineOrchestrator()
+
+def streamlit_progress_callback(stage, message):
+    """Progress callback for Streamlit integration."""
+    st.session_state.current_stage = stage
+    st.session_state.status_message = message
 
 # Streamlit app integration
-result = asyncio.run(process_text(user_input))
+orchestrator = get_pipeline_orchestrator()
+input_text = st.text_area("Enter Chinese text:", height=200)
+
+if st.button("Process Text"):
+    with st.spinner("Processing..."):
+        result = orchestrator.run_pipeline(
+            input_text=input_text,
+            progress_callback=streamlit_progress_callback
+        )
+
+    # Display results using UI components
+    if result.success:
+        st.success(f"Pipeline completed in {result.total_time:.2f}s")
+        # Display graph visualization, triples, etc.
+    else:
+        st.error(f"Processing failed: {result.error}")
 ```
 
-## Development
+### Advanced Configuration
 
-### Code Quality Standards
+#### **Model and API Settings** (`core/config.py`)
 
-- **Type Hints**: Full type annotation coverage
-- **Documentation**: Comprehensive docstrings (Google style)
-- **Error Handling**: Graceful failure with meaningful messages
-- **Testing**: TDD approach with 90%+ coverage requirement
-- **Security**: Input validation and API key protection
+```python
+# Entity Extraction Configuration
+ENTITY_MODEL = "gpt-5-mini"  # or "azure/gpt-4o-mini"
+ENTITY_TEMPERATURE = 0.0     # Deterministic output
+ENTITY_MAX_TOKENS = 4000
 
-### Adding New Features
+# Triple Generation Configuration
+TRIPLE_MODEL = "gpt-5-mini"
+TRIPLE_TEMPERATURE = 0.1
+TRIPLE_MAX_TOKENS = 3000
 
-1. **Write Tests First**: Follow TDD principles
-2. **Update Models**: Add/modify data structures in `core/models.py`
-3. **Implement Logic**: Add functionality in appropriate module
-4. **Add Validation**: Update validation rules if needed
-5. **Update Tests**: Ensure comprehensive test coverage
-6. **Update Documentation**: Keep README and docstrings current
+# Graph Judgment Configuration
+JUDGMENT_MODEL = "perplexity/sonar-reasoning"
+JUDGMENT_TEMPERATURE = 0.2
+JUDGMENT_MAX_TOKENS = 2000
 
-### Performance Guidelines
+# API Rate Limiting
+MAX_REQUESTS_PER_MINUTE = 60
+RETRY_ATTEMPTS = 3
+BACKOFF_FACTOR = 2.0
+```
 
-- **Async Operations**: Use async/await for I/O operations
-- **Rate Limiting**: Respect API limits and implement backoff
-- **Caching**: Consider caching for repeated operations
-- **Memory Management**: Handle large text inputs efficiently
+#### **Evaluation Configuration**
 
-## Monitoring and Logging
+```python
+# Evaluation Metrics Configuration
+ENABLE_EXACT_MATCHING = True      # Fast exact triple matching
+ENABLE_SEMANTIC_SIMILARITY = True # Semantic embedding comparison
+ENABLE_TEXT_SIMILARITY = True     # BLEU, ROUGE, BERTScore
+ENABLE_GRAPH_EDIT_DISTANCE = False # Computationally intensive
 
-The pipeline includes comprehensive logging:
-- API request/response logging
-- Performance metrics tracking
-- Error reporting with context
-- Processing time measurements
+# Performance Limits
+MAX_EVALUATION_TIME = 30.0  # seconds
+MAX_EVALUATION_TRIPLES = 500
+```
 
-Configure logging levels through environment variables or `core/config.py`.
+**⚠️ Evaluation Function Status**: Please note that the evaluation functionality is currently incomplete and may produce identical scores across different metrics (G-BLEU, G-ROUGE, G-BertScore) due to fallback mechanisms when certain dependencies are missing. The system falls back to basic word overlap calculations when advanced metric packages like NLTK, rouge-score, or bert-score are unavailable, resulting in identical precision/recall/F1 values that do not reflect the distinct characteristics of each similarity measure.
 
-## Security Considerations
+### Testing Framework
 
-- **API Key Management**: Use environment variables, never commit keys
-- **Input Validation**: All user input is validated and sanitized  
-- **Rate Limiting**: Implemented to prevent API abuse
-- **Error Handling**: Sensitive information is not exposed in error messages
+#### **Test Categories and Execution**
 
-## Troubleshooting
-
-### Common Issues
-
-1. **"No valid API configuration found"**
-   - Check `.env` file exists and has correct keys
-   - Verify API keys are valid and have sufficient quota
-   - For Azure OpenAI, ensure both KEY and ENDPOINT are set
-
-2. **Import Errors**
-   - Run from the `streamlit_pipeline` directory
-   - Check Python path includes current directory
-   - Verify all dependencies are installed
-
-3. **Test Failures**
-   - Run `python run_tests.py --verbose` for detailed output
-   - Check API connectivity if integration tests fail
-   - Clear pytest cache: `rm -rf .pytest_cache __pycache__`
-
-4. **Performance Issues**
-   - Monitor API rate limits
-   - Use `--performance` flag to run performance tests
-   - Consider async processing for batch operations
-
-### Debug Mode
-
-Enable debug logging:
 ```bash
-export LOG_LEVEL=DEBUG
-python run_tests.py --verbose
+# Unit tests (fast, no API calls)
+python run_tests.py --unit
+
+# Integration tests (requires API keys)
+python run_tests.py --integration
+
+# Performance tests (timing and scalability)
+python run_tests.py --performance
+
+# Smoke tests (quick validation)
+python run_tests.py --smoke
+
+# Comprehensive testing with coverage
+python run_tests.py --coverage --verbose
 ```
 
-## Contributing
+#### **Test Structure**
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Write tests first (TDD approach)
-4. Implement your feature
-5. Ensure tests pass: `python run_tests.py --coverage`
-6. Update documentation as needed
-7. Submit a pull request
+- **Unit Tests**: Individual component testing with mocks
+- **Integration Tests**: Cross-module and API integration testing
+- **Performance Tests**: Timing, memory usage, and scalability validation
+- **Mock API Tests**: Simulated API responses for reliable testing
+- **Coverage Reports**: HTML and terminal coverage reporting with 90%+ requirement
 
-### Code Style
+### Data Storage and Session Management
 
-- Follow PEP 8 style guidelines
-- Use type hints throughout
-- Write comprehensive docstrings
-- Maintain test coverage above 90%
+#### **Storage System** (`utils/storage_manager.py`)
+- **Iteration-based Storage**: Each pipeline run creates a timestamped iteration folder
+- **Multi-format Support**: JSON, CSV, and graph-specific formats
+- **Automatic Organization**: Results organized by processing stage and timestamp
+- **Export Capabilities**: Multiple export formats for downstream analysis
 
-## License
+#### **Session State Management** (`utils/session_state.py`)
+- **Streamlit Integration**: Persistent session state across page reloads
+- **Processing History**: Track multiple runs within a single session
+- **Error Recovery**: Maintain state during error conditions
+- **Progress Tracking**: Real-time progress updates and stage management
 
-This project is part of the GraphJudge research system. See the main repository for license information.
+### Monitoring and Debugging
 
-## Acknowledgments
+#### **Comprehensive Logging** (`utils/detailed_logger.py`)
 
-- Built on the foundation of the original GraphJudge system
-- Utilizes OpenAI GPT models for entity extraction
-- Leverages Perplexity AI for graph reasoning and judgment
+```python
+# Enable debug logging
+import os
+os.environ['LOG_LEVEL'] = 'DEBUG'
+
+# Detailed processing logs available at:
+# - logs/pipeline_YYYYMMDD_HHMMSS.log
+# - Real-time Streamlit console output
+# - Per-stage timing and performance metrics
+```
+
+#### **Error Handling and Recovery**
+
+- **Stage-specific Error Isolation**: Failures don't cascade across stages
+- **Automatic Retry Logic**: Configurable retry attempts with exponential backoff
+- **User-friendly Error Messages**: Clear error descriptions with recovery suggestions
+- **Graceful Degradation**: Partial results available even with stage failures
+
+### Visualization and Export
+
+#### **Multi-format Graph Visualization**
+- **Plotly**: Interactive network graphs with hover details and filtering
+- **Pyvis**: Advanced network visualization with physics simulation
+- **kgGenShows**: Compatible format for external knowledge graph tools
+
+#### **Export Formats**
+- **JSON**: Complete pipeline results with metadata
+- **CSV**: Triple lists and judgment results for analysis
+- **Graph Formats**: Multiple graph formats for different visualization tools
+- **Evaluation Reports**: Comprehensive metrics and assessment results (see evaluation status warning above)
+
+### Troubleshooting
+
+#### **Common Issues and Solutions**
+
+1. **API Configuration Errors**
+   ```bash
+   # Verify API keys are correctly set
+   python -c "from core.config import get_api_config; print(get_api_config())"
+   ```
+
+2. **Import and Path Issues**
+   ```bash
+   # Run from streamlit_pipeline directory
+   cd streamlit_pipeline
+   python -c "import core.models; print('Imports successful')"
+   ```
+
+3. **Memory Issues with Large Texts**
+   ```bash
+   # Monitor memory usage and consider text chunking
+   python run_tests.py --performance
+   ```
+
+4. **Test Failures**
+   ```bash
+   # Debug with verbose output
+   python run_tests.py --verbose --pattern "test_specific_function"
+   ```
+
+## Performance Optimization
+
+### **Async Operations**
+- All API calls use async/await patterns for improved throughput
+- Concurrent processing where possible while respecting API rate limits
+- Non-blocking UI updates during long-running operations
+
+### **Caching and Storage**
+- Intelligent caching of API responses to reduce redundant calls
+- Persistent storage of intermediate results for pipeline resumption
+- Session-based caching for improved user experience
+
+### **Resource Management**
+- Automatic cleanup of temporary files and processing artifacts
+- Memory-efficient processing for large text inputs
+- Configurable resource limits and timeouts
+
+## Citation
+
+If you use this streamlit pipeline in your research, please cite the original GraphJudge paper:
+
+```bibtex
+@misc{huang2025llmsgoodgraphjudge,
+      title={Can LLMs be Good Graph Judge for Knowledge Graph Construction?},
+      author={Haoyu Huang and Chong Chen and Zeang Sheng and Yang Li and Wentao Zhang},
+      year={2025},
+      eprint={2411.17388},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2411.17388},
+}
+```
 
 ---
 
-**For more information about the broader GraphJudge project, see the main repository README.**
+**For comprehensive documentation on the broader GraphJudge research project, please refer to the main repository README.**
