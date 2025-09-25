@@ -188,3 +188,7 @@ kgGenShows/
 CLAUDE.md
 
 AGENTS.md
+
+# Ignore contents of streamlit_pipeline/datasets but keep folder structure
+streamlit_pipeline/datasets/*
+!streamlit_pipeline/datasets/**/.gitkeep
