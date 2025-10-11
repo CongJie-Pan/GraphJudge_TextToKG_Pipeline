@@ -210,8 +210,27 @@ class ReferenceGraphManager:
             if 'triples' in data:
                 # {"triples": [...]}
                 return self._parse_json_format(json.dumps(data['triples']))
+            elif 'edges' in data:
+                # Pyvis format: {"nodes": [...], "edges": [...]}
+                # Check root level 'edges' before checking nested 'graph.edges'
+                for edge in data['edges']:
+                    if isinstance(edge, dict):
+                        # Pyvis uses 'from', 'to', 'label'
+                        if all(key in edge for key in ['from', 'to', 'label']):
+                            triples.append(Triple(
+                                str(edge['from']),
+                                str(edge['label']),
+                                str(edge['to'])
+                            ))
+                        # Also support 'source', 'target', 'label' (alternative format)
+                        elif all(key in edge for key in ['source', 'target', 'label']):
+                            triples.append(Triple(
+                                str(edge['source']),
+                                str(edge['label']),
+                                str(edge['target'])
+                            ))
             elif 'graph' in data:
-                # {"graph": {...}}
+                # {"graph": {"edges": [...]}}
                 if 'edges' in data['graph']:
                     for edge in data['graph']['edges']:
                         if isinstance(edge, dict) and all(key in edge for key in ['source', 'target', 'label']):

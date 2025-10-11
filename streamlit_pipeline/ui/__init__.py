@@ -29,9 +29,13 @@ from .error_display import (
     ErrorRecoveryHelper
 )
 
+from .graph_viewer import (
+    display_graph_viewer_tab
+)
+
 __all__ = [
     'display_input_section',
-    'display_entity_results', 
+    'display_entity_results',
     'display_triple_results',
     'display_judgment_results',
     'display_pipeline_summary',
@@ -44,5 +48,6 @@ __all__ = [
     'display_success_message',
     'display_progress_card',
     'PipelineProgressDisplay',
-    'ErrorRecoveryHelper'
+    'ErrorRecoveryHelper',
+    'display_graph_viewer_tab'
 ]

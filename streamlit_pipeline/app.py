@@ -452,13 +452,29 @@ class GraphJudgeApp:
             st.sidebar.error(f"API Test Failed: {str(e)}")
     
     def _render_main_interface(self):
-        """Render the main interface for input and results."""
+        """Render the main interface with tabs for text processing and graph viewing."""
+        # Create main application tabs
+        tab1, tab2 = st.tabs([
+            get_text('app.tab_text_processing'),
+            get_text('app.tab_graph_viewer')
+        ])
+
+        # Tab 1: Text Processing (Original functionality)
+        with tab1:
+            self._render_text_processing_tab()
+
+        # Tab 2: Graph Viewer (New functionality)
+        with tab2:
+            self._render_graph_viewer_tab()
+
+    def _render_text_processing_tab(self):
+        """Render text processing interface (original functionality)."""
         # Input section
         input_text = display_input_section()
-        
+
         # Processing controls
         col1, col2, col3 = st.columns([2, 1, 1])
-        
+
         with col1:
             process_button = st.button(
                 f"🚀 {get_text('buttons.start_processing')}",
@@ -466,7 +482,7 @@ class GraphJudgeApp:
                 type="primary",
                 help="Click to start the three-stage knowledge graph construction pipeline"
             )
-        
+
         with col2:
             if st.session_state.current_result:
                 st.button(f"📊 {get_text('buttons.view_details')}", key="view_details", on_click=self._show_detailed_results)
@@ -474,14 +490,19 @@ class GraphJudgeApp:
         with col3:
             if st.session_state.pipeline_results:
                 st.button(f"📈 {get_text('buttons.historical_comparison')}", key="show_comparison", on_click=self._show_comparison)
-        
+
         # Process the input if button clicked
         if process_button and input_text.strip():
             self._start_processing(input_text.strip())
-        
+
         # Display current results
         if st.session_state.current_result:
             self._render_results_section(st.session_state.current_result)
+
+    def _render_graph_viewer_tab(self):
+        """Render standalone graph viewer tab."""
+        from streamlit_pipeline.ui.graph_viewer import display_graph_viewer_tab
+        display_graph_viewer_tab()
     
     def _render_processing_view(self):
         """Render the processing view with progress indicators."""

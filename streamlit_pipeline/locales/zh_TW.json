@@ -13,7 +13,25 @@
     "runtime_label": "**執行時間**",
     "processed_at": "處理時間: {time}",
     "status_ready": "**狀態**: 就緒",
-    "ready_for_next": "準備進行下一次處理"
+    "ready_for_next": "準備進行下一次處理",
+    "tab_text_processing": "📝 文字處理",
+    "tab_graph_viewer": "📊 圖譜檢視器"
+  },
+  "graph_viewer": {
+    "title": "知識圖譜檢視器",
+    "description": "上傳並以多種格式視覺化現有的知識圖譜檔案",
+    "upload_section_title": "📤 上傳圖譜檔案",
+    "upload_help": "支援 JSON、CSV、TXT 格式，自動偵測檔案格式",
+    "choose_file": "選擇要視覺化的圖譜檔案",
+    "file_formats": "支援的格式: *.json, *.csv, *.txt",
+    "parse_success": "✅ 圖譜載入成功: 已解析 {count} 個三元組",
+    "parse_error": "❌ 圖譜檔案解析失敗: {error}",
+    "no_file_uploaded": "📁 請上傳圖譜檔案以查看視覺化",
+    "visualization_section": "📊 圖譜視覺化",
+    "conversion_info": "🔄 正在將圖譜資料轉換為視覺化格式...",
+    "triples_count": "三元組數",
+    "entities_count": "實體數",
+    "file_info_title": "📋 檔案資訊"
   },
   "sidebar": {
     "configuration": "⚙️ 設定選項",
@@ -356,7 +374,17 @@
     "large_graph_warning": "⚠️ 偵測到大型圖（{entities} 個實體）。為了性能，顯示前20個。",
     "graph_visualization_failed": "❌ 圖視覺化失敗：{error}",
     "knowledge_graph_network": "🕸️ 知識圖譜網路視覺化",
-    "interaction_help": "💡 懸停在節點和邊上查看詳情 | 節點大小 = 關係數量 | 邊粗細 = 置信度"
+    "interaction_help": "💡 懸停在節點和邊上查看詳情 | 節點大小 = 關係數量 | 邊粗細 = 置信度",
+    "viewer_tabs_title": "📊 知識圖譜檢視器",
+    "tab_pyvis": "🌐 互動式網路 (Pyvis)",
+    "tab_plotly": "📈 Plotly 圖表",
+    "tab_kgshows": "📋 kgGenShows 格式",
+    "tab_text": "📝 文字顯示",
+    "plotly_graph_title": "Plotly 網路視覺化",
+    "kgshows_viewer_title": "kgGenShows 格式檢視器",
+    "kgshows_entities_list": "📋 實體清單",
+    "kgshows_relationships_list": "🔗 關係清單",
+    "download_kgshows_json": "📥 下載 kgGenShows JSON"
   },
   "progress": {
     "processing_progress": "🔄 處理進度",

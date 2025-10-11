@@ -13,7 +13,25 @@
     "runtime_label": "**Runtime**",
     "processed_at": "Processed at: {time}",
     "status_ready": "**Status**: Ready",
-    "ready_for_next": "Ready for next processing"
+    "ready_for_next": "Ready for next processing",
+    "tab_text_processing": "📝 Text Processing",
+    "tab_graph_viewer": "📊 Graph Viewer"
+  },
+  "graph_viewer": {
+    "title": "Knowledge Graph Viewer",
+    "description": "Upload and visualize existing knowledge graph files in multiple formats",
+    "upload_section_title": "📤 Upload Graph File",
+    "upload_help": "Support JSON, CSV, TXT formats with automatic format detection",
+    "choose_file": "Choose a graph file to visualize",
+    "file_formats": "Supported formats: *.json, *.csv, *.txt",
+    "parse_success": "✅ Graph loaded successfully: {count} triples parsed",
+    "parse_error": "❌ Failed to parse graph file: {error}",
+    "no_file_uploaded": "📁 Please upload a graph file to view its visualization",
+    "visualization_section": "📊 Graph Visualization",
+    "conversion_info": "🔄 Converting graph data to visualization formats...",
+    "triples_count": "Triples",
+    "entities_count": "Entities",
+    "file_info_title": "📋 File Information"
   },
   "sidebar": {
     "configuration": "⚙️ Configuration Options",
@@ -327,7 +345,17 @@
     "large_graph_warning": "⚠️ Large graph detected ({entities} entities). Showing first 20 for performance.",
     "graph_visualization_failed": "❌ Graph visualization failed: {error}",
     "knowledge_graph_network": "🕸️ Knowledge Graph Network Visualization",
-    "interaction_help": "💡 Hover over nodes and edges for details | Node size = relationship count"
+    "interaction_help": "💡 Hover over nodes and edges for details | Node size = relationship count",
+    "viewer_tabs_title": "📊 Knowledge Graph Viewers",
+    "tab_pyvis": "🌐 Interactive Network (Pyvis)",
+    "tab_plotly": "📈 Plotly Graph",
+    "tab_kgshows": "📋 kgGenShows Format",
+    "tab_text": "📝 Text Display",
+    "plotly_graph_title": "Plotly Network Visualization",
+    "kgshows_viewer_title": "kgGenShows Format Viewer",
+    "kgshows_entities_list": "📋 Entities List",
+    "kgshows_relationships_list": "🔗 Relationships List",
+    "download_kgshows_json": "📥 Download kgGenShows JSON"
   },
   "progress": {
     "processing_progress": "🔄 Processing Progress",

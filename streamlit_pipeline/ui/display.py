@@ -183,19 +183,29 @@ def display_final_knowledge_graph(triples: List[Triple], judgment_result: Judgme
     if len(triples) > 0:
         st.markdown(f"### {get_text('results.interactive_graph')}")
 
-        # Check if we have pipeline result with pyvis data
-        if hasattr(st.session_state, 'pipeline_result') and hasattr(st.session_state.pipeline_result, 'pyvis_data'):
-            pyvis_data = st.session_state.pipeline_result.pyvis_data
+        # Check if we have pipeline result with all graph data formats
+        if hasattr(st.session_state, 'pipeline_result'):
+            pipeline_result = st.session_state.pipeline_result
+            pyvis_data = getattr(pipeline_result, 'pyvis_data', None)
+            plotly_graph_data = getattr(pipeline_result, 'graph_data', graph_data)
+            kgshows_data = getattr(pipeline_result, 'kgshows_data', None)
         else:
             pyvis_data = None
+            plotly_graph_data = graph_data
+            kgshows_data = None
 
-        # Use Pyvis viewer as primary option
-        if pyvis_data and PYVIS_AVAILABLE:
-            display_pyvis_knowledge_graph(pyvis_data, triples)
+        # Display multi-format graph viewer with tabs
+        if pyvis_data or plotly_graph_data or kgshows_data:
+            display_pyvis_knowledge_graph(
+                pyvis_data=pyvis_data,
+                triples=triples,
+                graph_data=plotly_graph_data,
+                kgshows_data=kgshows_data
+            )
         else:
-            # Fallback to Plotly or text display
+            # Fallback to basic text display
             st.info(get_text('results.fallback_visualization'))
-            create_enhanced_knowledge_graph(triples, graph_data)
+            _display_text_based_graph(triples)
 
 
 def display_rejected_triples_analysis(rejected_triples: List[Triple], judgment_result: JudgmentResult):
@@ -758,46 +768,161 @@ def create_pyvis_knowledge_graph(pyvis_data: Dict[str, Any], height: int = 600) 
         return None
 
 
+def display_kgshows_viewer(kgshows_data: Dict[str, Any]):
+    """
+    Display kgGenShows format graph data with formatted JSON and entity/relationship lists.
+
+    Args:
+        kgshows_data: kgGenShows format graph data with entities and relationships
+    """
+    if not kgshows_data:
+        st.warning(get_text('errors.no_graph_data'))
+        return
+
+    try:
+        st.markdown(f"### {get_text('graph.kgshows_viewer_title')}")
+
+        # Display metadata and statistics
+        metadata = kgshows_data.get("metadata", {})
+        entities = kgshows_data.get("entities", [])
+        relationships = kgshows_data.get("relationships", [])
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric(get_text('graph.entities'), len(entities))
+        with col2:
+            st.metric(get_text('graph.relationships'), len(relationships))
+        with col3:
+            format_type = metadata.get("format", "kgshows")
+            st.metric("Format", format_type.upper())
+
+        # Create tabs for entities and relationships
+        entity_tab, rel_tab, json_tab = st.tabs([
+            get_text('graph.kgshows_entities_list'),
+            get_text('graph.kgshows_relationships_list'),
+            "📄 JSON Data"
+        ])
+
+        with entity_tab:
+            # Display entities list
+            if entities:
+                st.markdown(f"**Total Entities:** {len(entities)}")
+
+                # Create a DataFrame for better display
+                entity_df = pd.DataFrame({
+                    "#": range(1, len(entities) + 1),
+                    "Entity": entities
+                })
+                st.dataframe(entity_df, use_container_width=True, hide_index=True)
+            else:
+                st.info(get_text('results.no_relationships'))
+
+        with rel_tab:
+            # Display relationships list
+            if relationships:
+                st.markdown(f"**Total Relationships:** {len(relationships)}")
+
+                # Parse relationships and create DataFrame
+                rel_data = []
+                for i, rel in enumerate(relationships, 1):
+                    # kgGenShows format: "subject - predicate - object"
+                    parts = rel.split(" - ")
+                    if len(parts) == 3:
+                        rel_data.append({
+                            "#": i,
+                            "Subject": parts[0].strip(),
+                            "Predicate": parts[1].strip(),
+                            "Object": parts[2].strip(),
+                            "Full": rel
+                        })
+                    else:
+                        rel_data.append({
+                            "#": i,
+                            "Subject": "",
+                            "Predicate": "",
+                            "Object": "",
+                            "Full": rel
+                        })
+
+                rel_df = pd.DataFrame(rel_data)
+                st.dataframe(
+                    rel_df[["#", "Subject", "Predicate", "Object"]],
+                    use_container_width=True,
+                    hide_index=True
+                )
+            else:
+                st.info(get_text('results.no_relationships'))
+
+        with json_tab:
+            # Display formatted JSON
+            st.json(kgshows_data)
+
+            # Download button for kgGenShows JSON
+            json_str = json.dumps(kgshows_data, ensure_ascii=False, indent=2)
+            st.download_button(
+                label=get_text('graph.download_kgshows_json'),
+                data=json_str,
+                file_name=f"kgshows_graph_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                mime="application/json",
+                key="download_kgshows"
+            )
+
+    except Exception as e:
+        st.error(f"❌ kgGenShows viewer error: {str(e)}")
+
+
 def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
                                  triples: Optional[List[Triple]] = None,
+                                 graph_data: Optional[Dict[str, Any]] = None,
+                                 kgshows_data: Optional[Dict[str, Any]] = None,
                                  height: int = 600):
     """
-    Display interactive Pyvis knowledge graph with fallback options.
+    Display knowledge graph with multiple viewer options using tabs.
 
     Args:
         pyvis_data: Pre-processed Pyvis graph data
         triples: Fallback triples for text display
+        graph_data: Plotly format graph data
+        kgshows_data: kgGenShows format graph data
         height: Height of visualization in pixels
     """
-    if not pyvis_data:
+    if not pyvis_data and not graph_data and not kgshows_data:
         st.warning(get_text('errors.no_graph_data'))
         if triples:
             _display_text_based_graph(triples)
         return
 
-    # Display metrics from Pyvis data
-    metadata = pyvis_data.get("metadata", {})
-    nodes_count = metadata.get("nodes_count", len(pyvis_data.get("nodes", [])))
-    edges_count = metadata.get("edges_count", len(pyvis_data.get("edges", [])))
+    # Display overall metrics
+    if pyvis_data:
+        metadata = pyvis_data.get("metadata", {})
+        nodes_count = metadata.get("nodes_count", len(pyvis_data.get("nodes", [])))
+        edges_count = metadata.get("edges_count", len(pyvis_data.get("edges", [])))
+    elif graph_data:
+        nodes_count = len(graph_data.get("nodes", []))
+        edges_count = len(graph_data.get("edges", []))
+    else:
+        nodes_count = 0
+        edges_count = 0
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
         st.metric(get_text('graph.entities'), nodes_count)
     with col2:
         st.metric(get_text('graph.relationships'), edges_count)
-    with col3:
-        physics_status = get_text('graph.physics_enabled') if metadata.get("physics_enabled", True) else get_text('graph.physics_disabled')
-        st.metric(get_text('graph.physics_status'), physics_status)
 
-    # Viewer selection
-    viewer_option = st.selectbox(
-        get_text('graph.choose_visualization'),
-        [get_text('graph.interactive_network'), get_text('graph.simple_text_display')],
-        index=0
-    )
+    st.markdown(f"### {get_text('graph.viewer_tabs_title')}")
 
-    if viewer_option == get_text('graph.interactive_network'):
-        if PYVIS_AVAILABLE:
+    # Create tabs for different viewers
+    tab1, tab2, tab3, tab4 = st.tabs([
+        get_text('graph.tab_pyvis'),
+        get_text('graph.tab_plotly'),
+        get_text('graph.tab_kgshows'),
+        get_text('graph.tab_text')
+    ])
+
+    # Tab 1: Pyvis Interactive Network
+    with tab1:
+        if pyvis_data and PYVIS_AVAILABLE:
             # Generate Pyvis visualization
             html = create_pyvis_knowledge_graph(pyvis_data, height)
             if html:
@@ -810,34 +935,64 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
                 st.info(get_text('ui.interaction_tips'))
 
                 # Add download option
-                if st.button(get_text('buttons.download_html')):
+                if st.button(get_text('buttons.download_html'), key="download_pyvis_html"):
                     st.download_button(
                         label="Save Interactive Graph",
                         data=html,
-                        file_name=f"knowledge_graph_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html",
-                        mime="text/html"
+                        file_name=f"knowledge_graph_pyvis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html",
+                        mime="text/html",
+                        key="download_pyvis_html_btn"
                     )
             else:
                 st.error(get_text('errors.failed_pyvis'))
                 if triples:
                     _display_text_based_graph(triples)
-        else:
+        elif not PYVIS_AVAILABLE:
             st.error(get_text('errors.pyvis_not_available'))
+            st.info(get_text('errors.pyvis_install'))
             if triples:
                 _display_text_based_graph(triples)
-    else:
-        # Text-based display
+        else:
+            st.warning(get_text('errors.no_graph_data'))
+            if triples:
+                _display_text_based_graph(triples)
+
+    # Tab 2: Plotly Graph
+    with tab2:
+        if graph_data and PLOTLY_AVAILABLE:
+            st.markdown(f"### {get_text('graph.plotly_graph_title')}")
+            create_enhanced_knowledge_graph(triples if triples else [], graph_data)
+        elif not PLOTLY_AVAILABLE:
+            st.error(get_text('errors.plotly_required'))
+            st.info(get_text('errors.plotly_install'))
+            if triples:
+                _display_text_based_graph(triples)
+        else:
+            st.warning(get_text('errors.no_graph_data'))
+            if triples:
+                _display_text_based_graph(triples)
+
+    # Tab 3: kgGenShows Format
+    with tab3:
+        if kgshows_data:
+            display_kgshows_viewer(kgshows_data)
+        else:
+            st.warning(get_text('errors.no_graph_data'))
+            st.info("kgGenShows format data not available")
+
+    # Tab 4: Text Display
+    with tab4:
         if triples:
             _display_text_based_graph(triples)
-        else:
+        elif pyvis_data:
             # Convert from pyvis data to basic text display
             entities = set()
             relationships = []
 
             for edge in pyvis_data.get("edges", []):
-                entities.add(edge["from"])
-                entities.add(edge["to"])
-                rel_text = f"{edge['from']} → {edge.get('label', 'related to')} → {edge['to']}"
+                entities.add(edge.get("from", ""))
+                entities.add(edge.get("to", ""))
+                rel_text = f"{edge.get('from', '')} → {edge.get('label', 'related to')} → {edge.get('to', '')}"
                 relationships.append(rel_text)
 
             st.markdown(f"### {get_text('results.text_based_kg')}")
@@ -845,3 +1000,5 @@ def display_pyvis_knowledge_graph(pyvis_data: Optional[Dict[str, Any]],
             st.markdown(get_text('results.relationships_title'))
             for i, rel in enumerate(relationships, 1):
                 st.write(f"{i}. {rel}")
+        else:
+            st.info(get_text('results.no_relationships'))
